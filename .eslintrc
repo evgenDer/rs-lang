@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "global-require": 0
+  }
+}

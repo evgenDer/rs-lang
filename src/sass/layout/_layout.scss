@@ -1,0 +1,52 @@
+body {
+  margin: 0 auto;
+  padding: 0.5em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 0.1fr auto 0.1fr;
+  grid-gap: 1em;
+}
+
+.nav_wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+header, footer {
+  grid-column: 1/ 4;
+}
+
+@media all and (max-width: 700px) {
+  aside,
+  article {
+    grid-column: 1/4;
+  }
+
+  .nav_wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+article {
+  flex-flow: column;
+}
+
+header,
+aside,
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+.layout {
+  display: grid;
+}
+
+.swiper-container {
+  grid-column: 3 /10;
+  width: 100%;
+}
+
+
