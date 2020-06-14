@@ -4,10 +4,14 @@
 // abstract
 @import "./abstract/constants";
 @import "./abstract/mixins";
+@import "./abstract/placeholders";
 
 // base
 @import "./base/base";
 
 // components
+@import "./components/navigation";
 
 // layouts
+@import "./layouts/wrapper";
+@import "./layouts/main-page";
