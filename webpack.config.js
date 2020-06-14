@@ -55,10 +55,6 @@ module.exports = (env, options) => {
           test: /\.html$/,
           loader: 'html-loader',
         },
-        {
-          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader',
-        },
       ],
     },
 
@@ -87,10 +83,10 @@ module.exports = (env, options) => {
             from: './src/img',
             to: 'assets/img',
           },
-          {
+          /* {
             from: './src/audio',
             to: 'assets/audio',
-          },
+          }, */
         ],
       }),
     ],
