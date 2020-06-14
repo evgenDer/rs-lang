@@ -38,13 +38,13 @@
 .hamburger__line_active {
   transform: rotate(-90deg);
   transition: all 0.3s ease-in;
-  background: $color-primary;
+  background: $color-additional;
   &:before {  
-    background: $color-primary;
+    background: $color-additional;
     transition: all 0.3s ease-in;
   }
   &:after {
-    background: $color-primary;
+    background: $color-additional;
     transition: all 0.3s ease-in;
   }
 }
