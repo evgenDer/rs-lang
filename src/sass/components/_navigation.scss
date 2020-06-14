@@ -56,19 +56,26 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 300px;
+  width: calc((100vw - 1400px) / 2 + 300px);
+  padding-left: calc((100vw - 1400px) / 2);
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4);
   margin: 0;
   padding-top: 80px;
-  padding-left: 0px;
   transition: all 0.3s ease-in;
+  @include media-laptop {
+    width: 300px;
+    padding-left: 0px;
+  }
   @include media-tablet {
     padding-top: 50px;
   }
 }
 
 .navigation_hidden {
-  left: -300px;
+  left: calc(((100vw - 1400px) / 2 + 300px) * -1);
+  @include media-laptop {
+    left: -300px;
+  }
   box-shadow: none;
 }
 
