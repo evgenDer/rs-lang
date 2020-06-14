@@ -1,0 +1,111 @@
+.authentication{
+  // background-image: linear-gradient(-225deg, $color-violet 20%, $color-yellow 80%)!important;
+  background-image: url(../img/background.jpg)!important;
+  background-repeat: no-repeat;
+  position: relative;
+  width: 100vw!important;
+  height: 100vh;
+  overflow: hidden;
+}
+
+form {
+  width: 420px;
+  @include media-mobilesmall{
+    width: $mobile-small-width;
+  }
+  min-height: 500px;
+  height: auto;
+  border-radius: 10px;
+  margin: 3rem auto;
+  box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+  padding: 2%;
+  background-color: rgba(248, 242, 238, 0.8);
+  @media (max-width: $mobile-big-width){
+
+  }
+}
+/* form Container */
+form .authentication-page__container{
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+/* the header form form */
+.head-form {
+  margin: 1% auto 1% auto;
+  text-align: center;
+}
+/* Login title form form */
+.head-form  h2 {
+  font-size: 4rem;
+  color: $color-additional;
+  margin: 30px;
+}
+
+.input-item {
+  background: #fff;
+  color: $color-additional;
+  padding: 15px 0px 15px 7px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+/* Show/hide password Font Icon */
+#eye {
+  background: #fff;
+  color: $color-additional;
+
+  margin: 7px 0;
+  margin-left: -20px;
+  padding: 15px 9px 19px 0px;
+  border-radius: 0px 5px 5px 0px;
+
+  float: right;
+  position: relative;
+  right: 1%;
+  top: -.2%;
+  z-index: 5;
+
+  cursor: pointer;
+}
+/* inputs form  */
+input[class="form-input"]{
+  @include media-mobilesmall{
+    width: 260px;
+    padding: 25px;
+  }
+  width: 280px;
+  height: 50px;
+
+  margin-top: 2%;
+  font-size: 16px;
+  color: $color-secondary;
+  outline: none;
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+  transition: 0.2s linear;
+
+}
+input[id="txt-input"] {
+  width: 280px;
+}
+/* focus  */
+input:focus {
+  transform: translateX(-2px);
+  border-radius: 5px;
+}
+
+input:-webkit-autofill {
+  box-shadow: inset 0 0 0 50px #fff !important;
+  -webkit-box-shadow: inset 0 0 0 50px #fff !important;
+}
+
+.error-msg{
+  color: $color-red!important;
+  height: 30px;
+}

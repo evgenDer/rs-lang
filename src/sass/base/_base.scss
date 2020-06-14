@@ -8,7 +8,7 @@ h1 {
   @include media-tablet {
     @include font(2.6rem, 2.6rem, bold);
   }
-  @media (max-width: 800px) {    
+  @media (max-width: 800px) {
     @include font(2.6rem, 2.6rem, bold);
   }
 }
