@@ -4,41 +4,88 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="../../favicon/favicon.ico" type="image/x-icon">
   <title>RS Lang</title>
 </head>
 <body>
-  <div class="authentication-page hidden">
-    <form>
-       <div class="authentication-page__container">
-       <div class="head-form">
-          <h2>Вход</h2>
-          <p class = "error-msg"></p>
-       </div>
-       <br>
-       <div class="field-set">
-          <span class="input-item">
-            <i class="fa fa-envelope-o" aria-hidden="true"></i>
-          </span>
-          <input class="form-input" id="txt-input" placeholder="Электронная почта" type="email" required>
-          <br>
-          <span class="input-item">
-            <i class="fa fa-key"></i>
-          </span>
-            <input class="form-input" type="password" placeholder="Пароль" id="pwd"  name="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[+\-_@$!%*?&#.,;:\[\]{}]).{8,}/m" required>
-            <span><i class="fa fa-eye" aria-hidden="true"  type="button" id="eye"></i></span>
-          <br>
-          <button class="log-in" type="submit">Войти</button>
-       </div>
-       <div class="other">
-          <button class="btn submits sign-up">Регистрация
-            <i class="fa fa-user-plus" aria-hidden="true"></i>
-          </button>
-       </div>
+  <header class="header">
+    <div class="wrapper header__wrapper">
+      <nav class="header__navigation">
+        <ul class="navigation navigation_hidden">
+          <li class="navigation__link navigation__link_active">
+            <a href="./index.html">
+              <img src="../img/icons/home.svg" alt="home">
+              Главная
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/learning.svg" alt="learning">
+              Изучение
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/training.svg" alt="training">
+              Тренировка
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/games.svg" alt="games">
+              Мини-игры
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/dictionary.svg" alt="dictionary">
+              Словарь
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/statistics.svg" alt="statistics">
+              Статистика
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/settings.svg" alt="settings">
+              Настройки
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/promo.svg" alt="promo">
+              Промо
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/team.svg" alt="team">
+              О команде
+            </a>
+          </li>
+          <li class="navigation__link">
+            <a href="#">
+              <img src="../img/icons/logout.svg" alt="logout">
+              Выйти
+            </a>
+          </li>
+        </ul>
+        <div class="header__hamburger">
+          <div class="hamburger">
+            <span class="hamburger__line"></span>
+          </div>
+        </div>
+      </nav>
+      <div class="header__logo">
+        <h1 class="logo">RS LANG</h1>
       </div>
-    </form>
-  </div>
+      <div class="header__aligner"></div>
+    </div>
+  </header>
+
 </body>
 </html>

@@ -1,6 +1,6 @@
-import { loginUser } from '../api/authorizationApi';
+import { loginUser, createUser } from '../api/authorizationApi';
 import { ERROR_MSG, LOG_PAGE } from '../utils/constants';
-
+import { isNewUser } from '../utils/checks';
 
 function show() {
   const password = document.getElementById('pwd');
@@ -40,5 +40,21 @@ async function logIn(event) {
   }
 }
 
+function authorizationHandlers() {
+  document.getElementById('eye').addEventListener('click', changeVisibilityPassword, false);
+  document.querySelector('.sign-up').addEventListener('click', createUser);
+  document.querySelector('.log-in').addEventListener('click', logIn);
+  window.onload = () => {
+    if (isNewUser()) {
+      document.body.classList.add('authentication');
+      LOG_PAGE.classList.remove('hidden');
+    } else if (!LOG_PAGE.classList.contains('hidden')) {
+      LOG_PAGE.classList.add('hidden');
+      document.body.classList.remove('authentication');
+    }
+  };
+}
 
-export { changeVisibilityPassword, logIn };
+
+// eslint-disable-next-line import/prefer-default-export
+export { authorizationHandlers };
