@@ -82,6 +82,7 @@
 
 .stat-value {
   color: $color-additional !important;
+  font-weight: 600;
 }
 
 .language-stat {
@@ -92,6 +93,10 @@
   width: 100%;
   padding: 20px;
   margin-bottom: 10px;
+  @include media-tablet {
+    flex-direction: column;
+  }
+  @extend %light-shadow;
 }
 
 .language-stat_lang {
@@ -109,6 +114,21 @@
   }
 }
 
+.language-stat_bar {
+  width: 100%;
+  margin: 20px;
+  p {
+    color: $color-secondary;
+    margin: 5px;
+    text-align: center;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
 .today-stat {
   display: flex;
   align-items: center;
@@ -117,24 +137,26 @@
   width: 100%;
   padding: 20px;
   margin-top: 10px;
+  margin-bottom: 10px;
+  @extend %light-shadow;
 }
 
-.today-stat_first-row {
+.today-stat_primary-row {
   display: flex;
   align-items: center;
   justify-content: stretch;
   flex-direction: row;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
 }
 
-.today-stat_second-row {
+.today-stat_secondary-row {
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-direction: row;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   flex-wrap: wrap;
 }
 
@@ -148,4 +170,55 @@
       @include font(1.6rem, 1.6rem, bold);
     }
   }
+}
+
+.today-stat_bar {
+  width: 40%;
+  margin: 20px;
+  p {
+    color: $color-secondary;
+    margin: 5px;
+    text-align: center;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  @include media-tablet {
+    width: 100%;
+  }
+}
+
+
+.main-page-contol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 5px;
+  @include media-tablet {
+    flex-direction: column;
+  }
+}
+
+.main-page-contol_button {
+  outline: none;
+  border: none;
+  width: 270px;
+  height: 70px;
+  border-radius: 10px;
+  margin: 5px;
+  @include font(1.4rem, 1.4rem, 600);
+  @extend %light-shadow;
+
+  background-color: $color-secondary;
+  color: $color-primary;
+  &:hover {
+    background-color: $color-background-additinal;
+    color: $color-secondary;
+    cursor: pointer;
+    transition: all .4s;
+  }
+  transition: all .4s;
 }
