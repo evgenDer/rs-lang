@@ -1,0 +1,40 @@
+.authentication-page button {
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s linear;
+  letter-spacing: 0.05em;
+  color: $color-primary;
+  opacity: 1;
+}
+
+.sign-up {
+  background-color: $color-additional;
+  margin-left: 20px;
+  background: $color-violet;
+}
+
+.log-in{
+  margin: 7% 0;
+  background: $color-additional;
+  width: 310px;
+}
+/*       Forgot Password button FAF3DD  */
+.frgt-pass {background: transparent;}
+
+/* buttons hover Animation */
+button:hover {
+  animation: ani9 0.4s ease-in-out infinite alternate;
+}
+@keyframes ani9 {
+  0% {
+      transform: translateY(3px);
+  }
+  100% {
+      transform: translateY(5px);
+  }
+}
