@@ -3,7 +3,7 @@ const APP_NAME = 'RS LANG';
 const PAGES = [
   {
     id: 'main-page',
-    href: '#',
+    href: 'main.html',
     img: './assets/img/icons/home.svg',
     text: 'Главная',
   },
@@ -21,13 +21,13 @@ const PAGES = [
   },
   {
     id: 'games-page',
-    href: '#',
+    href: 'games.html',
     img: './assets/img/icons/games.svg',
     text: 'Мини-игры',
   },
   {
     id: 'dictionary-page',
-    href: '#',
+    href: 'dictionary.html',
     img: './assets/img/icons/dictionary.svg',
     text: 'Словарь',
   },
