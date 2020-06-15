@@ -8,11 +8,13 @@
 
 // base
 @import "./base/base";
+@import "./base/buttons";
 
 // components
 @import "./components/navigation";
+@import "./components/progres-bar";
 
 // layouts
 @import "./layouts/wrapper";
 @import "./layouts/main-page";
-@import "./components/progres-bar";
+@import "./layouts/authorization";

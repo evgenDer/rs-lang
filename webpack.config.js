@@ -11,7 +11,7 @@ module.exports = (env, options) => {
     mode: isProduction ? 'production' : 'development',
     devtool: isProduction ? 'none' : 'source-map',
     watch: !isProduction,
-    entry: ['./src/js/index.js', './src/sass/style.scss'],
+    entry: ['babel-polyfill', './src/js/index.js', './src/sass/style.scss'],
     output:
     {
       path: path.join(__dirname, '/dist'),
@@ -68,9 +68,9 @@ module.exports = (env, options) => {
       }),
       new HtmlWebpackPlugin({
         hash: true,
-        template: './src/pages/dictionary.html',
+        template: './src/pages/authorization.html',
         inject: 'body',
-        filename: 'dictionary.html',
+        filename: 'authorization.html',
       }),
       new HtmlWebpackPlugin({
         hash: true,

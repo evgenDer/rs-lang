@@ -1,4 +1,6 @@
 import { addHeaderToPage, defineActivePage } from './navigation/index';
+import addAuthorizationClickHandler from './authorization/index';
+import { isNewUser } from './utils/checks';
 
 
 window.onload = () => {
@@ -35,6 +37,10 @@ window.onload = () => {
       break;
     case 9:
       // authorization-page
+      window.stop();
+      if (isNewUser()) {
+        addAuthorizationClickHandler();
+      }
       break;
     default:
       break;
