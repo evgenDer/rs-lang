@@ -1,13 +1,16 @@
 import { ERROR_MSG } from '../utils/constants';
 import { getUser, getMistakeResponse } from '../utils/helpers';
+import {
+  setUserPassword, setUserEmail, setToken, getToken,
+} from '../utils/storage';
+import { isValidToken } from '../utils/checks';
 
 
 async function createUser(event) {
   event.preventDefault();
   const user = getUser();
-  localStorage.setItem('email', user.email);
-  localStorage.setItem('password', user.password);
-
+  setUserPassword(user);
+  setUserEmail(user);
   const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/users', {
     method: 'POST',
     headers: {
@@ -36,5 +39,13 @@ async function loginUser() {
   return content;
 }
 
+async function getTokenForRequest() {
+  if (!isValidToken()) {
+    const infoAboutUser = await loginUser();
+    setToken(infoAboutUser);
+  }
+  return getToken();
+}
 
-export { createUser, loginUser };
+
+export { createUser, loginUser, getTokenForRequest };

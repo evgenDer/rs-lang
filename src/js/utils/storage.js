@@ -32,5 +32,6 @@ function getDateToken() {
 }
 
 export {
-  setUserId, setToken, setDateToken, setUserPassword, setUserEmail, getToken, getUserId, getDateToken,
+  setUserId, setToken, setDateToken, setUserPassword,
+  setUserEmail, getToken, getUserId, getDateToken,
 };

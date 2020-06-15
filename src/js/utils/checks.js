@@ -1,8 +1,9 @@
 import { LIFETIME_TOKEN } from './constants';
+import { getDateToken } from './storage';
 
 function isValidToken() {
   const currentDateString = new Date().toString();
-  const tokenDateString = localStorage.getItem('date');
+  const tokenDateString = getDateToken();
   return (Date.parse(currentDateString) - Date.parse(tokenDateString) <= LIFETIME_TOKEN);
 }
 
