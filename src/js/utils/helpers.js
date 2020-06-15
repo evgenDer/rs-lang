@@ -1,4 +1,4 @@
-import { ERROR_PASSWORD } from './constants';
+import { ERROR_PASSWORD } from '../authorization/constants';
 
 function getUser() {
   const emailInput = document.querySelector('input[type="email"]');

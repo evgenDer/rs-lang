@@ -1,4 +1,4 @@
-import { LIFETIME_TOKEN } from './constants';
+import { LIFETIME_TOKEN } from '../authorization/constants';
 import { getDateToken } from './storage';
 
 function isValidToken() {
