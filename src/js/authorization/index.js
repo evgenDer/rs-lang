@@ -28,8 +28,8 @@ async function logIn(event) {
     setUserId(infoAboutUser);
     setToken(infoAboutUser);
     setDateToken();
-    window.history.pushState(null, null, 'index.html');
-    window.location.replace('index.html');
+    window.history.pushState(null, null, 'main.html');
+    window.location.replace('main.html');
   } catch (error) {
     ERROR_MSG.innerText = 'Пароль или логин введены неверно';
   }

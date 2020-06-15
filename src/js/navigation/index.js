@@ -1,6 +1,7 @@
 import path from 'path';
 import { PAGES, APP_NAME } from '../utils/constants';
 import { createElement } from '../utils/create';
+import { removeUserId } from '../utils/storage';
 
 
 function closeNavigationMenu() {
@@ -49,6 +50,11 @@ function generateNavigation() {
     const icon = createElement('img', '', [], [['src', page.img], ['alt', path.basename(page.img, '.svg')]]);
     const title = createElement('span', '', [], [], page.text);
     const anchor = createElement('a', '', [icon, title], [['href', page.href]]);
+    if (num === PAGES.length - 1) {
+      anchor.onclick = () => {
+        removeUserId();
+      };
+    }
 
     const link = createElement('li', 'navigation__link', [anchor]);
     if (num === activePageNum) {

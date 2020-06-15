@@ -60,23 +60,29 @@ module.exports = (env, options) => {
 
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/pages/main.html',
-        filename: 'main.html',
+        template: './src/pages/authorization.html',
+        filename: 'authorization.html',
       }),
       new MiniCssExtractPlugin({
         filename: 'style.css',
       }),
       new HtmlWebpackPlugin({
         hash: true,
-        template: './src/pages/authorization.html',
+        template: './src/pages/main.html',
         inject: 'body',
-        filename: 'authorization.html',
+        filename: 'main.html',
       }),
       new HtmlWebpackPlugin({
         hash: true,
         template: './src/pages/games.html',
         inject: 'body',
         filename: 'games.html',
+      }),
+      new HtmlWebpackPlugin({
+        hash: true,
+        template: './src/pages/dictionary.html',
+        inject: 'body',
+        filename: 'dictionary.html',
       }),
       new CopyPlugin({
         patterns: [

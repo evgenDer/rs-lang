@@ -31,7 +31,11 @@ function getDateToken() {
   return localStorage.getItem('tokenDate');
 }
 
+function removeUserId() {
+  localStorage.removeItem('userId');
+}
+
 export {
   setUserId, setToken, setDateToken, setUserPassword,
-  setUserEmail, getToken, getUserId, getDateToken,
+  setUserEmail, getToken, getUserId, getDateToken, removeUserId,
 };

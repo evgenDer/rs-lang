@@ -57,7 +57,7 @@ const PAGES = [
   },
   {
     id: 'authorization-page',
-    href: '#',
+    href: 'authorization.html',
     img: './assets/img/icons/logout.svg',
     text: 'Выйти',
   },
