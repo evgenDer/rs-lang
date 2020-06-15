@@ -47,7 +47,8 @@ function generateNavigation() {
   const list = [];
   PAGES.forEach((page, num) => {
     const icon = createElement('img', '', [], [['src', page.img], ['alt', path.basename(page.img, '.svg')]]);
-    const anchor = createElement('a', '', [icon], [['href', page.href]], page.text);
+    const title = createElement('span', '', [], [], page.text);
+    const anchor = createElement('a', '', [icon, title], [['href', page.href]]);
 
     const link = createElement('li', 'navigation__link', [anchor]);
     if (num === activePageNum) {
