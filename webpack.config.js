@@ -77,6 +77,12 @@ module.exports = (env, options) => {
         inject: 'body',
         filename: 'games.html',
       }),
+      new HtmlWebpackPlugin({
+        hash: true,
+        template: './src/pages/configuration.html',
+        inject: 'body',
+        filename: 'configuration.html',
+      }),
       new CopyPlugin({
         patterns: [
           {

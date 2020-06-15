@@ -1,0 +1,23 @@
+.configuration__card {
+	margin-top: 40px;
+}
+
+.configuration__tab-link a{
+  color: $color-black
+}
+
+.configuration__tab-link.uk-active a {
+  border-color: $color-active;
+  color: $color-active;
+}
+
+.checkbox-label.uk-form-label {
+  margin-top: 0px;
+  width: 350px;
+  display: inline-block;
+
+  @include media-tablet{
+    max-width: 350px;
+    width: 200px;
+  }
+}
