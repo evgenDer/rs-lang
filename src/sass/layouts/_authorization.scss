@@ -51,7 +51,7 @@ form .authentication-page__container{
 .input-item {
   background: #fff;
   color: $color-additional;
-  padding: 15px 0px 15px 7px;
+  padding: 15px 0px 15px 8px;
   border-radius: 5px 0px 0px 5px;
 }
 
@@ -60,15 +60,15 @@ form .authentication-page__container{
   background: #fff;
   color: $color-additional;
 
-  margin: 7px 0;
+  margin: 6px 0 0 0;
   margin-left: -20px;
-  padding: 15px 9px 19px 0px;
+  padding: 15px 9px 18px 0px;
   border-radius: 0px 5px 5px 0px;
 
   float: right;
   position: relative;
   right: 1%;
-  top: -.2%;
+  top: 0;
   z-index: 5;
 
   cursor: pointer;
@@ -80,7 +80,7 @@ input[class="form-input"]{
     padding: 25px;
   }
   width: 280px;
-  height: 50px;
+  height: 49px;
 
   margin-top: 2%;
   font-size: 16px;
