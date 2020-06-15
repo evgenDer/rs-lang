@@ -1,4 +1,4 @@
-import { ERROR_MSG } from '../utils/constants';
+import { ERROR_MSG } from '../authorization/constants';
 import { getUser, getMistakeResponse } from '../utils/helpers';
 import {
   setUserPassword, setUserEmail, setToken, getToken,

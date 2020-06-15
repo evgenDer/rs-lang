@@ -1,5 +1,5 @@
 import addNavigationClickHandler from './navigation/index';
-import addAuthorizationClickHandler from './authorization/authorization';
+import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 
 

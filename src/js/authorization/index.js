@@ -1,6 +1,6 @@
-import { loginUser, createUser } from '../api/authorizationApi';
-import { ERROR_MSG, PASSWORD } from '../utils/constants';
+import { ERROR_MSG, PASSWORD } from './constants';
 import { setDateToken, setUserId, setToken } from '../utils/storage';
+import { loginUser, createUser } from '../api/authorization';
 
 function show() {
   PASSWORD.setAttribute('type', 'text');
