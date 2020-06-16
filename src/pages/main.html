@@ -9,84 +9,58 @@
   <link rel="shortcut icon" href="../../favicon/favicon.ico" type="image/x-icon">
   <title>RS Lang</title>
 </head>
-<body>
-  <header class="header">
-    <div class="wrapper header__wrapper">
-      <nav class="header__navigation">
-        <ul class="navigation navigation_hidden">
-          <li class="navigation__link navigation__link_active">
-            <a href="./index.html">
-              <img src="../img/icons/home.svg" alt="home">
-              Главная
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/learning.svg" alt="learning">
-              Изучение
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/training.svg" alt="training">
-              Тренировка
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/games.svg" alt="games">
-              Мини-игры
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/dictionary.svg" alt="dictionary">
-              Словарь
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/statistics.svg" alt="statistics">
-              Статистика
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/settings.svg" alt="settings">
-              Настройки
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/promo.svg" alt="promo">
-              Промо
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/team.svg" alt="team">
-              О команде
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/logout.svg" alt="logout">
-              Выйти
-            </a>
-          </li>
-        </ul>
-        <div class="header__hamburger">
-          <div class="hamburger">
-            <span class="hamburger__line"></span>
+<body id="main-page">
+  <main calss="main">
+    <div class="wrapper main__wrapper">
+      <div class="language-stat stat">
+        <div class="language-stat_lang stat-container stat-container__lang">
+          <img src="../img/union-jack.jpg" alt="flag">
+          <p>Английский</p>
+        </div>
+        <div class="language-stat_bar progress progress__red">
+          <p>Изучено слов: <span id="learned-words">0</span> из <span id="all-words">0</span></p>
+          <progress id="language-stat_bar" value="0" max="0"></progress>
+        </div>
+      </div>
+      <div class="today-stat stat">
+        <div class="today-stat_primary-row">
+          <div class="today-stat_title">
+            <p>Сегодня</p>
           </div>
         </div>
-      </nav>
-      <div class="header__logo">
-        <h1 class="logo">RS LANG</h1>
+        <div class="today-stat_secondary-row">
+          <div class="today-stat_bar progress progress__green">
+            <p>Выполнение дневного плана: <span id="day-learned-words">0</span> из <span id="day-all-words">0</span></p>
+            <progress id="today-stat_plan-bar" value="0" max="0"></progress>
+          </div>
+          <div class="today-stat_bar progress progress__yellow">
+            <p>Слова на сегодня: <span id="day-learned-words">0</span> из <span id="max-all-words">0</span></p>
+            <progress id="today-stat_max-bar" value="0" max="0"></progress>
+          </div>
+        </div>
+        <div class="today-stat_secondary-row">
+          <div class="today-stat_practised stat-container">
+            <p>Пройдено карточек</p>
+            <p class="stat-value" id="words-practiced">0</p>
+          </div>
+          <div class="today-stat_correct stat-container">
+            <p>Правильные ответы</p>
+            <p class="stat-value"><span id="correct-repeats">0</span>%</p>
+          </div>
+          <div class="today-stat_new stat-container">
+            <p>Новые слова</p>
+            <p class="stat-value" id="new-words">0</p>
+          </div>
+          <div class="today-stat_streak stat-container">
+            <p>Лучшая серия</p>
+            <p class="stat-value" id="best-streak">0</p>
+          </div>
+        </div>
       </div>
-      <div class="header__aligner"></div>
+      <div class="main-page-contol">
+        <button class="main-page-contol_button" id="start-learning-btn">Приступить к изучению</button>
+      </div>
     </div>
-  </header>
-
+  </main>
 </body>
 </html>
