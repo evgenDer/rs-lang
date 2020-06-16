@@ -5,7 +5,6 @@ import { isNewUser } from './utils/checks';
 
 window.onload = () => {
   addHeaderToPage();
-
   const activePage = defineActivePage();
   switch (activePage) {
     case 0:
@@ -39,7 +38,10 @@ window.onload = () => {
       // authorization-page
       window.stop();
       if (isNewUser()) {
+        document.body.classList.remove('hidden');
         addAuthorizationClickHandler();
+      } else {
+        window.location.replace('main.html');
       }
       break;
     default:
