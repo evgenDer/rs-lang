@@ -13,85 +13,7 @@
   <title>RS Lang - Personal Space</title>
 </head>
 
-<body>
-  <header class="header">
-    <div class="wrapper header__wrapper">
-      <nav class="header__navigation">
-        <ul class="navigation navigation_hidden">
-          <li class="navigation__link">
-            <a href="./main.html">
-              <img src="../img/icons/home.svg" alt="home">
-              Главная
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/learning.svg" alt="learning">
-              Изучение
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/training.svg" alt="training">
-              Тренировка
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/games.svg" alt="games">
-              Мини-игры
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/dictionary.svg" alt="dictionary">
-              Словарь
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/statistics.svg" alt="statistics">
-              Статистика
-            </a>
-          </li>
-          <li class="navigation__link navigation__link_active">
-            <a href="configuration.html">
-              <img src="../img/icons/settings.svg" alt="settings">
-              Настройки
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/promo.svg" alt="promo">
-              Промо
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/team.svg" alt="team">
-              О команде
-            </a>
-          </li>
-          <li class="navigation__link">
-            <a href="#">
-              <img src="../img/icons/logout.svg" alt="logout">
-              Выйти
-            </a>
-          </li>
-        </ul>
-        <div class="header__hamburger">
-          <div class="hamburger">
-            <span class="hamburger__line"></span>
-          </div>
-        </div>
-      </nav>
-      <div class="header__logo">
-        <h1 class="logo">RS LANG</h1>
-      </div>
-      <div class="header__aligner"></div>
-    </div>
-  </header>
-
+<body id="settings-page">
   <div class="configuration">
     <div class="wrapper">
       <div class="uk-flex uk-flex-center" uk-grid>
@@ -109,24 +31,24 @@
                   <div class="uk-margin">
                     <label class="uk-form-label" for="form-maxNewWordsPerDay">Новых слов на день</label>
                     <div class="uk-form-controls">
-                      <input class="uk-input" type="number" id="form-maxNewWordsPerDay" name="form-maxNewWordsPerDay" min="10"
-                        max="1000">
+                      <input class="uk-input" type="number" id="form-maxNewWordsPerDay" name="form-maxNewWordsPerDay"
+                        min="10" max="1000">
                     </div>
                   </div>
 
                   <div class="uk-margin">
                     <label class="uk-form-label" for="form-maxCardsWithWordsPerDay">Карточек со словами на день</label>
                     <div class="uk-form-controls">
-                      <input class="uk-input" type="number" id="form-maxCardsWithWordsPerDay" name="form-maxCardsWithWordsPerDay" min="10"
-                        max="10000">
+                      <input class="uk-input" type="number" id="form-maxCardsWithWordsPerDay"
+                        name="form-maxCardsWithWordsPerDay" min="10" max="10000">
                     </div>
                   </div>
 
                   <div class="uk-margin">
                     <label class="uk-form-label" for="form-difficultyLevel">Уровень Сложности</label>
                     <div class="uk-form-controls">
-                      <input class="uk-input" type="number" id="form-difficultyLevel" name="form-difficultyLevel" min="0"
-                        max="10" uk-tooltip="Определяет сложность изучаемых слов">
+                      <input class="uk-input" type="number" id="form-difficultyLevel" name="form-difficultyLevel"
+                        min="0" max="10" uk-tooltip="Определяет сложность изучаемых слов">
                     </div>
                   </div>
                 </form>
@@ -134,27 +56,32 @@
               <li>
                 <form class="uk-form-horizontal uk-margin-large">
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-showWordTranslation">Отображать перевод слова</label>
+                    <label class="checkbox-label uk-form-label" for="form-showWordTranslation">Отображать перевод
+                      слова</label>
                     <input class="uk-checkbox" id="form-showWordTranslation" type="checkbox">
                   </div>
 
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-showSentenceExplanation">Отображать предложение с объяснением</label>
+                    <label class="checkbox-label uk-form-label" for="form-showSentenceExplanation">Отображать
+                      предложение с объяснением</label>
                     <input class="uk-checkbox" id="form-showSentenceExplanation" type="checkbox">
                   </div>
 
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-showExplanationExample">Отображать пример с использованием</label>
+                    <label class="checkbox-label uk-form-label" for="form-showExplanationExample">Отображать пример с
+                      использованием</label>
                     <input class="uk-checkbox" id="form-showExplanationExample" type="checkbox">
                   </div>
 
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-showWordTranscription">Отображать транскрипцию слова</label>
+                    <label class="checkbox-label uk-form-label" for="form-showWordTranscription">Отображать транскрипцию
+                      слова</label>
                     <input class="uk-checkbox" id="form-showWordTranscription" type="checkbox">
                   </div>
 
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-showImageAssociation">Отображать картинку-ассоциацию</label>
+                    <label class="checkbox-label uk-form-label" for="form-showImageAssociation">Отображать
+                      картинку-ассоциацию</label>
                     <input class="uk-checkbox" id="form-showImageAssociation" type="checkbox">
                   </div>
                 </form>
@@ -162,22 +89,26 @@
               <li>
                 <form class="uk-form-horizontal uk-margin-large">
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-enableAutomaticAudio">Автоматическое воспроизведение звука </label>
+                    <label class="checkbox-label uk-form-label" for="form-enableAutomaticAudio">Автоматическое
+                      воспроизведение звука </label>
                     <input class="uk-checkbox" id="form-enableAutomaticAudio" type="checkbox">
                   </div>
 
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-showNewWordTranslation">Отображать перевод изучаемого слова</label>
+                    <label class="checkbox-label uk-form-label" for="form-showNewWordTranslation">Отображать перевод
+                      изучаемого слова</label>
                     <input class="uk-checkbox" id="form-showNewWordTranslation" type="checkbox">
                   </div>
 
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-showSentenceTranslation">Отображать перевод предложений</label>
+                    <label class="checkbox-label uk-form-label" for="form-showSentenceTranslation">Отображать перевод
+                      предложений</label>
                     <input class="uk-checkbox" id="form-showSentenceTranslation" type="checkbox">
                   </div>
 
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-showAnswer">Возможность посмотреть ответ</label>
+                    <label class="checkbox-label uk-form-label" for="form-showAnswer">Возможность посмотреть
+                      ответ</label>
                     <input class="uk-checkbox" id="form-showAnswer" type="checkbox">
                   </div>
 
@@ -187,7 +118,8 @@
                   </div>
 
                   <div class="uk-margin">
-                    <label class="checkbox-label uk-form-label" for="form-markAsDifficultWord">Возможность добавлять в словарь</label>
+                    <label class="checkbox-label uk-form-label" for="form-markAsDifficultWord">Возможность добавлять в
+                      словарь</label>
                     <input class="uk-checkbox" id="form-markAsDifficultWord" type="checkbox">
                   </div>
                 </form>
