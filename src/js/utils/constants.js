@@ -1,4 +1,5 @@
 const APP_NAME = 'RS LANG';
+const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
 
 const PAGES = [
   {
@@ -64,4 +65,4 @@ const PAGES = [
 ];
 
 
-export { PAGES, APP_NAME };
+export { PAGES, APP_NAME, BACKEND_URL };
