@@ -74,6 +74,12 @@ module.exports = (env, options) => {
       }),
       new HtmlWebpackPlugin({
         hash: true,
+        template: './src/pages/learningWords.html',
+        inject: 'body',
+        filename: 'learningWords.html',
+      }),
+      new HtmlWebpackPlugin({
+        hash: true,
         template: './src/pages/games.html',
         inject: 'body',
         filename: 'games.html',

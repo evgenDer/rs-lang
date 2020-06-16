@@ -2,6 +2,8 @@ import { addHeaderToPage, defineActivePage } from './navigation/index';
 import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 
+//импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
+import './learningWords/learningWordsPage.js';
 
 window.onload = () => {
   addHeaderToPage();

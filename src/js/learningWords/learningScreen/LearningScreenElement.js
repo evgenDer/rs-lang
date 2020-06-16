@@ -2,12 +2,15 @@ import learningScreenShadowTreeHTML from './shadowTree/shadowTree.js';
 
 import createCard from './lightTree/createCard.js';
 import createStatusBar from './lightTree/createStatusBar.js';
+import createArrow from './lightTree/createArrow.js';
+import createEvents from './createEvents.js';
 
 import getNewWords from './functions/getWords.js';
 import getLearnedWords from './functions/getWords.js';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
+    super();
     this.state = {
       currentCardIndex: 0,
     };
@@ -18,7 +21,7 @@ export default class LearningScreenElement extends HTMLElement {
     }
 
     this.wordArrs = {
-      newWords: [],
+      newWords: [{ word: `one`, translation: 'один' }, { word: `two`, translation: 'два' }, { word: `three`, translation: 'три' }],
       learnedWords: [],
     }
 
@@ -28,11 +31,13 @@ export default class LearningScreenElement extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = learningScreenShadowTreeHTML;
 
-    getNewWords();
-    getLearnedWords();
+    //getNewWords();
+    //getLearnedWords();
 
     createStatusBar(this);
+    createArrow(this);
     createCard(this);
+    createEvents(this);
   }
 
 

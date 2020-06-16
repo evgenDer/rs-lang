@@ -9,7 +9,7 @@ const PAGES = [
   },
   {
     id: 'learning-page',
-    href: '#',
+    href: 'learningWords.html',
     img: './assets/img/icons/learning.svg',
     text: 'Изучение',
   },

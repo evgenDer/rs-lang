@@ -1,6 +1,4 @@
 export default function initLearningMode(cardElement) {
-  cardElement.insertAdjacentHTML('beforeend',
-    `<span slot='ENBlock'>${cardElement.state.word}</span>
-  <span slot='RUBlock'>${cardElement.state.translation}</span>
-  `);
+  cardElement.innerHTML = `<span slot='ENitem'>${cardElement.state.word}</span>
+  <span slot='RUitem'>${cardElement.state.translation}</span>`;
 }
