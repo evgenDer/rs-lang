@@ -6,31 +6,34 @@ import {
 import * as localStorage from '../data-access/local-storage';
 import * as htmlHelper from '../helpers/html-helper';
 
-const getUserConfiguration = () => {
-  const userConfiguration = localStorage.getUserConfiguration();
+export const getUserConfiguration = () => {
+  let userConfiguration = localStorage.getUserConfiguration();
 
   if (!userConfiguration) {
-    localStorage.setUserConfiguration(DEFAULT_USER_CONFIGURATION);
+    userConfiguration = DEFAULT_USER_CONFIGURATION;
+    localStorage.setUserConfiguration(userConfiguration);
   }
 
   return userConfiguration;
 };
 
-const getCardsConfiguration = () => {
-  const cardsConfiguration = localStorage.getCardsViewConfiguration();
+export const getCardsConfiguration = () => {
+  let cardsConfiguration = localStorage.getCardsViewConfiguration();
 
   if (!cardsConfiguration) {
-    localStorage.setCardsViewConfiguration(DEFAULT_CARDS_VIEW);
+    cardsConfiguration = DEFAULT_CARDS_VIEW;
+    localStorage.setCardsViewConfiguration(cardsConfiguration);
   }
 
   return cardsConfiguration;
 };
 
-const getAppConfiguration = () => {
-  const appConfiguration = localStorage.getAppConfiguration();
+export const getAppConfiguration = () => {
+  let appConfiguration = localStorage.getAppConfiguration();
 
   if (!appConfiguration) {
-    localStorage.setAppConfiguration(DEFAULT_APP_CONFIGURATION);
+    appConfiguration = DEFAULT_APP_CONFIGURATION;
+    localStorage.setAppConfiguration(appConfiguration);
   }
 
   return appConfiguration;
@@ -65,9 +68,58 @@ const updateAppConfigurationPageElement = () => {
   htmlHelper.updateCheckboxValue(appConfiguration.markAsDifficultWord, '#form-markAsDifficultWord');
 };
 
-
-export const updateConfigurationValues = () => {
+const updateConfigurationValues = () => {
   updateUserConfigurationPageElement();
   updateCardsConfigurationPageElement();
   updateAppConfigurationPageElement();
+};
+
+const saveUserConfiguration = () => {
+  const userConfiguration = getUserConfiguration();
+
+  userConfiguration.maxNewWordsPerDay = htmlHelper.getInputValue('#form-maxNewWordsPerDay');
+  userConfiguration.maxCardsWithWordsPerDay = htmlHelper.getInputValue('#form-maxCardsWithWordsPerDay');
+  userConfiguration.difficultyLevel = htmlHelper.getInputValue('#form-difficultyLevel');
+
+  localStorage.setUserConfiguration(userConfiguration);
+};
+
+const saveCardsConfiguration = () => {
+  const cardsConfiguration = getCardsConfiguration();
+
+  cardsConfiguration.showWordTranslation = htmlHelper.getCheckboxValue('#form-showWordTranslation');
+  cardsConfiguration.showSentenceExplanation = htmlHelper.getCheckboxValue('#form-showSentenceExplanation');
+  cardsConfiguration.showExplanationExample = htmlHelper.getCheckboxValue('#form-showExplanationExample');
+  cardsConfiguration.showWordTranscription = htmlHelper.getCheckboxValue('#form-showWordTranscription');
+  cardsConfiguration.showImageAssociation = htmlHelper.getCheckboxValue('#form-showImageAssociation');
+
+  localStorage.setCardsViewConfiguration(cardsConfiguration);
+};
+
+const saveAppConfiguration = () => {
+  const appConfiguration = getAppConfiguration();
+
+  appConfiguration.enableAutomaticAudio = htmlHelper.getCheckboxValue('#form-enableAutomaticAudio');
+  appConfiguration.showNewWordTranslation = htmlHelper.getCheckboxValue('#form-showNewWordTranslation');
+  appConfiguration.showSentenceTranslation = htmlHelper.getCheckboxValue('#form-showSentenceTranslation');
+  appConfiguration.showAnswer = htmlHelper.getCheckboxValue('#form-showAnswer');
+  appConfiguration.deleteWords = htmlHelper.getCheckboxValue('#form-deleteWords');
+  appConfiguration.markAsDifficultWord = htmlHelper.getCheckboxValue('#form-markAsDifficultWord');
+
+  localStorage.setAppConfiguration(appConfiguration);
+};
+
+const addSaveButtonClickHandler = () => {
+  document.querySelector('.configuration__save-button').addEventListener('click', () => {
+    saveUserConfiguration();
+    saveCardsConfiguration();
+    saveAppConfiguration();
+
+    UIkit.notification({ message: "<span uk-icon='icon: check'></span> Сохранено", status: 'success', pos: 'top-right' });
+  });
+};
+
+export const initConfigurationPage = () => {
+  updateConfigurationValues();
+  addSaveButtonClickHandler();
 };

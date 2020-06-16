@@ -20,7 +20,7 @@ export const setCardsViewConfiguration = (cardsConfiguration) => {
 export const getCardsViewConfiguration = () => {
   const json = window.localStorage.getItem(CARDS_CONFIGURATION_NAME);
   return JSON.parse(json);
-}
+};
 
 export const setAppConfiguration = (appConfiguration) => {
   const json = JSON.stringify(appConfiguration);
