@@ -1,13 +1,9 @@
+import sendRequest from './requests';
+
 async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, wordsPerPage = 20) {
   try {
-    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/words/count?group=${numberGroup}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    const content = await rawResponse.json();
+    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/words/count?group=${numberGroup}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`;
+    const content = await sendRequest('GET', urlRequest);
     return content.count;
   } catch (error) {
     return error;
@@ -17,14 +13,8 @@ async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, w
 // eslint-disable-next-line max-len
 async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 10, wordsPerPage = 10) {
   try {
-    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/words/?group=${numberGroup}&page=${numberPage}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    const result = await rawResponse.json();
+    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/words/?group=${numberGroup}&page=${numberPage}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`;
+    const result = await sendRequest('GET', urlRequest);
     return result;
   } catch (error) {
     return error;
@@ -33,14 +23,8 @@ async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 1
 
 async function getWordById(idWord) {
   try {
-    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/words/${idWord}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    const result = await rawResponse.json();
+    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/words/${idWord}`;
+    const result = await sendRequest('GET', urlRequest);
     return result;
   } catch (error) {
     return error;

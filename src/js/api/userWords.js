@@ -1,41 +1,22 @@
-import { getTokenForRequest } from './authorization';
 import { getUserId } from '../utils/storage';
+import sendRequest from './requests';
 
 async function createUserWord(wordId, word) {
   try {
     const userId = getUserId();
-    const token = await getTokenForRequest();
-    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
-      method: 'POST',
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(word),
-    });
-    const content = await rawResponse.json();
+    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`;
+    const content = await sendRequest('POST', urlRequest, true, word);
     return content;
   } catch (error) {
     return error;
   }
 }
 
-async function getRequestByWordIdWithSuchMethod(methodRequest, wordId) {
+async function makeRequestByWordId(methodRequest, wordId) {
   try {
     const userId = getUserId();
-    const token = await getTokenForRequest();
-    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`, {
-      method: methodRequest,
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    const content = await rawResponse.json();
+    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`;
+    const content = await sendRequest(methodRequest, urlRequest, true);
     return content;
   } catch (error) {
     return error;
@@ -45,17 +26,8 @@ async function getRequestByWordIdWithSuchMethod(methodRequest, wordId) {
 async function getAllUserWords() {
   try {
     const userId = getUserId();
-    const token = await getTokenForRequest();
-    const rawResponse = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/words`, {
-      method: 'POST',
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    const content = await rawResponse.json();
+    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/words`;
+    const content = await sendRequest('POST', urlRequest, true);
     return content;
   } catch (error) {
     return error;
@@ -63,17 +35,17 @@ async function getAllUserWords() {
 }
 
 async function getUserWordById(wordId) {
-  const result = await getRequestByWordIdWithSuchMethod('GET', wordId);
+  const result = await makeRequestByWordId('GET', wordId);
   return result;
 }
 
 async function updateUserWord(wordId) {
-  const result = await getRequestByWordIdWithSuchMethod('PUT', wordId);
+  const result = await makeRequestByWordId('PUT', wordId);
   return result;
 }
 
 async function deleteUserWord(wordId) {
-  const result = await getRequestByWordIdWithSuchMethod('DELETE', wordId);
+  const result = await makeRequestByWordId('DELETE', wordId);
   return result;
 }
 
