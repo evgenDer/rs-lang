@@ -14,7 +14,7 @@ export const DEFAULT_CARDS_VIEW = {
 
 export const DEFAULT_APP_CONFIGURATION = {
   enableAutomaticAudio: true,
-  showWordTranslation: true,
+  showNewWordTranslation: true,
   showSentenceTranslation: true,
   showAnswer: true,
   deleteWords: true,
