@@ -1,10 +1,11 @@
 import { getUserId } from '../utils/storage';
 import sendRequest from './requests';
+import { BACKEND_URL } from '../utils/constants';
 
 async function createUserWord(wordId, word) {
   try {
     const userId = getUserId();
-    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`;
+    const urlRequest = `${BACKEND_URL}/users/${userId}/words/${wordId}`;
     const content = await sendRequest('POST', urlRequest, true, word);
     return content;
   } catch (error) {
@@ -15,7 +16,7 @@ async function createUserWord(wordId, word) {
 async function makeRequestByWordId(methodRequest, wordId) {
   try {
     const userId = getUserId();
-    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/words/${wordId}`;
+    const urlRequest = `${BACKEND_URL}/users/${userId}/words/${wordId}`;
     const content = await sendRequest(methodRequest, urlRequest, true);
     return content;
   } catch (error) {
@@ -26,7 +27,7 @@ async function makeRequestByWordId(methodRequest, wordId) {
 async function getAllUserWords() {
   try {
     const userId = getUserId();
-    const urlRequest = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/words`;
+    const urlRequest = `${BACKEND_URL}/users/${userId}/words`;
     const content = await sendRequest('POST', urlRequest, true);
     return content;
   } catch (error) {

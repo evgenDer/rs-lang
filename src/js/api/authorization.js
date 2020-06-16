@@ -4,6 +4,7 @@ import {
   setUserPassword, setUserEmail, setToken, getToken,
 } from '../utils/storage';
 import { isValidToken } from '../utils/checks';
+import { BACKEND_URL } from '../utils/constants';
 
 
 async function createUser(event) {
@@ -11,7 +12,7 @@ async function createUser(event) {
   const user = getUser();
   setUserPassword(user);
   setUserEmail(user);
-  const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/users', {
+  const rawResponse = await fetch(`${BACKEND_URL}/users`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -27,7 +28,7 @@ async function createUser(event) {
 
 async function loginUser() {
   const user = getUser();
-  const rawResponse = await fetch('https://afternoon-falls-25894.herokuapp.com/signin', {
+  const rawResponse = await fetch(`${BACKEND_URL}/signin`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
