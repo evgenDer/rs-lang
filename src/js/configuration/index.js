@@ -82,6 +82,14 @@ const saveUserConfiguration = () => {
   userConfiguration.difficultyLevel = htmlHelper.getInputValue('#form-difficultyLevel');
 
   localStorage.setUserConfiguration(userConfiguration);
+  return true;
+};
+
+
+const showValidationErrorMessage = () => {
+  htmlHelper.setClassesToElement('#form-showWordTranslation', 'validation_failed');
+  htmlHelper.setClassesToElement('#form-showSentenceExplanation', 'validation_failed');
+  htmlHelper.setClassesToElement('#form-showExplanationExample', 'validation_failed');
 };
 
 const saveCardsConfiguration = () => {
@@ -93,7 +101,15 @@ const saveCardsConfiguration = () => {
   cardsConfiguration.showWordTranscription = htmlHelper.getCheckboxValue('#form-showWordTranscription');
   cardsConfiguration.showImageAssociation = htmlHelper.getCheckboxValue('#form-showImageAssociation');
 
+  if (cardsConfiguration.showWordTranslation === false &&
+    cardsConfiguration.showSentenceExplanation === false &&
+    cardsConfiguration.showExplanationExample === false) {
+    showValidationErrorMessage();
+    return false;
+  }
+
   localStorage.setCardsViewConfiguration(cardsConfiguration);
+  return true;
 };
 
 const saveAppConfiguration = () => {
@@ -107,19 +123,32 @@ const saveAppConfiguration = () => {
   appConfiguration.markAsDifficultWord = htmlHelper.getCheckboxValue('#form-markAsDifficultWord');
 
   localStorage.setAppConfiguration(appConfiguration);
+  return true;
 };
 
 const addSaveButtonClickHandler = () => {
   document.querySelector('.configuration__save-button').addEventListener('click', () => {
-    saveUserConfiguration();
-    saveCardsConfiguration();
-    saveAppConfiguration();
-
-    UIkit.notification({ message: "<span uk-icon='icon: check'></span> Сохранено", status: 'success', pos: 'top-right' });
+    if (saveUserConfiguration() && saveCardsConfiguration() && saveAppConfiguration()) {
+      UIkit.notification({
+        message: "<span uk-icon='icon: check'></span> Сохранено",
+        status: 'success',
+        pos: 'top-right',
+      });
+    }
   });
+};
+
+const addCheckboxClickHandler = () => {
+  const checkboxes = document.querySelectorAll('.configuration__card .uk-checkbox');
+  checkboxes.forEach((element) => element.addEventListener('click', () => {
+    checkboxes.forEach((checboxEl) => {
+      checboxEl.classList.remove('validation_failed');
+    });
+  }));
 };
 
 export const initConfigurationPage = () => {
   updateConfigurationValues();
   addSaveButtonClickHandler();
+  addCheckboxClickHandler();
 };
