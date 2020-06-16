@@ -8,6 +8,7 @@
 
 // base
 @import "./base/base";
+@import "./base/buttons";
 
 // components
 @import "./components/navigation";
@@ -15,3 +16,4 @@
 // layouts
 @import "./layouts/wrapper";
 @import "./layouts/main-page";
+@import "./layouts/authorization";
