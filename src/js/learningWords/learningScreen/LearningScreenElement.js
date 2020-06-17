@@ -1,9 +1,9 @@
-import learningScreenShadowTreeHTML from './shadowTree/shadowTree.js';
+import learningScreenShadowTreeHTML from './domBuilder/shadowTree/shadowTree.js';
 
-import createCard from './lightTree/createCard.js';
-import createStatusBar from './lightTree/createStatusBar.js';
-import createArrow from './lightTree/createArrow.js';
-import createEvents from './createEvents.js';
+import createCard from './domBuilder/lightTree/createCard.js';
+import createStatusBar from './domBuilder/lightTree/createStatusBar.js';
+import createArrow from './domBuilder/lightTree/createArrow.js';
+import createEvents from './events/createEvents.js';
 
 import getNewWords from './functions/getWords.js';
 import getLearnedWords from './functions/getWords.js';
@@ -15,6 +15,10 @@ export default class LearningScreenElement extends HTMLElement {
       currentCardIndex: 0,
     };
 
+    this.localState = {
+      progressArr: [false, false, false, false, false, false, false, false, false, false],
+    }
+
     this.settings = {
       newWordCount: 3,
       wordCount: 6,
@@ -22,7 +26,7 @@ export default class LearningScreenElement extends HTMLElement {
 
     this.wordArrs = {
       newWords: [{ word: `one`, translation: 'один' }, { word: `two`, translation: 'два' }, { word: `three`, translation: 'три' }],
-      learnedWords: [],
+      learnedWords: [{ word: `one`, translation: 'один' }, { word: `two`, translation: 'два' }, { word: `three`, translation: 'три' }],
     }
 
   }
@@ -36,7 +40,7 @@ export default class LearningScreenElement extends HTMLElement {
 
     createStatusBar(this);
     createArrow(this);
-    createCard(this);
+    createCard(this, 'newWord');
     createEvents(this);
   }
 

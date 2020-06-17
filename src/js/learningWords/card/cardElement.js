@@ -1,5 +1,9 @@
-import cardShadowTreeHTML from './shadowTree/shadowTree.js';
-import initLearningMode from './lightTree/initLearningMode.js'
+import cardShadowTreeHTML from './domBuilder/shadowTree/shadowTree.js';
+import initNewWord from './domBuilder/lightTree/initNewWord.js';
+import initLearning from './domBuilder/lightTree/initLearningMode.js';
+import initCardOptions from './domBuilder/lightTree/initOptions.js';
+import createEventListener from './events/createEventListener.js';
+
 
 export default class WordCardElement extends HTMLElement {
   constructor() {
@@ -7,7 +11,10 @@ export default class WordCardElement extends HTMLElement {
     this.state = {
       word: null,
       translation: null,
-      mode: 'newWord',
+      sentence: null,
+      sentenceTranslation: null,
+      mode: null,
+      isDone: false,
     }
 
     this.settings = {
@@ -23,17 +30,21 @@ export default class WordCardElement extends HTMLElement {
   connectedCallback() {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = cardShadowTreeHTML;
-    this.switchMode();
-
+    createEventListener(this);
   }
 
   switchMode() {
     this.innerHTML = ``;
     switch (this.state.mode) {
       case 'learning':
-        initLearningMode(this);
+        initLearning(this);
+        break;
+
+      case 'newWord':
+        initNewWord(this);
         break;
     }
+    initCardOptions(this);
   }
 
   setState(propName, newPropState) {
@@ -64,7 +75,7 @@ export default class WordCardElement extends HTMLElement {
       }
       if (isReadyToRender) {
         this.localState.isReadyToRenderArr = [];
-        initLearningMode(this);
+        this.switchMode();
       }
     }, 16)
   }
