@@ -119,6 +119,7 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
+  watch: isDev,
   entry: {
     main: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
   },
