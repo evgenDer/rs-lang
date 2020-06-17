@@ -79,7 +79,8 @@ const jsLoaders = () => {
   return loaders;
 };
 
-const htmlWebpackPluginCreator = (template) => new HtmlWebpackPlugin({
+const htmlWebpackPluginCreator = (template, ...args) => new HtmlWebpackPlugin({
+  chunks: [...args],
   template: `./pages/${template}`,
   minify: {
     collapseWhitespace: isProd,
@@ -90,11 +91,11 @@ const htmlWebpackPluginCreator = (template) => new HtmlWebpackPlugin({
 
 const plugins = () => {
   const base = [
-    htmlWebpackPluginCreator('authorization.html'),
-    htmlWebpackPluginCreator('main.html'),
-    htmlWebpackPluginCreator('games.html'),
-    htmlWebpackPluginCreator('dictionary.html'),
-    htmlWebpackPluginCreator('game_savannah.html'),
+    htmlWebpackPluginCreator('authorization.html', 'index'),
+    htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
+    htmlWebpackPluginCreator('games.html', 'index'),
+    htmlWebpackPluginCreator('dictionary.html', 'index'),
+    htmlWebpackPluginCreator('game_savannah.html', 'index'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -104,6 +105,10 @@ const plugins = () => {
         {
           from: './img',
           to: 'assets/img',
+        },
+        {
+          from: '../favicon',
+          to: 'favicon',
         },
       ],
     }),
@@ -115,8 +120,14 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
+  watch: isDev,
+  watchOptions: {
+    poll: true,
+    ignored: /node_modules/,
+  },
   entry: {
-    main: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
+    index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
+    main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
   },
   output: {
     filename: filename('js'),

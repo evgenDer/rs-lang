@@ -1,0 +1,36 @@
+.body {
+    height: 100vh;
+    overflow: hidden;
+}
+.game-container {
+    height: 100%;
+    background-image: url(../img/savannah-bg.svg);
+    background-position: bottom;
+    text-align: center;
+    &__start {
+        width: 400px;
+        margin: auto;
+        position: absolute;
+        left: calc(50% - 200px);
+        top: 40%;
+        color: $color-light-green;
+    }
+    &__text {
+        color: $color-darken;
+    }
+    &__btn {
+        width: 200px;
+        height: 70px;
+        color: $color-darken;
+        background-color: $color-light-green;
+        border: none;
+        border-radius: 5px;
+        animation: ani9 0.4s ease-in-out infinite alternate;
+
+        cursor: pointer;
+        &:focus {
+            outline: none;
+        }
+
+    }
+}
