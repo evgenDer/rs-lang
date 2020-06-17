@@ -21,6 +21,7 @@ export const updateAppConfigurationPageElement = (appConfiguration) => {
   htmlHelper.updateCheckboxValue(appConfiguration.showAnswer, '#form-showAnswer');
   htmlHelper.updateCheckboxValue(appConfiguration.deleteWords, '#form-deleteWords');
   htmlHelper.updateCheckboxValue(appConfiguration.markAsDifficultWord, '#form-markAsDifficultWord');
+  htmlHelper.updateCheckboxValue(appConfiguration.possibilityToMarkWord, '#form-possibilityToMarkWord');
 };
 
 export const getUserConfiguration = () => {
@@ -54,6 +55,7 @@ export const getAppConfiguration = () => {
   appConfiguration.showAnswer = htmlHelper.getCheckboxValue('#form-showAnswer');
   appConfiguration.deleteWords = htmlHelper.getCheckboxValue('#form-deleteWords');
   appConfiguration.markAsDifficultWord = htmlHelper.getCheckboxValue('#form-markAsDifficultWord');
+  appConfiguration.possibilityToMarkWord = htmlHelper.getCheckboxValue('#form-possibilityToMarkWord');
 
   return appConfiguration;
 };

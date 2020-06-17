@@ -4,7 +4,6 @@ import {
   DEFAULT_APP_CONFIGURATION,
 } from '../constants/defaul-settings';
 import * as localStorage from '../data-access/local-storage';
-import * as htmlHelper from '../helpers/html-helper';
 import * as page from './page';
 
 export const getUserConfiguration = () => {
