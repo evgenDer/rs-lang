@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="shortcut icon" href="../../favicon/favicon.ico" type="image/x-icon">
+  <title>RS Lang - Personal Space</title>
+</head>
+
+<body id="settings-page">
+  <div class="configuration">
+    <div class="wrapper">
+      <div class="uk-flex uk-flex-center" uk-grid>
+        <div class="uk-width-2-3@m">
+          <div class="configuration__card uk-card uk-card-default uk-card-body">
+            <h3 class="configuration__header">Настройки</h3>
+            <ul uk-tab uk-switcher="animation: uk-animation-fade" class="configuration__switcher">
+              <li class="configuration__tab-link uk-active"><a href="#">Профиль</a></li>
+              <li class="configuration__tab-link"><a href="#">Карточки</a></li>
+              <li class="configuration__tab-link"><a href="#">Приложение</a></li>
+            </ul>
+            <ul class="uk-switcher uk-margin-medium">
+              <li>
+                <form class="uk-form-horizontal uk-margin-large">
+                  <div class="uk-margin">
+                    <label class="uk-form-label" for="form-maxNewWordsPerDay">Новых слов на день</label>
+                    <div class="uk-form-controls">
+                      <input class="uk-input" type="number" id="form-maxNewWordsPerDay" name="form-maxNewWordsPerDay"
+                        min="10" max="1000">
+                    </div>
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="uk-form-label" for="form-maxCardsWithWordsPerDay">Карточек со словами на день</label>
+                    <div class="uk-form-controls">
+                      <input class="uk-input" type="number" id="form-maxCardsWithWordsPerDay"
+                        name="form-maxCardsWithWordsPerDay" min="10" max="10000">
+                    </div>
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="uk-form-label" for="form-difficultyLevel">Уровень Сложности</label>
+                    <div class="uk-form-controls">
+                      <input class="uk-input" type="number" id="form-difficultyLevel" name="form-difficultyLevel"
+                        min="0" max="10" uk-tooltip="Определяет сложность изучаемых слов">
+                    </div>
+                  </div>
+                </form>
+              </li>
+              <li>
+                <form class="uk-form-horizontal uk-margin-large">
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-showWordTranslation">Отображать перевод
+                      слова</label>
+                    <input class="uk-checkbox" id="form-showWordTranslation" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-showSentenceExplanation">Отображать
+                      предложение с объяснением</label>
+                    <input class="uk-checkbox" id="form-showSentenceExplanation" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-showExplanationExample">Отображать пример с
+                      использованием</label>
+                    <input class="uk-checkbox" id="form-showExplanationExample" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-showWordTranscription">Отображать транскрипцию
+                      слова</label>
+                    <input class="uk-checkbox" id="form-showWordTranscription" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-showImageAssociation">Отображать
+                      картинку-ассоциацию</label>
+                    <input class="uk-checkbox" id="form-showImageAssociation" type="checkbox">
+                  </div>
+                </form>
+              </li>
+              <li>
+                <form class="uk-form-horizontal uk-margin-large">
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-enableAutomaticAudio">Автоматическое
+                      воспроизведение звука </label>
+                    <input class="uk-checkbox" id="form-enableAutomaticAudio" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-showNewWordTranslation">Отображать перевод
+                      изучаемого слова</label>
+                    <input class="uk-checkbox" id="form-showNewWordTranslation" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-showSentenceTranslation">Отображать перевод
+                      предложений</label>
+                    <input class="uk-checkbox" id="form-showSentenceTranslation" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-showAnswer">Возможность посмотреть
+                      ответ</label>
+                    <input class="uk-checkbox" id="form-showAnswer" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-deleteWords">Возможность удалять</label>
+                    <input class="uk-checkbox" id="form-deleteWords" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-markAsDifficultWord">Возможность добавлять в
+                      словарь</label>
+                    <input class="uk-checkbox" id="form-markAsDifficultWord" type="checkbox">
+                  </div>
+
+                  <div class="uk-margin">
+                    <label class="checkbox-label uk-form-label" for="form-possibilityToMarkWord">Возможность оценивать слова</label>
+                    <input class="uk-checkbox" id="form-possibilityToMarkWord" type="checkbox">
+                  </div>
+                </form>
+              </li>
+            </ul>
+            <div class="uk-align-right">
+              <button class="configuration__save-button uk-button uk-button-default main-page-contol_button">Сохранить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UIkit JS -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+</body>
+
+</html>

@@ -40,7 +40,7 @@ const PAGES = [
   },
   {
     id: 'settings-page',
-    href: '#',
+    href: 'configuration.html',
     img: './assets/img/icons/settings.svg',
     text: 'Настройки',
   },
