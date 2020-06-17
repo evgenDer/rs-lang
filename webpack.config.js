@@ -105,6 +105,10 @@ const plugins = () => {
           from: './img',
           to: 'assets/img',
         },
+        {
+          from: '../favicon',
+          to: 'favicon',
+        },
       ],
     }),
   ];
