@@ -16,7 +16,7 @@ function setUserPassword(user) {
 }
 
 function setUserEmail(user) {
-  localStorage.setItem('password', user.email);
+  localStorage.setItem('password', user.password);
 }
 
 function getToken() {
