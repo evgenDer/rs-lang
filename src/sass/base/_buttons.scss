@@ -1,4 +1,4 @@
-.authentication-page button {
+.authentication-page, .game-puzzle button {
   height: 50px;
   padding: 0 20px;
   border-radius: 5px;
@@ -15,7 +15,7 @@
 .sign-up {
   background-color: $color-additional;
   margin-left: 20px;
-  background: $color-violet;
+  background: $color-secondary;
 }
 
 .log-in{
@@ -36,5 +36,97 @@ button:hover {
   }
   100% {
       transform: translateY(5px);
+  }
+}
+
+
+.btn_autopronoucing::before{
+  content: "\f028";
+}
+.btn_translation::before{
+  content: "\f1ab";
+}
+.btn_pronoucing::before{
+  content: "\f001";
+}
+.btn_background::before{
+  content: "\f03e";
+}
+
+.btn_exit::before{
+  content: "\f015";
+}
+
+.block-hints button{
+    background-color: transparent;
+}
+
+
+.btn_exit, .btn_autopronoucing{
+  font-family: FontAwesome;
+}
+
+.btn_close{
+  background: transparent!important;
+  position: absolute;
+  top: -50px!important;
+  margin: 0px 0px 0px 450px!important;
+  padding: 0px!important;
+  @include media-laptop{
+    margin: 0px 0px 0px 350px!important;
+  }
+  @include media-tablet{
+    margin: 0px 0px 0px 190px!important;
+  }
+  @include media-mobile{
+    margin: 0px 0px 0px 100px!important;
+  }
+}
+
+.btn_close::before{
+  font-family: FontAwesome;
+  content: "\f00d";
+}
+
+.disable{
+  background-color: $button-disable !important;
+}
+
+.btns button{
+  width: 50px;
+  margin-right: 10px;
+  background-color: $color-additional;
+  font-size: 2rem;
+  font-family: FontAwesome;
+  color: white;
+  text-align: center;
+  padding: 0px;
+  @media (max-width: $tablet-width){
+      margin: 20px 6px 0 6px;
+  }
+}
+
+.block-btns{
+  justify-content: center;
+  display: flex;
+  margin: 50px;
+  @media (max-width: $tablet-width){
+      margin: 25px 5px 0 5px;
+  }
+  @media (max-width: 480px){
+      display: block;
+      text-align: center;
+  }
+}
+
+.block-btns button{
+  color: white;
+  width: 300px;
+  height: 60px;
+  margin: 30px;
+  background-color: $color-additional;
+  font-size: 2rem;
+  @media (max-width: $tablet-width){
+      margin: 10px;
   }
 }
