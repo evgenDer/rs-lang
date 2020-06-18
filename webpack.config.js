@@ -127,7 +127,6 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
-  watch: isDev,
   watchOptions: {
     poll: true,
     ignored: /node_modules/,
