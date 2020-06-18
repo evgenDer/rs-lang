@@ -1,3 +1,3 @@
-import hangEventOnWindow from './pagesetter';
+import hangEventOnWindow from './mainpage';
 
 hangEventOnWindow();

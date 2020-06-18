@@ -51,6 +51,30 @@
     }
 }
 
+.process {
+    transform: scale3d(0,0, 1);
+    transition: 1s;
+    &__header {
+        padding: 30px 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__hearts {
+        display: flex;
+    }
+    &__heart {
+        width: 40px;
+        padding: 0 5px;
+    }
+}
+
+
+
+
+
+
+
+// <------- abstract -------->
 .animated-hide {
     transform: rotateZ(720deg) scale3d(0, 0, 1);
 }
@@ -72,4 +96,10 @@
 }
 .show-after-click {
     transform: scale3d(1, 1, 1);
+}
+.hide {
+    transform: scale3d(0, 0, 1);
+}
+.shake {
+    animation: ani9 0.4s ease-in-out infinite alternate;
 }

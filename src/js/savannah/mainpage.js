@@ -1,7 +1,7 @@
 import { SAVANNAH_TEXT, SAVANNAH_TITLE, SAVANNAH_BUTTON } from '../utils/constants';
 import { createElement } from '../utils/create';
 import loader from '../../img/icons/savannah_loader.svg';
-
+import createHeader from './gamepage';
 
 const createGameTimer = () => {
   let time = 3;
@@ -24,9 +24,12 @@ const createGameTimer = () => {
 
     setTimeout(() => {
       clearInterval(timerId);
-      // timer.remove();
-      // image.remove();
-    }, 5000);
+      timer.classList.add('hide');
+      createHeader();
+      setTimeout(() => {
+        timer.remove();
+      }, 1000);
+    }, 4000);
   }, 1000);
 };
 
