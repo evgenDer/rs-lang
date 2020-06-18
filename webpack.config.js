@@ -15,19 +15,13 @@ const isProd = !isDev;
 const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
 
 const optimization = () => {
-  const config = {
-    splitChunks: {
-      chunks: 'all',
-    },
-  };
-
+  const config = {};
   if (isProd) {
     config.minimizer = [
       new OptimizeCssAssetWebpackPlugin(),
       new TerserWebpackPlugin(),
     ];
   }
-
   return config;
 };
 
