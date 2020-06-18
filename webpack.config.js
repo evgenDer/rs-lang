@@ -135,12 +135,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.json', '.png'],
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
-      '@sass': path.resolve(__dirname, 'src/sass'),
-      '@scripts': path.resolve(__dirname, 'src/js'),
-    },
   },
   optimization: optimization(),
   devServer: {
