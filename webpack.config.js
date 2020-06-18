@@ -91,11 +91,18 @@ const htmlWebpackPluginCreator = (template, ...args) => new HtmlWebpackPlugin({
 
 const plugins = () => {
   const base = [
-    htmlWebpackPluginCreator('authorization.html', 'index'),
+    new HtmlWebpackPlugin({
+      chunks: ['index'],
+      template: './index.html',
+      minify: {
+        collapseWhitespace: isProd,
+      },
+      inject: 'body',
+      filename: 'index.html',
+    }),
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
-    htmlWebpackPluginCreator('game_savannah.html', 'index'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
