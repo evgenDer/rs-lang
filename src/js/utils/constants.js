@@ -4,6 +4,7 @@ const SAVANNAH_TITLE = 'С А В А Н Н А';
 const SAVANNAH_TEXT = `Тренировка Саванна развивает
 словарный запас. Чем больше слов ты знаешь, тем больше очков
 опыта получишь.`;
+const SAVANNAH_BUTTON = 'Начать';
 
 const PAGES = [
   {
@@ -70,5 +71,5 @@ const PAGES = [
 
 
 export {
-  PAGES, APP_NAME, BACKEND_URL, SAVANNAH_TITLE, SAVANNAH_TEXT,
+  PAGES, APP_NAME, BACKEND_URL, SAVANNAH_TITLE, SAVANNAH_TEXT, SAVANNAH_BUTTON,
 };

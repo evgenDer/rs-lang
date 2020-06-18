@@ -1,4 +1,3 @@
-import { hangEventOnWindow, hangEventOnStartButton } from './pagesetter';
+import hangEventOnWindow from './pagesetter';
 
 hangEventOnWindow();
-hangEventOnStartButton();
