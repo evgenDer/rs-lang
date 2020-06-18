@@ -13,5 +13,16 @@ function getMistakeResponse(codeError) {
   return 'Такой пользователь уже существует';
 }
 
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+function removeChild(parentNode) {
+  while (parentNode.firstChild) {
+    parentNode.removeChild(parentNode.lastChild);
+  }
+}
 
-export { getUser, getMistakeResponse };
+
+export {
+  getUser, getMistakeResponse, shuffle, removeChild,
+};
