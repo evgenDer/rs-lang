@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+import { SAVANNAH_TEXT, SAVANNAH_TITLE } from 'Utils/constants';
 import { createElement } from '../utils/create';
 
 
@@ -29,9 +31,19 @@ const onStartButtonClick = () => {
   createGameTimer();
 };
 
-const hangEventOnStartButton = () => {
+export const hangEventOnStartButton = () => {
   const startButton = document.querySelector('.game-container__btn');
   startButton.addEventListener('click', onStartButtonClick);
 };
 
-export default hangEventOnStartButton;
+const createStartingPage = () => {
+  const gameContainer = document.querySelector('.game-container');
+  const gameText = createElement('p', 'game-container__text', '', '', SAVANNAH_TEXT);
+  const gameTitle = createElement('h1', 'game-container__title', '', '', SAVANNAH_TITLE);
+  const gameStartContainer = createElement('div', 'game-container__start', [gameText, gameTitle]);
+  gameContainer.append(gameStartContainer);
+};
+
+export const hangEventOnWindow = () => {
+  window.addEventListener('load', createStartingPage);
+};

@@ -1,5 +1,9 @@
 const APP_NAME = 'RS LANG';
 const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
+const SAVANNAH_TITLE = 'С А В А Н Н А';
+const SAVANNAH_TEXT = `Тренировка Саванна развивает
+словарный запас. Чем больше слов ты знаешь, тем больше очков
+опыта получишь.`;
 
 const PAGES = [
   {
@@ -65,4 +69,6 @@ const PAGES = [
 ];
 
 
-export { PAGES, APP_NAME, BACKEND_URL };
+export {
+  PAGES, APP_NAME, BACKEND_URL, SAVANNAH_TITLE, SAVANNAH_TEXT,
+};

@@ -1,3 +1,4 @@
-const { default: hangEventOnStartButton } = require('./pagesetter');
+import { hangEventOnWindow, hangEventOnStartButton } from './pagesetter';
 
+hangEventOnWindow();
 hangEventOnStartButton();

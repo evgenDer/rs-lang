@@ -85,13 +85,6 @@ const htmlWebpackPluginCreator = (template, ...args) => new HtmlWebpackPlugin({
 
 const plugins = () => {
   const base = [
-<<<<<<< HEAD
-    htmlWebpackPluginCreator('authorization.html', 'index'),
-    htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
-    htmlWebpackPluginCreator('games.html', 'index'),
-    htmlWebpackPluginCreator('dictionary.html', 'index'),
-    htmlWebpackPluginCreator('game_savannah.html', 'index', 'savannah'),
-=======
     new HtmlWebpackPlugin({
       chunks: ['index'],
       template: './index.html',
@@ -104,7 +97,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
->>>>>>> webpack-config
+    htmlWebpackPluginCreator('game_savannah.html', 'index', 'game_savannah'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -129,10 +122,6 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
-<<<<<<< HEAD
-  watch: isDev,
-=======
->>>>>>> webpack-config
   watchOptions: {
     poll: true,
     ignored: /node_modules/,
@@ -140,10 +129,7 @@ module.exports = {
   entry: {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
-<<<<<<< HEAD
-    savannah: ['@babel/polyfill', './js/savannah/index.js', './sass/style.scss'],
-=======
->>>>>>> webpack-config
+    game_savannah: ['@babel/polyfill', './js/savannah/index.js', './sass/style.scss'],
   },
   output: {
     filename: filename('js'),
@@ -151,12 +137,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.json', '.png'],
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
-      '@sass': path.resolve(__dirname, 'src/sass'),
-      '@scripts': path.resolve(__dirname, 'src/js'),
-    },
   },
   optimization: optimization(),
   devServer: {
