@@ -15,19 +15,13 @@ const isProd = !isDev;
 const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
 
 const optimization = () => {
-  const config = {
-    splitChunks: {
-      chunks: 'all',
-    },
-  };
-
+  const config = {};
   if (isProd) {
     config.minimizer = [
       new OptimizeCssAssetWebpackPlugin(),
       new TerserWebpackPlugin(),
     ];
   }
-
   return config;
 };
 
@@ -91,11 +85,26 @@ const htmlWebpackPluginCreator = (template, ...args) => new HtmlWebpackPlugin({
 
 const plugins = () => {
   const base = [
+<<<<<<< HEAD
     htmlWebpackPluginCreator('authorization.html', 'index'),
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('game_savannah.html', 'index', 'savannah'),
+=======
+    new HtmlWebpackPlugin({
+      chunks: ['index'],
+      template: './index.html',
+      minify: {
+        collapseWhitespace: isProd,
+      },
+      inject: 'body',
+      filename: 'index.html',
+    }),
+    htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
+    htmlWebpackPluginCreator('games.html', 'index'),
+    htmlWebpackPluginCreator('dictionary.html', 'index'),
+>>>>>>> webpack-config
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -120,7 +129,10 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
+<<<<<<< HEAD
   watch: isDev,
+=======
+>>>>>>> webpack-config
   watchOptions: {
     poll: true,
     ignored: /node_modules/,
@@ -128,7 +140,10 @@ module.exports = {
   entry: {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
+<<<<<<< HEAD
     savannah: ['@babel/polyfill', './js/savannah/index.js', './sass/style.scss'],
+=======
+>>>>>>> webpack-config
   },
   output: {
     filename: filename('js'),
