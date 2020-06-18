@@ -95,7 +95,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
-    htmlWebpackPluginCreator('game_savannah.html', 'index'),
+    htmlWebpackPluginCreator('game_savannah.html', 'index', 'savannah'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -128,6 +128,7 @@ module.exports = {
   entry: {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
+    savannah: ['@babel/polyfill', './js/savannah/index.js', './sass/style.scss'],
   },
   output: {
     filename: filename('js'),
