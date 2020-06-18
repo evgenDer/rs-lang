@@ -89,6 +89,9 @@ module.exports = (env, options) => {
         template: './src/pages/dictionary.html',
         inject: 'body',
         filename: 'dictionary.html',
+        template: './src/pages/configuration.html',
+        inject: 'body',
+        filename: 'configuration.html',
       }),
       new CopyPlugin({
         patterns: [

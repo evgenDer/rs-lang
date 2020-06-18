@@ -1,0 +1,50 @@
+.configuration__header {
+	font-size: 2rem;
+	font-weight: bold;
+	line-height: 2rem;
+	color: $color-secondary;
+}
+
+#settings-page {
+	height: 100vh;
+}
+
+.configuration__card {
+	margin-top: 40px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.configuration__tab-link a {
+	color: $color-secondary;
+	font-weight: 600;
+	font-size: 1rem;
+}
+
+.configuration__tab-link.uk-active a {
+	border-color: $color-active;
+	color: $color-active;
+}
+
+.configuration label {
+	color: $color-secondary;
+}
+
+.checkbox-label.uk-form-label {
+	margin-top: 0px;
+	width: 350px;
+	display: inline-block;
+
+	@include media-tablet {
+		max-width: 350px;
+		width: 200px;
+	}
+}
+
+.configuration .configuration__save-button {
+	width: inherit;
+	height: inherit;
+	margin: 0;
+	font-size: inherit;
+	line-height: 38px;
+}
