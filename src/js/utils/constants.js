@@ -1,5 +1,14 @@
 const APP_NAME = 'RS LANG';
 const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
+const MASTERPIECE_URL = 'https://raw.githubusercontent.com/evgenDer/rslang_data_paintings/master/';
+const DATA_URL = 'https://raw.githubusercontent.com/evgenDer/rslang-data/master/';
+
+const BUTTONS_CLASSES = {
+  autoPlaySound: 'btn_autopronoucing',
+  showImage: 'btn_background',
+  showTranslate: 'btn_translation',
+  playSound: 'btn_pronoucing',
+};
 
 const PAGES = [
   {
@@ -65,4 +74,6 @@ const PAGES = [
 ];
 
 
-export { PAGES, APP_NAME, BACKEND_URL };
+export {
+  PAGES, APP_NAME, BACKEND_URL, MASTERPIECE_URL, DATA_URL, BUTTONS_CLASSES,
+};
