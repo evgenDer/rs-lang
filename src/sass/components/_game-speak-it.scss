@@ -56,3 +56,21 @@
 .hidden {
   display: none;
 }
+
+.game-container{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.difficulty-levels {
+  list-style: none;
+  display: flex;
+}
+
+.level {
+  border: 5px solid $color-green;
+  border-radius: 50%;
+  margin: 10px;
+  width: 10px;
+  height: 10px;
+}
