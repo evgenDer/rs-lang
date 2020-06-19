@@ -1,224 +1,221 @@
 .header {
-  background: $color-primary;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-  padding: 5px 0;
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 999;
+	background: $color-primary;
+	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+	padding: 5px 0;
+	position: sticky;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 999;
 }
 
 .header__wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .logo {
-  color: $color-secondary;
+	color: $color-secondary;
 }
 
 .header__aligner {
-  width: 30px;
+	width: 30px;
 }
 
-
 .main__wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+	padding: 20px;
 }
 
 .stat {
-  background: $color-primary;
-  border-radius: 10px;
+	background: $color-primary;
+	border-radius: 10px;
 }
 
 .stat-container {
-  background: $color-background-additinal;
-  width: 250px;
-  height: 100px;
-  border-radius: 10px;
-  margin: 5px;
-  p {
-    color: $color-secondary;
-    text-align: center;
-    margin: 5px;
-  }
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10px;
+	background: $color-background-additinal;
+	width: 250px;
+	height: 100px;
+	border-radius: 10px;
+	margin: 5px;
+	p {
+		color: $color-secondary;
+		text-align: center;
+		margin: 5px;
+	}
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 10px;
 }
 
 .stat-container__lang {
-  width: fit-content !important;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  img {
-    height: 80px;
-    width: 80px;
-    border: 3px solid $color-primary;
-    border-radius: 40px;
-    overflow: hidden;
-    @include media-tablet {
-      height: 60px;
-      width: 60px;
-      border-radius: 30px;
-    }
-    @include media-mobile {
-      height: 40px;
-      width: 40px;
-      border-radius: 20px;
-    }
-  }
+	width: fit-content !important;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	img {
+		height: 80px;
+		width: 80px;
+		border: 3px solid $color-primary;
+		border-radius: 40px;
+		overflow: hidden;
+		@include media-tablet {
+			height: 60px;
+			width: 60px;
+			border-radius: 30px;
+		}
+		@include media-mobile {
+			height: 40px;
+			width: 40px;
+			border-radius: 20px;
+		}
+	}
 }
 
 .stat-value {
-  color: $color-additional !important;
-  font-weight: 600;
+	color: $color-additional !important;
+	font-weight: 600;
 }
 
 .language-stat {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  width: 100%;
-  padding: 20px;
-  margin-bottom: 10px;
-  @include media-tablet {
-    flex-direction: column;
-  }
-  @extend %light-shadow;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	width: 100%;
+	padding: 20px;
+	margin-bottom: 10px;
+	@include media-tablet {
+		flex-direction: column;
+	}
+	@extend %light-shadow;
 }
 
 .language-stat_lang {
-  width: 200px;
-  p {
-    @include font(2rem, 2rem, bold);
-    color: $color-secondary;
-    margin: 5px;
-    @include media-tablet {
-      @include font(1.6rem, 1.6rem, bold);
-    }
-    @include media-mobile {
-      @include font(1.4rem, 1.4rem, bold);
-    }
-  }
+	width: 200px;
+	p {
+		@include font(2rem, 2rem, bold);
+		color: $color-secondary;
+		margin: 5px;
+		@include media-tablet {
+			@include font(1.6rem, 1.6rem, bold);
+		}
+		@include media-mobile {
+			@include font(1.4rem, 1.4rem, bold);
+		}
+	}
 }
 
 .language-stat_bar {
-  width: 100%;
-  margin: 20px;
-  p {
-    color: $color-secondary;
-    margin: 5px;
-    text-align: center;
-  }
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+	width: 100%;
+	margin: 20px;
+	p {
+		color: $color-secondary;
+		margin: 5px;
+		text-align: center;
+	}
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 
-
 .today-stat {
-  display: flex;
-  align-items: center;
-  justify-content: stretch;
-  flex-direction: column;
-  width: 100%;
-  padding: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  @extend %light-shadow;
+	display: flex;
+	align-items: center;
+	justify-content: stretch;
+	flex-direction: column;
+	width: 100%;
+	padding: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	@extend %light-shadow;
 }
 
 .today-stat_primary-row {
-  display: flex;
-  align-items: center;
-  justify-content: stretch;
-  flex-direction: row;
-  width: 100%;
-  padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: stretch;
+	flex-direction: row;
+	width: 100%;
+	padding: 10px;
 }
 
 .today-stat_secondary-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
-  width: 100%;
-  padding: 10px;
-  flex-wrap: wrap;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-direction: row;
+	width: 100%;
+	padding: 10px;
+	flex-wrap: wrap;
 }
 
 .today-stat_title {
-  width: 200px;
-  p {
-    @include font(2rem, 2rem, bold);
-    color: $color-secondary;
-    margin: 5px;
-    @include media-tablet {
-      @include font(1.6rem, 1.6rem, bold);
-    }
-  }
+	width: 200px;
+	p {
+		@include font(2rem, 2rem, bold);
+		color: $color-secondary;
+		margin: 5px;
+		@include media-tablet {
+			@include font(1.6rem, 1.6rem, bold);
+		}
+	}
 }
 
 .today-stat_bar {
-  width: 40%;
-  margin: 20px;
-  p {
-    color: $color-secondary;
-    margin: 5px;
-    text-align: center;
-  }
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  @include media-tablet {
-    width: 100%;
-  }
+	width: 40%;
+	margin: 20px;
+	p {
+		color: $color-secondary;
+		margin: 5px;
+		text-align: center;
+	}
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	@include media-tablet {
+		width: 100%;
+	}
 }
 
-
 .main-page-contol {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  width: 100%;
-  margin-top: 5px;
-  @include media-tablet {
-    flex-direction: column;
-  }
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	width: 100%;
+	margin-top: 5px;
+	@include media-tablet {
+		flex-direction: column;
+	}
 }
 
 .main-page-contol_button {
-  outline: none;
-  border: none;
-  width: 270px;
-  height: 70px;
-  border-radius: 10px;
-  margin: 5px;
-  @include font(1.4rem, 1.4rem, 600);
-  @extend %light-shadow;
+	outline: none;
+	border: none;
+	width: 270px;
+	height: 70px;
+	border-radius: 10px;
+	margin: 5px;
+	@include font(1.4rem, 1.4rem, 600);
+	@extend %light-shadow;
 
-  background-color: $color-secondary;
-  color: $color-primary;
-  &:hover {
-    background-color: $color-background-additinal;
-    color: $color-secondary;
-    cursor: pointer;
-    transition: all .4s;
-  }
-  transition: all .4s;
+	background-color: $color-secondary;
+	color: $color-primary;
+	&:hover {
+		background-color: $color-background-additinal;
+		color: $color-secondary;
+		cursor: pointer;
+		transition: all 0.4s;
+	}
+	transition: all 0.4s;
 }
