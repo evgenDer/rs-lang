@@ -3,7 +3,6 @@ import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
 
-
 window.onload = () => {
   addHeaderToPage();
   const activePage = defineActivePage();
