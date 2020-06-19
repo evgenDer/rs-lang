@@ -6,7 +6,6 @@ import createEventListener from './events/createEventListener.js';
 
 import { getCardsViewConfiguration, getAppConfiguration } from '../../data-access/local-storage.js';
 
-
 export default class WordCardElement extends HTMLElement {
   constructor() {
     super();
@@ -27,6 +26,7 @@ export default class WordCardElement extends HTMLElement {
       'wordTranslate': null,
       'wordsPerExampleSentence': null,
       'mode': null,
+      'isDeleted': null,
     }
 
     this.settings = {
@@ -47,6 +47,7 @@ export default class WordCardElement extends HTMLElement {
   }
 
   switchMode() {
+
     this.innerHTML = ``;
     switch (this.state.mode) {
       case 'learning':
@@ -63,20 +64,24 @@ export default class WordCardElement extends HTMLElement {
   setState(propName, newPropState) {
     if (this.state[propName] != newPropState) {
       this.state[propName] = newPropState;
-      this.setAttribute(propName, this.state[propName]);
+      if (propName == 'word' || propName == 'wordTranslation' || propName == 'isDone' || propName == 'isDeleted') {
+        this.setAttribute(propName, this.state[propName]);
+      }
+
     }
   }
 
   setSettingsFromLocalStorage() {
     const config = getCardsViewConfiguration();
     const appConfig = getAppConfiguration();
+    console.log(config);
+    console.log(appConfig);
     Object.assign(this.settings, config, appConfig);
-    console.log(this.settings);
   }
 
 
   static get observedAttributes() {
-    return ['word', 'wordTranslate']
+    return ['word', 'wordTranslate', 'isdone', 'isdeleted']
   }
 
   attributeChangedCallback() {

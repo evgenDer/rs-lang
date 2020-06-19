@@ -1,4 +1,5 @@
 import createCard from '../../domBuilder/lightTree/createCard.js';
+import switchCardMode from '../eventFunctions/switchCardMode.js';
 
 export default function leftClick(learningScreenElement) {
   if (learningScreenElement.state.mode == 'newWord') {
@@ -7,9 +8,15 @@ export default function leftClick(learningScreenElement) {
       createCard(learningScreenElement);
     }
   } else {
-    if (learningScreenElement.state.currentLearningCardIndex > 0) {
+    if ((learningScreenElement.state.currentLearningCardIndex == 0) && (learningScreenElement.state.mode == 'learning')) {
+      let lastCheckedNewWordIndex = learningScreenElement.localState.newWordProgressArr.indexOf(false);
+      if (lastCheckedNewWordIndex == -1) { lastCheckedNewWordIndex = 0 };
+
+      learningScreenElement.setState('currentNewWordCardIndex', lastCheckedNewWordIndex);
+      switchCardMode(learningScreenElement);
+    } else if (learningScreenElement.state.currentLearningCardIndex > 0) {
       learningScreenElement.state.currentLearningCardIndex -= 1;
-      createCard(learningScreenElement);
     }
+    createCard(learningScreenElement);
   }
 }

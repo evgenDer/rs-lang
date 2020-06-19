@@ -3,6 +3,7 @@ import removeAnswer from '../../learningScreen/events/eventFunctions/removeAnswe
 const style = {
   inputColor: `#b9f3fc`,
   correctLetterColor: `#61bd4f`,
+  deletedWordColor: `#fe5c55`,
 }
 
 export default class LearningLineElement extends HTMLElement {
@@ -36,11 +37,11 @@ export default class LearningLineElement extends HTMLElement {
     ::slotted(span.animatted) {opacity: 0;}
     ::slotted(input) {padding-left: 10px; width: 100%; position:absolute; left:0; top:0; background: transparent; border: none; outline: none; }
     ::slotted(span[slot=input]) {color: ${style.correctLetterColor};}
+    ::slotted(span[slot=input].deleted) {color: ${style.deletedWordColor};}
     </style>
 
       <div id='textBefore'>
         <slot name='textBefore'></slot>
-        <span>123</span>
       </div>
 
       <div id='background'>
@@ -59,19 +60,21 @@ export default class LearningLineElement extends HTMLElement {
 
       <div id='after'>
         <slot name='textAfter'></slot>
-        <span>123</span>
       </div>
     `;
   }
 
-
-
   render() {
     if (this.state.isDone) {
-      this.innerHTML = `<span slot='input'>${this.state.word}</span>`
+      if (this.state.isDeleted) {
+        this.innerHTML = `<span slot='input' class='deleted'>${this.state.word}</span>`;
+      } else {
+        this.innerHTML = `<span slot='input'>${this.state.word}</span>`;
+      }
     } else {
       this.innerHTML = `<span slot='word1'>${this.state.word}</span>
       <input slot='input'>`;
+      this.querySelector('input').focus();
       this.querySelector('input').onfocus = () => { removeAnswer(this) };
     }
 

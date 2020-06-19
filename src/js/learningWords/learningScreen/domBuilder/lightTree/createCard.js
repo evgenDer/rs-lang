@@ -16,6 +16,7 @@ export default function createCard(learningScreenElement) {
     }
   } else if (mode == 'learning') {
     card.setState(`isDone`, learningScreenElement.localState.learningProgressArr[currentLearningCardIndex])
+    card.setState(`isDeleted`, learningScreenElement.localState.deletedArr[currentLearningCardIndex])
     for (let prop in learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex]) {
       card.setState(prop, learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex][prop])
     }

@@ -13,7 +13,6 @@ export default function switchCardMode(learningScreenElement, target = null) {
     } else {
       learningScreenElement.setState('mode', 'newWord')
     }
-    createStatusBar(learningScreenElement);
   }
 
 }
