@@ -41,31 +41,31 @@ export function defineActivePage() {
 function generateNavigation() {
   const activePageNum = defineActivePage();
 
-  const hambLine = createElement('span', 'hamburger__line');
-  const hambrLineContainer = createElement('div', 'hamburger', [hambLine]);
-  const hamb = createElement('div', 'header__hamburger', [hambrLineContainer]);
+  const hambLine = createElement({ tagName: 'span', classNames: 'hamburger__line' });
+  const hambrLineContainer = createElement({ tagName: 'div', classNames: 'hamburger', children: [hambLine] });
+  const hamb = createElement({ tagName: 'div', classNames: 'header__hamburger', children: [hambrLineContainer] });
 
   const list = [];
   PAGES.forEach((page, num) => {
-    const icon = createElement('img', '', [], [['src', page.img], ['alt', path.basename(page.img, '.svg')]]);
-    const title = createElement('span', '', [], [], page.text);
-    const anchor = createElement('a', '', [icon, title], [['href', page.href]]);
+    const icon = createElement({ tagName: 'img', attrs: [['src', page.img], ['alt', path.basename(page.img, '.svg')]] });
+    const title = createElement({ tagName: 'span', textContent: page.text });
+    const anchor = createElement({ tagName: 'a', children: [icon, title], attrs: [['href', page.href]] });
     if (num === PAGES.length - 1) {
       anchor.onclick = () => {
         removeUserId();
       };
     }
 
-    const link = createElement('li', 'navigation__link', [anchor]);
+    const link = createElement({ tagName: 'li', classNames: 'navigation__link', children: [anchor] });
     if (num === activePageNum) {
       link.classList.add('navigation__link_active');
     }
     list.push(link);
   });
 
-  const navList = createElement('ul', 'navigation navigation_hidden', list);
+  const navList = createElement({ tagName: 'ul', classNames: 'navigation navigation_hidden', children: list });
 
-  const navigation = createElement('nav', 'header__navigation', [navList, hamb]);
+  const navigation = createElement({ tagName: 'nav', classNames: 'header__navigation', children: [navList, hamb] });
   return navigation;
 }
 
@@ -77,14 +77,14 @@ export function addHeaderToPage() {
   }
 
   const navigation = generateNavigation();
-  const aligner = createElement('div', 'header__aligner');
+  const aligner = createElement({ tagName: 'div', classNames: 'header__aligner' });
 
-  const logo = createElement('h1', 'logo', [], [], APP_NAME);
-  const logoContainer = createElement('div', 'header__logo', [logo]);
+  const logo = createElement({ tagName: 'h1', classNames: 'logo', textContent: APP_NAME });
+  const logoContainer = createElement({ tagName: 'div', classNames: 'header__logo', children: [logo] });
 
-  const wrapper = createElement('div', 'wrapper header__wrapper', [navigation, logoContainer, aligner]);
+  const wrapper = createElement({ tagName: 'div', classNames: 'wrapper header__wrapper', children: [navigation, logoContainer, aligner] });
 
-  const header = createElement('header', 'header', [wrapper]);
+  const header = createElement({ tagName: 'header', classNames: 'header', children: [wrapper] });
   document.body.prepend(header);
 
   addNavigationClickHandler();
