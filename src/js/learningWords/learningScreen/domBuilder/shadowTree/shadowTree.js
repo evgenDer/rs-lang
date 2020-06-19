@@ -13,6 +13,12 @@ const styles = {
     learningDotsSuccess: `#61bd4f`,
     learningDotsError: `#fce373`,
   },
+  leftButtonColor: `#338c9950`,
+  rightButtonColor: `#ff934d50`,
+  leftButtonHoverColor: `#43b7c880`,
+  rightButtonHoverColor: `#ffd04d80`,
+  leftButtonActiveColor: `#43b7c8`,
+  rightButtonActiveColor: `#ffd04d`,
 }
 
 const learningScreenShadowTreeHTML = `
@@ -33,6 +39,14 @@ const learningScreenShadowTreeHTML = `
   .arrow {width: 10%; min-width: 30px; min-height: 100%; align-items: center;}
   ::slotted(svg:hover)  {cursor: pointer;}
   #leftArrow {transform: rotate(180deg);}
+  #modeBlock {width: 100%; min-width: 300px; max-width: 600px; height: 40px; flex-direction: row;}
+  ::slotted(div.modeButton) {width:100px; height: 100%; display:flex; justify-content: center; align-items: center;}
+  ::slotted(div[slot=modeButtonLeft]) {background-color:${styles.leftButtonColor}}
+  ::slotted(div[slot=modeButtonRight]) {background-color:${styles.rightButtonColor}}
+  ::slotted(div[slot=modeButtonLeft]:hover) {cursor: pointer; background-color:${styles.leftButtonHoverColor}}
+  ::slotted(div[slot=modeButtonRight]:hover) {cursor: pointer; background-color:${styles.rightButtonHoverColor}}
+  ::slotted(div[slot=modeButtonLeft].active) { background-color:${styles.leftButtonActiveColor}; border: 1px solid ${styles.dots.newDots};}
+  ::slotted(div[slot=modeButtonRight].active) {background-color:${styles.rightButtonActiveColor}}
 </style>
 
 <div id='topBlock'>
@@ -55,7 +69,13 @@ const learningScreenShadowTreeHTML = `
   <div id='RightArrow' class='arrow'>
     <slot name='rightArrow'></slot>
   </div>
+</div>
 
+<div id='modeBlock'>
+  <div class='deadZone'></div>
+  <slot name='modeButtonLeft'></slot>
+  <slot name='modeButtonRight'></slot>
+  <div class='deadZone'></div>
 </div>
 
 `;

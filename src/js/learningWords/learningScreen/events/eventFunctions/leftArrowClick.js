@@ -1,7 +1,15 @@
-import chooseMode from './chooseCardMode.js';
 import createCard from '../../domBuilder/lightTree/createCard.js';
 
 export default function leftClick(learningScreenElement) {
-  learningScreenElement.state.currentCardIndex -= 1;
-  createCard(learningScreenElement, chooseMode(learningScreenElement));
+  if (learningScreenElement.state.mode == 'newWord') {
+    if (learningScreenElement.state.currentNewWordCardIndex > 0) {
+      learningScreenElement.state.currentNewWordCardIndex -= 1;
+      createCard(learningScreenElement);
+    }
+  } else {
+    if (learningScreenElement.state.currentLearningCardIndex > 0) {
+      learningScreenElement.state.currentLearningCardIndex -= 1;
+      createCard(learningScreenElement);
+    }
+  }
 }

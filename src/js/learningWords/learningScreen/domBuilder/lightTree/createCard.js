@@ -1,21 +1,23 @@
-export default function createCard(learningScreenElement, mode) {
+export default function createCard(learningScreenElement) {
   const prevCard = learningScreenElement.querySelector('card-word');
   if (prevCard != null) { prevCard.remove() }
 
   learningScreenElement.insertAdjacentHTML('beforeend', `<card-word slot='card'></card-word>`);
   const card = learningScreenElement.querySelector('card-word');
-  const currentCardIndex = learningScreenElement.state.currentCardIndex;
+  const currentNewWordCardIndex = learningScreenElement.state.currentNewWordCardIndex;
+  const currentLearningCardIndex = learningScreenElement.state.currentLearningCardIndex;
+  const mode = learningScreenElement.state.mode;
 
   card.setState(`mode`, mode);
-  card.setState(`isDone`, learningScreenElement.localState.progressArr[currentCardIndex])
-
-  if (currentCardIndex <= learningScreenElement.settings.newWordCount - 1) {
-    for (let prop in learningScreenElement.wordArrs.newWords[currentCardIndex]) {
-      card.setState(prop, learningScreenElement.wordArrs.newWords[currentCardIndex][prop])
+  if (mode == 'newWord') {
+    card.setState(`isDone`, learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex])
+    for (let prop in learningScreenElement.wordArrs.newWords[currentNewWordCardIndex]) {
+      card.setState(prop, learningScreenElement.wordArrs.newWords[currentNewWordCardIndex][prop])
     }
-  } else if ((currentCardIndex - learningScreenElement.settings.newWordCount) <= learningScreenElement.settings.wordCount - 1) {
-    for (let prop in learningScreenElement.wordArrs.learnedWords[currentCardIndex - learningScreenElement.settings.newWordCount]) {
-      card.setState(prop, learningScreenElement.wordArrs.learnedWords[currentCardIndex - learningScreenElement.settings.newWordCount][prop])
+  } else if (mode == 'learning') {
+    card.setState(`isDone`, learningScreenElement.localState.learningProgressArr[currentLearningCardIndex])
+    for (let prop in learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex]) {
+      card.setState(prop, learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex][prop])
     }
   }
 

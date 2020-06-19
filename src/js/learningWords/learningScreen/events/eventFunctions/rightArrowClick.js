@@ -1,30 +1,43 @@
-import chooseMode from './chooseCardMode.js';
+import switchCardMode from './switchCardMode.js';
 import createCard from '../../domBuilder/lightTree/createCard.js';
+
 import checkAnswer from '../eventFunctions/checkAnswer.js';
 import readIt from '../../functions/readWord.js';
 
 export default function rightClick(learningScreenElement) {
   let isAnswerCorrect = true;
+  const currentNewWordCardIndex = learningScreenElement.state.currentNewWordCardIndex;
+  const currentLearningCardIndex = learningScreenElement.state.currentLearningCardIndex;
+  const mode = learningScreenElement.state.mode;
 
-  if (learningScreenElement.state.currentCardIndex >= learningScreenElement.settings.newWordCount) {
+  if (learningScreenElement.state.mode == 'learning') {
     isAnswerCorrect = checkAnswer(learningScreenElement.querySelector('card-word'));
 
     if (isAnswerCorrect) {
-      learningScreenElement.querySelectorAll('div.dot')[learningScreenElement.state.currentCardIndex].classList.remove('error');
-      learningScreenElement.querySelectorAll('div.dot')[learningScreenElement.state.currentCardIndex].classList.add('success');
+      learningScreenElement.querySelectorAll('div.dot')[currentLearningCardIndex].classList.remove('error');
+      learningScreenElement.querySelectorAll('div.dot')[currentLearningCardIndex].classList.add('success');
+      learningScreenElement.localState.learningProgressArr[currentLearningCardIndex] = true;
+      learningScreenElement.state.currentLearningCardIndex += 1;
     } else {
-      learningScreenElement.querySelectorAll('div.dot')[learningScreenElement.state.currentCardIndex].classList.add('error');
+      learningScreenElement.querySelectorAll('div.dot')[currentLearningCardIndex].classList.add('error');
     }
 
   } else {
-    learningScreenElement.querySelectorAll('div.dot')[learningScreenElement.state.currentCardIndex].classList.add('active');
-    readIt(learningScreenElement.querySelector('card-word').state.word)
+    learningScreenElement.querySelectorAll('div.dot')[currentNewWordCardIndex].classList.add('active');
+    learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex] = true;
+    learningScreenElement.state.currentNewWordCardIndex += 1;
+  }
+
+  if ((learningScreenElement.state.currentNewWordCardIndex == learningScreenElement.settings.newWordCount) && (learningScreenElement.state.mode == 'newWord')) {
+    learningScreenElement.setState('currentNewWordCardIndex', 0);
+    switchCardMode(learningScreenElement);
+  } else if ((learningScreenElement.state.currentLearningCardIndex == learningScreenElement.settings.wordCount) && (learningScreenElement.state.mode == 'learning')) {
+
   }
 
   if (isAnswerCorrect) {
-    learningScreenElement.localState.progressArr[learningScreenElement.state.currentCardIndex] = true;
-    learningScreenElement.state.currentCardIndex += 1;
-    createCard(learningScreenElement, chooseMode(learningScreenElement));
+    readIt(learningScreenElement.querySelector('card-word').state.word);
+    createCard(learningScreenElement);
   } else {
 
   }

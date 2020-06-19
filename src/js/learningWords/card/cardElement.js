@@ -4,17 +4,29 @@ import initLearning from './domBuilder/lightTree/initLearningMode.js';
 import initCardOptions from './domBuilder/lightTree/initOptions.js';
 import createEventListener from './events/createEventListener.js';
 
+import { getCardsViewConfiguration, getAppConfiguration } from '../../data-access/local-storage.js';
+
 
 export default class WordCardElement extends HTMLElement {
   constructor() {
     super();
     this.state = {
-      word: null,
-      translation: null,
-      sentence: null,
-      sentenceTranslation: null,
-      mode: null,
-      isDone: false,
+      'id': null,
+      'group': null,
+      'page': null,
+      'word': null,
+      'image': null,
+      'audio': null,
+      'audioMeaning': null,
+      'audioExample': null,
+      'textMeaning': null,
+      'textExample': null,
+      'transcription': null,
+      'textExampleTranslate': null,
+      'textMeaningTranslate': null,
+      'wordTranslate': null,
+      'wordsPerExampleSentence': null,
+      'mode': null,
     }
 
     this.settings = {
@@ -30,6 +42,7 @@ export default class WordCardElement extends HTMLElement {
   connectedCallback() {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = cardShadowTreeHTML;
+    this.setSettingsFromLocalStorage();
     createEventListener(this);
   }
 
@@ -54,8 +67,16 @@ export default class WordCardElement extends HTMLElement {
     }
   }
 
+  setSettingsFromLocalStorage() {
+    const config = getCardsViewConfiguration();
+    const appConfig = getAppConfiguration();
+    Object.assign(this.settings, config, appConfig);
+    console.log(this.settings);
+  }
+
+
   static get observedAttributes() {
-    return ['word', 'translation']
+    return ['word', 'wordTranslate']
   }
 
   attributeChangedCallback() {

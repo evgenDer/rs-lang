@@ -10,8 +10,10 @@ export default class LearningLineElement extends HTMLElement {
     super();
 
     this.state = {
-      word: null,
-      translation: null,
+      'word': null,
+      'wordTranslate': null,
+      "textMeaning": null,
+      "textExample": null,
     }
 
     this.localState = {

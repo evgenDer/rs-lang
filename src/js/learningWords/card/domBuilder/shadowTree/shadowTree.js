@@ -15,6 +15,17 @@ const cardShadowTreeHTML = `
 <div id='mainBlock'>
 
   <div id='ENBlock'>
+    <div id='ENWord'>
+      <slot name='ENitem'></slot>
+      <div id='imgBlock'>
+        <slot name='cardImg'></slot>
+      </div>
+    </div>
+  <div id='sentenseBlock'>
+    <slot name='ENexample'></slot>
+    <slot name='ENMeaning'></slot>
+  </div>
+
     <slot name='ENitem'></slot>
   </div>
 
