@@ -1,27 +1,32 @@
 import saveDayWords from './saveDayWords.js';
 import saveDayLocalState from './saveDayLocalState.js';
+import saveDayMode from './saveDayMode.js';
 
 export default function getDayLocalState(learningScreenElemen) {
   let currentDate = new Date(Date.now());
   currentDate = currentDate.getDate();
   const prevDate = JSON.parse(localStorage.getItem('dayLearningDate'));
   //const prevDate = 10;
-  console.log(currentDate);
-  console.log(prevDate);
 
   if (prevDate == currentDate) {
     const dayLocalState = window.localStorage.getItem('dayLearningLocalState');
     const dayWordArrs = window.localStorage.getItem('dayLearningWordArrs');
-    console.log(dayLocalState)
-    console.log(dayWordArrs)
+
     learningScreenElemen.localState = JSON.parse(dayLocalState);
     learningScreenElemen.wordArrs = JSON.parse(dayWordArrs);
-    console.log(learningScreenElemen.localState)
-    console.log(learningScreenElemen.wordArrs)
+
+    const dayMode = window.localStorage.getItem('dayLearningMode');
+    const firstNoLearnedNewWordIndex = learningScreenElemen.localState.newWordProgressArr.indexOf(false) >= 0 ? learningScreenElemen.localState.newWordProgressArr.indexOf(false) : 0;
+    const firstNoLearnedWordIndex = learningScreenElemen.localState.learningProgressArr.indexOf(false) >= 0 ? learningScreenElemen.localState.learningProgressArr.indexOf(false) : 0;
+    learningScreenElemen.setState('mode', dayMode);
+    learningScreenElemen.setState('currentNewWordCardIndex', firstNoLearnedNewWordIndex);
+    learningScreenElemen.setState('currentLearningCardIndex', firstNoLearnedWordIndex);
   } else {
-    window.localStorage.setItem('dayLearningDate', currentDate);
     learningScreenElemen.localState = [];
     learningScreenElemen.wordArrs = [];
+    learningScreenElemen.setState('mode', 'newWord');
+    learningScreenElemen.setState('currentNewWordCardIndex', 0);
+    learningScreenElemen.setState('currentLearningCardIndex', 0);
     //getWords()
     const dayWordArrs = {
       newWords: [{
@@ -138,6 +143,8 @@ export default function getDayLocalState(learningScreenElemen) {
 
     Object.assign(learningScreenElemen.localState, dayLocalState)
     Object.assign(learningScreenElemen.wordArrs, dayWordArrs)
+    window.localStorage.setItem('dayLearningDate', currentDate);
+    saveDayMode(learningScreenElemen);
     saveDayLocalState(learningScreenElemen);
     saveDayWords(learningScreenElemen);
   }

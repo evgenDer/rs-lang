@@ -1,5 +1,6 @@
 import switchCardMode from './switchCardMode.js';
 import createCard from '../../domBuilder/lightTree/createCard.js';
+import createResults from '../../domBuilder/lightTree/createResults.js';
 
 import checkAnswer from '../eventFunctions/checkAnswer.js';
 import readIt from '../../functions/readWord.js';
@@ -7,11 +8,11 @@ import readIt from '../../functions/readWord.js';
 import saveDayLocalState from '../../functions/saveDayLocalState.js';
 
 export default function rightClick(learningScreenElement) {
+
   let isAnswerCorrect = true;
   let isFirstTimeDone = false;
   const currentNewWordCardIndex = learningScreenElement.state.currentNewWordCardIndex;
   const currentLearningCardIndex = learningScreenElement.state.currentLearningCardIndex;
-  const mode = learningScreenElement.state.mode;
 
   if (learningScreenElement.state.mode == 'newWord') {
     isFirstTimeDone = learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex];
@@ -46,7 +47,9 @@ export default function rightClick(learningScreenElement) {
 
   }
 
-  if (isAnswerCorrect) {
+  if (learningScreenElement.localState.newWordProgressArr.indexOf(false) == -1 && learningScreenElement.localState.learningProgressArr.indexOf(false) == -1 && learningScreenElement.state.currentLearningCardIndex >= learningScreenElement.settings.wordCount) {
+    createResults(learningScreenElement);
+  } else if (isAnswerCorrect) {
     if (learningScreenElement.settings.enableAutomaticAudio && !isFirstTimeDone) {
       const card = learningScreenElement.querySelector('card-word');
       readIt(card.state.word);

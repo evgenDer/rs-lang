@@ -4,7 +4,7 @@ const cardShadowTreeHTML = `
   div {display:flex; justify-content: center;}
   #mainBlock {width: 95%; height: 95%; flex-direction: column;}
   #ENBlock { padding-bottom: 15px; max-height: 50%; position: relative; flex-direction: column; align-items: center ;justify-content: flex-end; font-size: 50px; border-bottom: 1px solid #efe6e1;}
-  #ENWord {padding-top: 100px; padding-bottom: 15px;}
+  #ENWord {padding-top: 110px; padding-bottom: 15px;}
   #imgBlock {overflow: hidden; position: absolute; top: -50px;  }
   #imgBlock ::slotted(div) {width: 100px; height: 100px; background-color: black; border:5px solid white; border-radius: 5px;}
   .sentenseBlock {width:100%; font-size:15px;  flex-direction: column; align-items: center;}

@@ -9,9 +9,7 @@ import createEvents from './events/createEvents.js';
 import { getUserConfiguration } from '../../data-access/local-storage.js';
 
 import getDayLocalState from './functions/getDayLocalState.js';
-
-import { getNewWords } from './functions/getWords.js';
-import getLearnedWords from './functions/getWords.js';
+import createResults from './domBuilder/lightTree/createResults.js';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
@@ -46,12 +44,8 @@ export default class LearningScreenElement extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = learningScreenShadowTreeHTML;
 
-    //getNewWords();
-    //getLearnedWords();
-
     this.setSettingsFromLocalStorage();
     getDayLocalState(this);
-
 
     createStatusBar(this);
     createArrow(this);
@@ -59,6 +53,10 @@ export default class LearningScreenElement extends HTMLElement {
     createCard(this);
 
     createEvents(this);
+
+    if (this.localState.newWordProgressArr.indexOf(false) == -1 && this.localState.learningProgressArr.indexOf(false) == -1) {
+      createResults(this);
+    }
   }
 
 

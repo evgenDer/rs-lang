@@ -20,8 +20,10 @@ const styles = {
 
 const learningScreenShadowTreeHTML = `
 <style>
-  :host {margin-top: 20px; width: 100vw; display: flex; flex-direction: column; align-items: center; color:${styles.fontColor}}
+  :host {width: 100vw; display: flex; color:${styles.fontColor}}
   div{display: flex; justify-content: center;}
+  ::slotted(learning-results) {position: fixed; z-index:10;}
+  #cardContentBlock {margin-top: 20px; width: 100%; flex-direction: column; align-items: center;}
   #topBlock {width: 100%; min-width: 300px; max-width: 600px; height: 40px;}
   .deadZone {width: 10%; min-width: 30px; height: 40px;}
   .statusBar {width: calc(50% - 60px); height: 40px; align-items: center;}
@@ -50,6 +52,9 @@ const learningScreenShadowTreeHTML = `
   ::slotted(div[slot=modeButtonRight].active) {background-color:${styles.rightButtonActiveColor}}
 </style>
 
+  <slot name='results'></slot>
+
+<div id='cardContentBlock'>
 <div id='topBlock'>
   <div class='deadZone'></div>
   <div id='newWordStatusBar' class='statusBar'>
@@ -82,6 +87,6 @@ const learningScreenShadowTreeHTML = `
   <slot name='modeButtonRight'></slot>
   <div class='deadZone'></div>
 </div>
-
+</div>
 `;
 export default learningScreenShadowTreeHTML;

@@ -1,6 +1,6 @@
 export default function initNewWord(cardElement) {
   cardElement.innerHTML = `<span slot='ENitem'>${cardElement.state.word}</span>`;
-  if (cardElement.settings.showWordTranscription) {
+  if (cardElement.settings.showWordTranslation) {
     cardElement.insertAdjacentHTML('beforeend', `<span slot='RUitem'>${cardElement.state.wordTranslate}</span>`)
   }
   if (cardElement.settings.showExplanationExample) {
