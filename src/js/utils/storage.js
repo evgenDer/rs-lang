@@ -1,3 +1,5 @@
+import { DEFAULT_SETTINGS_PUZZLE } from '../constants/defaul-settings';
+
 function setUserId(infoAboutUser) {
   localStorage.setItem('userId', infoAboutUser.userId);
 }
@@ -35,7 +37,15 @@ function removeUserId() {
   localStorage.removeItem('userId');
 }
 
+function setDataEnglishPuzzle(englishPuzzleSettings) {
+  localStorage.setItem('englishPuzzle', JSON.stringify(englishPuzzleSettings));
+}
+
+function getDataEnglishPuzzle() {
+  return JSON.parse(localStorage.getItem('englishPuzzle')) || DEFAULT_SETTINGS_PUZZLE;
+}
+
 export {
-  setUserId, setToken, setDateToken, setUserPassword,
-  setUserEmail, getToken, getUserId, getDateToken, removeUserId,
+  setUserId, setToken, setDateToken, setUserPassword, setDataEnglishPuzzle,
+  getDataEnglishPuzzle, setUserEmail, getToken, getUserId, getDateToken, removeUserId,
 };

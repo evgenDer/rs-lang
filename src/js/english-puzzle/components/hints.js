@@ -1,6 +1,7 @@
 import { BUTTONS_CLASSES } from '../../utils/constants';
 import { fillPuzzleColor, drawPuzzleImage } from './sentence';
 import { DEFAULT_SETTINGS_PUZZLE } from '../../constants/defaul-settings';
+import { setDataEnglishPuzzle, getDataEnglishPuzzle } from '../../utils/storage';
 
 const RESULT_FIELD = document.querySelector('.block-results');
 const SOURCE_FIELD = document.querySelector('.block-source');
@@ -21,7 +22,6 @@ function addHintShowImage(isHintOn, image) {
   const hintElement = document.querySelector(`.${BUTTONS_CLASSES.showImage}`);
   const sentenceElementsSource = SOURCE_FIELD.querySelectorAll('canvas');
   const sentenceElementsResult = RESULT_FIELD.querySelectorAll('.current > canvas');
-  console.log(sentenceElementsSource);
   if (!isHintOn) {
     hintElement.classList.add('disable');
     sentenceElementsSource.forEach((canvas) => { fillPuzzleColor(canvas); });
@@ -36,8 +36,6 @@ function addHintShowImage(isHintOn, image) {
 function addHintPlaySound(isHintOn) {
   const hintElement = document.querySelector(`.${BUTTONS_CLASSES.playSound}`);
   const hintSoundIcon = document.querySelector('.block-hints .btn_pronoucing');
-  console.log(hintSoundIcon);
-  debugger;
   if (!isHintOn) {
     hintElement.classList.add('disable');
     hintSoundIcon.classList.add('hidden');
@@ -56,32 +54,35 @@ function addHintAutoplaySound(isHintOn) {
   }
 }
 
-function generateHints() {
+function addHints() {
   const englishPuzzleSettings = JSON.parse(localStorage.getItem('englishPuzzle')) || DEFAULT_SETTINGS_PUZZLE;
   addHintAutoplaySound(englishPuzzleSettings.autoPlaySound);
   addHintPlaySound(englishPuzzleSettings.playSound);
-  addHintShowImage(englishPuzzleSettings.showImage);
   addHintTranslate(englishPuzzleSettings.showTranslation);
 }
 
 function addEventsListenerOnHintButtons() {
-  const englishPuzzleSettings = JSON.parse(localStorage.getItem('englishPuzzle')) || DEFAULT_SETTINGS_PUZZLE;
   document.querySelector(`.${BUTTONS_CLASSES.autoPlaySound}`).addEventListener('click', () => {
+    const englishPuzzleSettings = getDataEnglishPuzzle();
     englishPuzzleSettings.autoPlaySound = !englishPuzzleSettings.autoPlaySound;
     addHintAutoplaySound(englishPuzzleSettings.autoPlaySound);
+    setDataEnglishPuzzle(englishPuzzleSettings);
   });
   document.querySelector(`.${BUTTONS_CLASSES.playSound}`).addEventListener('click', () => {
+    const englishPuzzleSettings = getDataEnglishPuzzle();
     englishPuzzleSettings.playSound = !englishPuzzleSettings.playSound;
     addHintPlaySound(englishPuzzleSettings.playSound);
+    setDataEnglishPuzzle(englishPuzzleSettings);
   });
   document.querySelector(`.${BUTTONS_CLASSES.showTranslate}`).addEventListener('click', () => {
+    const englishPuzzleSettings = getDataEnglishPuzzle();
     englishPuzzleSettings.showTranslate = !englishPuzzleSettings.showTranslate;
     addHintTranslate(englishPuzzleSettings.showTranslate);
+    setDataEnglishPuzzle(englishPuzzleSettings);
   });
-  localStorage.setItem('englishPuzzle', JSON.stringify(englishPuzzleSettings));
 }
 
 export {
   addHintAutoplaySound, addHintShowImage, addEventsListenerOnHintButtons,
-  addHintTranslate, addHintPlaySound, generateHints,
+  addHintTranslate, addHintPlaySound, addHints,
 };
