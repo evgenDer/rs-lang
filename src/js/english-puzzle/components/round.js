@@ -1,9 +1,8 @@
-import { getDataWords } from '../../api/words';
 import Sentence from './sentence';
 import { createElement } from '../../utils/create';
 import { removeChild } from '../../utils/helpers';
 import { BUTTONS_CLASSES, DATA_URL } from '../../utils/constants';
-import { addHintShowImage } from './hints';
+import { addHintShowImage, addHints } from './hints';
 import { DEFAULT_SETTINGS_PUZZLE } from '../../constants/defaul-settings';
 
 const COUNT_SENTENCE = 10;
@@ -17,12 +16,12 @@ HTMLAudioElement.prototype.stop = function () {
 
 
 export default class Round {
-  constructor(level, page) {
+  constructor(level, page, dataPage) {
     this.page = page;
     this.level = level;
     this.image = new Image();
     this.audioSentence = new Audio();
-    this.dataPage = {};
+    this.dataPage = dataPage;
     this.srcImagesParts = [];
     this.currentSentenceNumber = 0;
     this.width = RESULT_FIELD.offsetWidth;
@@ -30,14 +29,15 @@ export default class Round {
     this.currenSentenceElement = createElement('div', 'sentence');
   }
 
-  async generateNewRoundOnPage(imageSrc) {
-    this.dataPage = await getDataWords(this.level, this.page);
+  generateNewRoundOnPage(imageSrc) {
     this.image.onload = () => {
       this.generateNewRoundImages();
       this.generateSentenceInRound();
     };
     this.image.setAttribute('crossorigin', 'anonymous');
     this.image.src = imageSrc;
+    this.image.classList.add('hidden');
+    RESULT_FIELD.append(this.image);
   }
 
   generateNewRoundImages() {
@@ -58,19 +58,34 @@ export default class Round {
     slicedImage.onload = () => {
       const height = this.height / COUNT_SENTENCE;
       const textExample = this.dataPage[this.currentSentenceNumber].textExample.replace(/<\/?[a-zA-Z]+>/gi, '');
-
       const newSentence = new Sentence(slicedImage, textExample, this.width, height);
       this.currenSentenceElement = createElement('div', 'sentence current');
       const newSentenceElemement = newSentence.renderSourceGame();
       SOURCE_FIELD.append(newSentenceElemement);
       RESULT_FIELD.append(this.currenSentenceElement);
       this.addHintsInRound();
+      this.addClickPuzzles();
     };
     slicedImage.src = this.srcImagesParts[this.currentSentenceNumber];
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  addClickPuzzles() {
+    const currentSentence = RESULT_FIELD.querySelector('.current');
+    SOURCE_FIELD.addEventListener('click', (event) => {
+      const elementClick = event.target.closest('canvas');
+      currentSentence.append(elementClick);
+    });
+    currentSentence.addEventListener('click', (event) => {
+      const elementClick = event.target.closest('canvas');
+      SOURCE_FIELD.querySelector('.sentence').append(elementClick);
+    });
+  }
+
   addHintsInRound() {
-    console.log(`.${BUTTONS_CLASSES.showTranslate}`);
+    const englPuzzleSettings = JSON.parse(localStorage.getItem('englishPuzzle')) || DEFAULT_SETTINGS_PUZZLE;
+    addHintShowImage(englPuzzleSettings.showImage, this.srcImagesParts[this.currentSentenceNumber]);
+    addHints();
     const translateFieldElement = document.querySelector('.translate');
     const autoPlaySoundElement = document.querySelector(`.${BUTTONS_CLASSES.autoPlaySound}`);
     if (!autoPlaySoundElement.classList.contains('disable')) {
@@ -78,16 +93,14 @@ export default class Round {
     }
     const translateText = this.dataPage[this.currentSentenceNumber].textExampleTranslate;
     translateFieldElement.innerText = translateText;
-    const englPuzzleSettings = JSON.parse(localStorage.getItem('englishPuzzle')) || DEFAULT_SETTINGS_PUZZLE;
-    addHintShowImage(englPuzzleSettings.showImage, this.srcImagesParts[this.currentSentenceNumber]);
     document.querySelector(`.${BUTTONS_CLASSES.showImage}`).addEventListener('click', () => {
       englPuzzleSettings.showImage = !englPuzzleSettings.showImage;
+      // eslint-disable-next-line max-len
       addHintShowImage(englPuzzleSettings.showImage, this.srcImagesParts[this.currentSentenceNumber]);
       localStorage.setItem('englishPuzzle', JSON.stringify(englPuzzleSettings));
     });
     const buttonHints = document.querySelector('.block-hints');
     const buttonSound = buttonHints.querySelector('.btn_pronoucing');
-    console.log(buttonSound);
     buttonSound.addEventListener('click', () => {
       if (!buttonSound.classList.contains('hidden')) {
         this.playAudio();
@@ -129,6 +142,7 @@ export default class Round {
     }
     return false;
   }
+
 
   clickButton(event) {
     const puzzle = event.target.closest('canvas');
