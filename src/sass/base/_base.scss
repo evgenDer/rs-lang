@@ -28,3 +28,7 @@ h2 {
 body {
   background: $color-background;
 }
+
+.validation_failed {
+	border-color: $color-red;
+}

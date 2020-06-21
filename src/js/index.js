@@ -1,7 +1,7 @@
 import { addHeaderToPage, defineActivePage } from './navigation/index';
 import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
-
+import { initConfigurationPage } from './configuration/index';
 
 window.onload = () => {
   addHeaderToPage();
@@ -26,6 +26,7 @@ window.onload = () => {
       // statistics-page
       break;
     case 6:
+      initConfigurationPage();
       // settings-page
       break;
     case 7:
