@@ -40,7 +40,7 @@ const PAGES = [
   },
   {
     id: 'settings-page',
-    href: '#',
+    href: 'configuration.html',
     img: './assets/img/icons/settings.svg',
     text: 'Настройки',
   },
@@ -58,7 +58,7 @@ const PAGES = [
   },
   {
     id: 'authorization-page',
-    href: 'authorization.html',
+    href: 'index.html',
     img: './assets/img/icons/logout.svg',
     text: 'Выйти',
   },

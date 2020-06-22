@@ -1,8 +1,8 @@
 {
-  "useTabs": true,
-  "printWidth": 140,
+  "useTabs": false,
+  "printWidth": 100,
   "tabWidth": 2,
   "singleQuote": true,
   "comma-dangle": ["error", "always"],
-  "trailingComma": "none"
+  "trailingComma": "all"
 }
