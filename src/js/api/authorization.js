@@ -20,6 +20,8 @@ async function createUser(event) {
 
   if (!rawResponse.ok) {
     ERROR_MSG.innerText = getMistakeResponse(rawResponse.status);
+  } else {
+    ERROR_MSG.innerText = 'Регистрация прошла успешно';
   }
 }
 

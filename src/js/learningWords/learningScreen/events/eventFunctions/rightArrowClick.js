@@ -47,10 +47,9 @@ export default function rightClick(learningScreenElement) {
     learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex] = true;
     saveDayLocalState(learningScreenElement);
     console.log(createUserWord);
-    createUserWord(
-      '5e9f5ee35eb9e72bc21af716',
-      { difficulty: 'weak', optional: { testFieldString: 'test', testFieldBoolean: true } },
-    );
+    const userWord = createUserWord("5e9f5ee35eb9e72bc21af4ac", { "difficulty": "weak", "optional": { testFieldString: 'test', testFieldBoolean: true } });
+    console.log(userWord);
+
     learningScreenElement.state.currentNewWordCardIndex += 1;
   }
 
