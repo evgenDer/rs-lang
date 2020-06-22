@@ -3,6 +3,20 @@ import { createElement } from '../utils/create';
 import loader from '../../img/icons/savannah_loader.svg';
 import createHeader from './gamepage';
 
+const rnd = (rndTrash) => {
+  const number = Math.floor(Math.random() * 20);
+  return rndTrash.includes(number) ? rnd(rndTrash) : number;
+};
+const request = () => fetch('https://afternoon-falls-25894.herokuapp.com/words?page=2&group=0')
+  .then((res) => res.json());
+
+
+const createMain = (obj) => {
+  console.log(obj);
+  const rndTrash = [];
+  rnd.call(this, rndTrash);
+};
+
 const createGameTimer = () => {
   let time = 3;
   const gameContainer = document.querySelector('.game-container');
@@ -27,6 +41,7 @@ const createGameTimer = () => {
       timer.classList.add('hide');
       createHeader();
       setTimeout(() => {
+        request().then(createMain);
         timer.remove();
       }, 1000);
     }, 4000);

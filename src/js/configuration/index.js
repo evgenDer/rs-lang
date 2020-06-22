@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import {
   DEFAULT_USER_CONFIGURATION,
   DEFAULT_CARDS_VIEW,
@@ -60,9 +61,9 @@ const saveUserConfiguration = () => {
 const saveCardsConfiguration = () => {
   const cardsConfiguration = page.getCardsConfiguration();
 
-  if (cardsConfiguration.showWordTranslation === false &&
-    cardsConfiguration.showSentenceExplanation === false &&
-    cardsConfiguration.showExplanationExample === false) {
+  if (cardsConfiguration.showWordTranslation === false
+    && cardsConfiguration.showSentenceExplanation === false
+    && cardsConfiguration.showExplanationExample === false) {
     page.showValidationErrorMessage();
     return false;
   }
