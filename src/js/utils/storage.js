@@ -11,11 +11,11 @@ function setDateToken() {
   localStorage.setItem('tokenDate', dateGetToken.toString());
 }
 
-function setUserPassword(user) {
+function setUserEmail(user) {
   localStorage.setItem('email', user.email);
 }
 
-function setUserEmail(user) {
+function setUserPassword(user) {
   localStorage.setItem('password', user.password);
 }
 
