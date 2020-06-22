@@ -6,6 +6,4 @@ export async function getNewWords() {
   console.log(allwords);
 }
 
-export function getLearnedWords() {
-
-}
+export function getLearnedWords() {}

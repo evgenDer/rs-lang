@@ -1,14 +1,20 @@
 export default function createStatusBar(learningScreenElement) {
   for (let i = 0; i < learningScreenElement.settings.newWordCount; i += 1) {
-    learningScreenElement.insertAdjacentHTML('beforeend', `
-    <div class='dot newWordDot'  slot='newWordStatusPoint'></div>`);
+    learningScreenElement.insertAdjacentHTML(
+      'beforeend',
+      `
+    <div class='dot newWordDot'  slot='newWordStatusPoint'></div>`,
+    );
     if (learningScreenElement.localState.newWordProgressArr[i]) {
       learningScreenElement.querySelectorAll('div.dot.newWordDot')[i].classList.add('active');
     }
   }
   for (let i = 0; i < learningScreenElement.settings.wordCount; i += 1) {
-    learningScreenElement.insertAdjacentHTML('beforeend', `
-    <div class='dot learningWordDot' slot='learningStatusPoint'></div>`);
+    learningScreenElement.insertAdjacentHTML(
+      'beforeend',
+      `
+    <div class='dot learningWordDot' slot='learningStatusPoint'></div>`,
+    );
     if (learningScreenElement.localState.learningProgressArr[i]) {
       learningScreenElement.querySelectorAll('div.dot.learningWordDot')[i].classList.add('success');
     }
@@ -16,7 +22,6 @@ export default function createStatusBar(learningScreenElement) {
       learningScreenElement.querySelectorAll('div.dot.learningWordDot')[i].classList.add('deleted');
     }
   }
-
 
   /*
     const dotArr = learningScreenElement.querySelectorAll('div.dot') || [];

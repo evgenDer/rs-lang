@@ -1,4 +1,3 @@
-
 import learningScreenShadowTreeHTML from './domBuilder/shadowTree/shadowTree';
 
 import createCard from './domBuilder/lightTree/createCard';
@@ -54,12 +53,13 @@ export default class LearningScreenElement extends HTMLElement {
 
     createEvents(this);
 
-    if (this.localState.newWordProgressArr.indexOf(false) === -1
-      && this.localState.learningProgressArr.indexOf(false) === -1) {
+    if (
+      this.localState.newWordProgressArr.indexOf(false) === -1 &&
+      this.localState.learningProgressArr.indexOf(false) === -1
+    ) {
       createResults(this);
     }
   }
-
 
   setSettingsFromLocalStorage() {
     let config = getUserConfiguration();

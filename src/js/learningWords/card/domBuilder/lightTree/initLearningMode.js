@@ -10,7 +10,7 @@ export default function initLearning(cardElement, isJustUpdated = false) {
     cardElement.querySelector('learning-line').setState('isDone', cardElement.state.isDone);
     cardElement.querySelector('learning-line').setState('isDeleted', cardElement.state.isDeleted);
   } else {
-    cardElement.innerHTML = '<learning-line slot=\'ENitem\'></learning-line>';
+    cardElement.innerHTML = "<learning-line slot='ENitem'></learning-line>";
     const learningline = cardElement.querySelector('learning-line');
 
     for (const prop in cardElement.state) {
@@ -18,30 +18,36 @@ export default function initLearning(cardElement, isJustUpdated = false) {
     }
 
     if (cardElement.settings.showWordTranscription) {
-      cardElement.insertAdjacentHTML('beforeend', `<span slot='RUitem'>${cardElement.state.wordTranslate}</span>`);
+      cardElement.insertAdjacentHTML(
+        'beforeend',
+        `<span slot='RUitem'>${cardElement.state.wordTranslate}</span>`,
+      );
     }
 
     if (cardElement.settings.showWordTranscription) {
-      cardElement.insertAdjacentHTML('beforeend', `<span slot='transcription'>${cardElement.state.transcription}</span>`);
+      cardElement.insertAdjacentHTML(
+        'beforeend',
+        `<span slot='transcription'>${cardElement.state.transcription}</span>`,
+      );
     }
 
     if (cardElement.settings.showAnswer && !cardElement.state.isDone) {
-      cardElement.insertAdjacentHTML('beforeend', '<div slot=\'openWord\'>Ответ</div>');
+      cardElement.insertAdjacentHTML('beforeend', "<div slot='openWord'>Ответ</div>");
     }
 
     if (cardElement.settings.deleteWords && !cardElement.state.isDeleted) {
-      cardElement.insertAdjacentHTML('beforeend', '<div slot=\'deleteWord\'>Удалить</div>');
+      cardElement.insertAdjacentHTML('beforeend', "<div slot='deleteWord'>Удалить</div>");
     }
 
     if (cardElement.settings.markAsDifficultWord && !cardElement.state.isDeleted) {
-      cardElement.insertAdjacentHTML('beforeend', '<div slot=\'hardWord\'>Сложно</div>');
+      cardElement.insertAdjacentHTML('beforeend', "<div slot='hardWord'>Сложно</div>");
     }
 
     if (cardElement.settings.deleteWords && cardElement.state.isDeleted) {
-      cardElement.insertAdjacentHTML('beforeend', '<div slot=\'restoreWord\'>Восстановить</div>');
+      cardElement.insertAdjacentHTML('beforeend', "<div slot='restoreWord'>Восстановить</div>");
     }
 
-    cardElement.insertAdjacentHTML('beforeend', '<div slot=\'cardImg\'></div>');
+    cardElement.insertAdjacentHTML('beforeend', "<div slot='cardImg'></div>");
   }
 
   if (cardElement.settings.showExplanationExample) {
@@ -50,15 +56,24 @@ export default function initLearning(cardElement, isJustUpdated = false) {
     let exampleUpdated = null;
     if (cardElement.state.isDone) {
       if (cardElement.state.isDeleted) {
-        exampleUpdated = example.replace(`<b>${word}</b>`, `<span style='color: #fe5c55' ><b>${word}</b></span>`);
+        exampleUpdated = example.replace(
+          `<b>${word}</b>`,
+          `<span style='color: #fe5c55' ><b>${word}</b></span>`,
+        );
       } else {
-        exampleUpdated = example.replace(`<b>${word}</b>`, `<span style='color: #61bd4f' ><b>${word}</b></span>`);
+        exampleUpdated = example.replace(
+          `<b>${word}</b>`,
+          `<span style='color: #61bd4f' ><b>${word}</b></span>`,
+        );
       }
     } else {
       exampleUpdated = example.replace(`<b>${word}</b>`, '____');
     }
-    cardElement.insertAdjacentHTML('beforeend', `<span slot='ENExample'>${exampleUpdated}</span>
-  <span slot='RUExample'>${cardElement.state.textExampleTranslate}</span>`);
+    cardElement.insertAdjacentHTML(
+      'beforeend',
+      `<span slot='ENExample'>${exampleUpdated}</span>
+  <span slot='RUExample'>${cardElement.state.textExampleTranslate}</span>`,
+    );
   }
 
   if (cardElement.settings.showSentenceExplanation) {
@@ -67,14 +82,23 @@ export default function initLearning(cardElement, isJustUpdated = false) {
     let exampleUpdated = null;
     if (cardElement.state.isDone) {
       if (cardElement.state.isDeleted) {
-        exampleUpdated = example.replace(`<i>${word}</i>`, `<span style='color: #fe5c55'><b>${word}</b></span>`);
+        exampleUpdated = example.replace(
+          `<i>${word}</i>`,
+          `<span style='color: #fe5c55'><b>${word}</b></span>`,
+        );
       } else {
-        exampleUpdated = example.replace(`<i>${word}</i>`, `<span style='color: #61bd4f'><b>${word}</b></span>`);
+        exampleUpdated = example.replace(
+          `<i>${word}</i>`,
+          `<span style='color: #61bd4f'><b>${word}</b></span>`,
+        );
       }
     } else {
       exampleUpdated = example.replace(`<i>${word}</i>`, '____');
     }
-    cardElement.insertAdjacentHTML('beforeend', `<span slot='ENMeaning'>${exampleUpdated}</span>
-  <span slot='RUMeaning'>${cardElement.state.textMeaningTranslate}</span>`);
+    cardElement.insertAdjacentHTML(
+      'beforeend',
+      `<span slot='ENMeaning'>${exampleUpdated}</span>
+  <span slot='RUMeaning'>${cardElement.state.textMeaningTranslate}</span>`,
+    );
   }
 }

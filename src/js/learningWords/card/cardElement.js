@@ -29,9 +29,7 @@ export default class WordCardElement extends HTMLElement {
       isDeleted: null,
     };
 
-    this.settings = {
-
-    };
+    this.settings = {};
 
     this.localState = {
       isReadyToRenderArr: [],
@@ -64,7 +62,12 @@ export default class WordCardElement extends HTMLElement {
   setState(propName, newPropState) {
     if (this.state[propName] !== newPropState) {
       this.state[propName] = newPropState;
-      if (propName === 'word' || propName === 'wordTranslation' || propName === 'isDone' || propName === 'isDeleted') {
+      if (
+        propName === 'word' ||
+        propName === 'wordTranslation' ||
+        propName === 'isDone' ||
+        propName === 'isDeleted'
+      ) {
         this.setAttribute(propName, this.state[propName]);
       }
     }
@@ -76,7 +79,6 @@ export default class WordCardElement extends HTMLElement {
 
     Object.assign(this.settings, config, appConfig);
   }
-
 
   static get observedAttributes() {
     return ['word', 'wordTranslate', 'isdone', 'isdeleted'];

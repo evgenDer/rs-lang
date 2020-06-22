@@ -9,11 +9,16 @@ export default function leftClick(learningScreenElement) {
       createCard(learningScreenElement);
     }
   } else {
-    if ((learningScreenElement.state.currentLearningCardIndex === 0)
-      && (learningScreenElement.state.mode === 'learning')) {
-      let lastCheckedNewWordIndex = learningScreenElement
-        .localState.newWordProgressArr.indexOf(false);
-      if (lastCheckedNewWordIndex === -1) { lastCheckedNewWordIndex = 0; }
+    if (
+      learningScreenElement.state.currentLearningCardIndex === 0 &&
+      learningScreenElement.state.mode === 'learning'
+    ) {
+      let lastCheckedNewWordIndex = learningScreenElement.localState.newWordProgressArr.indexOf(
+        false,
+      );
+      if (lastCheckedNewWordIndex === -1) {
+        lastCheckedNewWordIndex = 0;
+      }
 
       learningScreenElement.setState('currentNewWordCardIndex', lastCheckedNewWordIndex);
       switchCardMode(learningScreenElement);

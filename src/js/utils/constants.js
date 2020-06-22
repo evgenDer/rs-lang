@@ -64,5 +64,4 @@ const PAGES = [
   },
 ];
 
-
 export { PAGES, APP_NAME, BACKEND_URL };

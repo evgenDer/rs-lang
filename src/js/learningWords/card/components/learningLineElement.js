@@ -74,7 +74,9 @@ export default class LearningLineElement extends HTMLElement {
       this.innerHTML = `<span slot='word1'>${this.state.word}</span>
       <input slot='input'>`;
       this.querySelector('input').focus();
-      this.querySelector('input').onfocus = () => { removeAnswer(this); };
+      this.querySelector('input').onfocus = () => {
+        removeAnswer(this);
+      };
     }
   }
 

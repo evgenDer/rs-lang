@@ -1,11 +1,8 @@
 import { ERROR_MSG } from '../authorization/constants';
 import { getUser, getMistakeResponse } from '../utils/helpers';
-import {
-  setUserPassword, setUserEmail, setToken, getToken,
-} from '../utils/storage';
+import { setUserPassword, setUserEmail, setToken, getToken } from '../utils/storage';
 import { isValidToken } from '../utils/checks';
 import { BACKEND_URL } from '../utils/constants';
-
 
 async function createUser(event) {
   event.preventDefault();
@@ -47,6 +44,5 @@ async function getTokenForRequest() {
   }
   return getToken();
 }
-
 
 export { createUser, loginUser, getTokenForRequest };

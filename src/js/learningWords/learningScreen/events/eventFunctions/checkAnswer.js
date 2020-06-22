@@ -32,16 +32,23 @@ export default function checkAnswer(cardElement) {
     cardElement.querySelector('input').value = '';
 
     const mistakeColor = mistakes > 1 ? '#fe5c55' : '#fce373';
-    cardElement.querySelector('learning-line').insertAdjacentHTML('beforeend', `
-    <span slot='word3' ><style>.wrongLetter {color: ${mistakeColor}}</style>${comparison}</span>`);
+    cardElement.querySelector('learning-line').insertAdjacentHTML(
+      'beforeend',
+      `
+    <span slot='word3' ><style>.wrongLetter {color: ${mistakeColor}}</style>${comparison}</span>`,
+    );
 
-    setTimeout(() => cardElement.querySelector('span[slot=word3]').classList.add('animatted'), 1000);
+    setTimeout(
+      () => cardElement.querySelector('span[slot=word3]').classList.add('animatted'),
+      1000,
+    );
     setTimeout(() => {
-      cardElement.querySelector('learning-line').insertAdjacentHTML('beforeend', `<span slot='word2'>${cardElement.state.word}</span>`);
+      cardElement
+        .querySelector('learning-line')
+        .insertAdjacentHTML('beforeend', `<span slot='word2'>${cardElement.state.word}</span>`);
       cardElement.querySelector('span[slot=word3]').remove();
     }, 1500);
   }
-
 
   return false;
 }

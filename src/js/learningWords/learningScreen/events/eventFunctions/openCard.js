@@ -10,14 +10,24 @@ export default function openCard(learningScreenElement) {
   learningScreenElement.localState.learningProgressArr[cardIndex] = true;
   saveDayLocalState(learningScreenElement);
 
-  learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.remove('error');
-  learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.remove('hard');
-  learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.add('noAnswered');
+  learningScreenElement
+    .querySelectorAll('div.dot[slot=learningStatusPoint]')
+    [cardIndex].classList.remove('error');
+  learningScreenElement
+    .querySelectorAll('div.dot[slot=learningStatusPoint]')
+    [cardIndex].classList.remove('hard');
+  learningScreenElement
+    .querySelectorAll('div.dot[slot=learningStatusPoint]')
+    [cardIndex].classList.add('noAnswered');
 
   if (learningScreenElement.settings.enableAutomaticAudio) {
     readIt(card.state.word);
-    if (card.settings.showExplanationExample) { readIt(card.state.textExample); }
-    if (card.settings.showSentenceExplanation) { readIt(card.state.textMining); }
+    if (card.settings.showExplanationExample) {
+      readIt(card.state.textExample);
+    }
+    if (card.settings.showSentenceExplanation) {
+      readIt(card.state.textMining);
+    }
   }
 
   updateCard(learningScreenElement);

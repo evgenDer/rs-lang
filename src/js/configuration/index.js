@@ -60,9 +60,11 @@ const saveUserConfiguration = () => {
 const saveCardsConfiguration = () => {
   const cardsConfiguration = page.getCardsConfiguration();
 
-  if (cardsConfiguration.showWordTranslation === false &&
+  if (
+    cardsConfiguration.showWordTranslation === false &&
     cardsConfiguration.showSentenceExplanation === false &&
-    cardsConfiguration.showExplanationExample === false) {
+    cardsConfiguration.showExplanationExample === false
+  ) {
     page.showValidationErrorMessage();
     return false;
   }
@@ -92,11 +94,13 @@ const addSaveButtonClickHandler = () => {
 
 const addCheckboxClickHandler = () => {
   const checkboxes = document.querySelectorAll('.configuration__card .uk-checkbox');
-  checkboxes.forEach((element) => element.addEventListener('click', () => {
-    checkboxes.forEach((checboxEl) => {
-      checboxEl.classList.remove('validation_failed');
-    });
-  }));
+  checkboxes.forEach((element) =>
+    element.addEventListener('click', () => {
+      checkboxes.forEach((checboxEl) => {
+        checboxEl.classList.remove('validation_failed');
+      });
+    }),
+  );
 };
 
 export const initConfigurationPage = () => {

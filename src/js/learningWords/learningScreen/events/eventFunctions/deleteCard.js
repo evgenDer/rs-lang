@@ -9,11 +9,21 @@ export default function daleteCard(learningScreenElement) {
   learningScreenElement.localState.deletedArr[cardIndex] = true;
   saveDayLocalState(learningScreenElement);
 
-  learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.remove('error');
-  learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.remove('hard');
-  learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.remove('success');
-  learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.remove('noAnswered');
-  learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.add('deleted');
+  learningScreenElement
+    .querySelectorAll('div.dot[slot=learningStatusPoint]')
+    [cardIndex].classList.remove('error');
+  learningScreenElement
+    .querySelectorAll('div.dot[slot=learningStatusPoint]')
+    [cardIndex].classList.remove('hard');
+  learningScreenElement
+    .querySelectorAll('div.dot[slot=learningStatusPoint]')
+    [cardIndex].classList.remove('success');
+  learningScreenElement
+    .querySelectorAll('div.dot[slot=learningStatusPoint]')
+    [cardIndex].classList.remove('noAnswered');
+  learningScreenElement
+    .querySelectorAll('div.dot[slot=learningStatusPoint]')
+    [cardIndex].classList.add('deleted');
 
   updateCard(learningScreenElement);
 }

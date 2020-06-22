@@ -36,6 +36,13 @@ function removeUserId() {
 }
 
 export {
-  setUserId, setToken, setDateToken, setUserPassword,
-  setUserEmail, getToken, getUserId, getDateToken, removeUserId,
+  setUserId,
+  setToken,
+  setDateToken,
+  setUserPassword,
+  setUserEmail,
+  getToken,
+  getUserId,
+  getDateToken,
+  removeUserId,
 };

@@ -12,7 +12,12 @@ async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, w
 }
 
 // eslint-disable-next-line max-len
-async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 10, wordsPerPage = 10) {
+async function getDataWords(
+  numberGroup,
+  numberPage,
+  wordsPerExampleSentence = 10,
+  wordsPerPage = 10,
+) {
   try {
     const urlRequest = `${BACKEND_URL}/words/?group=${numberGroup}&page=${numberPage}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`;
     const result = await sendRequest('GET', urlRequest);
