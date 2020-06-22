@@ -1,12 +1,12 @@
-import updateCard from '../../domBuilder/lightTree/updateCard.js';
-import saveDayLocalState from '../../functions/saveDayLocalState.js';
+/* eslint-disable no-param-reassign */
+import updateCard from '../../domBuilder/lightTree/updateCard';
+import saveDayLocalState from '../../functions/saveDayLocalState';
 
 export default function restoreCard(learningScreenElement) {
-  const card = learningScreenElement.querySelector('card-word');
   const cardIndex = learningScreenElement.state.currentLearningCardIndex;
 
-  learningScreenElement.localState.learningProgressArr[learningScreenElement.state.currentLearningCardIndex] = false;
-  learningScreenElement.localState.deletedArr[learningScreenElement.state.currentLearningCardIndex] = false;
+  learningScreenElement.localState.learningProgressArr[cardIndex] = false;
+  learningScreenElement.localState.deletedArr[cardIndex] = false;
   saveDayLocalState(learningScreenElement);
 
   learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.remove('error');

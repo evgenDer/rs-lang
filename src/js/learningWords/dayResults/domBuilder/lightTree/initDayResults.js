@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export default function initDayResults(dayResult) {
   dayResult.innerHTML = `
   <span slot='resultsHeader'>Еще один значимый шаг на пути к цели!</span>

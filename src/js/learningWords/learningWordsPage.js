@@ -1,10 +1,9 @@
-import WordCardElement from './card/cardElement.js';
+import WordCardElement from './card/cardElement';
+
+import dayLearningResults from './dayResults/dayLearningResults';
+
+import LearningScreenElement from './learningScreen/LearningScreenElement';
+
 customElements.define('card-word', WordCardElement);
-
-import dayLearningResults from './dayResults/dayLearningResults.js';
 customElements.define('learning-results', dayLearningResults);
-
-import LearningScreenElement from './learningScreen/LearningScreenElement.js';
 customElements.define('learning-screen', LearningScreenElement);
-
-

@@ -1,3 +1,3 @@
-export default function getSettings(settingsGiver, settingsGetter) {
+export default function getSettings() {
 
 }

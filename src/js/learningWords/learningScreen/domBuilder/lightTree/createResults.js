@@ -1,5 +1,5 @@
 export default function createResults(learningScreenElement) {
-  learningScreenElement.insertAdjacentHTML('afterbegin', `<learning-results slot='results'></learning-results>`);
+  learningScreenElement.insertAdjacentHTML('afterbegin', '<learning-results slot=\'results\'></learning-results>');
   const results = learningScreenElement.querySelector('learning-results');
 
   results.setState('wordCount', +learningScreenElement.settings.wordCount);

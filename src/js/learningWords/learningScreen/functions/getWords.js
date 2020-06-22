@@ -1,7 +1,7 @@
-import { getAllUserWords } from '../../../api/userWords.js';
-import { getDataWords } from '../../../api/words.js';
+import { getAllUserWords } from '../../../api/userWords';
+import { getDataWords } from '../../../api/words';
 
-export async function getNewWords(newWordsCount) {
+export async function getNewWords() {
   const allwords = await getAllUserWords();
   console.log(allwords);
 }
@@ -9,4 +9,3 @@ export async function getNewWords(newWordsCount) {
 export function getLearnedWords() {
 
 }
-

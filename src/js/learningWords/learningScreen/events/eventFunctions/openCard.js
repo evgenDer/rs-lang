@@ -1,12 +1,13 @@
-import updateCard from '../../domBuilder/lightTree/updateCard.js';
-import readIt from '../../functions/readWord.js';
-import saveDayLocalState from '../../functions/saveDayLocalState.js';
+/* eslint-disable no-param-reassign */
+import updateCard from '../../domBuilder/lightTree/updateCard';
+import readIt from '../../functions/readWord';
+import saveDayLocalState from '../../functions/saveDayLocalState';
 
 export default function openCard(learningScreenElement) {
   const card = learningScreenElement.querySelector('card-word');
   const cardIndex = learningScreenElement.state.currentLearningCardIndex;
 
-  learningScreenElement.localState.learningProgressArr[learningScreenElement.state.currentLearningCardIndex] = true;
+  learningScreenElement.localState.learningProgressArr[cardIndex] = true;
   saveDayLocalState(learningScreenElement);
 
   learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[cardIndex].classList.remove('error');

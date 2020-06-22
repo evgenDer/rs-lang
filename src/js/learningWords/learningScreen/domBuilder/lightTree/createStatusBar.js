@@ -1,21 +1,19 @@
 export default function createStatusBar(learningScreenElement) {
   for (let i = 0; i < learningScreenElement.settings.newWordCount; i += 1) {
     learningScreenElement.insertAdjacentHTML('beforeend', `
-    <div class='dot newWordDot'  slot='newWordStatusPoint'></div>`)
+    <div class='dot newWordDot'  slot='newWordStatusPoint'></div>`);
     if (learningScreenElement.localState.newWordProgressArr[i]) {
-      learningScreenElement.querySelectorAll(`div.dot.newWordDot`)[i].classList.add('active');
+      learningScreenElement.querySelectorAll('div.dot.newWordDot')[i].classList.add('active');
     }
   }
-  console.log(learningScreenElement.localState.deletedArr)
   for (let i = 0; i < learningScreenElement.settings.wordCount; i += 1) {
-    console.log('123123')
     learningScreenElement.insertAdjacentHTML('beforeend', `
-    <div class='dot learningWordDot' slot='learningStatusPoint'></div>`)
+    <div class='dot learningWordDot' slot='learningStatusPoint'></div>`);
     if (learningScreenElement.localState.learningProgressArr[i]) {
-      learningScreenElement.querySelectorAll(`div.dot.learningWordDot`)[i].classList.add('success');
+      learningScreenElement.querySelectorAll('div.dot.learningWordDot')[i].classList.add('success');
     }
     if (learningScreenElement.localState.deletedArr[i]) {
-      learningScreenElement.querySelectorAll(`div.dot.learningWordDot`)[i].classList.add('deleted');
+      learningScreenElement.querySelectorAll('div.dot.learningWordDot')[i].classList.add('deleted');
     }
   }
 
@@ -27,7 +25,6 @@ export default function createStatusBar(learningScreenElement) {
         element.remove();
       });
     }
-
 
 
     switch (learningScreenElement.state.mode) {

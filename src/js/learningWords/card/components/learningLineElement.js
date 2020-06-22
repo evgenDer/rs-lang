@@ -1,31 +1,30 @@
-import removeAnswer from '../../learningScreen/events/eventFunctions/removeAnswer.js';
+import removeAnswer from '../../learningScreen/events/eventFunctions/removeAnswer';
 
 const style = {
-  inputColor: `#b9f3fc`,
-  correctLetterColor: `#61bd4f`,
-  deletedWordColor: `#fe5c55`,
-}
+  inputColor: '#b9f3fc',
+  correctLetterColor: '#61bd4f',
+  deletedWordColor: '#fe5c55',
+};
 
 export default class LearningLineElement extends HTMLElement {
   constructor() {
     super();
 
     this.state = {
-      'word': null,
-      'wordTranslate': null,
-      "textMeaning": null,
-      "textExample": null,
-    }
+      word: null,
+      wordTranslate: null,
+      textMeaning: null,
+      textExample: null,
+    };
 
     this.localState = {
       isReadyToRenderArr: [],
-    }
+    };
   }
 
   connectedCallback() {
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML =
-      `<style>
+    this.shadowRoot.innerHTML = `<style>
     :host {display: flex; flex-direction: row;}
     div {text-align: center;}
     #background {margin:0px 5px ;padding: 0px 5px 0px; position: relative; left:0; top:0; background-color: ${style.inputColor}; border-radius: 5px; user-select: none;}
@@ -75,20 +74,19 @@ export default class LearningLineElement extends HTMLElement {
       this.innerHTML = `<span slot='word1'>${this.state.word}</span>
       <input slot='input'>`;
       this.querySelector('input').focus();
-      this.querySelector('input').onfocus = () => { removeAnswer(this) };
+      this.querySelector('input').onfocus = () => { removeAnswer(this); };
     }
-
   }
 
   setState(propName, newPropState) {
-    if (this.state[propName] != newPropState) {
+    if (this.state[propName] !== newPropState) {
       this.state[propName] = newPropState;
       this.setAttribute(propName, this.state[propName]);
     }
   }
 
   static get observedAttributes() {
-    return ['word', 'translation']
+    return ['word', 'translation'];
   }
 
   attributeChangedCallback() {
@@ -110,6 +108,6 @@ export default class LearningLineElement extends HTMLElement {
         this.localState.isReadyToRenderArr = [];
         this.render();
       }
-    }, 16)
+    }, 16);
   }
 }

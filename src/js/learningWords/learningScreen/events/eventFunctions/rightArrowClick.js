@@ -1,26 +1,29 @@
-import switchCardMode from './switchCardMode.js';
-import createCard from '../../domBuilder/lightTree/createCard.js';
-import createResults from '../../domBuilder/lightTree/createResults.js';
+/* eslint-disable no-param-reassign */
+import switchCardMode from './switchCardMode';
+import createCard from '../../domBuilder/lightTree/createCard';
+import createResults from '../../domBuilder/lightTree/createResults';
 
-import checkAnswer from '../eventFunctions/checkAnswer.js';
-import readIt from '../../functions/readWord.js';
+import createUserWord from '../../functions/createUserWord';
 
-import saveDayLocalState from '../../functions/saveDayLocalState.js';
+import checkAnswer from './checkAnswer';
+import readIt from '../../functions/readWord';
+
+import saveDayLocalState from '../../functions/saveDayLocalState';
 
 export default function rightClick(learningScreenElement) {
-
   let isAnswerCorrect = true;
   let isFirstTimeDone = false;
-  const currentNewWordCardIndex = learningScreenElement.state.currentNewWordCardIndex;
-  const currentLearningCardIndex = learningScreenElement.state.currentLearningCardIndex;
+  const { currentNewWordCardIndex } = learningScreenElement.state;
+  const { currentLearningCardIndex } = learningScreenElement.state;
 
-  if (learningScreenElement.state.mode == 'newWord') {
+  if (learningScreenElement.state.mode === 'newWord') {
     isFirstTimeDone = learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex];
   } else {
-    isFirstTimeDone = learningScreenElement.localState.learningProgressArr[currentLearningCardIndex];
+    isFirstTimeDone = learningScreenElement
+      .localState.learningProgressArr[currentLearningCardIndex];
   }
-
-  if (learningScreenElement.state.mode == 'learning') {
+  console.log('123123121312');
+  if (learningScreenElement.state.mode === 'learning') {
     isAnswerCorrect = checkAnswer(learningScreenElement.querySelector('card-word'));
 
     if (isAnswerCorrect) {
@@ -32,22 +35,26 @@ export default function rightClick(learningScreenElement) {
     } else {
       learningScreenElement.querySelectorAll('div.dot[slot=learningStatusPoint]')[currentLearningCardIndex].classList.add('error');
     }
-
   } else {
     learningScreenElement.querySelectorAll('div.dot[slot=newWordStatusPoint]')[currentNewWordCardIndex].classList.add('active');
     learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex] = true;
     saveDayLocalState(learningScreenElement);
+    console.log('asdasdasdasdasd');
+    createUserWord({
+      wordId: '5e9f5ee35eb9e72bc21af716',
+      word: { difficulty: 'weak', optional: { testFieldString: 'test', testFieldBoolean: true } },
+    });
     learningScreenElement.state.currentNewWordCardIndex += 1;
   }
 
-  if ((learningScreenElement.state.currentNewWordCardIndex == learningScreenElement.settings.newWordCount) && (learningScreenElement.state.mode == 'newWord')) {
+  if ((learningScreenElement.state.currentNewWordCardIndex === learningScreenElement.settings.newWordCount) && (learningScreenElement.state.mode == 'newWord')) {
     learningScreenElement.setState('currentNewWordCardIndex', 0);
     switchCardMode(learningScreenElement);
-  } else if ((learningScreenElement.state.currentLearningCardIndex == learningScreenElement.settings.wordCount) && (learningScreenElement.state.mode == 'learning')) {
-
   }
-
-  if (learningScreenElement.localState.newWordProgressArr.indexOf(false) == -1 && learningScreenElement.localState.learningProgressArr.indexOf(false) == -1 && learningScreenElement.state.currentLearningCardIndex >= learningScreenElement.settings.wordCount) {
+  if (learningScreenElement.localState.newWordProgressArr.indexOf(false) === -1
+    && learningScreenElement.localState.learningProgressArr.indexOf(false) === -1
+    && learningScreenElement.state.currentLearningCardIndex
+    >= learningScreenElement.settings.wordCount) {
     createResults(learningScreenElement);
   } else if (isAnswerCorrect) {
     if (learningScreenElement.settings.enableAutomaticAudio && !isFirstTimeDone) {
@@ -58,7 +65,5 @@ export default function rightClick(learningScreenElement) {
     }
 
     createCard(learningScreenElement);
-  } else {
-
   }
 }

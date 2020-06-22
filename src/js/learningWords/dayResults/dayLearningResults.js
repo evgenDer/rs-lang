@@ -1,6 +1,6 @@
-import dayResultsShadowTreeHTML from './domBuilder/shadowTree/shadowTree.js';
-import initDayResults from './domBuilder/lightTree/initDayResults.js'
-import createEventListener from './events/createEvents.js';
+import dayResultsShadowTreeHTML from './domBuilder/shadowTree/shadowTree';
+import initDayResults from './domBuilder/lightTree/initDayResults';
+import createEventListener from './events/createEvents';
 
 export default class dayLearningResults extends HTMLElement {
   constructor() {
@@ -10,10 +10,10 @@ export default class dayLearningResults extends HTMLElement {
       wordCount: null,
       errorCount: null,
       noAnsweredCount: null,
-    }
+    };
     this.localState = {
       isReadyToRenderArr: [],
-    }
+    };
   }
 
   connectedCallback() {
@@ -23,14 +23,14 @@ export default class dayLearningResults extends HTMLElement {
   }
 
   setState(propName, newPropState) {
-    if (this.state[propName] != newPropState) {
+    if (this.state[propName] !== newPropState) {
       this.state[propName] = newPropState;
       this.setAttribute(propName, this.state[propName]);
     }
   }
 
   static get observedAttributes() {
-    return ['newwordcount']
+    return ['newwordcount'];
   }
 
   attributeChangedCallback() {
@@ -52,7 +52,6 @@ export default class dayLearningResults extends HTMLElement {
         this.localState.isReadyToRenderArr = [];
         initDayResults(this);
       }
-    }, 16)
+    }, 16);
   }
-
 }

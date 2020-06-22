@@ -1,22 +1,22 @@
 const styles = {
-  fontColor: `#0f2c5c`,
+  fontColor: '#0f2c5c',
   dots: {
-    mainColor: `#ffffff`,
-    newDots: `#338c9933`,
-    newDotsActive: `#338c99`,
-    learningDotsSuccess: `#61bd4f`,
-    learningDotsError: `#fce373`,
-    noAnswered: `#cecece`,
-    deleted: `#fe5c55`,
-    hard: `#c377e0`,
+    mainColor: '#ffffff',
+    newDots: '#338c9933',
+    newDotsActive: '#338c99',
+    learningDotsSuccess: '#61bd4f',
+    learningDotsError: '#fce373',
+    noAnswered: '#cecece',
+    deleted: '#fe5c55',
+    hard: '#c377e0',
   },
-  leftButtonColor: `#338c9950`,
-  rightButtonColor: `#ff934d50`,
-  leftButtonHoverColor: `#43b7c880`,
-  rightButtonHoverColor: `#ffd04d80`,
-  leftButtonActiveColor: `#43b7c8`,
-  rightButtonActiveColor: `#ffd04d`,
-}
+  leftButtonColor: '#338c9950',
+  rightButtonColor: '#ff934d50',
+  leftButtonHoverColor: '#43b7c880',
+  rightButtonHoverColor: '#ffd04d80',
+  leftButtonActiveColor: '#43b7c8',
+  rightButtonActiveColor: '#ffd04d',
+};
 
 const learningScreenShadowTreeHTML = `
 <style>

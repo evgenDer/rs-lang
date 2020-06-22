@@ -1,15 +1,16 @@
-import learningScreenShadowTreeHTML from './domBuilder/shadowTree/shadowTree.js';
 
-import createCard from './domBuilder/lightTree/createCard.js';
-import createStatusBar from './domBuilder/lightTree/createStatusBar.js';
-import createArrow from './domBuilder/lightTree/createArrow.js';
-import createModeButtons from './domBuilder/lightTree/createModeButtons.js';
-import createEvents from './events/createEvents.js';
+import learningScreenShadowTreeHTML from './domBuilder/shadowTree/shadowTree';
 
-import { getUserConfiguration } from '../../data-access/local-storage.js';
+import createCard from './domBuilder/lightTree/createCard';
+import createStatusBar from './domBuilder/lightTree/createStatusBar';
+import createArrow from './domBuilder/lightTree/createArrow';
+import createModeButtons from './domBuilder/lightTree/createModeButtons';
+import createEvents from './events/createEvents';
 
-import getDayLocalState from './functions/getDayLocalState.js';
-import createResults from './domBuilder/lightTree/createResults.js';
+import { getUserConfiguration } from '../../data-access/local-storage';
+
+import getDayLocalState from './functions/getDayLocalState';
+import createResults from './domBuilder/lightTree/createResults';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
@@ -24,20 +25,19 @@ export default class LearningScreenElement extends HTMLElement {
       newWordProgressArr: [],
       learningProgressArr: [],
       deletedArr: [],
-    }
+    };
 
     this.settings = {
       enableAutomaticAudio: true,
       newWordCount: 3,
       wordCount: 6,
       difficultyLevel: 0,
-    }
+    };
 
     this.wordArrs = {
       newWords: [],
       learnedWords: [],
-    }
-
+    };
   }
 
   connectedCallback() {
@@ -54,22 +54,30 @@ export default class LearningScreenElement extends HTMLElement {
 
     createEvents(this);
 
-    if (this.localState.newWordProgressArr.indexOf(false) == -1 && this.localState.learningProgressArr.indexOf(false) == -1) {
+    if (this.localState.newWordProgressArr.indexOf(false) === -1
+      && this.localState.learningProgressArr.indexOf(false) === -1) {
       createResults(this);
     }
   }
 
 
   setSettingsFromLocalStorage() {
-    const config = getUserConfiguration();
+    let config = getUserConfiguration();
+    console.log(config);
+    if (config == null) {
+      config = {
+        maxNewWordsPerDay: 3,
+        maxCardsWithWordsPerDay: 3,
+        difficultyLevel: 0,
+      };
+    }
     this.settings.newWordCount = config.maxNewWordsPerDay;
     this.settings.wordCount = config.maxCardsWithWordsPerDay;
     this.settings.difficultyLevel = config.difficultyLevel;
-    console.log(this.settings)
+    console.log(this.settings);
   }
 
   setState(prop, newProp) {
     this.state[prop] = newProp;
   }
-
 }
