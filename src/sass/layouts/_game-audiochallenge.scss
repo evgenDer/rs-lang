@@ -1,0 +1,431 @@
+#game-audiochallenge {
+  header {
+    display: none;
+  }
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 1px;
+  margin-top: -1px;
+  animation: 2s ease-in-out;
+  background: 
+    linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%) center center / cover fixed, 
+    url(../img/bg-audiochallenge.jpg) center center no-repeat;
+  background-size: cover;
+  @include media-tablet {
+    height: 100%;
+  }
+}
+
+.audiochallenge__wrapper {
+  display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+  padding: 20px;
+  width: 100%;
+}
+
+.audiochallenge__primary-row {
+  width: 100%;
+  display: flex;
+	align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  @include media-mobile {
+    padding: 0 10px;
+  }
+}
+
+.audiochallenge__exit {
+  img {
+    width: 25px;
+    filter: invert(100%);
+  }
+  &:hover {
+    cursor: pointer;
+    img {
+      filter: invert(18%) sepia(100%) hue-rotate(330deg) saturate(600%) contrast(76%) brightness(220%);
+      transition: all .4s;
+    }
+  }
+  transition: all .4s;
+
+  .exit__back {
+    transform: rotate(180deg);
+  }
+}
+
+.audiochallenge__exit_full {
+  .exit {
+    display: block;
+  }
+  .exit__back {
+    display: none;
+  }
+}
+.audiochallenge__exit_back {
+  .exit {
+    display: none;
+  }
+  .exit__back {
+    display: block;
+  }
+}
+
+
+.audiochallenge__secondary-row {
+  width: 100%;
+  display: flex;
+	align-items: center;
+  justify-content: center;
+}
+
+.audiochallenge__desription {
+  background: $color-secondary;
+  opacity: 0.8;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 80px 0 10px;
+  padding: 40px 0;
+  display: flex;
+	align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.description__title {
+  p {
+    color: $color-active;
+    @include font(3.2rem, 3.2rem, 800);
+    @include media-tablet {
+      @include font(2.6rem, 2.6rem, bold);
+    }
+    margin: 5px;
+  }
+  margin: 20px 0;
+}
+
+.description__desc {
+  p {
+    color: $color-primary;
+    @include font(2.2rem, 2.2rem);
+    margin: 5px;
+    padding: 0 15px;
+    text-align: center;
+  }
+  margin: 20px 0;
+}
+
+.description__start {
+  margin: 25px 0 20px;
+  outline: none;
+	border: none;
+	width: 250px;
+	height: 70px;
+	border-radius: 10px;
+	@include font(1.4rem, 1.4rem, 600);
+	@extend %light-shadow;
+
+	background-color: $color-primary;
+	color: $color-additional;
+	&:hover {
+		background-color: $color-active;
+		color: $color-secondary;
+		cursor: pointer;
+		transition: all 0.4s;
+	}
+	transition: all 0.4s;
+}
+
+.audiochallenge__game-control {
+  max-width: fit-content;
+  display: flex;
+	align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  @include media-mobile {
+    flex-direction: column;
+  }
+  .game-control {
+    margin: 5px;
+  }
+}
+
+.game-control__btn {
+  width: 150px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  background-color: $color-primary !important;
+	color: $color-secondary !important;
+	&:hover {
+		background-color: $color-additional;
+		color: $color-primary;
+		cursor: pointer;
+		transition: all 0.4s;
+	}
+	transition: all 0.4s;
+}
+
+.game-control__list {
+  background: $color-secondary;
+  opacity: 0.8;
+  border-radius: 10px;
+  color: $color-primary;
+  padding: 15px 25px;
+  min-width: fit-content;
+  ul li {
+    @include font(1.1rem, 1.4rem, 400);
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  .list__active {
+    color: $color-active;
+  }
+}
+
+
+
+.audiochallenge__game-field {
+  margin: 50px 0 10px;
+}
+
+
+.game-field__answers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.game-field__answer {
+  width: 200px;
+  height: 60px;
+  background: $color-secondary;
+  opacity: 0.8;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+	align-items: center;
+  justify-content: center;
+  @include font(1.2rem, 1.2rem);
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.4s;
+  }
+  transition: all 0.4s;
+}
+
+.answer__number {
+  margin-right: 10px;
+  color: $color-yellow;
+}
+
+.answer__word {
+  color: $color-primary;
+  max-height: 60px;
+  text-align: center;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.answer_wrong {
+  opacity: 0.6;
+  .answer__number {
+    color: $color-red;
+  }
+  .answer__word {
+    color: $color-red;
+    text-decoration: line-through;
+  }
+  &:hover {
+    cursor: default;
+    opacity: 0.4;
+    transition: all 0.4s;
+  }
+  transition: all 0.4s;
+}
+
+.answer_correct {
+  opacity: 0.9;
+  transition: all 0.4s;
+  .answer__number {
+    display: none;
+  }
+  .answer__word {
+    color: $color-green;
+  }
+}
+
+
+.game-field__control-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.game-field__control {
+  width: 250px;
+  height: 60px;
+  background: $color-secondary;
+  opacity: 0.8;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+	align-items: center;
+  justify-content: center;
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.4s;
+    img {
+      filter: invert(60%);
+      transition: all 0.4s;
+    }
+  }
+  transition: all 0.4s;
+
+  img {
+    width: 30px;
+    filter: invert(100%);
+    transition: all 0.4s;
+  }
+  p {
+    @include font(1.4rem, 1.4rem);
+    color: $color-primary;
+  }
+}
+
+.game-field__control_idnk {
+  img {
+    display: none;
+  }
+}
+
+.game-field__control_next {
+  p {
+    display: none;
+  }
+}
+
+
+.game-field__task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.task__desc {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-direction: column;
+  color: $color-primary;
+  margin: 20px;
+  @include font(1.2rem, 1.2rem);
+}
+
+.task__word {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  * {
+    margin: 5px;
+  }
+  p {
+    max-width: 500px;
+    word-break: break-all;
+    overflow: hidden;
+  }
+  .word__transcr {
+    font-style: italic;
+    color: $color-yellow;
+  }
+}
+
+.task__example {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  * {
+    margin: 5px;
+  }
+
+  .exapmle {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    flex-direction: column;
+    p {
+      max-width: 500px;
+      word-break: break-all;
+      overflow: hidden;
+    }
+    * {
+      margin: 5px;
+    }
+  }
+}
+
+.task__audio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 180px;
+  border-radius: 100%;
+  background-color: $color-active;
+  opacity: 0.8;
+  .task__speaker {
+    width: 90px;
+  }
+}
+
+.task__img img {
+  width: 300px;
+  border: 3px solid $color-secondary;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.task__speaker {
+  width: 30px;
+  filter: invert(100%);
+  &:hover {
+    cursor: pointer;
+    filter: invert(60%);
+    transition: all 0.4s;
+  }
+  transition: all 0.4s;
+}

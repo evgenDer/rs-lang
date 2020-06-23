@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../favicon/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
+  <title>RS Lang</title>
+</head>
+<body id="game-audiochallenge">
+  <main class="audiochallenge">
+    <div class="wrapper audiochallenge__wrapper">
+      <div class="audiochallenge__primary-row">
+        <div class="audiochallenge__exit audiochallenge__exit_back">
+          <img class="exit" src="./assets/img/icons/close-game.svg" alt="close">
+          <img class="exit__back" src="./assets/img/icons/arrow-right.svg" alt="close">
+        </div>
+        <div class="audiochallenge__game-control">
+          <div class="uk-inline game-control">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_level" type="button">
+              Уровень: <span id="game-control__current_level">1</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_level">
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="list__active list_level_1">Уровень 1</li>
+                <li class="list_level_2">Уровень 2</li>
+                <li class="list_level_3">Уровень 3</li>
+                <li class="list_level_4">Уровень 4</li>
+                <li class="list_level_5">Уровень 5</li>
+                <li class="list_level_6">Уровень 6</li>
+              </ul>
+            </div>
+          </div>
+          <div class="uk-inline game-control">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_round" type="button">
+              Раунд: <span id="game-control__current_round">1</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_round">
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="list__active list_round_1">Раунд 1</li>
+                <li class="list_round_2">Раунд 2</li>
+                <li class="list_round_3">Раунд 3</li>
+                <li class="list_round_4">Раунд 4</li>
+                <li class="list_round_5">Раунд 5</li>
+                <li class="list_round_6">Раунд 6</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="audiochallenge__secondary-row">
+        <div class="audiochallenge__desription hidden">
+          <div class="description__title">
+            <p>Аудиовызов</p>
+          </div>
+          <div class="description__desc">
+            <p>Выберите из предложенных вариантов ответа правильный перевод слова, которое услышите</p>
+          </div>
+          <button class="description__start">НАЧАТЬ</button>
+        </div>
+        
+        <div class="audiochallenge__game-field">
+          <div class="game-field__task">
+            <div class="task__img hidden">
+              <img src="./assets/img/bg-audiochallenge.jpg" alt="tmp">
+            </div>
+            <div class="task__audio">
+              <img class="task__speaker" id="main-speaker" src="./assets/img/icons/speaker.svg" alt="speaker">
+            </div>
+            <div class="task__desc hidden">
+              <div class="task__word">
+                <img class="task__speaker" id="word-speaker" src="./assets/img/icons/speaker.svg" alt="speaker">
+                <p class="word__eng">TV</p>
+                <p class="word__transcr">[tv]</p>
+              </div>
+              <div class="task__example">
+                <img class="task__speaker" id="example-speaker" src="./assets/img/icons/speaker.svg" alt="speaker">
+                <div class="exapmle">
+                  <p class="exapmle__eng">I like to watch TV.</p>
+                  <p class="exapmle__rus">Я люблю смотреть телевизор</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="game-field__answers">
+            <div class="game-field__answer">
+              <p class="answer__number">1</p>
+              <p class="answer__word">машина</p>
+            </div>
+            <div class="game-field__answer answer_wrong">
+              <p class="answer__number">2</p>
+              <p class="answer__word">очень-очень-длинное-слово</p>
+            </div>
+            <div class="game-field__answer">
+              <p class="answer__number">3</p>
+              <p class="answer__word">компьютер</p>
+            </div>
+            <div class="game-field__answer answer_correct">
+              <p class="answer__number">4</p>
+              <p class="answer__word">телевизор</p>
+            </div>
+            <div class="game-field__answer answer_wrong uk-animation-shake">
+              <p class="answer__number">5</p>
+              <p class="answer__word">стол</p>
+            </div>
+          </div>
+          <div class="game-field__control-field">
+            <div class="game-field__control game-field__control_next">
+              <p>Я НЕ ЗНАЮ</p>
+              <img src="./assets/img/icons/arrow-right.svg" alt="close">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+</body>
+</html>
