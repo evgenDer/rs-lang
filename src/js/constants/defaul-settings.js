@@ -20,3 +20,10 @@ export const DEFAULT_APP_CONFIGURATION = {
   deleteWords: true,
   markAsDifficultWord: true,
 };
+
+export const DEFAULT_SETTINGS_PUZZLE = {
+  autoPlaySound: 'true',
+  showImage: 'true',
+  showTranslation: 'true',
+  playSound: 'true',
+};
