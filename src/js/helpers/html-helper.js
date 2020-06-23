@@ -11,3 +11,13 @@ export const updateCheckboxValue = (value, selector) => {
 export const getInputValue = (selector) => document.querySelector(selector).value;
 
 export const getCheckboxValue = (selector) => document.querySelector(selector).checked;
+
+export const setClassesToElement = (selector, ...classes) => {
+  const element = document.querySelector(selector);
+  element.classList.add(...classes);
+};
+
+export const removeClassesFromElement = (selector, ...classes) => {
+  const element = document.querySelector(selector);
+  element.classList.remove(...classes);
+};

@@ -6,6 +6,7 @@
   width: 100vw!important;
   height: 100vh;
   overflow: hidden;
+  position: fixed;
 }
 
 .authentication__form {
@@ -21,7 +22,7 @@
   padding: 2%;
   background-color: rgba(248, 242, 238, 0.8);
   @media (max-width: $mobile-big-width){
-
+    width: 300px;
   }
 }
 /* form Container */
@@ -51,8 +52,11 @@ form .authentication-page__container{
 .input-item {
   background: #fff;
   color: $color-additional;
-  padding: 15px 0px 15px 8px;
+  padding: 15px 0px 14.8px 8px;
   border-radius: 5px 0px 0px 5px;
+  @media (max-width: $mobile-big-width){
+    display: none;
+  }
 }
 
 /* Show/hide password Font Icon */
@@ -72,13 +76,12 @@ form .authentication-page__container{
   z-index: 5;
 
   cursor: pointer;
+  @media (max-width: $mobile-big-width){
+    margin: -49px 15px 20px 0;
+  }
 }
 /* inputs form  */
 input[class="form-input"]{
-  @include media-mobilesmall{
-    width: 260px;
-    padding: 25px;
-  }
   width: 280px;
   height: 49px;
 
@@ -89,10 +92,21 @@ input[class="form-input"]{
   border: none;
   border-radius: 0px 5px 5px 0px;
   transition: 0.2s linear;
+  @media (max-width: $mobile-big-width){
+    margin-left: 20px;
+    padding-left: 20px;
+    width: 250px;
+    border-radius: 5px;
+  }
 
 }
 input[id="txt-input"] {
   width: 280px;
+  @media (max-width: $mobile-big-width){
+    width: 250px;
+    padding-left: 20px;
+    margin-left: 20px;
+  }
 }
 /* focus  */
 input:focus {

@@ -4,7 +4,7 @@ import {
   DEFAULT_APP_CONFIGURATION,
 } from '../constants/defaul-settings';
 import * as localStorage from '../data-access/local-storage';
-import * as htmlHelper from '../helpers/html-helper';
+import * as page from './page';
 
 export const getUserConfiguration = () => {
   let userConfiguration = localStorage.getUserConfiguration();
@@ -39,87 +39,68 @@ export const getAppConfiguration = () => {
   return appConfiguration;
 };
 
-const updateUserConfigurationPageElement = () => {
-  const userConfiguration = getUserConfiguration();
-
-  htmlHelper.updateInputValue(userConfiguration.maxNewWordsPerDay, '#form-maxNewWordsPerDay');
-  htmlHelper.updateInputValue(userConfiguration.maxCardsWithWordsPerDay, '#form-maxCardsWithWordsPerDay');
-  htmlHelper.updateInputValue(userConfiguration.difficultyLevel, '#form-difficultyLevel');
-};
-
-const updateCardsConfigurationPageElement = () => {
-  const cardsConfiguration = getCardsConfiguration();
-
-  htmlHelper.updateCheckboxValue(cardsConfiguration.showWordTranslation, '#form-showWordTranslation');
-  htmlHelper.updateCheckboxValue(cardsConfiguration.showSentenceExplanation, '#form-showSentenceExplanation');
-  htmlHelper.updateCheckboxValue(cardsConfiguration.showExplanationExample, '#form-showExplanationExample');
-  htmlHelper.updateCheckboxValue(cardsConfiguration.showWordTranscription, '#form-showWordTranscription');
-  htmlHelper.updateCheckboxValue(cardsConfiguration.showImageAssociation, '#form-showImageAssociation');
-};
-
-const updateAppConfigurationPageElement = () => {
-  const appConfiguration = getAppConfiguration();
-
-  htmlHelper.updateCheckboxValue(appConfiguration.enableAutomaticAudio, '#form-enableAutomaticAudio');
-  htmlHelper.updateCheckboxValue(appConfiguration.showNewWordTranslation, '#form-showNewWordTranslation');
-  htmlHelper.updateCheckboxValue(appConfiguration.showSentenceTranslation, '#form-showSentenceTranslation');
-  htmlHelper.updateCheckboxValue(appConfiguration.showAnswer, '#form-showAnswer');
-  htmlHelper.updateCheckboxValue(appConfiguration.deleteWords, '#form-deleteWords');
-  htmlHelper.updateCheckboxValue(appConfiguration.markAsDifficultWord, '#form-markAsDifficultWord');
-};
-
 const updateConfigurationValues = () => {
-  updateUserConfigurationPageElement();
-  updateCardsConfigurationPageElement();
-  updateAppConfigurationPageElement();
+  const userConfiguration = getUserConfiguration();
+  page.updateUserConfigurationPageElement(userConfiguration);
+
+  const cardsConfiguration = getCardsConfiguration();
+  page.updateCardsConfigurationPageElement(cardsConfiguration);
+
+  const appConfiguration = getAppConfiguration();
+  page.updateAppConfigurationPageElement(appConfiguration);
 };
 
 const saveUserConfiguration = () => {
-  const userConfiguration = getUserConfiguration();
-
-  userConfiguration.maxNewWordsPerDay = htmlHelper.getInputValue('#form-maxNewWordsPerDay');
-  userConfiguration.maxCardsWithWordsPerDay = htmlHelper.getInputValue('#form-maxCardsWithWordsPerDay');
-  userConfiguration.difficultyLevel = htmlHelper.getInputValue('#form-difficultyLevel');
+  const userConfiguration = page.getUserConfiguration();
 
   localStorage.setUserConfiguration(userConfiguration);
+  return true;
 };
 
 const saveCardsConfiguration = () => {
-  const cardsConfiguration = getCardsConfiguration();
+  const cardsConfiguration = page.getCardsConfiguration();
 
-  cardsConfiguration.showWordTranslation = htmlHelper.getCheckboxValue('#form-showWordTranslation');
-  cardsConfiguration.showSentenceExplanation = htmlHelper.getCheckboxValue('#form-showSentenceExplanation');
-  cardsConfiguration.showExplanationExample = htmlHelper.getCheckboxValue('#form-showExplanationExample');
-  cardsConfiguration.showWordTranscription = htmlHelper.getCheckboxValue('#form-showWordTranscription');
-  cardsConfiguration.showImageAssociation = htmlHelper.getCheckboxValue('#form-showImageAssociation');
+  if (cardsConfiguration.showWordTranslation === false &&
+    cardsConfiguration.showSentenceExplanation === false &&
+    cardsConfiguration.showExplanationExample === false) {
+    page.showValidationErrorMessage();
+    return false;
+  }
 
   localStorage.setCardsViewConfiguration(cardsConfiguration);
+  return true;
 };
 
 const saveAppConfiguration = () => {
-  const appConfiguration = getAppConfiguration();
-
-  appConfiguration.enableAutomaticAudio = htmlHelper.getCheckboxValue('#form-enableAutomaticAudio');
-  appConfiguration.showNewWordTranslation = htmlHelper.getCheckboxValue('#form-showNewWordTranslation');
-  appConfiguration.showSentenceTranslation = htmlHelper.getCheckboxValue('#form-showSentenceTranslation');
-  appConfiguration.showAnswer = htmlHelper.getCheckboxValue('#form-showAnswer');
-  appConfiguration.deleteWords = htmlHelper.getCheckboxValue('#form-deleteWords');
-  appConfiguration.markAsDifficultWord = htmlHelper.getCheckboxValue('#form-markAsDifficultWord');
+  const appConfiguration = page.getAppConfiguration();
 
   localStorage.setAppConfiguration(appConfiguration);
+  return true;
 };
 
 const addSaveButtonClickHandler = () => {
   document.querySelector('.configuration__save-button').addEventListener('click', () => {
-    saveUserConfiguration();
-    saveCardsConfiguration();
-    saveAppConfiguration();
-
-    UIkit.notification({ message: "<span uk-icon='icon: check'></span> Сохранено", status: 'success', pos: 'top-right' });
+    if (saveUserConfiguration() && saveCardsConfiguration() && saveAppConfiguration()) {
+      UIkit.notification({
+        message: "<span uk-icon='icon: check'></span> Сохранено",
+        status: 'success',
+        pos: 'top-right',
+      });
+    }
   });
+};
+
+const addCheckboxClickHandler = () => {
+  const checkboxes = document.querySelectorAll('.configuration__card .uk-checkbox');
+  checkboxes.forEach((element) => element.addEventListener('click', () => {
+    checkboxes.forEach((checboxEl) => {
+      checboxEl.classList.remove('validation_failed');
+    });
+  }));
 };
 
 export const initConfigurationPage = () => {
   updateConfigurationValues();
   addSaveButtonClickHandler();
+  addCheckboxClickHandler();
 };

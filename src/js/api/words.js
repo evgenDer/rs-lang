@@ -7,7 +7,7 @@ async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, w
     const content = await sendRequest('GET', urlRequest);
     return content.count;
   } catch (error) {
-    return error;
+    return 20;
   }
 }
 

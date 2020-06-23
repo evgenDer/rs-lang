@@ -1,5 +1,5 @@
 import { ERROR_MSG } from '../authorization/constants';
-import { getUser, getMistakeResponse } from '../utils/helpers';
+import { getMistakeResponse, getUser } from '../utils/helpers';
 import {
   setUserPassword, setUserEmail, setToken, getToken,
 } from '../utils/storage';
@@ -23,11 +23,13 @@ async function createUser(event) {
 
   if (!rawResponse.ok) {
     ERROR_MSG.innerText = getMistakeResponse(rawResponse.status);
+  } else {
+    ERROR_MSG.innerText = 'Регистрация прошла успешно';
   }
 }
 
-async function loginUser() {
-  const user = getUser();
+async function loginUser(emailUser, passwordUser) {
+  const user = {email: emailUser, password: passwordUser};
   const rawResponse = await fetch(`${BACKEND_URL}/signin`, {
     method: 'POST',
     headers: {

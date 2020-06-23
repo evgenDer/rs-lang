@@ -19,6 +19,7 @@ export const DEFAULT_APP_CONFIGURATION = {
   showAnswer: true,
   deleteWords: true,
   markAsDifficultWord: true,
+  possibilityToMarkWord: true,
 };
 
 export const DEFAULT_SETTINGS_PUZZLE = {
