@@ -1,7 +1,7 @@
 import sendRequest from './requests';
 import { BACKEND_URL } from '../utils/constants';
 
-async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, wordsPerPage = 20) {
+async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, wordsPerPage = 10) {
   try {
     const urlRequest = `${BACKEND_URL}/words/count?group=${numberGroup}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`;
     const content = await sendRequest('GET', urlRequest);

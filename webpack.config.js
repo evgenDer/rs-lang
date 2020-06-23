@@ -65,7 +65,6 @@ const jsLoaders = () => {
     loader: 'babel-loader',
     options: babelOptions(),
   }];
-<<<<<<< HEAD
   return loaders;
 };
 
@@ -94,39 +93,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
-
-=======
-
-  return loaders;
-};
-
-const htmlWebpackPluginCreator = (template, ...args) => new HtmlWebpackPlugin({
-  chunks: [...args],
-  template: `./pages/${template}`,
-  minify: {
-    collapseWhitespace: isProd,
-  },
-  inject: 'body',
-  filename: template,
-});
-
-const plugins = () => {
-  const base = [
-    new HtmlWebpackPlugin({
-      chunks: ['index'],
-      template: './index.html',
-      minify: {
-        collapseWhitespace: isProd,
-      },
-      inject: 'body',
-      filename: 'index.html',
-    }),
-    htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
-    htmlWebpackPluginCreator('games.html', 'index'),
-    htmlWebpackPluginCreator('dictionary.html', 'index'),
-    htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
-
->>>>>>> d099f752a10f26c584a906e0ff75c8cc59fcc9b9
+    htmlWebpackPluginCreator('game_english-puzzle.html', 'index', 'english_puzzle'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -158,6 +125,7 @@ module.exports = {
   entry: {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
+    english_puzzle: ['@babel/polyfill', './js/english-puzzle/index.js', './sass/style.scss']
   },
   output: {
     filename: filename('js'),
