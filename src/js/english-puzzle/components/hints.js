@@ -21,11 +21,13 @@ function addHintTranslate(isHintOn) {
 function addHintShowImage(isHintOn, image) {
   const hintElement = document.querySelector(`.${BUTTONS_CLASSES.showImage}`);
   const sentenceElementsSource = SOURCE_FIELD.querySelectorAll('canvas');
-  const sentenceElementsResult = RESULT_FIELD.querySelectorAll('.current > canvas');
+  const sentenceElementsResult = RESULT_FIELD.querySelectorAll('.current canvas');
   if (!isHintOn) {
     hintElement.classList.add('disable');
+    debugger;
     sentenceElementsSource.forEach((canvas) => { fillPuzzleColor(canvas); });
     sentenceElementsResult.forEach((canvas) => { fillPuzzleColor(canvas); });
+    debugger;
   } else {
     sentenceElementsSource.forEach((canvas) => { drawPuzzleImage(canvas, image); });
     sentenceElementsResult.forEach((canvas) => { drawPuzzleImage(canvas, image); });

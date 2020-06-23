@@ -1,30 +1,38 @@
 import { shuffle } from '../../utils/helpers';
 import { createElement } from '../../utils/create';
+import { getDataEnglishPuzzle } from '../../utils/storage';
 
 export function fillText(puzzle) {
   const context = puzzle.getContext('2d');
   context.fillStyle = 'white';
-  context.font = 'bold 2em sans-serif';
+  context.font = 'bold 20px sans-serif';
   context.textAlign = 'center';
   const text = puzzle.dataset.word;
   const width = puzzle.width - puzzle.height / 2;
   context.fillText(`${text}`, width / 2 + puzzle.height / 4, puzzle.height / 1.5, width);
 }
 
-export function drawPuzzleImage(puzzle, image) {
+export function drawPuzzleImage(puzzle, imageSrc) {
   const context = puzzle.getContext('2d');
   const widthClipElement = puzzle.dataset.clip;
-  context.drawImage(image, widthClipElement, 0);
-  fillText(puzzle);
-  context.stroke();
+  const image = document.createElement('img');
+  image.src = imageSrc;
+  image.onload = () => {
+    context.drawImage(image, widthClipElement, 0);
+    fillText(puzzle);
+    context.lineWidth = 3;
+    context.strokeStyle = 'white';
+    context.stroke();
+  };
 }
 
 // eslint-disable-next-line class-methods-use-this
 export function fillPuzzleColor(puzzle) {
   const context = puzzle.getContext('2d');
-  context.fillStyle = 'blue';
+  context.fillStyle = '#0f2c5c';
   context.fill();
   fillText(puzzle);
+  context.lineWidth = 5;
   context.stroke();
 }
 
@@ -39,7 +47,9 @@ export default class Sentence {
   }
 
   drawPuzzle(width, text, isLastSentence = false, isFirstSentence = false) {
+    const englishPuzzleSetting = getDataEnglishPuzzle();
     const puzzle = document.createElement('canvas');
+    // puzzle.setAttribute('draggable', true)
     const context = puzzle.getContext('2d');
     const radius = this.height / 4;
     puzzle.width = width + this.height / 2;
@@ -48,7 +58,6 @@ export default class Sentence {
     context.beginPath();
     context.moveTo(0, 0);
     if (!isFirstSentence) {
-      puzzle.style.marginLeft = `-${this.height / 2 - 2}px`;
       context.lineTo(0, radius);
       context.arc(radius / 2, 2 * radius, radius, (3 / 2) * Math.PI, (1 / 2) * Math.PI, false);
       context.lineTo(0, 3 * radius);
@@ -67,7 +76,9 @@ export default class Sentence {
     context.clip();
     puzzle.setAttribute('data-clip', -this.width);
     puzzle.setAttribute('data-word', text);
-    this.drawPuzzleImage(puzzle);
+    if (englishPuzzleSetting.showImage) {
+      drawPuzzleImage(puzzle, this.image.src);
+    } else fillPuzzleColor(puzzle);
     return puzzle;
   }
 
@@ -78,8 +89,10 @@ export default class Sentence {
   }
 
   renderCorrectSentence() {
+    this.sentenceBlock = [];
+    this.width = 0;
     this.renderNewSentence();
-    const sentenceBlock = createElement('div', 'sentence', this.sentenceBlock);
+    const sentenceBlock = createElement('div', 'sentence current', this.sentenceBlock);
     return sentenceBlock;
   }
 
@@ -87,10 +100,8 @@ export default class Sentence {
     const arraySentence = this.sentence.split(' ');
     const minWidth = 3;
     let puzzle;
-    const sentenceBlock = document.createElement('div');
-    sentenceBlock.classList.add('sentence');
     arraySentence.forEach((element, index) => {
-      const widthLastElement = this.imageWidth - this.width - this.height / 4;
+      const widthLastElement = this.imageWidth - this.width;
       const widthElement = (index !== arraySentence.length - 1)
         ? (this.imageWidth / this.sentence.length) * element.length : widthLastElement;
       const widthForDrawElement = (element.length < minWidth && index !== arraySentence.length - 1)
