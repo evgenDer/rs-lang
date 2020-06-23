@@ -5,12 +5,17 @@
   background-repeat: no-repeat!important;
   position: relative;
   width: 100vw!important;
-  height: 100%!important;
+  height: 100vh!important;
   background-size: cover!important;
   overflow-x: hidden;
   padding: 20px 0;
   margin-bottom: 0px!important;
   bottom: 0px!important;
+  height: 100vh;
+  @include media-laptop {
+    height: 100%!important;
+  }
+  // touch-action: none;
 }
 
 .block-source p{
@@ -51,6 +56,9 @@
   }
 }
 .block-results img{
+  animation-name: Appearance;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(.1,-.6,.2,0);
   width: inherit;
   height: inherit;
 }
@@ -198,8 +206,12 @@ option::selection {
   .uk-active{
     color: $color-active;
   }
+.uk-dropdown.uk-open.uk-dropdown-bottom-left:nth-child(4){
+  height: 420px;
+  overflow-y: scroll;
+}
 
-  .uk-button{
+.uk-button{
     font-size: 1.5em;
     border-radius: 5px;
     background-color: $color-additional;
@@ -211,4 +223,7 @@ option::selection {
   }
 }
 
-
+@keyframes Appearance {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
