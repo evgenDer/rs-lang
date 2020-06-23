@@ -41,13 +41,13 @@ button:hover {
 
 
 .btn_autopronoucing::before{
-  content: "\f028";
+  content: "\f001";
 }
 .btn_translation::before{
   content: "\f1ab";
 }
 .btn_pronoucing::before{
-  content: "\f001";
+  content: "\f028";
 }
 .btn_background::before{
   content: "\f03e";
@@ -57,12 +57,18 @@ button:hover {
   content: "\f015";
 }
 
+.btn_statistic img{
+  width: 35px;
+  height: 35px;
+
+}
+
 .block-hints button{
     background-color: transparent;
 }
 
 
-.btn_exit, .btn_autopronoucing{
+.btn_exit, .btn_pronoucing{
   font-family: FontAwesome;
 }
 
@@ -106,6 +112,26 @@ button:hover {
   }
 }
 
+button.btn_unknown::before{
+ content: "Не знаю";
+}
+
+.btn_check::before{
+  content: "Проверить";
+}
+
+.btn_result::before{
+  content: "Результаты";
+}
+
+.btn_continue::before{
+  content: "Продолжить";
+}
+
+.btn_next::before{
+  content: "Следующий раунд"
+}
+
 .block-btns{
   justify-content: center;
   display: flex;
@@ -122,7 +148,7 @@ button:hover {
 .block-btns button{
   color: white;
   width: 300px;
-  height: 60px;
+  height: 80px;
   margin: 30px;
   background-color: $color-additional;
   font-size: 2rem;

@@ -1,20 +1,42 @@
 .game-puzzle{
   background: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%)
-  center center / cover fixed, url(../img/puzzle_background.jpg)
-  center center no-repeat fixed!important;
+  center center / cover, url(../img/puzzle_background.jpg)
+  center center no-repeat!important;
   background-repeat: no-repeat!important;
   position: relative;
   width: 100vw!important;
   height: 100%!important;
-  overflow-x: hidden;
   background-size: cover!important;
+  overflow-x: hidden;
   padding: 20px 0;
+  margin-bottom: 0px!important;
+  bottom: 0px!important;
 }
 
-canvas{
-  color: white;
-  font-size: 3em;
-  z-index: 5px;
+.block-source p{
+  color: $color-secondary;
+  vertical-align: middle;
+  font-size: 30px;
+  font-weight: 700;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.block-source{
+  margin: auto;
+  margin-top: 40px;
+  background-color: lightblue;
+  width: $max-width-puzzle-field;
+  height: 60px;
+  @mixin media-laptop{
+    width: $middle-width-puzzle-field;
+  }
+}
+
+.current{
+ // border: 1px solid green;
+  background: lightblue;
+  height: 60px;
 }
 
 .block-results{
@@ -22,19 +44,33 @@ canvas{
   text-align: center;
   background-color: $color-background;
   // padding-left: 0px;
-  width: 800px;
-  height: 800px;
-  padding-left: 40px;
+  width: $max-width-puzzle-field;
+  height: 600px;
+  @mixin media-laptop{
+    width: $middle-width-puzzle-field;
+  }
+}
+.block-results img{
+  width: inherit;
+  height: inherit;
 }
 
-.block-source{
-  padding-left: 40px;
-  margin: auto;
-  margin-top: 40px;
-  width: 800px;
-  background-color: lightblue;
-  height: 80px;
+.sentence {
+  display: flex;
+  width: $max-width-puzzle-field;
+  @mixin media-laptop{
+    width: $middle-width-puzzle-field;
+  }
+  padding-left: 30px;
 }
+
+canvas{
+  color: white;
+  font-size: 3em;
+  z-index: 5px;
+  margin-left: -30px;
+}
+
 
 .hints{
   display: flex;
@@ -88,8 +124,9 @@ option::selection {
 .block-hints{
   p{
     margin: 0 0 40px;
-    height: 30px;
   }
+  height: 100px;
+  margin-top: 20px;
   font-size: 2em;
   color: $color-primary;
   text-align: center;
