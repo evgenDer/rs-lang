@@ -1,18 +1,13 @@
 import StartScreen from './StartScreen';
-import StatusBar from './StatusBar';
-import GameBoard from './GameBoard';
-import Display from './Display';
+import GamePage from './gamePage/GamePage';
+
 
 const mainWrapper = document.querySelector('.speak-it_main');
-const gameContainer = document.querySelector('.game-container');
 
 const startScreen = new StartScreen();
-mainWrapper.append(startScreen.generateStartScreen());
-const statusBar = new StatusBar();
-const gameBoard = new GameBoard();
-const display = new Display();
-gameContainer.append(
-  statusBar.generateStatusBar(),
-  display.generateDisplay(),
-  gameBoard.generateGameBoard(),
-);
+const gamePage = new GamePage();
+mainWrapper.append( gamePage.generateGamePage(), startScreen.generateStartScreen());
+
+document.addEventListener('startSpeakit', () => {
+  gamePage.start();
+})

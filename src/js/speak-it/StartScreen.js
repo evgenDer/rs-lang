@@ -17,6 +17,8 @@ export default class StartScreen {
   addListeners() {
     this.startBtn.addEventListener('click', () => {
       this.intro.classList.add('hidden');
+      const customEvent = new CustomEvent('startSpeakit');
+      document.dispatchEvent(customEvent);
     });
   }
 }

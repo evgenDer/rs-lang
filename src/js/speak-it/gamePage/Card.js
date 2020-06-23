@@ -1,4 +1,4 @@
-import { createElement } from '../utils/create';
+import { createElement } from '../../utils/create';
 
 export default class Card {
   constructor(data) {
@@ -8,7 +8,7 @@ export default class Card {
     this.wordTranslate = data.wordTranslate;
     this.imageUrl = `https://raw.githubusercontent.com/Marrlika/rslang-data/master/${data.image}`;
     this.audioSrc = `https://raw.githubusercontent.com/Marrlika/rslang-data/master/${data.audio}`;
-    this.isPronounceCorrectly = false;
+    this.isCorrectAnswer = false;
   }
 
   generateCard() {
@@ -29,8 +29,25 @@ export default class Card {
     return this.audioSrc;
   }
 
-  getDataForDisplay() {
-    return { image: this.imageUrl, translate: this.wordTranslate };
+  getWord() {
+    return this.word;
+  }
+
+  getElement() {
+    return this.card;
+  }
+
+  wasAnswered() {
+  return this.isCorrectAnswer;
+  }
+
+  getTranslate() {
+    return this.wordTranslate;
+  }
+
+  markAsGuessed() {
+    this.isCorrectAnswer = true;
+    this.card.classList.add('card_active');
   }
 
   makeInactive() {
@@ -39,9 +56,5 @@ export default class Card {
 
   makeActive() {
     this.card.classList.add('card_active');
-  }
-
-  getElement() {
-    return this.card;
   }
 }
