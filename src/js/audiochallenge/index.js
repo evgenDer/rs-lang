@@ -1,3 +1,5 @@
+import { Game } from './Game';
+
 const startBtn = document.querySelector('.description__start');
 const description = document.querySelector('.audiochallenge__desription');
 const gameField = document.querySelector('.audiochallenge__game-field');
@@ -50,7 +52,7 @@ function addExitGameBtnClickHandler() {
     closeGameField();
     openDescription();
     setExitButtonStdMode();
-  })
+  });
 }
 
 
@@ -61,6 +63,9 @@ function addStartButtonClickHandler() {
     closeDescription();
     openGameField();
     setExitButtonBackMode();
+
+    // eslint-disable-next-line no-unused-vars
+    const game = new Game();
   });
 }
 
