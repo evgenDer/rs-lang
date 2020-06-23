@@ -23,6 +23,25 @@ function removeChild(parentNode) {
 }
 
 
+function exitGame() {
+  document.location.href = 'games.html';
+}
+
+function removeAllButtons() {
+  const buttonsBlock = document.querySelector('.block-btns');
+  removeChild(buttonsBlock);
+}
+
+function insertNewButtons(buttons) {
+  const buttonsBlock = document.querySelector('.block-btns');
+  if (buttons.length) {
+    buttons.forEach((button) => {
+      buttonsBlock.append(button);
+    });
+  }
+}
+
+
 export {
-  getUser, getMistakeResponse, shuffle, removeChild,
+  getUser, getMistakeResponse, shuffle, removeChild, removeAllButtons, insertNewButtons, exitGame,
 };
