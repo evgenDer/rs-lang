@@ -42,13 +42,19 @@ export default function rightClick(learningScreenElement) {
       [currentLearningCardIndex].classList.add('error');
     }
   } else {
-    learningScreenElement
-      .querySelectorAll('div.dot[slot=newWordStatusPoint]')[currentNewWordCardIndex].classList.add('active');
+    learningScreenElement.querySelectorAll('div.dot[slot=newWordStatusPoint]')[currentNewWordCardIndex].classList.add('active');
     learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex] = true;
     saveDayLocalState(learningScreenElement);
-    console.log(createUserWord);
-    const userWord = createUserWord("5e9f5ee35eb9e72bc21af4ac", { "difficulty": "weak", "optional": { testFieldString: 'test', testFieldBoolean: true } });
-    console.log(userWord);
+
+    const wordId = learningScreenElement.wordArrs.newWords[currentNewWordCardIndex]['id'];
+    const wordDifficulty = learningScreenElement.wordArrs.newWords[currentNewWordCardIndex]['difficulty'];
+    const wordOptions = learningScreenElement.wordArrs.newWords[currentNewWordCardIndex].options;
+    const word = {
+      "difficulty": wordDifficulty,
+      "options": wordOptions,
+    }
+    console.log(word);
+    createUserWord(wordId, word);
 
     learningScreenElement.state.currentNewWordCardIndex += 1;
   }

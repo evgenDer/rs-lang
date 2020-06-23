@@ -27,6 +27,7 @@ export default class LearningScreenElement extends HTMLElement {
     };
 
     this.settings = {
+      mode: 'new&repeat', //new, repeat, new&repeat
       enableAutomaticAudio: true,
       newWordCount: 3,
       wordCount: 6,
@@ -44,21 +45,25 @@ export default class LearningScreenElement extends HTMLElement {
     this.shadowRoot.innerHTML = learningScreenShadowTreeHTML;
 
     this.setSettingsFromLocalStorage();
-    getDayLocalState(this);
 
-    createStatusBar(this);
-    createArrow(this);
-    createModeButtons(this);
-    createCard(this);
+    getDayLocalState(this)
+      .then(() => {
+        createStatusBar(this);
+        createArrow(this);
+        createModeButtons(this);
+        createCard(this);
 
-    createEvents(this);
+        createEvents(this);
 
-    if (
-      this.localState.newWordProgressArr.indexOf(false) === -1 &&
-      this.localState.learningProgressArr.indexOf(false) === -1
-    ) {
-      createResults(this);
-    }
+        if (
+          this.localState.newWordProgressArr.indexOf(false) === -1 &&
+          this.localState.learningProgressArr.indexOf(false) === -1
+        ) {
+          createResults(this);
+        }
+      });
+
+
   }
 
   setSettingsFromLocalStorage() {

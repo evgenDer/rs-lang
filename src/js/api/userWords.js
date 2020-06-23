@@ -5,10 +5,8 @@ import { BACKEND_URL } from '../utils/constants';
 async function createUserWord(wordId, word) {
   try {
     const userId = getUserId();
-    console.log(userId);
     const urlRequest = `${BACKEND_URL}/users/${userId}/words/${wordId}`;
     const content = await sendRequest('POST', urlRequest, true, word);
-    console.log(content);
     return content;
   } catch (error) {
     return error;

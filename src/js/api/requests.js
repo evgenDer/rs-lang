@@ -3,7 +3,6 @@ import { getTokenForRequest } from './authorization';
 async function sendRequest(methodRequest, urlRequest, withCredentials = false, objectBody = null) {
   try {
     const token = await getTokenForRequest();
-    console.log(token);
     const params = {
       method: methodRequest,
       headers: {
@@ -14,10 +13,12 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     };
     if (objectBody) {
       params.body = JSON.stringify(objectBody);
+      console.log(params.body)
     }
     if (withCredentials) {
       params.withCredentials = true;
     }
+    console.log(params)
     const rawResponse = await fetch(urlRequest, params);
     return rawResponse.json();
   } catch (error) {
