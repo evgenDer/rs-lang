@@ -9,6 +9,7 @@ async function createUserWord(wordId, word) {
     const content = await sendRequest('POST', urlRequest, true, word);
     return content;
   } catch (error) {
+    alert(error);
     return error;
   }
 }

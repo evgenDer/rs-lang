@@ -8,8 +8,11 @@ import { createNewWordsPack } from './createNewWordsPack';
 const newWordOptionsTemplate = {
   "difficulty": 'normal', // easy, normal, hard
   "options": {
+    mode: new Date(Date.now), //deleted,null
+    lastUpdateDate: null,
     referenceCount: 0,
-    errorCount: 0,
+    errorCount: 10,
+    repeatCount: 0,
     rightSequence: 0,
     successPoint: 0, // [0,5]
   }

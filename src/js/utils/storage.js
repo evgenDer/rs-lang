@@ -11,12 +11,20 @@ function setDateToken() {
   localStorage.setItem('tokenDate', dateGetToken.toString());
 }
 
-function setUserEmail(user) {
-  localStorage.setItem('email', user.email);
+function setUserEmail(email) {
+  localStorage.setItem('email', email);
 }
 
-function setUserPassword(user) {
-  localStorage.setItem('password', user.password);
+function setUserPassword(password) {
+  localStorage.setItem('password', password);
+}
+
+function getUserPassword() {
+  return localStorage.getItem('password');
+}
+
+function getUserEmail() {
+  return localStorage.getItem('email');
 }
 
 function getToken() {
@@ -36,13 +44,6 @@ function removeUserId() {
 }
 
 export {
-  setUserId,
-  setToken,
-  setDateToken,
-  setUserPassword,
-  setUserEmail,
-  getToken,
-  getUserId,
-  getDateToken,
-  removeUserId,
+  setUserId, setToken, setDateToken, setUserPassword, getUserEmail, getUserPassword,
+  setUserEmail, getToken, getUserId, getDateToken, removeUserId,
 };

@@ -51,9 +51,10 @@ export default function rightClick(learningScreenElement) {
     const wordOptions = learningScreenElement.wordArrs.newWords[currentNewWordCardIndex].options;
     const word = {
       "difficulty": wordDifficulty,
-      "options": wordOptions,
+      "optional": wordOptions,
     }
     console.log(word);
+    console.log(wordId)
     createUserWord(wordId, word);
 
     learningScreenElement.state.currentNewWordCardIndex += 1;
