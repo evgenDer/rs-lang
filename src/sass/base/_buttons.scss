@@ -111,9 +111,6 @@ button:hover {
   color: white;
   text-align: center;
   padding: 0px;
-  @media (max-width: $tablet-width){
-      margin: 20px 6px 0 6px;
-  }
 }
 
 button.btn_unknown::before{
@@ -140,11 +137,7 @@ button.btn_unknown::before{
   justify-content: center;
   display: flex;
   margin: 50px;
-  @media (max-width: $tablet-width){
-      margin: 25px 5px 0 5px;
-  }
   @media (max-width: 480px){
-      display: block;
       text-align: center;
   }
 }

@@ -11,3 +11,16 @@
 %light-shadow {
   box-shadow: 0 0 0.125rem 0 rgba(143,115,96,.12), 0 0.125rem 0.25rem 0 rgba(143,115,96,.12);
 }
+
+%puzzle-field{
+  width: $max-width-puzzle-field;
+  @include media-laptop{
+    width: $middle-width-puzzle-field;
+  }
+  @include media-tablet{
+    width: $tablet-width-puzzle-field;
+  }
+  @include media-mobile{
+    width: $small-width-puzzle-field;
+  }
+}
