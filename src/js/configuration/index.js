@@ -1,63 +1,38 @@
 import {
-  DEFAULT_USER_CONFIGURATION,
-  DEFAULT_CARDS_VIEW,
-  DEFAULT_APP_CONFIGURATION,
+  DEFAULT_CONFIGURATION,
 } from '../constants/defaul-settings';
-import * as localStorage from '../data-access/local-storage';
+
 import * as page from './page';
+import * as configurationService from '../api/settings';
 
-export const getUserConfiguration = () => {
-  let userConfiguration = localStorage.getUserConfiguration();
 
-  if (!userConfiguration) {
-    userConfiguration = DEFAULT_USER_CONFIGURATION;
-    localStorage.setUserConfiguration(userConfiguration);
+export async function getConfiguration() {
+  const configuration = (await configurationService.getSettings()).optional;
+  // let userConfiguration = localStorage.getUserConfiguration();
+
+  if (!configuration) {
+    const configurationModel = {
+      optional: DEFAULT_CONFIGURATION
+    };
+
+    await configurationService.upserSettings(configurationModel);
+    return DEFAULT_CONFIGURATION;
   }
 
-  return userConfiguration;
+  return configuration;
 };
 
-export const getCardsConfiguration = () => {
-  let cardsConfiguration = localStorage.getCardsViewConfiguration();
+export async function updateConfigurationValues() {
+  const configuration = await getConfiguration();
 
-  if (!cardsConfiguration) {
-    cardsConfiguration = DEFAULT_CARDS_VIEW;
-    localStorage.setCardsViewConfiguration(cardsConfiguration);
-  }
-
-  return cardsConfiguration;
+  page.updateUserConfigurationPageElement(configuration);
+  page.updateCardsConfigurationPageElement(configuration);
+  page.updateAppConfigurationPageElement(configuration);
 };
 
-export const getAppConfiguration = () => {
-  let appConfiguration = localStorage.getAppConfiguration();
 
-  if (!appConfiguration) {
-    appConfiguration = DEFAULT_APP_CONFIGURATION;
-    localStorage.setAppConfiguration(appConfiguration);
-  }
-
-  return appConfiguration;
-};
-
-const updateConfigurationValues = () => {
-  const userConfiguration = getUserConfiguration();
-  page.updateUserConfigurationPageElement(userConfiguration);
-
-  const cardsConfiguration = getCardsConfiguration();
-  page.updateCardsConfigurationPageElement(cardsConfiguration);
-
-  const appConfiguration = getAppConfiguration();
-  page.updateAppConfigurationPageElement(appConfiguration);
-};
-
-const saveUserConfiguration = () => {
+async function saveConfiguration() {
   const userConfiguration = page.getUserConfiguration();
-
-  localStorage.setUserConfiguration(userConfiguration);
-  return true;
-};
-
-const saveCardsConfiguration = () => {
   const cardsConfiguration = page.getCardsConfiguration();
 
   if (cardsConfiguration.showWordTranslation === false &&
@@ -67,20 +42,39 @@ const saveCardsConfiguration = () => {
     return false;
   }
 
-  localStorage.setCardsViewConfiguration(cardsConfiguration);
-  return true;
-};
-
-const saveAppConfiguration = () => {
   const appConfiguration = page.getAppConfiguration();
 
-  localStorage.setAppConfiguration(appConfiguration);
+  const configuration = {
+    maxNewWordsPerDay: userConfiguration.maxNewWordsPerDay,
+    maxCardsWithWordsPerDay: userConfiguration.maxCardsWithWordsPerDay,
+    difficultyLevel: userConfiguration.difficultyLevel,
+    showWordTranslation: cardsConfiguration.showWordTranslation,
+    showSentenceExplanation: cardsConfiguration.showSentenceExplanation,
+    showExplanationExample: cardsConfiguration.showExplanationExample,
+    showWordTranscription: cardsConfiguration.showWordTranscription,
+    showImageAssociation: cardsConfiguration.showImageAssociation,
+    enableAutomaticAudio: appConfiguration.enableAutomaticAudio,
+    showNewWordTranslation: appConfiguration.showNewWordTranslation,
+    showSentenceTranslation: appConfiguration.showSentenceTranslation,
+    showAnswer: appConfiguration.showAnswer,
+    deleteWords: appConfiguration.deleteWords,
+    markAsDifficultWord: appConfiguration.markAsDifficultWord,
+    possibilityToMarkWord: appConfiguration.possibilityToMarkWord,
+  }
+
+  const configurationModel = {
+    optional: configuration
+  };
+
+  await configurationService.upserSettings(configurationModel);
+
   return true;
 };
 
+
 const addSaveButtonClickHandler = () => {
-  document.querySelector('.configuration__save-button').addEventListener('click', () => {
-    if (saveUserConfiguration() && saveCardsConfiguration() && saveAppConfiguration()) {
+  document.querySelector('.configuration__save-button').addEventListener('click', async () => {
+    if (await saveConfiguration()) {
       UIkit.notification({
         message: "<span uk-icon='icon: check'></span> Сохранено",
         status: 'success',
