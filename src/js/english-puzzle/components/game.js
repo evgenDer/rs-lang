@@ -91,6 +91,7 @@ export default class Game {
         document.querySelector('.button_level').innerText = textContent;
         this.numberLevel = Number(textContent[textContent.length - 1]);
         this.numberRound = 1;
+        this.pageData = getPageData(this.numberLevel);
         this.generateRoundsInPage();
         this.generateNewRound();
       }
