@@ -5,10 +5,8 @@ import {
 import * as page from './page';
 import * as configurationService from '../api/settings';
 
-
 export async function getConfiguration() {
   const configuration = (await configurationService.getSettings()).optional;
-  // let userConfiguration = localStorage.getUserConfiguration();
 
   if (!configuration) {
     const configurationModel = {
@@ -29,7 +27,6 @@ export async function updateConfigurationValues() {
   page.updateCardsConfigurationPageElement(configuration);
   page.updateAppConfigurationPageElement(configuration);
 };
-
 
 async function saveConfiguration() {
   const userConfiguration = page.getUserConfiguration();
@@ -70,7 +67,6 @@ async function saveConfiguration() {
 
   return true;
 };
-
 
 const addSaveButtonClickHandler = () => {
   document.querySelector('.configuration__save-button').addEventListener('click', async () => {
