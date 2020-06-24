@@ -13,7 +13,14 @@ async function initNewStatisticsData(prevStatisticsObject, gameName, dateTime) {
     const statisticsData = statistics.optional.statisticsData
       .find((d) => d.name.toLowerCase() === gameName.toLowerCase());
 
-    statisticsData.data.push(currentStatistics);
+    if (!statisticsData) {
+      statistics.optional.statisticsData.push({
+        name: gameName,
+        data: [currentStatistics]
+      })
+    } else {
+      statisticsData.data.push(currentStatistics);
+    }
   }
 
   return statistics;

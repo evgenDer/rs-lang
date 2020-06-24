@@ -4,7 +4,7 @@ import {
 } from './components/statistics';
 
 export async function initStatistics() {
-  const stat = new Statistics('daily');
+  const stat = new Statistics('daily-2');
 
   //  await stat.updateStatistics('game', true, 2);
   //  await stat.updateStatistics('new', true, 2);
@@ -13,7 +13,7 @@ export async function initStatistics() {
   //  await stat.updateStatistics('winter', false, 2);
   //  await stat.updateStatistics('winter', false, 2);
 
-  const data = await stat.getDateTimeStatistics('daily');
+  const data = await stat.getDateTimeStatistics('daily-2');
 
   if (!data) {
     return;
@@ -34,7 +34,6 @@ export async function initStatistics() {
       type: "line",
       name: "Время",
       connectNullData: true,
-      //nullDataLineDashType: "solid",
       xValueType: "dateTime",
       xValueFormatString: "DD MMM hh:mm TT",
       dataPoints: data
