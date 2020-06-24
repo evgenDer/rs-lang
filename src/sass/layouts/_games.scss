@@ -1,15 +1,17 @@
-#games-page{
-  h2{
+#games-page {
+  height: auto;
+
+  h2 {
     margin: 40px 0;
     color: $color-secondary;
     text-align: left;
   }
 }
-.game{
-  margin: 40px 0;
+.game {
+  padding: 40px 0;
 }
 
-.game__cards{
+.game__cards {
   display: flex;
   font-size: 1.5rem;
   border-radius: 5px;
@@ -17,20 +19,19 @@
   justify-content: center;
   align-items: center;
   border-radius: 10px 10px 0 0;
-
 }
 
-.uk-card .uk-card-header{
+.uk-card .uk-card-header {
   background: $color-background-additinal;
 }
 
-.uk-card{
+.uk-card {
   margin-right: 40px;
   margin-bottom: 20px;
   border-radius: 10px;
   color: $color-secondary;
-  @media (min-width: $content-width){
-    width: 580px
+  @media (min-width: $content-width) {
+    width: 580px;
   }
   @include media-laptop {
     margin-right: 0px;
@@ -45,24 +46,24 @@
   color: $color-secondary;
 }
 
-a.uk-button.uk-button-text{
+a.uk-button.uk-button-text {
   font-size: 1.2rem;
-  color: $color-secondary!important;
+  color: $color-secondary !important;
 }
-.uk-button-text::before{
+.uk-button-text::before {
   border-bottom: 1px solid $color-active;
 }
 
-a.uk-button-text:focus, a.uk-button-text:hover{
-  color: $color-active!important;
+a.uk-button-text:focus,
+a.uk-button-text:hover {
+  color: $color-active !important;
 }
-.card__icons{
+.card__icons {
   display: flex;
   flex-direction: space-around;
-  img{
+  img {
     margin-left: 5px;
     height: 25px;
     width: 25px;
   }
-
 }
