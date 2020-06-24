@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-import readIt from '../../functions/readWord';
 
 const style = {
   correctLetterColor: '#61bd4f',
@@ -13,10 +12,8 @@ export default function checkAnswer(cardElement) {
   }
   const answer = cardElement.querySelector('input').value.toLowerCase().trim();
   if (answer === cardElement.state.word) {
-    readIt(answer);
     return true;
   }
-  console.log(answer.length > 0);
   if (answer.length > 0) {
     let comparison = '';
     let mistakes = 0;

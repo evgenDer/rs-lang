@@ -29,7 +29,7 @@ async function getAllUserWords() {
   try {
     const userId = getUserId();
     const urlRequest = `${BACKEND_URL}/users/${userId}/words`;
-    const content = await sendRequest('POST', urlRequest, true);
+    const content = await sendRequest('GET', urlRequest, true);
     return content;
   } catch (error) {
     return error;
@@ -41,9 +41,16 @@ async function getUserWordById(wordId) {
   return result;
 }
 
-async function updateUserWord(wordId) {
-  const result = await makeRequestByWordId('PUT', wordId);
-  return result;
+async function updateUserWord(wordId, word) {
+  try {
+    const userId = getUserId();
+    const urlRequest = `${BACKEND_URL}/users/${userId}/words/${wordId}`;
+    const content = await sendRequest('PUT', urlRequest, true, word);
+    return content;
+  } catch (error) {
+    alert(error);
+    return error;
+  }
 }
 
 async function deleteUserWord(wordId) {

@@ -4,9 +4,10 @@ import leftClick from './eventFunctions/leftArrowClick';
 import switchCardMode from './eventFunctions/switchCardMode';
 import createCard from '../domBuilder/lightTree/createCard';
 import openCard from './eventFunctions/openCard';
-import hardCard from './eventFunctions/hardCard';
+import chooseWordDifficulty from './eventFunctions/chooseWordDifficulty';
 import deleteCard from './eventFunctions/deleteCard';
 import restoreCard from './eventFunctions/restoreCard';
+import checkAnswer from './eventFunctions/checkAnswer';
 
 export default function createEvents(learningScreenElement) {
   learningScreenElement.addEventListener('click', () => {
@@ -17,12 +18,12 @@ export default function createEvents(learningScreenElement) {
       item = event.target.closest('div[slot=modeButtonLeft]');
     } else if (event.target.closest('div[slot=modeButtonRight]')) {
       item = event.target.closest('div[slot=modeButtonRight]');
+    } else if (event.target.closest('div[slot=difficultyButton]')) {
+      item = event.target.closest('div[slot=difficultyButton]');
     } else if (event.target.closest('div[slot=openWord]') != null) {
       openCard(learningScreenElement);
     } else if (event.target.closest('div[slot=deleteWord]') != null) {
       deleteCard(learningScreenElement);
-    } else if (event.target.closest('div[slot=hardWord]') != null) {
-      hardCard(learningScreenElement);
     } else if (event.target.closest('div[slot=restoreWord]') != null) {
       restoreCard(learningScreenElement);
     }
@@ -36,7 +37,9 @@ export default function createEvents(learningScreenElement) {
             leftClick(learningScreenElement);
           }
           break;
-
+        case 'difficultyButton':
+          chooseWordDifficulty(learningScreenElement, item)
+          break;
         case 'modeButton':
           switchCardMode(learningScreenElement, item);
           createCard(learningScreenElement);
@@ -51,7 +54,7 @@ export default function createEvents(learningScreenElement) {
     if (event.key === 'Enter') {
       rightClick(learningScreenElement);
     } else if (event.key === 'Backspace') {
-      leftClick(learningScreenElement);
+
     }
   });
 }

@@ -27,6 +27,7 @@ export default class WordCardElement extends HTMLElement {
       wordsPerExampleSentence: null,
       mode: null,
       isDeleted: null,
+      isFirstAnswer: true,
     };
 
     this.settings = {};
@@ -34,6 +35,12 @@ export default class WordCardElement extends HTMLElement {
     this.localState = {
       isReadyToRenderArr: [],
     };
+
+    this.audio = {
+      word: null,
+      example: null,
+      meaning: null,
+    }
   }
 
   connectedCallback() {
@@ -45,17 +52,7 @@ export default class WordCardElement extends HTMLElement {
 
   switchMode() {
     this.innerHTML = '';
-    switch (this.state.mode) {
-      case 'learning':
-        initLearning(this);
-        break;
-
-      case 'newWord':
-        initNewWord(this);
-        break;
-      default:
-        break;
-    }
+    initLearning(this);
     initCardOptions(this);
   }
 

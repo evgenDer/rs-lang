@@ -1,15 +1,17 @@
 import learningScreenShadowTreeHTML from './domBuilder/shadowTree/shadowTree';
 
 import createCard from './domBuilder/lightTree/createCard';
-import createStatusBar from './domBuilder/lightTree/createStatusBar';
+import createStatusBar, { updateStatusBar } from './domBuilder/lightTree/createStatusBar';
 import createArrow from './domBuilder/lightTree/createArrow';
 import createModeButtons from './domBuilder/lightTree/createModeButtons';
+import createDifficultyButtons from './domBuilder/lightTree/createDifficultyButtons'
+import createResults from './domBuilder/lightTree/createResults';
 import createEvents from './events/createEvents';
 
 import { getUserConfiguration } from '../../data-access/local-storage';
 
+import findNextNotDeletedWord from './functions/findNextNotDeletedWord';
 import getDayLocalState from './functions/getDayLocalState';
-import createResults from './domBuilder/lightTree/createResults';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
@@ -46,21 +48,36 @@ export default class LearningScreenElement extends HTMLElement {
 
     this.setSettingsFromLocalStorage();
 
+
+
     getDayLocalState(this)
       .then(() => {
+        console.log(this.wordArrs);
         createStatusBar(this);
+        updateStatusBar(this);
+
         createArrow(this);
         createModeButtons(this);
+        createDifficultyButtons(this);
+
+        /*
+        if (this.state.mode === 'learning') {
+          this.state.currentLearningCardIndex =
+            findNextNotDeletedWord(this, this.state.currentLearningCardIndex, 'right');
+        } else {
+          this.state.currentNewWordCardIndex =
+            findNextNotDeletedWord(this, this.state.currentNewWordCardIndex, 'right');
+        }*/
         createCard(this);
 
         createEvents(this);
-
-        if (
-          this.localState.newWordProgressArr.indexOf(false) === -1 &&
-          this.localState.learningProgressArr.indexOf(false) === -1
-        ) {
-          createResults(this);
-        }
+        /*
+                if (
+                  this.localState.newWordProgressArr.indexOf(false) === -1 &&
+                  this.localState.learningProgressArr.indexOf(false) === -1
+                ) {
+                  createResults(this);
+                }*/
       });
 
 

@@ -8,7 +8,7 @@ import getWordById from '../api/words';
 const newWordOptionsTemplate = {
   "difficulty": 'normal', // easy, normal, hard
   "options": {
-    mode: null, //deleted,null
+    mode: null, //deleted,null,needToRepeat
     lastUpdateDate: null,
     referenceCount: 0,
     errorCount: 0,
@@ -27,54 +27,85 @@ async function getUpdatedUserWord(wordId) {
 }
 
 function increaseWordErrorCount(word) {
-  word.optional[lastUpdateDate] = Date.now();
-  word.optional[referenceCount] += 1;
-  word.optional[errorCount] += 1;
-  word.optional[rightSequence] = 0;
+  word.optional['lastUpdateDate'] = Date.now();
+  word.optional['referenceCount'] += 1;
+  word.optional['errorCount'] += 1;
+  word.optional['mode'] = 'needToRepeat';
+  word.optional['rightSequence'] = 0;
   calculateSuccessPoint(word);
 }
 
 function increaseWordReferenceCount(word) {
-  word.optional[lastUpdateDate] = Date.now();
-  word.optional[referenceCount] += 1;
+  word.optional['lastUpdateDate'] = Date.now();
+  word.optional['referenceCount'] += 1;
   calculateSuccessPoint(word);
 }
 
-function deleteUserWord(word) {
-  word.optional[mode] = 'deleted';
-}
-
-function increaseWordRepeatCount(word) {
-  word.optional[lastUpdateDate] = Date.now();
-  word.optional[referenceCount] += 1;
-  word.optional[repeatCount] += 1;
-  calculateSuccessPoint(word);
+function switchDeleteModeUserWord(word) {
+  word.optional['lastUpdateDate'] = Date.now();
+  word.optional['mode'] = 'deleted';
 }
 
 function increaseWordRightSequenceCount(word) {
-  word.optional[lastUpdateDate] = Date.now();
-  word.optional[referenceCount] += 1;
-  word.optional[rightSequence] += 1;
-  calculateSuccessPoint(word);
+  word.optional['lastUpdateDate'] = Date.now();
+  word.optional['referenceCount'] += 1;
+  word.optional['rightSequence'] += 1;
+  word.optional['mode'] = 0;
+  calculateSuccessPoint(word, 'success');
 }
 
-function calculateSuccessPoint(word) {
-  const c1 = 0.15;
-  const difficultyToPoint = {
-    'hard': 1 / 28,
-    'normal': 5 / 91,
-    'easy': 1 / 11,
+function increaseRepeatCount(word) {
+  word.optional['repeatCount'] += 1;
+}
+
+function calculateSuccessPoint(word, mode) {
+  let mark = 0;
+  const currentMark = word.optional['successPoint'];
+  const difficultyToSuccessPoint = {
+    'hard': 0.2,
+    'normal': 0.6,
+    'easy': 1,
   }
-  word.optional[successPoint] += c1;
+  const difficultyToErrorPoint = {
+    'hard': 1,
+    'normal': 0.6,
+    'easy': 0.2,
+  }
+
+  if (word.optional['referenceCount'] === 1) {
+    mark = 1;
+  } else if ((word.optional['referenceCount'] - word.optional['errorCount']) <= 5) {
+    mark = 1 + ((word.optional['referenceCount'] - word.optional['errorCount']) / 5);
+    console.log(mark);
+  } else if (currentMark <= 4) {
+    if (mode == 'success') {
+      mark = word.optional['successPoint'] + difficultyToSuccessPoint[word.difficulty];
+    } else {
+      mark = word.optional['successPoint'] - difficultyToErrorPoint[word.difficulty];
+    }
+    if (mark < 1) { mark = 1; }
+  } else if (currentMark > 4) {
+    mark = 3.8 + word.optional['rightSequence'] / 5;
+  } else if (currentMark > 5) {
+    mark = 5;
+  }
+  word.optional['successPoint'] = mark;
 }
 
 function calculateRepeatTiming(word) {
   const timing = 30 * successPoint / 5; //days
-  const repeatRating = Math.floor(timing * 24 * 3600 * 1000 + word.optional[lastUpdateDate]);
+  const repeatRating = Math.floor(timing * 24 * 3600 * 1000 + word.optional['lastUpdateDate']);
   return repeatRating;
 }
 
+function openCardUpdate(word) {
+  word.optional['mode'] = 'needToRepeat';
+  word.optional['rightSequence'] = 0;
+  word.optional['repeatCount'] += 1;
+  calculateSuccessPoint(word);
+}
+
 export {
-  getUpdatedUserWord, increaseWordErrorCount, increaseWordReferenceCount, deleteUserWord,
-  increaseWordRepeatCount, increaseWordRightSequenceCount, calculateRepeatTiming
+  getUpdatedUserWord, increaseWordErrorCount, increaseWordReferenceCount, switchDeleteModeUserWord,
+  increaseWordRightSequenceCount, calculateRepeatTiming, increaseRepeatCount, openCardUpdate
 }

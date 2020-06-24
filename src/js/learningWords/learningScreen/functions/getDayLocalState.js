@@ -5,19 +5,6 @@ import saveDayMode from './saveDayMode';
 
 import { createNewWordsPack } from './createNewWordsPack';
 
-const newWordOptionsTemplate = {
-  "difficulty": 'normal', // easy, normal, hard
-  "options": {
-    mode: new Date(Date.now), //deleted,null
-    lastUpdateDate: null,
-    referenceCount: 0,
-    errorCount: 10,
-    repeatCount: 0,
-    rightSequence: 0,
-    successPoint: 0, // [0,5]
-  }
-}
-
 export default async function getDayLocalState(learningScreenElemen) {
   let currentDate = new Date(Date.now());
   currentDate = currentDate.getDate();
@@ -53,7 +40,18 @@ export default async function getDayLocalState(learningScreenElemen) {
 
     let wordArrs = await createNewWordsPack(learningScreenElemen.settings.newWordCount, learningScreenElemen.settings.difficultyLevel, 0);
     let newWordsPack = wordArrs.newWords;
-    newWordsPack.map((element) => Object.assign(element, newWordOptionsTemplate));
+    newWordsPack.map((element) => Object.assign(element, {
+      "difficulty": 'normal', // easy, normal, hard
+      "optional": {
+        mode: 'newWord', //deleted,null
+        lastUpdateDate: Date.now(),
+        referenceCount: 0,
+        errorCount: 0,
+        repeatCount: 0,
+        rightSequence: 0,
+        successPoint: 0, // [0,5]
+      }
+    }));
     console.log(newWordsPack);
 
     const dayWordArrs = {

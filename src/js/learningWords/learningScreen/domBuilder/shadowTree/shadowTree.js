@@ -10,62 +10,82 @@ const styles = {
     deleted: '#fe5c55',
     hard: '#c377e0',
   },
-  leftButtonColor: '#338c9950',
-  rightButtonColor: '#ff934d50',
-  leftButtonHoverColor: '#43b7c880',
-  rightButtonHoverColor: '#ffd04d80',
-  leftButtonActiveColor: '#43b7c8',
-  rightButtonActiveColor: '#ffd04d',
+  difficultyButtons: {
+    easyButtonColor: '#61bd4f20',
+    normalButtonColor: '#338c9920',
+    hardButtonColor: '#ff934d20',
+    easyButtonHoverColor: '#61bd4f60',
+    normalButtonHoverColor: '#338c9960',
+    hardButtonHoverColor: '#ff934d60',
+  },
+  modeButtons: {
+    leftButtonColor: '#338c9920',
+    rightButtonColor: '#ff934d20',
+    leftButtonHoverColor: '#43b7c850',
+    rightButtonHoverColor: '#ffd04d50',
+    leftButtonActiveColor: '#43b7c870',
+    rightButtonActiveColor: '#ffd04d70',
+  },
+
+  topBarHeight: '127px', //topBar + margin
 };
 
 const learningScreenShadowTreeHTML = `
 <style>
-  :host {width: 100vw; display: flex; color:${styles.fontColor}}
+  :host {margin-top: 50px; width: 100vw; height:calc(100vh - ${styles.topBarHeight});
+     position: relative; display: flex; flex-direction: column; align-items:center; color:${styles.fontColor}}
   div{display: flex; justify-content: center;}
   ::slotted(learning-results) {position: fixed; z-index:10;}
-  #cardContentBlock {margin-top: 20px; width: 100%; flex-direction: column; align-items: center;}
-  #topBlock {width: 100%; min-width: 300px; max-width: 600px; height: 40px;}
-  .deadZone {width: 10%; min-width: 30px; height: 40px;}
-  .statusBar {width: calc(50% - 60px); height: 40px; align-items: center;}
-  #statusBarDeadZone {width: 120px; height: 40px;}
-  ::slotted(div.dot) {margin: 5px; width: 10px; height: 10px; border-radius: 5px; background-color:${styles.dots.mainColor};}
-  ::slotted(div.newWordDot) {background-color: ${styles.dots.newDots};}
-  ::slotted(div.learningWordDot) {}
-  ::slotted(div.newWordDot.active) {background-color:${styles.dots.newDotsActive};}
-  ::slotted(div.learningWordDot.hard) {background-color: ${styles.dots.hard}}
-  ::slotted(div.learningWordDot.error) {background-color: ${styles.dots.learningDotsError}}
-  ::slotted(div.learningWordDot.success) {background-color: ${styles.dots.learningDotsSuccess}}
-  ::slotted(div.learningWordDot.noAnswered) {background-color: ${styles.dots.noAnswered}}
-  ::slotted(div.learningWordDot.deleted) {background-color: ${styles.dots.deleted}}
-  #mainBlock {width: 100%; min-width: 300px; max-width: 600px;}
+
+  #cardContentBlock {margin-top: 20px; width: 100%; height:90%; position:relative;
+     flex-direction: column; justify-content: flex-start; align-items: center;}
+  #mainBlock {width: 100%; min-width: 300px; max-width: 600px; z-index:10;}
   #cardBlock {width: 100%; height: 100%;}
   .arrow {width: 10%; min-width: 30px; min-height: 100%; align-items: center;}
   ::slotted(img:hover)  {cursor: pointer;}
   #leftArrow {transform: rotate(180deg);}
-  #modeBlock {width: 100%; min-width: 300px; max-width: 600px; height: 40px; flex-direction: row;}
-  ::slotted(div.modeButton) {width:100px; height: 100%; display:flex; justify-content: center; align-items: center;}
-  ::slotted(div[slot=modeButtonLeft]) {background-color:${styles.leftButtonColor}}
-  ::slotted(div[slot=modeButtonRight]) {background-color:${styles.rightButtonColor}}
-  ::slotted(div[slot=modeButtonLeft]:hover) {cursor: pointer; background-color:${styles.leftButtonHoverColor}}
-  ::slotted(div[slot=modeButtonRight]:hover) {cursor: pointer; background-color:${styles.rightButtonHoverColor}}
-  ::slotted(div[slot=modeButtonLeft].active) { background-color:${styles.leftButtonActiveColor}; border: 1px solid ${styles.dots.newDots};}
-  ::slotted(div[slot=modeButtonRight].active) {background-color:${styles.rightButtonActiveColor}}
-</style>
+
+  #difficultyBlock{height:30px; align-items: center;}
+  ::slotted([slot=difficultyButton]) {padding-bottom: 10px; min-width:100px; min-height:50px; border-radius:10px;
+    display:flex; justify-content: center; align-items:flex-end; border: 3px solid; transform: translateY(-30px);
+    transition-property: background, box-shadow;
+   transition-duration: 0.3s, 0.3s;}
+  ::slotted([slot=difficultyButton].readyToMove){transition-property: background, box-shadow,transform;  transition-duration: 0.3s, 0.3s, 0.6s;}
+  ::slotted([slot=difficultyButton].active) {transform: translateY(0px);}
+  ::slotted([slot=difficultyButton].easy) {background: ${styles.difficultyButtons.easyButtonColor}; border-color: ${styles.difficultyButtons.easyButtonColor};}
+  ::slotted([slot=difficultyButton].normal) {background: ${styles.difficultyButtons.normalButtonColor}; border-color: ${styles.difficultyButtons.normalButtonColor};}
+  ::slotted([slot=difficultyButton].hard) {background: ${styles.difficultyButtons.hardButtonColor}; border-color: ${styles.difficultyButtons.hardButtonColor};}
+  ::slotted([slot=difficultyButton].active:hover) {cursor:pointer; box-shadow: 0px 0px 15px #cacaca;}
+  ::slotted([slot=difficultyButton].active.easy:hover) {background: ${styles.difficultyButtons.easyButtonHoverColor};}
+  ::slotted([slot=difficultyButton].active.normal:hover) {background: ${styles.difficultyButtons.normalButtonHoverColor};}
+  ::slotted([slot=difficultyButton].active.hard:hover) {background: ${styles.difficultyButtons.hardButtonHoverColor};}
+
+  #modeBlock {max-width: 600px; height: 40px; position: absolute; top:-55px; right:0; flex-direction: row;}
+  ::slotted(div.modeButton) {width:100px; height: 100%; display:flex; justify-content: center; align-items: center;
+  border: 3px solid; border-radius:10px;}
+  ::slotted(div[slot=modeButtonLeft]) {background-color:${styles.modeButtons.leftButtonColor}; border-color:${styles.modeButtons.leftButtonColor}; }
+  ::slotted(div[slot=modeButtonRight]) {background-color:${styles.modeButtons.rightButtonColor}; border-color:${styles.modeButtons.rightButtonColor}; }
+  #modeBlock ::slotted(div:hover) {cursor: pointer; box-shadow: 0px 0px 15px #cacaca;}
+  ::slotted(div[slot=modeButtonLeft]:hover) { background-color:${styles.modeButtons.leftButtonHoverColor};}
+  ::slotted(div[slot=modeButtonRight]:hover) { background-color:${styles.modeButtons.rightButtonHoverColor};}
+  ::slotted(div.active) {box-shadow: 0px 0px 15px #cacaca;}
+  ::slotted(div[slot=modeButtonLeft].active) { background-color:${styles.modeButtons.leftButtonActiveColor};}
+  ::slotted(div[slot=modeButtonRight].active) {background-color:${styles.modeButtons.rightButtonActiveColor};}
+
+  #statusBlock {width: 100%; min-width: 300px; max-width: 720px; height: 40px;}
+  #statusBarDeadZone {width: 60px; height: 40px;}
+  #lineStatusBlock {width:100%; min-width: 160px; max-width: 500px; position: relative;}
+  #lineStatus {margin: 15px; width: 100%; height: 10px; border:3px solid pink; border-radius:10px;}
+  ::slotted([slot=progressLine]) {margin: 15px; max-width: 470px; height:16px; position: absolute; left:0;
+     background: pink; border:3px solid pink; border-radius:10px;
+    transition:width; transition-duration:1s;}
+  #numberStatusBlock {width:60px; height: 40px; align-items: center;}
+  .deadZone {width: 10%; min-width: 30px; height: 40px;}
+  </style>
 
   <slot name='results'></slot>
 
 <div id='cardContentBlock'>
-<div id='topBlock'>
-  <div class='deadZone'></div>
-  <div id='newWordStatusBar' class='statusBar'>
-    <slot name='newWordStatusPoint'></slot>
-  </div>
-  <div id='statusBarDeadZone'></div>
-  <div id='learningStatusBar' class='statusBar'>
-    <slot name='learningStatusPoint'></slot>
-  </div>
-  <div class='deadZone'></div>
-</div>
 
 <div id='mainBlock'>
   <div id='leftArrow' class='arrow'>
@@ -81,12 +101,29 @@ const learningScreenShadowTreeHTML = `
   </div>
 </div>
 
+<div id='difficultyBlock'>
+  <slot name='difficultyButton'></slot>
+</div>
+
+</div>
+
 <div id='modeBlock'>
-  <div class='deadZone'></div>
   <slot name='modeButtonLeft'></slot>
   <slot name='modeButtonRight'></slot>
-  <div class='deadZone'></div>
 </div>
+
+<div id='statusBlock'>
+  <div id='statusBarDeadZone' class='deadZone'></div>
+  <div id='lineStatusBlock'>
+    <div id='lineStatus'></div>
+    <slot name='progressLine'></slot>
+
+  </div>
+  <div id='numberStatusBlock'>
+    <slot name='numberStatus'></slot>
+  </div>
 </div>
+
+
 `;
 export default learningScreenShadowTreeHTML;

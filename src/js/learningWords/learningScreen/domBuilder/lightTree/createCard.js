@@ -1,16 +1,18 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
+import checkDeleteWordMode from '../../functions/findNextNotDeletedWord';
+
 export default function createCard(learningScreenElement) {
+  const { currentNewWordCardIndex } = learningScreenElement.state;
+  const { currentLearningCardIndex } = learningScreenElement.state;
+  const { mode } = learningScreenElement.state;
+
   const prevCard = learningScreenElement.querySelector('card-word');
   if (prevCard != null) {
     prevCard.remove();
   }
-
   learningScreenElement.insertAdjacentHTML('beforeend', "<card-word slot='card'></card-word>");
   const card = learningScreenElement.querySelector('card-word');
-  const { currentNewWordCardIndex } = learningScreenElement.state;
-  const { currentLearningCardIndex } = learningScreenElement.state;
-  const { mode } = learningScreenElement.state;
 
   card.setState('mode', mode);
   if (mode === 'newWord') {
@@ -25,10 +27,6 @@ export default function createCard(learningScreenElement) {
     card.setState(
       'isDone',
       learningScreenElement.localState.learningProgressArr[currentLearningCardIndex],
-    );
-    card.setState(
-      'isDeleted',
-      learningScreenElement.localState.deletedArr[currentLearningCardIndex],
     );
     for (const prop in learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex]) {
       card.setState(

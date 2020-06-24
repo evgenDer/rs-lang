@@ -1,12 +1,21 @@
 const cardShadowTreeHTML = `
 <style>
-  :host {width: 100%; min-width: 500px; min-height: 300px; display:flex; justify-content: center; align-items: center; background-color: white; box-shadow: 0px 0px 15px #cacaca; border-radius: 15px;}
+  :host {width: 100%; min-width: 500px; min-height: 300px;  display:flex; justify-content: center; align-items: center;
+     background-color: white; box-shadow: 0px 0px 15px #cacaca; border-radius: 15px;}
   div {display:flex; justify-content: center;}
-  #mainBlock {width: 95%; height: 95%; flex-direction: column;}
+  #mainBlock {width: 95%; height: 95%; position: relative; flex-direction: column;}
+  #statusBlock {width: calc(50% - 60px); height: 40px; position: absolute; top:0; left:0; z-index:11;
+     flex-direction: column;}
+  #statusBlock div {justify-content: flex-start;}
+  ::slotted(div.dot) {margin: 5px; width: 10px; height: 10px; border-radius: 5px; background-color: pink;}
+  ::slotted([slot=statusText]){filter: opacity(0%); transition: filter; transition-duration:0.6s;}
+  ::slotted(div.dot){filter: opacity(40%); transition: filter; transition-duration:0.6s;}
+  #statusBlock:hover ::slotted(div.dot),
+  #statusBlock:hover ::slotted([slot=statusText]){filter: opacity(90%);}
   #ENBlock { padding-bottom: 15px; max-height: 50%; position: relative; flex-direction: column; align-items: center ;justify-content: flex-end; font-size: 50px; border-bottom: 1px solid #efe6e1;}
-  #ENWord {padding-top: 110px; padding-bottom: 15px;}
-  #imgBlock {overflow: hidden; position: absolute; top: -50px;  }
-  #imgBlock ::slotted(div) {width: 100px; height: 100px; background-color: black; border:5px solid white; border-radius: 5px;}
+  #ENWord {padding-top: 200px; padding-bottom: 15px;}
+  #imgBlock {overflow: hidden; position: absolute; top: -50px; border:5px solid white; border-radius: 5px; }
+  #imgBlock ::slotted(img) {width: 130px; height: 130px; object-fit: cover;}
   .sentenseBlock {width:100%; font-size:15px;  flex-direction: column; align-items: center;}
   .sentenseBlock ::slotted(span) {padding-bottom: 7px; text-align:center;}
   #RUBlock { padding-top: 15px; height: 35%; flex-direction: column; justify-content: flex-start; align-items: center; font-size: 30px;}
@@ -23,6 +32,14 @@ const cardShadowTreeHTML = `
 </style>
 
 <div id='mainBlock'>
+  <div id='statusBlock'>
+    <div id='statusDots'>
+      <slot name='statusDot'></slot>
+    </div>
+    <div id='statusText'>
+      <slot name ='statusText'></slot>
+    </div>
+  </div>
 
   <div id='ENBlock'>
     <div id='ENWord'>
@@ -51,7 +68,7 @@ const cardShadowTreeHTML = `
     <div id='difficultyButtonsBlock'>
       <slot name='openWord'></slot>
       <slot name='deleteWord'></slot>
-      <slot name='hardWord'></slot>
+      <slot name='repeatWord'></slot>
       <slot name='restoreWord'></slot>
     </div>
 

@@ -18,9 +18,7 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     if (withCredentials) {
       params.withCredentials = true;
     }
-    console.log(params)
     const rawResponse = await fetch(urlRequest, params);
-    console.log(rawResponse);
     return rawResponse.json();
   } catch (error) {
     alert(error);
