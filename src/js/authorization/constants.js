@@ -1,6 +1,6 @@
 const ERROR_MSG = document.querySelector('.error-msg');
 const LOG_PAGE = document.querySelector('.authentication-page');
-const LIFETIME_TOKEN = 4 * 60 * 3600 * 1000;
+const LIFETIME_TOKEN = 4 * 3600 * 1000;
 const ERROR_PASSWORD = 422;
 const ERROR_USER = 417;
 const PASSWORD = document.getElementById('pwd');

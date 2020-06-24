@@ -18,8 +18,10 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
       params.withCredentials = true;
     }
     const rawResponse = await fetch(urlRequest, params);
+    console.log(rawResponse);
     return rawResponse.json();
   } catch (error) {
+    alert(error);
     return error;
   }
 }
