@@ -12,28 +12,32 @@ export function fillText(puzzle) {
   context.fillText(`${text}`, width / 2 + puzzle.height / 4, puzzle.height / 1.5, width);
 }
 
+
+export function strokePuzzle(puzzle){
+  const context = puzzle.getContext('2d');
+  context.lineWidth = 3;
+  context.strokeStyle = 'white';
+  context.stroke();
+}
+
 export function drawPuzzleImage(puzzle, imageSrc) {
   const context = puzzle.getContext('2d');
   const widthClipElement = puzzle.dataset.clip;
   const image = document.createElement('img');
-  image.src = imageSrc;
   image.onload = () => {
     context.drawImage(image, widthClipElement, 0);
     fillText(puzzle);
-    context.lineWidth = 3;
-    context.strokeStyle = 'white';
-    context.stroke();
+    strokePuzzle(puzzle);
   };
+  image.src = imageSrc;
 }
-
 // eslint-disable-next-line class-methods-use-this
 export function fillPuzzleColor(puzzle) {
   const context = puzzle.getContext('2d');
   context.fillStyle = '#0f2c5c';
   context.fill();
   fillText(puzzle);
-  context.lineWidth = 5;
-  context.stroke();
+  strokePuzzle(puzzle);
 }
 
 export default class Sentence {
@@ -49,7 +53,7 @@ export default class Sentence {
   drawPuzzle(width, text, isLastSentence = false, isFirstSentence = false) {
     const englishPuzzleSetting = getDataEnglishPuzzle();
     const puzzle = document.createElement('canvas');
-    // puzzle.setAttribute('draggable', true)
+    puzzle.style.marginLeft = `${-this.height /2}px`;
     const context = puzzle.getContext('2d');
     const radius = this.height / 4;
     puzzle.width = width + this.height / 2;
@@ -85,6 +89,7 @@ export default class Sentence {
   renderSourceGame() {
     this.renderNewSentence();
     const sentenceBlock = createElement('div', 'sentence', shuffle(this.sentenceBlock));
+    sentenceBlock.style.paddingLeft = `${this.height /2}px`;
     return sentenceBlock;
   }
 
@@ -93,6 +98,7 @@ export default class Sentence {
     this.width = 0;
     this.renderNewSentence();
     const sentenceBlock = createElement('div', 'sentence current', this.sentenceBlock);
+    sentenceBlock.style.paddingLeft = `${this.height /2 }px`;
     return sentenceBlock;
   }
 
