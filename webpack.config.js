@@ -98,7 +98,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
-
+    htmlWebpackPluginCreator('game-speak-it.html', 'index', 'game_speakit'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -130,6 +130,7 @@ module.exports = {
   entry: {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
+    game_speakit: ['@babel/polyfill', './js/speak-it/index.js', './sass/style.scss'],
   },
   output: {
     filename: filename('js'),
