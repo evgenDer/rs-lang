@@ -1,17 +1,9 @@
-/* eslint-disable indent */
 import {
   Statistics
 } from './components/statistics';
 
-export async function initStatistics() {
+export default async function initStatistics() {
   const stat = new Statistics('daily-2');
-
-  //  await stat.updateStatistics('game', true, 2);
-  //  await stat.updateStatistics('new', true, 2);
-  //  await stat.updateStatistics('summer', true, 2);
-  //  await stat.updateStatistics('summer', true, 2);
-  //  await stat.updateStatistics('winter', false, 2);
-  //  await stat.updateStatistics('winter', false, 2);
 
   const data = await stat.getDateTimeStatistics('daily-2');
 
@@ -19,16 +11,16 @@ export async function initStatistics() {
     return;
   }
 
-  var chart = new CanvasJS.Chart("chartContainer", {
+  const chart = new CanvasJS.Chart('chartContainer', {
     animationEnabled: true,
     title: {
       text: 'Колличество изученных слов'
     },
     axisX: {
-      title: "Время"
+      title: 'Время'
     },
     axisY: {
-      title: "Колличество слов",
+      title: 'Колличество слов',
     },
     data: [{
       type: "line",
@@ -39,5 +31,6 @@ export async function initStatistics() {
       dataPoints: data
     }]
   });
+
   chart.render();
 };
