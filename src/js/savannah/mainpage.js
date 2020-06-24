@@ -1,28 +1,17 @@
 import { SAVANNAH_TEXT, SAVANNAH_TITLE, SAVANNAH_BUTTON } from '../utils/constants';
-import { createElement } from '../utils/create';
+import { createElement } from '../utils/updated-create';
 import loader from '../../img/icons/savannah_loader.svg';
-import createHeader from './gamepage';
-
-const rnd = (rndTrash) => {
-  const number = Math.floor(Math.random() * 20);
-  return rndTrash.includes(number) ? rnd(rndTrash) : number;
-};
-const request = () => fetch('https://afternoon-falls-25894.herokuapp.com/words?page=2&group=0')
-  .then((res) => res.json());
-
-
-const createMain = (obj) => {
-  console.log(obj);
-  const rndTrash = [];
-  rnd.call(this, rndTrash);
-};
+import createProcessTemplate from './gamepage';
+import store from './store/store';
+import request from './store/action-creators/fetch-words';
+import { changeLevelSelectAction, changeRoundSelectAction } from './store/action-creators/change-select';
 
 const createGameTimer = () => {
   let time = 3;
   const gameContainer = document.querySelector('.game-container');
-  const timerText = createElement('h2', 'timer__text');
-  const image = createElement('img', 'loader', '', [['src', loader]]);
-  const timer = createElement('div', 'timer', [timerText, image]);
+  const timerText = createElement({ tagName: 'h2', classNames: 'timer__text' });
+  const image = createElement({ tagName: 'img', classNames: 'loader', attrs: [['src', loader]] });
+  const timer = createElement({ tagName: 'div', classNames: 'timer', children: [timerText, image] });
   gameContainer.append(timer);
 
   setTimeout(() => {
@@ -39,21 +28,52 @@ const createGameTimer = () => {
     setTimeout(() => {
       clearInterval(timerId);
       timer.classList.add('hide');
-      createHeader();
+      createProcessTemplate();
       setTimeout(() => {
-        request().then(createMain);
         timer.remove();
       }, 1000);
     }, 4000);
   }, 1000);
 };
 
+const hangEventOnSelect = (isLevel, event) => {
+  const { value } = event.target;
+
+  const { dispatch } = store;
+  const { complexity, round } = store.getState();
+  const param = { complexity, round };
+
+  if (isLevel) {
+    dispatch(changeLevelSelectAction(value));
+    param.complexity = value;
+  } else {
+    dispatch(changeRoundSelectAction(value));
+    param.round = value;
+  }
+  dispatch(request(param));
+};
+
+const createSelectOptions = (array, name) => array.map((item, index) => createElement({
+  tagName: 'option', classNames: 'level-option', textContent: `${name} ${index + 1}`, attrs: [['value', `${index}`]],
+}));
+
+
 const createStartingPage = () => {
   const gameContainer = document.querySelector('.game-container');
-  const gameButton = createElement('button', 'game-container__btn', '', '', SAVANNAH_BUTTON);
-  const gameText = createElement('p', 'game-container__text', '', '', SAVANNAH_TEXT);
-  const gameTitle = createElement('h1', 'game-container__title', '', '', SAVANNAH_TITLE);
-  const gameStartContainer = createElement('div', 'game-container__start', [gameTitle, gameText, gameButton]);
+  const levelOptions = createSelectOptions([...Array(6).keys()], 'Уровень');
+  const roundOptions = createSelectOptions([...Array(30).keys()], 'Раунд');
+  const levelSelect = createElement({
+    tagName: 'select', classNames: 'select-css', children: levelOptions, onChange: hangEventOnSelect.bind(this, true),
+  });
+  const roundSelect = createElement({
+    tagName: 'select', classNames: 'select-css', children: roundOptions, onChange: hangEventOnSelect.bind(this, false),
+  });
+  const selectContainer = createElement({ tagName: 'div', children: [levelSelect, roundSelect], classNames: 'select-container d-flex justify-content-between' });
+
+  const gameButton = createElement({ tagName: 'button', classNames: 'game-container__btn', textContent: SAVANNAH_BUTTON });
+  const gameText = createElement({ tagName: 'p', classNames: 'game-container__text', textContent: SAVANNAH_TEXT });
+  const gameTitle = createElement({ tagName: 'h1', classNames: 'game-container__title', textContent: SAVANNAH_TITLE });
+  const gameStartContainer = createElement({ tagName: 'div', classNames: 'game-container__start', children: [gameTitle, gameText, selectContainer, gameButton] });
   gameContainer.append(gameStartContainer);
 };
 
