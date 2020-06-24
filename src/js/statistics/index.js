@@ -1,13 +1,44 @@
-import { Statistics } from './components/statistics';
+/* eslint-disable indent */
+import {
+  Statistics
+} from './components/statistics';
 
-function initStatistics() {
-  const statistics = new Statistics('standard');
+export async function initStatistics() {
+  const stat = new Statistics('daily');
 
-  const promise = new Promise((resolve) => {
-    resolve(statistics.updateStatistics('word', true, 1));
+  //  await stat.updateStatistics('game', true, 2);
+  //  await stat.updateStatistics('new', true, 2);
+  //  await stat.updateStatistics('summer', true, 2);
+  //  await stat.updateStatistics('summer', true, 2);
+  //  await stat.updateStatistics('winter', false, 2);
+  //  await stat.updateStatistics('winter', false, 2);
+
+  const data = await stat.getDateTimeStatistics('daily');
+
+  if (!data) {
+    return;
+  }
+
+  var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+    title: {
+      text: 'Колличество изученных слов'
+    },
+    axisX: {
+      title: "Время"
+    },
+    axisY: {
+      title: "Колличество слов",
+    },
+    data: [{
+      type: "line",
+      name: "Время",
+      connectNullData: true,
+      //nullDataLineDashType: "solid",
+      xValueType: "dateTime",
+      xValueFormatString: "DD MMM hh:mm TT",
+      dataPoints: data
+    }]
   });
-
-  promise.then((result) => console.log(result));
-}
-
-export default initStatistics();
+  chart.render();
+};

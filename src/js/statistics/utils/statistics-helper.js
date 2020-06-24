@@ -30,3 +30,10 @@ export async function initStatistics(gameName, dateTime) {
 
   return statistics;
 }
+
+export async function getStatistics() {
+  const statistics = await statisticsService.getStatistics();
+
+  const parsedStatistics = statisticsUtils.parseStatisticsData(statistics);
+  return parsedStatistics;
+}

@@ -4,7 +4,7 @@ import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
 import { initStatistics } from './statistics/index';
 
-window.onload = () => {
+window.onload = async () => {
   addHeaderToPage();
   const activePage = defineActivePage();
   switch (activePage) {
@@ -24,7 +24,7 @@ window.onload = () => {
       // dictionary-page
       break;
     case 5:
-      initStatistics();
+      await initStatistics();
       // statistics-page
       break;
     case 6:

@@ -1,0 +1,27 @@
+#statistics-page {
+  height: 100vh;
+}
+
+.stat__title {
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 2rem;
+  color: $color-secondary;
+  margin: 5px;
+}
+
+.statistics__common {
+  width: 100%;
+  padding: 20px;
+  margin: 20px 0 0 10px;
+}
+
+.stat__info{
+  padding: 20px;
+  text-align: center;
+}
+
+.canvasjs-chart-credit{
+  display: none;
+}

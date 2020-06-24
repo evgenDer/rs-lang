@@ -10,12 +10,18 @@ export const parseStatisticsData = (statistics) => {
   parsedStatistics.optional = statistics.optional;
   parsedStatistics.learnedWords = statistics.learnedWords;
 
-  const statisticsData = JSON.parse(statistics.optional.statisticsData);
-  console.log(statisticsData);
+  if (!statistics.optional) {
+    return statistics;
+  }
 
-  parsedStatistics.optional.statisticsData = statisticsData;
+  try {
+    const statisticsData = JSON.parse(statistics.optional.statisticsData);
+    parsedStatistics.optional.statisticsData = statisticsData;
 
-  return parsedStatistics;
+    return parsedStatistics;
+  } catch (e) {
+    return statistics;
+  }
 };
 
 export const getNewStatisticsValue = (currentStatistics, gameName) => {
@@ -75,7 +81,9 @@ export const updateWordData = (wordValue, isCorrect) => {
 };
 
 export const getCurrentStatistics = (globalStatistics, gameName, dateTime) => {
-  const statisticsData = globalStatistics.optional.statisticsData
+  const parsed = parseStatisticsData(globalStatistics);
+
+  const statisticsData = parsed.optional.statisticsData
     .find((n) => n.name.toLowerCase() === gameName.toLowerCase());
 
   if (!statisticsData) {

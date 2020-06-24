@@ -20,4 +20,30 @@ export class Statistics {
 
     await statisticsHelper.updateStatisticsData(this.globalStatistics);
   }
+
+  async endStatistics() {
+    return this.currentStatistics;
+  }
+
+  async getDateTimeStatistics(gameName) {
+    const statistics = await statisticsHelper.getStatistics();
+
+    if (!statistics.optional || !statistics.optional.statisticsData) {
+      return null;
+    }
+
+    const dateTime = statistics.optional.statisticsData
+
+    const gamedata = statistics.optional.statisticsData.find(f => f.name.toLowerCase() === gameName.toLowerCase());
+    console.log(gamedata);
+
+    const data = gamedata.data.map(function (f) {
+      return {
+        x: f.dateTime,
+        y: f.totalNewWords
+      };
+    });
+
+    return data;
+  }
 }
