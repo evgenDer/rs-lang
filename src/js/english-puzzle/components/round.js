@@ -1,5 +1,5 @@
 /* eslint-disable no-new */
-import Sentence from './sentence';
+import Sentence, { strokePuzzle } from './sentence';
 import { createElement } from '../../utils/create';
 import { removeChild, removeAllButtons, insertNewButtons } from '../../utils/helpers';
 import { BUTTONS_CLASSES, DATA_URL } from '../../utils/constants';
@@ -79,6 +79,7 @@ export default class Round {
       const textExample = this.dataPage[this.currentSentenceNumber].textExample.replace(/<\/?[a-zA-Z]+>/gi, '');
       this.currentSentence = new Sentence(slicedImage, textExample, this.width, height);
       const currentSentenceElement = createElement('div', 'sentence current');
+      currentSentenceElement.style.paddingLeft = `${this.height /(2*COUNT_SENTENCE) }px`;
       const newSentenceElemement = this.currentSentence.renderSourceGame();
       SOURCE_FIELD.append(newSentenceElemement);
       RESULT_FIELD.append(currentSentenceElement);
@@ -125,9 +126,9 @@ export default class Round {
   }
 
   playAudio() {
-    this.audioSentence.autoplay = true;
     const audioSentenceSrc = `${DATA_URL}${this.dataPage[this.currentSentenceNumber].audioExample}`;
     this.audioSentence.stop();
+    this.audioSentence.autoplay = true;
     this.audioSentence.src = audioSentenceSrc;
     this.audioSentence.play();
   }
@@ -159,11 +160,12 @@ export default class Round {
     currentSentenceElement.addEventListener("mouseleave", () => {
       this.checkPuzzles()
     }, false);
-    new Sortable(currentSentenceElement, {
-      group: 'shared', // set both lists to same group
+
+    const sortCurrent = new Sortable(currentSentenceElement, {
+      group: 'shared',
       animation: 150
     });
-    new Sortable(newSentenceElemement, {
+    const sortSource = new Sortable(newSentenceElemement, {
       group: 'shared',
       animation: 150
     });
@@ -179,6 +181,9 @@ export default class Round {
       const nextButton = createElement('button', 'btn_next');
       insertNewButtons([resultButton, nextButton]);
     } else {
+      document.querySelectorAll('canvas').forEach((puzzle) => {
+        strokePuzzle(puzzle);
+      });
       document.querySelector('.current').classList.remove('current');
       this.currentSentenceNumber += 1;
       this.generateSentenceInRound();
