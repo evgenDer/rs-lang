@@ -18,7 +18,7 @@ export const DEFAULT_CONFIGURATION = {
 
 export const DEFAULT_SETTINGS_PUZZLE = {
   autoPlaySound: 'true',
-  showImage: 'true',
+  showImage: 'false',
   showTranslation: 'true',
   playSound: 'true',
 
