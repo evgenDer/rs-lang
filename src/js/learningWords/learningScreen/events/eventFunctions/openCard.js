@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import updateCard from '../../domBuilder/lightTree/updateCard';
 import saveDayLocalState from '../../functions/saveDayLocalState';
+import addWordNeedToRepeat from './addWordNeedToRepeat';
 import { createUserWord, updateUserWord } from '../../../../api/userWords';
 import { openCardUpdate } from '../../../../words/updateWordState';
 
@@ -19,6 +20,7 @@ export default function openCard(learningScreenElement) {
   }
 
   openCardUpdate(card.state);
+  addWordNeedToRepeat(learningScreenElement);
 
   if (card.settings.enableAutomaticAudio) {
     card.audio.word.play();

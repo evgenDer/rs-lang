@@ -17,6 +17,14 @@ export default function findNexWordIndex(learningScreenElement, screenMode, mode
           return i;
         }
       }
+    } else if (screenMode === 'repeating') {
+      for (let i = 0; i < learningScreenElement.wordArrs.needToRepeat.length; i += 1) {
+        const word = learningScreenElement.wordArrs.needToRepeat[i];
+        const isDone = learningScreenElement.localState.needToRepeatProgressArr[i];
+        if (word.optional.mode !== 'deleted' && !isDone) {
+          return i;
+        }
+      }
     }
   } else {
     if (screenMode === 'newWord' && learningScreenElement.state.currentNewWordCardIndex > 0) {

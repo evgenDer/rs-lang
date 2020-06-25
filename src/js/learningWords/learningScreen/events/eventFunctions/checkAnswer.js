@@ -27,6 +27,15 @@ export default function checkAnswer(cardElement) {
       }
     }
 
+    const word2 = cardElement.querySelector('learning-line [slot=word2]');
+    const word3 = cardElement.querySelector('learning-line [slot=word3]');
+    if (word2 !== null) {
+      word2.remove();
+    }
+    if (word3 !== null) {
+      word3.remove();
+    }
+
     cardElement.querySelector('input').value = '';
 
     const mistakeColor = mistakes > 1 ? '#fe5c55' : '#fce373';

@@ -11,6 +11,7 @@ export default function createCard(learningScreenElement) {
   if (prevCard != null) {
     prevCard.remove();
   }
+
   learningScreenElement.insertAdjacentHTML('beforeend', "<card-word slot='card'></card-word>");
   const card = learningScreenElement.querySelector('card-word');
 
@@ -32,6 +33,20 @@ export default function createCard(learningScreenElement) {
       card.setState(
         prop,
         learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex][prop],
+      );
+    }
+  } else if (mode === 'repeating') {
+    const { currentRepeatingCardIndex } = learningScreenElement.state;
+    console.log(currentRepeatingCardIndex);
+    console.log(learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex]);
+    card.setState(
+      'isDone',
+      learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex],
+    );
+    for (const prop in learningScreenElement.wordArrs.needToRepeat[currentRepeatingCardIndex]) {
+      card.setState(
+        prop,
+        learningScreenElement.wordArrs.needToRepeat[currentRepeatingCardIndex][prop],
       );
     }
   }
