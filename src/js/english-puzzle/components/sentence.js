@@ -114,7 +114,7 @@ export default class Sentence {
     const minWidth = 3;
     let puzzle;
     arraySentence.forEach((element, index) => {
-      const widthLastElement = this.imageWidth - this.width + 4;
+      const widthLastElement = this.imageWidth - this.width;
       const widthElement = (index !== arraySentence.length - 1)
         ? (this.imageWidth / this.sentence.length) * element.length : widthLastElement;
       const widthForDrawElement = (element.length < minWidth && index !== arraySentence.length - 1)

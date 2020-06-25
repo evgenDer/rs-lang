@@ -54,6 +54,6 @@ function getDataEnglishPuzzle() {
 }
 
 export {
-  setUserId, setToken, setDateToken, setUserPassword, getUserEmail, getUserPassword, setDataEnglishPuzzle,
-  getDataEnglishPuzzle, setUserEmail, getToken, getUserId, getDateToken, removeUserId,
+  setUserId, setToken, setDateToken, setUserPassword, getUserEmail, getUserPassword,
+  setUserEmail, getToken, getUserId, getDateToken, removeUserId, getDataEnglishPuzzle, setDataEnglishPuzzle,
 };
