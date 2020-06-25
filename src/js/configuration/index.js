@@ -20,6 +20,18 @@ export async function getConfiguration() {
   return configuration;
 };
 
+export async function saveCustomConfiguration(gameName, gameConfiguration) {
+  const configuration = await configurationService.getSettings();
+
+  if(!configuration.optional){
+    return;
+  }
+
+  configuration.optional[gameName] = gameConfiguration;
+
+  await configurationService.upserSettings(configuration);
+}
+
 export async function updateConfigurationValues() {
   const configuration = await getConfiguration();
 

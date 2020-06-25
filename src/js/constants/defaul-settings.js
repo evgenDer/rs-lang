@@ -14,4 +14,10 @@ export const DEFAULT_CONFIGURATION = {
   deleteWords: true,
   markAsDifficultWord: true,
   possibilityToMarkWord: true,
+  englishPuzzle: {},
+  savannah: {},
+  sprint: {},
+  speakit: {},
+  audioCall: {},
+  mygame: {},
 };
