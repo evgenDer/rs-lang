@@ -44,7 +44,6 @@ export default class Game {
     const activeRound = this.numberRound;
     this.numberRound = activeRound;
     this.countRounds = await getCountWordsInGroup(this.numberLevel - 1);
-    console.log(this.countRounds);
     const switcherRound = document.querySelector('.switcher_round');
     removeChild(switcherRound);
     for (let i = 0; i < this.countRounds; i += 1) {
@@ -108,6 +107,7 @@ export default class Game {
     const imageSrc = `${MASTERPIECE_URL}${this.pageData[this.numberRound].imageSrc}`;
     this.round = await this.getCurrentRound();
     addEventsListenerOnHintButtons();
+    console.log(this.round);
     this.round.generateNewRoundOnPage(imageSrc);
     // this.pageData[this.numberRound] = {};
     // this.addImageInPage();
@@ -140,6 +140,5 @@ export default class Game {
       const nextRound = activeRound.nextElementSibling;
       nextRound.click();
     }
-    this.generateNewRound();
   }
 }

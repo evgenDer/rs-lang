@@ -44,9 +44,10 @@ export default class Round {
   }
 
   generateNewRoundOnPage(imageSrc) {
-    removeChild(RESULT_FIELD);
-    removeChild(SOURCE_FIELD);
     this.image.onload = () => {
+      console.log('hello');
+      removeChild(RESULT_FIELD);
+      removeChild(SOURCE_FIELD);
       this.generateNewRoundImages();
       this.generateSentenceInRound();
     };
@@ -57,6 +58,7 @@ export default class Round {
   }
 
   generateNewRoundImages() {
+    console.log('image');
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const height = this.height / COUNT_SENTENCE;
@@ -70,6 +72,7 @@ export default class Round {
   }
 
   generateSentenceInRound() {
+    console.log('sentence');
     const slicedImage = new Image();
     slicedImage.src = this.srcImagesParts[this.currentSentenceNumber];
     slicedImage.onload = () => {
@@ -158,17 +161,18 @@ export default class Round {
     const currentSentenceElement = RESULT_FIELD.querySelector('.current');
     const newSentenceElemement = SOURCE_FIELD.querySelector('.sentence');
     currentSentenceElement.addEventListener("mouseleave", () => {
-      this.checkPuzzles()
+      this.checkPuzzles();
     }, false);
-
     const sortCurrent = new Sortable(currentSentenceElement, {
       group: 'shared',
-      animation: 150
+      animation: 150,
     });
     const sortSource = new Sortable(newSentenceElemement, {
       group: 'shared',
       animation: 150
     });
+   /* sortCurrent.destroy();
+    sortSource.destroy();*/
   }
 
   continuationGame() {
@@ -181,9 +185,7 @@ export default class Round {
       const nextButton = createElement('button', 'btn_next');
       insertNewButtons([resultButton, nextButton]);
     } else {
-      document.querySelectorAll('canvas').forEach((puzzle) => {
-        strokePuzzle(puzzle);
-      });
+      this.generateCorrectSentence();
       document.querySelector('.current').classList.remove('current');
       this.currentSentenceNumber += 1;
       this.generateSentenceInRound();
