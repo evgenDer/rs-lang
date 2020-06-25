@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import switchCardMode from './switchCardMode';
 import checkAnswer from './checkAnswer';
+import whatsNext from './whatsNext';
 
 import createCard from '../../domBuilder/lightTree/createCard';
 import updateCard from '../../domBuilder/lightTree/updateCard';
@@ -8,13 +8,12 @@ import createResults from '../../domBuilder/lightTree/createResults';
 import { updateStatusBar } from '../../domBuilder/lightTree/createStatusBar';
 
 import { createUserWord, updateUserWord, deleteUserWord } from '../../../../api/userWords';
-import {
-  getUpdatedUserWord, increaseWordErrorCount, increaseWordReferenceCount, switchDeleteModeUserWord,
-  increaseWordRightSequenceCount, calculateRepeatTiming, increaseRepeatCount
-} from '../../../../words/updateWordState';
+import { increaseWordErrorCount, increaseWordRightSequenceCount, increaseRepeatCount }
+  from '../../../../words/updateWordState';
 
-import findNextNotDeletedWord from '../../functions/findNextNotDeletedWord';
+
 import saveDayLocalState from '../../functions/saveDayLocalState';
+import addWordNeedToRepeat from './addWordNeedToRepeat';
 
 export default function rightClick(learningScreenElement) {
   let isAnswerCorrect = true;
@@ -86,6 +85,7 @@ export default function rightClick(learningScreenElement) {
       if (card.state.isFirstAnswer) {
         increaseWordErrorCount(word);
         increaseRepeatCount(word);
+        addWordNeedToRepeat(learningScreenElement);
 
         if (cardMode === 'newWord') {
           createUserWord(wordId, word);
@@ -99,20 +99,20 @@ export default function rightClick(learningScreenElement) {
     }
     card.state.isFirstAnswer = false;
   } else {
-    if (learningScreenElement.state.mode === 'learning') {
-      learningScreenElement.state.currentLearningCardIndex += 1;
-    } else {
-      learningScreenElement.state.currentNewWordCardIndex += 1;
+    const willCreateCard = whatsNext(learningScreenElement);
+
+    if (willCreateCard) {
+      card.audio.word.pause();
+      card.audio.example.pause();
+      card.audio.meaning.pause();
+
+      difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));
+      difficultyButtons.forEach((element) => element.classList.remove('active'));
+      setTimeout(() => difficultyButtons.forEach((element) => element.classList.add('readyToMove')), 600);
+
+      createCard(learningScreenElement);
     }
 
-    card.audio.word.pause();
-    card.audio.example.pause();
-    card.audio.meaning.pause();
-
-    createCard(learningScreenElement);
-    difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));
-    difficultyButtons.forEach((element) => element.classList.remove('active'));
-    setTimeout(() => difficultyButtons.forEach((element) => element.classList.add('readyToMove')), 600);
   }
 
   /*if (

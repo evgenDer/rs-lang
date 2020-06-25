@@ -20,7 +20,6 @@ export default function initLearning(cardElement) {
   const statusText = cardElement.querySelector('[slot=statusText]');
   const mark = Math.floor(cardElement.state.optional.successPoint);
   const currentColor = markToStyle[`${mark}`];
-  console.log(mark);
   dots.forEach((element, index) => {
 
     if (index <= (mark - 1)) {

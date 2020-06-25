@@ -93,7 +93,7 @@ function calculateSuccessPoint(word, mode) {
 }
 
 function calculateRepeatTiming(word) {
-  const timing = 30 * successPoint / 5; //days
+  const timing = 30 * word.optional['successPoint'] / 5; //days
   const repeatRating = Math.floor(timing * 24 * 3600 * 1000 + word.optional['lastUpdateDate']);
   return repeatRating;
 }

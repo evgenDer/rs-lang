@@ -1,30 +1,24 @@
 /* eslint-disable no-param-reassign */
 import createCard from '../../domBuilder/lightTree/createCard';
-import switchCardMode from './switchCardMode';
+import whatsNext from './whatsNext';
 
 export default function leftClick(learningScreenElement) {
-  if (learningScreenElement.state.mode === 'newWord') {
-    if (learningScreenElement.state.currentNewWordCardIndex > 0) {
-      learningScreenElement.state.currentNewWordCardIndex -= 1;
+  const card = learningScreenElement.querySelector('card-word');
+  const difficultyButtons = learningScreenElement.querySelectorAll('[slot=difficultyButton]');
+  if ((learningScreenElement.state.mode === 'newWord'
+    && learningScreenElement.state.currentNewWordCardIndex > 0)
+    || (learningScreenElement.state.mode === 'learning')) {
+    const willCreateCard = whatsNext(learningScreenElement, 'left');
+    if (willCreateCard) {
+      card.audio.word.pause();
+      card.audio.example.pause();
+      card.audio.meaning.pause();
+
+      difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));
+      difficultyButtons.forEach((element) => element.classList.remove('active'));
+      setTimeout(() => difficultyButtons.forEach((element) => element.classList.add('readyToMove')), 600);
+
       createCard(learningScreenElement);
     }
-  } else {
-    if (
-      learningScreenElement.state.currentLearningCardIndex === 0 &&
-      learningScreenElement.state.mode === 'learning'
-    ) {
-      let lastCheckedNewWordIndex = learningScreenElement.localState.newWordProgressArr.indexOf(
-        false,
-      );
-      if (lastCheckedNewWordIndex === -1) {
-        lastCheckedNewWordIndex = 0;
-      }
-
-      learningScreenElement.setState('currentNewWordCardIndex', lastCheckedNewWordIndex);
-      switchCardMode(learningScreenElement);
-    } else if (learningScreenElement.state.currentLearningCardIndex > 0) {
-      learningScreenElement.state.currentLearningCardIndex -= 1;
-    }
-    createCard(learningScreenElement);
   }
 }

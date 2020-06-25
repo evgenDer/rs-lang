@@ -38,33 +38,21 @@ export default async function getDayLocalState(learningScreenElemen) {
     learningScreenElemen.setState('currentNewWordCardIndex', 0);
     learningScreenElemen.setState('currentLearningCardIndex', 0);
 
-    let wordArrs = await createNewWordsPack(learningScreenElemen.settings.newWordCount, learningScreenElemen.settings.difficultyLevel, 0);
-    let newWordsPack = wordArrs.newWords;
-    newWordsPack.map((element) => Object.assign(element, {
-      "difficulty": 'normal', // easy, normal, hard
-      "optional": {
-        mode: 'newWord', //deleted,null
-        lastUpdateDate: Date.now(),
-        referenceCount: 0,
-        errorCount: 0,
-        repeatCount: 0,
-        rightSequence: 0,
-        successPoint: 0, // [0,5]
-      }
-    }));
-    console.log(newWordsPack);
 
-    const dayWordArrs = {
-      newWords: newWordsPack,
-      learnedWords: wordArrs.learnedWords,
-    };
+    let cardToRepeatCount = learningScreenElemen.settings.wordCount - learningScreenElemen.settings.newWordCount;
+    if (cardToRepeatCount < 0) { cardToRepeatCount = 0 }
+
+    let wordArrs = await createNewWordsPack(learningScreenElemen.settings.newWordCount,
+      cardToRepeatCount,
+      learningScreenElemen.settings.difficultyLevel, currentDate);
+    const dayWordArrs = wordArrs;
 
     const newWordProgressArr = Array(+learningScreenElemen.settings.newWordCount).fill(false);
     const learningProgressArr = Array(+learningScreenElemen.settings.wordCount).fill(false);
     const dayLocalState = {
       newWordProgressArr,
       learningProgressArr,
-      deletedArr: learningProgressArr,
+      needToRepeatProgressArr: [],
     };
 
     Object.assign(learningScreenElemen.localState, dayLocalState);

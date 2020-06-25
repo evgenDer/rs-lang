@@ -10,7 +10,7 @@ import createEvents from './events/createEvents';
 
 import { getUserConfiguration } from '../../data-access/local-storage';
 
-import findNextNotDeletedWord from './functions/findNextNotDeletedWord';
+import whatsNext from './events/eventFunctions/whatsNext';
 import getDayLocalState from './functions/getDayLocalState';
 
 export default class LearningScreenElement extends HTMLElement {
@@ -20,16 +20,17 @@ export default class LearningScreenElement extends HTMLElement {
       mode: 'newWord',
       currentNewWordCardIndex: 0,
       currentLearningCardIndex: 0,
+      currentRepeatingCardIndex: 0,
     };
 
     this.localState = {
       newWordProgressArr: [],
       learningProgressArr: [],
-      deletedArr: [],
+      needToRepeatProgressArr: [],
     };
 
     this.settings = {
-      mode: 'new&repeat', //new, repeat, new&repeat
+      hardMode: false,
       enableAutomaticAudio: true,
       newWordCount: 3,
       wordCount: 6,
@@ -39,6 +40,7 @@ export default class LearningScreenElement extends HTMLElement {
     this.wordArrs = {
       newWords: [],
       learnedWords: [],
+      needToRepeat: [],
     };
   }
 
@@ -48,17 +50,23 @@ export default class LearningScreenElement extends HTMLElement {
 
     this.setSettingsFromLocalStorage();
 
-
-
     getDayLocalState(this)
       .then(() => {
         console.log(this.wordArrs);
-        createStatusBar(this);
-        updateStatusBar(this);
+        const willCreateCard = whatsNext(this);
+        if (willCreateCard) {
+          createStatusBar(this);
+          updateStatusBar(this);
 
-        createArrow(this);
-        createModeButtons(this);
-        createDifficultyButtons(this);
+          createArrow(this);
+          createModeButtons(this);
+          createDifficultyButtons(this);
+
+          createCard(this);
+
+          createEvents(this);
+        }
+
 
         /*
         if (this.state.mode === 'learning') {
@@ -68,9 +76,9 @@ export default class LearningScreenElement extends HTMLElement {
           this.state.currentNewWordCardIndex =
             findNextNotDeletedWord(this, this.state.currentNewWordCardIndex, 'right');
         }*/
-        createCard(this);
 
-        createEvents(this);
+
+
         /*
                 if (
                   this.localState.newWordProgressArr.indexOf(false) === -1 &&

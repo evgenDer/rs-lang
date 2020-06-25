@@ -5,24 +5,22 @@ import saveDayLocalState from '../../functions/saveDayLocalState';
 import { switchDeleteModeUserWord } from '../../../../words/updateWordState';
 import { createUserWord, updateUserWord } from '../../../../api/userWords';
 
+import whatsNext from './whatsNext';
+
 export default function daleteCard(learningScreenElement) {
+
   const card = learningScreenElement.querySelector('card-word');
   const screenMode = learningScreenElement.state.mode;
   const cardMode = card.state.optional.mode;
-  let cardIndex = 0;
 
-  console.log(learningScreenElement.state)
   if (screenMode === 'learning') {
-    cardIndex = learningScreenElement.state.currentLearningCardIndex;
-    learningScreenElement.localState.learningProgressArr[cardIndex] = true;
-    learningScreenElement.state.currentLearningCardIndex += 1;
+    learningScreenElement.localState
+      .learningProgressArr[learningScreenElement.state.currentLearningCardIndex] = true;
   } else {
-    cardIndex = learningScreenElement.state.currentNewWordCardIndex;
-    learningScreenElement.localState.newWordProgressArr[cardIndex] = true;
-    learningScreenElement.state.currentNewWordCardIndex += 1;
+    learningScreenElement.localState
+      .newWordProgressArr[learningScreenElement.state.currentNewWordCardIndex] = true;
   }
 
-  console.log(learningScreenElement.state)
   switchDeleteModeUserWord(card.state);
   saveDayLocalState(learningScreenElement);
 
@@ -33,7 +31,6 @@ export default function daleteCard(learningScreenElement) {
     "difficulty": wordDifficulty,
     "optional": wordOptions,
   };
-  console.log(cardMode);
   if (cardMode === 'newWord') {
     createUserWord(wordId, word);
   } else {
@@ -41,5 +38,18 @@ export default function daleteCard(learningScreenElement) {
     updateUserWord(wordId, word);
   }
 
-  createCard(learningScreenElement);
+  const willCreateCard = whatsNext(learningScreenElement);
+  if (willCreateCard) {
+    card.audio.word.pause();
+    card.audio.example.pause();
+    card.audio.meaning.pause();
+
+    const difficultyButtons = learningScreenElement.querySelectorAll('[slot=difficultyButton]');
+    difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));
+    difficultyButtons.forEach((element) => element.classList.remove('active'));
+    setTimeout(() => difficultyButtons.forEach((element) => element.classList.add('readyToMove')), 600);
+
+    createCard(learningScreenElement);
+  }
+
 }

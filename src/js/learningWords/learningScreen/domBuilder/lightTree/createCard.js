@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
-import checkDeleteWordMode from '../../functions/findNextNotDeletedWord';
+import checkDeleteWordMode from '../../functions/findNexWordIndex';
 
 export default function createCard(learningScreenElement) {
   const { currentNewWordCardIndex } = learningScreenElement.state;
@@ -34,5 +34,10 @@ export default function createCard(learningScreenElement) {
         learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex][prop],
       );
     }
+  }
+
+  if (card.state.isDone) {
+    const difficultyButtons = learningScreenElement.querySelectorAll('[slot=difficultyButton]');
+    difficultyButtons.forEach((element) => element.classList.add('active'));
   }
 }

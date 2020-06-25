@@ -1,12 +1,36 @@
 import { getDataWords, getWordById } from '../../../api/words';
 import { getAllUserWords } from '../../../api/userWords';
+import { calculateRepeatTiming } from '../../../words/updateWordState';
 
-export async function createNewWordsPack(dayNewWordsCount, group = 0, page = 0) {
+export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group = 0, page = 0) {
   let allUserWords = await getAllUserWords();
   let allUpdatedUserWords = [];
 
+  let dayNewWordsPack = [];
+  dayNewWordsPack = await updateNewWordsPack(dayNewWordsPack, allUserWords, dayNewWordsCount, group, page);
+
+  dayNewWordsPack.map((element) => Object.assign(element, {
+    "difficulty": 'normal', // easy, normal, hard
+    "optional": {
+      mode: 'newWord', //deleted,null
+      lastUpdateDate: Date.now(),
+      referenceCount: 0,
+      errorCount: 0,
+      repeatCount: 0,
+      rightSequence: 0,
+      successPoint: 0, // [0,5]
+    }
+  }));
+
   if (!Array.isArray(allUserWords)) { allUserWords = [] }
+
+  allUserWords = allUserWords.filter((element) => element.optional.mode !== 'deleted')
   allUserWords = sortLearnedWords(allUserWords);
+  allUserWords = sortLearnedWordsByNeededToRepeat(allUserWords);
+
+  if (allUserWords.length > dayWordsCount) {
+    allUserWords = allUserWords.slice(0, dayWordsCount);
+  }
 
   for (let i = 0; i < allUserWords.length; i += 1) {
     const word = await getWordById(allUserWords[i].wordId);
@@ -14,24 +38,38 @@ export async function createNewWordsPack(dayNewWordsCount, group = 0, page = 0) 
     allUpdatedUserWords.push(updatedWord);
   }
 
-  let dayNewWordsPack = [];
-  dayNewWordsPack = await updateNewWordsPack(dayNewWordsPack, allUserWords, dayNewWordsCount, group, page);
+  if (allUpdatedUserWords.length < dayWordsCount) {
+    allUpdatedUserWords = allUpdatedUserWords.concat(dayNewWordsPack.slice(0, dayWordsCount - allUserWords.length));
+  }
 
   const wordArrs = {
     newWords: dayNewWordsPack,
     learnedWords: allUpdatedUserWords,
+    needToRepeat: [],
   }
-  console.log(wordArrs);
   return wordArrs;
 }
 
 function sortLearnedWords(allUserWords) {
-  return allUserWords.sort((a, b) => +a.optional.successPoint < +b.optional.successPoint);
+  return allUserWords.sort((a, b) => calculateRepeatTiming(a) - calculateRepeatTiming(b));
+}
+
+function sortLearnedWordsByNeededToRepeat(allUserWords) {
+  let notNeedToRepeatArr = [];
+  let needToRepeatArr = [];
+  for (let i = 0; i < allUserWords.length; i += 1) {
+    if (allUserWords[i].optional.mode === 'needToRepeat') {
+      needToRepeatArr.push(allUserWords[i]);
+    } else {
+      notNeedToRepeatArr.push(allUserWords[i]);
+    }
+  }
+  return needToRepeatArr.concat(notNeedToRepeatArr);
 }
 
 async function updateNewWordsPack(dayNewWordsPack = [], allUserWords = [], dayNewWordsCount = 10, group = 0, page = 0) {
   let localDayNewWordsPack = dayNewWordsPack;
-  const newWordsPack = await getDataWords(0, 0);
+  const newWordsPack = await getDataWords(group, page);
 
   for (let i = 0; i < newWordsPack.length; i += 1) {
     let isNewWord = true;
@@ -47,6 +85,9 @@ async function updateNewWordsPack(dayNewWordsPack = [], allUserWords = [], dayNe
   }
   if (localDayNewWordsPack.length >= dayNewWordsCount) {
     return localDayNewWordsPack.filter((element, index) => index < dayNewWordsCount);
+  }
+  if (page === 30) {
+    return await updateNewWordsPack(localDayNewWordsPack, allUserWords, dayNewWordsCount, group + 1, 0)
   }
   return await updateNewWordsPack(localDayNewWordsPack, allUserWords, dayNewWordsCount, group, page + 1)
 

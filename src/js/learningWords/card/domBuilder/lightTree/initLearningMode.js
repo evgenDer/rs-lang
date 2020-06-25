@@ -9,8 +9,6 @@ import createImg from './createImg';
 import createAudio from './createAudio';
 
 export default function initLearning(cardElement, isJustUpdated = false) {
-
-
   console.log(cardElement.state);
   if (isJustUpdated) {
 
@@ -36,7 +34,8 @@ export default function initLearning(cardElement, isJustUpdated = false) {
     }
     updateStatusBar(cardElement)
 
-    if (cardElement.settings.showWordTranscription) {
+    console.log(cardElement.settings);
+    if (cardElement.settings.showWordTranslation) {
       cardElement.insertAdjacentHTML(
         'beforeend',
         `<span slot='RUitem'>${cardElement.state.wordTranslate}</span>`,
@@ -54,16 +53,13 @@ export default function initLearning(cardElement, isJustUpdated = false) {
       cardElement.insertAdjacentHTML('beforeend', "<div slot='openWord'>Ответ</div>");
     }
 
-    if (cardElement.settings.deleteWords && !cardElement.state.isDeleted) {
+    if (cardElement.settings.deleteWords) {
       cardElement.insertAdjacentHTML('beforeend', "<div slot='deleteWord'>Удалить</div>");
     }
 
-    /*
-    if (cardElement.settings.markAsDifficultWord && !cardElement.state.isDeleted) {
-      cardElement.insertAdjacentHTML('beforeend', "<div slot='hardWord'>Сложно</div>");
-    }*/
-    cardElement.insertAdjacentHTML('beforeend', "<div slot='repeatWord'>Снова</div>");
-
+    if (cardElement.state.isDone) {
+      cardElement.insertAdjacentHTML('beforeend', "<div slot='repeatWord'>Снова</div>");
+    }
 
     if (cardElement.settings.deleteWords && cardElement.state.isDeleted) {
       cardElement.insertAdjacentHTML('beforeend', "<div slot='restoreWord'>Восстановить</div>");

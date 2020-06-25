@@ -8,6 +8,7 @@ import chooseWordDifficulty from './eventFunctions/chooseWordDifficulty';
 import deleteCard from './eventFunctions/deleteCard';
 import restoreCard from './eventFunctions/restoreCard';
 import checkAnswer from './eventFunctions/checkAnswer';
+import addWordNeedToRepeat from './eventFunctions/addWordNeedToRepeat';
 
 export default function createEvents(learningScreenElement) {
   learningScreenElement.addEventListener('click', () => {
@@ -26,7 +27,10 @@ export default function createEvents(learningScreenElement) {
       deleteCard(learningScreenElement);
     } else if (event.target.closest('div[slot=restoreWord]') != null) {
       restoreCard(learningScreenElement);
+    } else if (event.target.closest('div[slot=repeatWord]') != null) {
+      addWordNeedToRepeat(learningScreenElement);
     }
+
 
     if (item != null) {
       switch (item.classList[0]) {
@@ -41,8 +45,13 @@ export default function createEvents(learningScreenElement) {
           chooseWordDifficulty(learningScreenElement, item)
           break;
         case 'modeButton':
+          const prevMode = learningScreenElement.state.mode;
           switchCardMode(learningScreenElement, item);
-          createCard(learningScreenElement);
+          const nextMode = learningScreenElement.state.mode;
+          if (prevMode !== nextMode) {
+            createCard(learningScreenElement);
+          }
+
           break;
         default:
           break;
@@ -53,8 +62,6 @@ export default function createEvents(learningScreenElement) {
   document.addEventListener('keydown', () => {
     if (event.key === 'Enter') {
       rightClick(learningScreenElement);
-    } else if (event.key === 'Backspace') {
-
     }
   });
 }
