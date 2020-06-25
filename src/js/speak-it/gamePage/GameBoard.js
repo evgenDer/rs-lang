@@ -1,6 +1,7 @@
 import { getDataWords } from '../../api/words';
 import Card from './Card';
 import { createElement } from '../../utils/create';
+import { getGameStatistics} from '../../utils/storage';
 
 export default class GameBoard {
   constructor() {
@@ -9,14 +10,19 @@ export default class GameBoard {
   }
 
   generateGameBoard() {
-    getDataWords(1, 0).then((data) => {
+
+    this.cardsContainer = createElement({ tagName: 'div', classNames: 'cards_container' });
+    return this.cardsContainer;
+  }
+
+  addCards() {
+    const localData = getGameStatistics('speakitStatistic');
+    getDataWords(localData.level, localData.page).then((data) => {
       data.forEach((cardData) => {
         this.currentCards.push(new Card(cardData));
       });
       this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
     });
-    this.cardsContainer = createElement({ tagName: 'div', classNames: 'cards_container' });
-    return this.cardsContainer;
   }
 
   getContainer() {
@@ -60,7 +66,7 @@ export default class GameBoard {
   }
 
   checkAnswers(inputValue, callback) {
-   const currentCard = this.currentCards.find((card) => card.getWord() === inputValue.toLowerCase() && !card.isGuessed());
+   const currentCard = this.currentCards.find((card) => card.getWord() === inputValue.toLowerCase() && !card.wasAnswered());
    if (currentCard) {
     currentCard.markAsGuessed();
     callback({img: currentCard.getImgUrl()});

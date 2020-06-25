@@ -27,6 +27,7 @@ export default class GamePage {
   }
 
   start() {
+    this.gameBoard.addCards();
     this.gameContainer.classList.remove('hidden');
   }
 

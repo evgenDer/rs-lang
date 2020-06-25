@@ -35,7 +35,20 @@ function removeUserId() {
   localStorage.removeItem('userId');
 }
 
+function getGameStatistics(gameName) {
+  if (localStorage.getItem(gameName) === null) {
+    const data  = { level: 0, page: 0 }
+    localStorage.setItem(gameName, JSON.stringify(data));
+  }
+  return JSON.parse(localStorage.getItem(gameName));
+};
+
+function setGameStatistics(data) {
+  localStorage.setItem('speakitStatistic', JSON.stringify(data));
+};
+
 export {
   setUserId, setToken, setDateToken, setUserPassword,
   setUserEmail, getToken, getUserId, getDateToken, removeUserId,
+  getGameStatistics, setGameStatistics,
 };

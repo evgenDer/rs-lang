@@ -12,8 +12,8 @@ export default class Card {
   }
 
   generateCard() {
-    const icon = createElement({ tagName: 'object', classNames: 'speaker-icon', attrs: [['type', 'image/svg+xml'], ['data', './assets/img/icons/speaker.svg']] });
-    const containerIcon =  createElement({ tagName: 'span', classNames: 'container-speaker-icon', children: [icon] });
+    const icon = createElement({ tagName: 'img', classNames: 'speaker-icon', attrs: [['src', './assets/img/icons/speaker.svg']] });
+    const containerIcon =  createElement({ tagName: 'div', classNames: 'container-speaker-icon', children: [icon] });
     const word = createElement({ tagName: 'p', classNames: 'word', textContent: this.word });
     const transcription = createElement({ tagName: 'p', classNames: 'transcription', textContent: this.transcription });
     const wordContainer = createElement({ tagName: 'div', classNames: 'word-container', children: [ word, transcription] });
