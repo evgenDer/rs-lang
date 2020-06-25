@@ -128,6 +128,10 @@ export default function rightClick(learningScreenElement) {
       card.audio.example.pause();
       card.audio.meaning.pause();
 
+      card.audio.word.src = null;
+      card.audio.example.src = null;
+      card.audio.meaning.src = null;
+
       difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));
       difficultyButtons.forEach((element) => element.classList.remove('active'));
       setTimeout(() => difficultyButtons.forEach((element) => element.classList.add('readyToMove')), 600);
