@@ -14,11 +14,11 @@ async function createUserWord(wordId, word) {
   }
 }
 
-async function makeRequestByWordId(methodRequest, wordId) {
+async function makeRequestByWordId(methodRequest, wordId, word) {
   try {
     const userId = getUserId();
     const urlRequest = `${BACKEND_URL}/users/${userId}/words/${wordId}`;
-    const content = await sendRequest(methodRequest, urlRequest, true);
+    const content = await sendRequest(methodRequest, urlRequest, true, word);
     return content;
   } catch (error) {
     return error;
@@ -41,8 +41,8 @@ async function getUserWordById(wordId) {
   return result;
 }
 
-async function updateUserWord(wordId) {
-  const result = await makeRequestByWordId('PUT', wordId);
+async function updateUserWord(wordId, word) {
+  const result = await makeRequestByWordId('PUT', wordId, word);
   return result;
 }
 
