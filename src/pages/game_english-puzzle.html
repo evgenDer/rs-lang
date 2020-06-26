@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta content="width=1180" name="viewport" id="viewport">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
@@ -11,21 +10,25 @@
         <title>English puzzle</title>
     </head>
     <body styles = "background: url(assets/img/puzzle.jpg), rgba(255,255,255,0.9)" class = "game-puzzle">
-       <div class="start-page hidden">
+       <div class="start-page">
          <div class="wrapper">
-            <button class="btn_close"></button>
+            <button class = 'btn_close' uk-close></button>
             <div class = "block-start">
               <h2>ENGLISH PUZZLE</h2>
               <p>Нажимайте на слова, чтобы собрать фразы.</p>
-              <button>Начать</button>
+              <button class = "block-start__button">Начать</button>
             </div>
           </div>
         </div>
-        <div class = "play-page">
+        <div class="load-page hidden uk-overlay-default">
+          <div uk-spinner="ratio: 3"></div>
+        </div>
+        </div>
+        <div class = "play-page hidden">
             <div class = "wrapper">
                 <div class = "header__game-puzzle">
                   <div class="switchers">
-                    <button class="uk-button uk-button-default button_level" type="button" sw>Уровень: 1</button>
+                    <button class="uk-button uk-button-default button_level" type="button" >Уровень: 1</button>
                     <div uk-dropdown>
                       <ul class="uk-nav uk-dropdown-nav switcher_level">
                           <li class="uk-active">Уровень 1</li>
@@ -56,22 +59,22 @@
                     <button class="btn_exit"></button>
                   </div>
                 </div>
+                <main>
+                    <div class = "wrapper">
+                        <div class = "block-hints">
+                          <button class = "btn_pronoucing"></button>
+                          <p class = "translate"></p>
+                        </div>
+                        <div id="left" class = "block-results">
+                        </div>
+                        <div id ="right" class = "block-source"></div>
+                        <div class = "block-btns">
+                            <button class="btn_unknown"></button>
+                        </div>
+                    </div>
+                </main>
             </div>
-          </div>
-        <main>
-            <div class = "wrapper">
-                <div class = "block-hints">
-                  <button class = "btn_pronoucing"></button>
-                  <p class = "translate"></p>
-                </div>
-                <div id="left" class = "block-results">
-                </div>
-                <div id ="right" class = "block-source"></div>
-                <div class = "block-btns">
-                    <button class="btn_unknown"></button>
-                </div>
-            </div>
-        </main>
+        </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>

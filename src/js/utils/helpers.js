@@ -41,7 +41,15 @@ function insertNewButtons(buttons) {
   }
 }
 
+function addHidden(element){
+   element.classList.add('hidden');
+}
+
+function removeHidden(element){
+  element.classList.remove('hidden');
+}
 
 export {
-  getUser, getMistakeResponse, shuffle, removeChild, removeAllButtons, insertNewButtons, exitGame,
+  getUser, getMistakeResponse, shuffle, removeChild, removeAllButtons,
+  insertNewButtons, exitGame, addHidden, removeHidden,
 };
