@@ -1,7 +1,7 @@
 import { ERROR_MSG } from '../authorization/constants';
 import { getMistakeResponse, getUser } from '../utils/helpers';
 import {
-  setUserPassword, setUserEmail, setToken, getToken,
+  setUserPassword, setUserEmail, setToken, getToken, getUserEmail, getUserPassword,
 } from '../utils/storage';
 import { isValidToken } from '../utils/checks';
 import { BACKEND_URL } from '../utils/constants';
@@ -29,6 +29,7 @@ async function createUser(event) {
 }
 
 async function loginUser(emailUser, passwordUser) {
+  try{
   const user = {email: emailUser, password: passwordUser};
   const rawResponse = await fetch(`${BACKEND_URL}/signin`, {
     method: 'POST',
@@ -40,11 +41,18 @@ async function loginUser(emailUser, passwordUser) {
   });
   const content = await rawResponse.json();
   return content;
+  }
+  catch(error){
+    window.location.href = 'index.html';
+    return error;
+  }
 }
 
 async function getTokenForRequest() {
   if (!isValidToken()) {
-    const infoAboutUser = await loginUser();
+    const email = getUserEmail();
+    const password = getUserPassword();
+    const infoAboutUser = await loginUser(email, password);
     setToken(infoAboutUser);
   }
   return getToken();
