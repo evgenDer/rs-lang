@@ -4,7 +4,8 @@
   }
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   padding-top: 1px;
   margin-top: -1px;
   animation: 2s ease-in-out;
@@ -12,9 +13,6 @@
     linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%) center center / cover fixed, 
     url(../img/bg-audiochallenge.jpg) center center no-repeat;
   background-size: cover;
-  @include media-tablet {
-    height: 100%;
-  }
 }
 
 .audiochallenge__wrapper {
@@ -144,7 +142,7 @@
 	align-items: center;
   justify-content: center;
   flex-direction: row;
-  @include media-mobile {
+  @include media-tablet {
     flex-direction: column;
   }
   .game-control {
@@ -175,6 +173,7 @@
   color: $color-primary;
   padding: 15px 25px;
   min-width: fit-content;
+  max-width: 250px;
   ul li {
     @include font(1.1rem, 1.4rem, 400);
     &:hover {
@@ -187,6 +186,36 @@
   }
 }
 
+
+// ===== game mode switch =====
+
+.game-control__btn_mode {
+  width: 190px;
+  padding: 0;
+}
+
+.game-control__btn_mode_active {
+  background: $color-yellow !important;
+  color: $color-secondary !important;
+}
+
+.game-control__btn_mode_disabled {
+  background: $color-additional !important;
+  color: $color-primary !important;
+}
+
+.game-control__list_desc {
+  div p {
+    @include font(1.1rem, 1.4rem, 400);
+    margin: 0;
+    width: 200px;
+    word-break: break-all;
+    overflow: hidden;
+    text-align: center;
+  }
+}
+
+// =====
 
 
 .audiochallenge__game-field {

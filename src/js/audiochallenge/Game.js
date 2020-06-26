@@ -1,14 +1,10 @@
 /* eslint-disable no-param-reassign */
 
 import { createElement } from '../utils/create';
+import { GAME_MODES } from '../games/constants';
 
 
-export const GAME_MODES = {
-  learned: 'Изученные',
-  all: 'Все',
-};
-
-
+// eslint-disable-next-line import/prefer-default-export
 export class Game {
   constructor(mode = GAME_MODES.all, level = 1, round = 1) {
     this.mode = mode;

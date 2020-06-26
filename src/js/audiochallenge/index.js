@@ -1,4 +1,7 @@
 import { Game } from './Game';
+import { addGameModeSwitchClickHandler } from '../games/index';
+import { showElement, hideElement } from '../helpers/html-helper';
+
 
 const startBtn = document.querySelector('.description__start');
 const description = document.querySelector('.audiochallenge__desription');
@@ -11,22 +14,7 @@ const mainSpeakerBtn = document.getElementById('main-speaker');
 const wordSpeakerBtn = document.getElementById('word-speaker');
 const exampleSpeakerBtn = document.getElementById('example-speaker');
 
-
-function closeDescription() {
-  description.classList.add('hidden');
-}
-
-function openDescription() {
-  description.classList.remove('hidden');
-}
-
-function closeGameField() {
-  gameField.classList.add('hidden');
-}
-
-function openGameField() {
-  gameField.classList.remove('hidden');
-}
+const modeBtn = document.querySelector('.game-control__btn_mode');
 
 
 function exitGame() {
@@ -49,8 +37,9 @@ function addExitGameBtnClickHandler() {
     exitGame();
   });
   backGameBtn.addEventListener('click', () => {
-    closeGameField();
-    openDescription();
+    showElement(modeBtn);
+    hideElement(gameField);
+    showElement(description);
     setExitButtonStdMode();
   });
 }
@@ -59,9 +48,10 @@ function addExitGameBtnClickHandler() {
 function addStartButtonClickHandler() {
   startBtn.addEventListener('click', (event) => {
     event.preventDefault();
-
-    closeDescription();
-    openGameField();
+    
+    hideElement(modeBtn);
+    hideElement(description);
+    showElement(gameField);
     setExitButtonBackMode();
 
     // eslint-disable-next-line no-unused-vars
@@ -86,6 +76,7 @@ function addSpeakerButtonsClickHandler() {
 window.onload = () => {
   addStartButtonClickHandler();
   addExitGameBtnClickHandler();
+  addGameModeSwitchClickHandler();
 
   addSpeakerButtonsClickHandler();
 };

@@ -14,11 +14,25 @@
   <main class="audiochallenge">
     <div class="wrapper audiochallenge__wrapper">
       <div class="audiochallenge__primary-row">
-        <div class="audiochallenge__exit audiochallenge__exit_back">
+        <div class="audiochallenge__exit audiochallenge__exit_full">
           <img class="exit" src="./assets/img/icons/close-game.svg" alt="close">
           <img class="exit__back" src="./assets/img/icons/arrow-right.svg" alt="close">
         </div>
         <div class="audiochallenge__game-control">
+          <div class="uk-inline game-control">
+            <button 
+              class="uk-button uk-button-default game-control__btn game-control__btn_mode game-control__btn_mode_disabled" 
+              type="button"
+              >
+              Cлова: <span id="game-mode-switch">изученные</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_desc">
+              <div class="uk-nav uk-dropdown-nav">
+                <p class="desc_active hidden">В игре будут задей- <br> ствованы слова из <br> всей коллекции</p>
+                <p class="desc_disabled">В игре будут задей- <br> ствованы только <br> изученные слова</p>
+              </div>
+            </div>
+          </div>
           <div class="uk-inline game-control">
             <button class="uk-button uk-button-default game-control__btn game-control__btn_level" type="button">
               Уровень: <span id="game-control__current_level">1</span>
