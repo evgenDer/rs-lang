@@ -1,4 +1,4 @@
-.authentication-page, .game-puzzle button {
+.authentication-page button, .game-puzzle button {
   height: 50px;
   padding: 0 20px;
   border-radius: 5px;
@@ -43,7 +43,6 @@ button:hover {
   }
 }
 
-
 .btn_autopronoucing::before{
   content: "\f001";
 }
@@ -53,6 +52,12 @@ button:hover {
 .btn_pronoucing::before{
   content: "\f028";
 }
+
+.modal-round .btn_pronoucing{
+  background: transparent;
+  color: $color-secondary;
+}
+
 .btn_background::before{
   content: "\f03e";
 }
@@ -74,28 +79,6 @@ button:hover {
 
 .btn_exit, .btn_pronoucing{
   font-family: FontAwesome;
-}
-
-.btn_close{
-  background: transparent!important;
-  position: absolute;
-  top: -50px!important;
-  margin: 0px 0px 0px 450px!important;
-  padding: 0px!important;
-  @include media-laptop{
-    margin: 0px 0px 0px 350px!important;
-  }
-  @include media-tablet{
-    margin: 0px 0px 0px 190px!important;
-  }
-  @include media-mobile{
-    margin: 0px 0px 0px 100px!important;
-  }
-}
-
-.btn_close::before{
-  font-family: FontAwesome;
-  content: "\f00d";
 }
 
 .disable{
@@ -133,14 +116,6 @@ button.btn_unknown::before{
   content: "Следующий раунд"
 }
 
-.block-btns{
-  justify-content: center;
-  display: flex;
-  margin: 50px;
-  @media (max-width: 480px){
-      text-align: center;
-  }
-}
 
 .block-btns button{
   color: white;
@@ -150,6 +125,29 @@ button.btn_unknown::before{
   background-color: $color-additional;
   font-size: 2rem;
   @media (max-width: $tablet-width){
-      margin: 10px;
+    font-size: 1.5rem;
+    margin: 10px;
+    width: 200px;
   }
 }
+
+.btn_close{
+  position: absolute;
+  background-color: transparent!important;
+  left: 10vw!important;
+  top: 20px;
+  @include media-tablet{
+    padding: 0px!important;
+    margin: -15px 0 5px!important;
+  }
+
+  svg{
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.btn_close:hover{
+  color: $color-additional;
+}
+

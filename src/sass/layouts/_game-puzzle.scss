@@ -10,17 +10,11 @@
   background-size: cover!important;
   overflow-x: hidden;
   padding: 20px 0;
-  // touch-action: none;
+  @include media-tablet{
+    overflow-y: scroll;
+  }
 }
 
-.block-source p{
-  color: $color-secondary;
-  vertical-align: middle;
-  font-size: 30px;
-  font-weight: 700;
-  padding-top: 15px;
-  text-align: center;
-}
 
 .block-source{
   margin: auto;
@@ -30,18 +24,32 @@
   @extend %puzzle-field;
 }
 
+.block-source p{
+  color: $color-secondary;
+  vertical-align: middle;
+  height: 90px;
+  margin-bottom: 20px;
+  background-color: lightblue;
+  font-size: 30px;
+  font-weight: 700;
+  padding-top: 15px;
+  text-align: center;
+}
 .current{
  // border: 1px solid green;
-  background: lightblue;
+ background: lightblue;
   height: 50px;
 }
 
 .block-results{
-  margin: 30px auto;
+  margin: 10px auto;
   text-align: center;
   background-color: $color-background;
   // padding-left: 0px;
   height: 500px;
+  @include media-tablet{
+    margin: 40px auto;
+  }
   @extend %puzzle-field;
 }
 .block-results img{
@@ -63,6 +71,19 @@ canvas{
   z-index: 5px;
 }
 
+.load-page{
+  margin-top: -20px;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+  vertical-align: middle;
+  .uk-spinner{
+    margin-top: 40vh;
+    text-align: center;
+    color: $color-additional;
+  }
+}
 
 .hints{
   display: flex;
@@ -98,27 +119,36 @@ option::selection {
 .start-page{
   text-align: center;
   align-items: center;
+  @include media-tablet{
+    margin-top:  0px;
+  }
 }
 
 .block-start{
   border-radius: 10px;
   width: 700px;
-  margin: 50px auto;
+  margin: 20vh auto 0px;
   background-color: rgba(248, 242, 238, 0.8);
   @include media-tablet{
     width: 380px;
+    margin: 10vh auto 0px;
   }
   @include media-mobile{
+
     width: 300px;
   }
 }
 
 .block-hints{
   p{
-    margin: 0 0 40px;
+    margin: 15px;
+    @include media-tablet{
+      margin: 0 0 40px;
+      font-size: 20px;
+    }
   }
   height: 100px;
-  margin-top: 20px;
+  margin-top: 0px;
   font-size: 2em;
   color: $color-primary;
   text-align: center;
@@ -131,7 +161,7 @@ option::selection {
   color: $color-secondary;
   margin-bottom: 0.5em;
   line-height: 1em;
-  @include media-mobile{
+  @include media-tablet{
     font-size: 3em;
   }
  }
@@ -174,6 +204,20 @@ option::selection {
   margin: auto 10px;
 }
 
+
+.block-btns{
+  justify-content: center;
+  display: flex;
+  margin: 40px;
+  overflow: hidden;
+  margin-bottom: 0px;
+  @media (max-width: 480px){
+    margin: 20px;
+    display: block;
+    text-align: center;
+  }
+}
+
 .game-puzzle .btns{
   display: flex;
   justify-content: center;
@@ -207,7 +251,7 @@ option::selection {
     background-color: $color-additional;
     margin-right: 10px;
     @include media-laptop{
-      font-size: 1.1em;
+      font-size: 1em;
     }
   }
   .uk-dropdown{

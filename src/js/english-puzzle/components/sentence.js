@@ -8,13 +8,15 @@ export function fillText(puzzle) {
   const tabletWidth = 768;
   let fontSize = puzzle.height/3;
   context.textAlign = 'center';
+  let width = puzzle.width - puzzle.height / 2;
   if(document.documentElement.clientWidth < tabletWidth){
-    fontSize = puzzle.height/4;
+    fontSize = puzzle.height / 5;
     context.textAlign = 'right';
+    width = puzzle.width - puzzle.height / 2 - 8;
   }
   context.font = `bold ${fontSize}px sans-serif`;
   const text = puzzle.dataset.word;
-  const width = puzzle.width - puzzle.height / 2;
+  // const width = puzzle.width - puzzle.height / 2;
   context.fillText(`${text}`, width / 2 + puzzle.height / 4, puzzle.height / 1.5, width);
 }
 
@@ -60,7 +62,7 @@ export default class Sentence {
     const tabletWidth = 768;
     const englishPuzzleSetting = getDataEnglishPuzzle();
     const puzzle = document.createElement('canvas');
-    puzzle.style.marginLeft = `${-this.height /2}px`;
+    puzzle.style.marginLeft = `${- this.height /2 }px`;
     const context = puzzle.getContext('2d');
     const radius = this.height / 4;
     puzzle.width = width + this.height / 2;
@@ -96,7 +98,7 @@ export default class Sentence {
   renderSourceGame() {
     this.renderNewSentence();
     const sentenceBlock = createElement('div', 'sentence', shuffle(this.sentenceBlock));
-    sentenceBlock.style.paddingLeft = `${this.height /2}px`;
+    sentenceBlock.style.paddingLeft = `${this.height / 2}px`;
     return sentenceBlock;
   }
 
@@ -105,7 +107,7 @@ export default class Sentence {
     this.width = 0;
     this.renderNewSentence();
     const sentenceBlock = createElement('div', 'sentence current', this.sentenceBlock);
-    sentenceBlock.style.paddingLeft = `${this.height /2 }px`;
+    sentenceBlock.style.paddingLeft = `${ this.height / 2 }px`;
     return sentenceBlock;
   }
 
@@ -114,7 +116,7 @@ export default class Sentence {
     const minWidth = 3;
     let puzzle;
     arraySentence.forEach((element, index) => {
-      const widthLastElement = this.imageWidth - this.width;
+      const widthLastElement = this.imageWidth + 1 - this.width;
       const widthElement = (index !== arraySentence.length - 1)
         ? (this.imageWidth / this.sentence.length) * element.length : widthLastElement;
       const widthForDrawElement = (element.length < minWidth && index !== arraySentence.length - 1)
