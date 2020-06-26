@@ -27,5 +27,9 @@ export const DEFAULT_SETTINGS_PUZZLE = {
   showImage: 'false',
   showTranslation: 'true',
   playSound: 'true',
+};
 
+export const DEFAULT_SETTINGS_GAME = {
+  level: 1,
+  round: 1,
 };
