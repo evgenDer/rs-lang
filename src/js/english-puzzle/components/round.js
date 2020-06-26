@@ -1,18 +1,18 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-new */
-import Sentence, { strokePuzzle } from './sentence';
+import Sentence from './sentence';
 import { createElement } from '../../utils/create';
 import { removeChild, removeAllButtons, insertNewButtons } from '../../utils/helpers';
 import { BUTTONS_CLASSES, DATA_URL } from '../../utils/constants';
 import { addHintShowImage, addHints } from './hints';
 import { DEFAULT_SETTINGS_PUZZLE } from '../../constants/defaul-settings';
 import Sortable from '../../../../node_modules/sortablejs';
+import { createStaticticRound } from './statistic';
 
 
 const COUNT_SENTENCE = 10;
 const RESULT_FIELD = document.querySelector('.block-results');
 const SOURCE_FIELD = document.querySelector('.block-source');
-
-document.addEventListener('touchstart', function(){}, {passive: false})
 
 // eslint-disable-next-line func-names
 HTMLAudioElement.prototype.stop = function () {
@@ -20,6 +20,7 @@ HTMLAudioElement.prototype.stop = function () {
   this.currentTime = 0.0;
 };
 function addImageInPage(image, infoAboutImage) {
+  createStaticticRound(image.src, infoAboutImage);
   const sourceField = document.querySelector('.block-source');
   const resultField = document.querySelector('.block-results');
   removeChild(sourceField);
@@ -37,15 +38,16 @@ export default class Round {
     this.dataPage = dataPage;
     this.srcImagesParts = [];
     this.currentSentenceNumber = 0;
-    this.width = RESULT_FIELD.offsetWidth;
+    this.width = RESULT_FIELD.offsetWidth + 1;
     this.height = RESULT_FIELD.offsetHeight;
     this.infoAboutImage = infoAboutImage;
     this.currentSentence = {};
+    this.correct = 0;
+    this.errors = 0;
   }
 
   generateNewRoundOnPage(imageSrc) {
     this.image.onload = () => {
-      console.log('hello');
       removeChild(RESULT_FIELD);
       removeChild(SOURCE_FIELD);
       this.generateNewRoundImages();
@@ -58,7 +60,6 @@ export default class Round {
   }
 
   generateNewRoundImages() {
-    console.log('image');
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const height = this.height / COUNT_SENTENCE;
@@ -72,7 +73,6 @@ export default class Round {
   }
 
   generateSentenceInRound() {
-    console.log('sentence');
     const slicedImage = new Image();
     slicedImage.src = this.srcImagesParts[this.currentSentenceNumber];
     slicedImage.onload = () => {
@@ -129,20 +129,21 @@ export default class Round {
   }
 
   playAudio() {
-    const audioSentenceSrc = `${DATA_URL}${this.dataPage[this.currentSentenceNumber].audioExample}`;
     this.audioSentence.stop();
+    this.audioSentence.src = `${DATA_URL}${this.dataPage[this.currentSentenceNumber].audioExample}`;
     this.audioSentence.autoplay = true;
-    this.audioSentence.src = audioSentenceSrc;
     this.audioSentence.play();
   }
 
   checkCorrectSentence() {
+
     const arraySentence = this.dataPage[this.currentSentenceNumber].textExample.replace(/<\/?[a-zA-Z]+>/gi, '').split(' ');
     const sentenceBlock = document.querySelector('.current').querySelectorAll('canvas');
     let countCorrectSentence = 0;
     sentenceBlock.forEach((element, index) => {
       const ctx = element.getContext('2d');
-      if (element.dataset.word === arraySentence[index]) {
+      const isCorrect = element.dataset.word === arraySentence[index];
+      if (isCorrect) {
         ctx.strokeStyle = 'green';
         ctx.stroke();
         countCorrectSentence += 1;
@@ -150,8 +151,10 @@ export default class Round {
         ctx.strokeStyle = 'red';
         ctx.stroke();
       }
+      this.dataPage[this.currentSentenceNumber].result = isCorrect;
     });
     if (countCorrectSentence === arraySentence.length) {
+      this.correct+=1;
       return true;
     }
     return false;
@@ -171,8 +174,6 @@ export default class Round {
       group: 'shared',
       animation: 150
     });
-   /* sortCurrent.destroy();
-    sortSource.destroy();*/
   }
 
   continuationGame() {
@@ -181,7 +182,7 @@ export default class Round {
       removeChild(RESULT_FIELD);
       addImageInPage(this.image, this.infoAboutImage);
       removeAllButtons();
-      const resultButton = createElement('button', 'btn_result');
+      const resultButton = createElement('button', 'btn_result', [], [['uk-toggle','target: #modal-close-default']]);
       const nextButton = createElement('button', 'btn_next');
       insertNewButtons([resultButton, nextButton]);
     } else {
@@ -232,6 +233,7 @@ export default class Round {
       removeAllButtons();
       const continueButton = createElement('button', 'btn_continue');
       insertNewButtons([continueButton]);
+      this.dataPage[this.currentSentenceNumber].result = false;
       this.continueButtonEventListeners();
     });
   }
@@ -243,7 +245,6 @@ export default class Round {
         const continueButton = createElement('button', 'btn_continue');
         insertNewButtons([continueButton]);
         this.continueButtonEventListeners();
-        // добавить делать белым
       } else {
         const unknownButton = createElement('button', 'btn_unknown');
         insertNewButtons([unknownButton]);

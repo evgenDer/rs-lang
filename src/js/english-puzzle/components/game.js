@@ -2,7 +2,8 @@ import Round from './round';
 import { getDataWords, getCountWordsInGroup } from '../../api/words';
 import { MASTERPIECE_URL } from '../../utils/constants';
 import { addEventsListenerOnHintButtons } from './hints';
-import { removeChild, removeAllButtons, insertNewButtons } from '../../utils/helpers';
+import { removeChild, removeAllButtons, insertNewButtons, removeHidden, addHidden } from '../../utils/helpers';
+import { saveCustomConfiguration } from '../../configuration/index';
 import paintings1 from '../levels/level1';
 import paintings2 from '../levels/level2';
 import paintings3 from '../levels/level3';
@@ -10,6 +11,7 @@ import paintings4 from '../levels/level4';
 import paintings5 from '../levels/level5';
 import paintings6 from '../levels/level6';
 import { createElement } from '../../utils/create';
+import { addStatisticRoundEnglishPuzzle } from './statistic';
 
 function getPageData(numberLevel) {
   switch (numberLevel) {
@@ -34,10 +36,17 @@ export default class Game {
 
   async getCurrentRound() {
     const dataPage = await getDataWords(this.numberLevel - 1, this.numberRound - 1);
+
+    await saveCustomConfiguration({})
     const { name, author, year } = this.pageData[this.numberRound];
     const infoAboutPage = `${name} - ${author} (${year})`;
     const round = new Round(this.numberLevel, this.numberRound, dataPage, infoAboutPage);
     return round;
+  }
+
+  async saveConfiguration(){
+    const {numberLevel, numberRound} = this;
+    await saveCustomConfiguration('englishPuzzle', {level: numberLevel, round: numberRound });
   }
 
   async generateRoundsInPage() {
@@ -101,29 +110,31 @@ export default class Game {
     this.generateLevelsInPage();
     this.generateNewRound();
     this.addEventsListenersOnButtons();
+    removeHidden(document.querySelector('.play-page'));
   }
 
   async generateNewRound() {
+    removeHidden(document.querySelector('.load-page'));
     const imageSrc = `${MASTERPIECE_URL}${this.pageData[this.numberRound].imageSrc}`;
     this.round = await this.getCurrentRound();
     addEventsListenerOnHintButtons();
-    console.log(this.round);
     this.round.generateNewRoundOnPage(imageSrc);
-    // this.pageData[this.numberRound] = {};
-    // this.addImageInPage();
+    addHidden(document.querySelector('.load-page'));
   }
 
   addEventsListenersOnButtons() {
     document.querySelector('.block-btns').addEventListener('click', (event) => {
       const button = event.target.closest('button');
       if (button.classList.contains('btn_next')) {
+        document.getElementById('modal-close-default').remove();
         removeAllButtons();
         removeChild(document.querySelector('.block-results'));
+        this.round.audioSentence = {};
         this.generateNextRound();
         insertNewButtons(['button_unknown']);
       }
       if (button.classList.contains('btn_result')) {
-        //
+        addStatisticRoundEnglishPuzzle(this.round.dataPage);
       }
     });
   }

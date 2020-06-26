@@ -1,0 +1,51 @@
+.modal-round{
+  border-radius: 10px;
+  background: $color-background;
+  .uk-modal-header{
+    background: $color-background;
+    text-align: center;
+    border-radius: 10px;
+    p{
+      color: $color-secondary;
+    }
+    margin-bottom: 30px;
+  }
+  img{
+    width: 100px;
+    height: 100px;
+  }
+  h3{
+    color: $color-secondary;
+  }
+  .line{
+    display: flex;
+    color: $color-secondary;
+    margin-top: -10px;
+  }
+  .uk-close{
+    color: $color-secondary
+  }
+  span{
+    padding: 0px 10px;
+    margin-left: 10px;
+    text-align: center;
+    height: 25px;
+    width: 35px!important;
+    border-radius: 20px;
+    color: $color-primary;
+  }
+}
+
+
+
+.modal-round__correct{
+  span{
+    background-color: $color-green;
+  }
+}
+.modal-round__error {
+  span{
+    background-color: $color-red;
+  }
+  margin-top: 20px;
+}
