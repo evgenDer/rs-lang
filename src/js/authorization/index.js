@@ -28,9 +28,7 @@ async function logIn(event) {
     const passwordInput = document.querySelector('input[name="password"]');
     const userEmail = emailInput.value;
     const userPassword = passwordInput.value;
-    const infoAboutUser = await loginUser( userEmail, userPassword );
-    setUserId(infoAboutUser);
-    setToken(infoAboutUser);
+    await loginUser( userEmail, userPassword );
     setUserPassword(userPassword);
     setUserEmail(userEmail);
     setDateToken();
