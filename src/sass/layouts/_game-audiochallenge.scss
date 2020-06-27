@@ -379,7 +379,7 @@
   flex-direction: column;
   color: $color-primary;
   margin: 20px;
-  @include font(1.2rem, 1.2rem);
+  @include font(1.2rem, 1.6rem);
 }
 
 .task__word {
@@ -416,10 +416,15 @@
     align-items: flex-start;
     justify-content: space-evenly;
     flex-direction: column;
+    margin: 0;
     p {
       max-width: 500px;
-      word-break: break-all;
+      word-break: break-word;
       overflow: hidden;
+      b, i {
+        margin: 0;
+        padding: 0;
+      }
     }
     * {
       margin: 5px;

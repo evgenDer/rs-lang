@@ -1,7 +1,10 @@
 /* eslint-disable no-param-reassign */
 
 import { createElement } from '../utils/create';
-import { GAME_MODES } from '../games/constants';
+import { GAME_MODES, GAME_DATA_URL } from '../games/constants';
+import { getFullDataWords } from '../api/words';
+import { showElement, hideElement } from '../helpers/html-helper';
+import { getRandomInt } from '../helpers/math-hepler';
 
 
 // eslint-disable-next-line import/prefer-default-export
@@ -13,9 +16,17 @@ export class Game {
     this.answersAmnt = 5;
 
     this.task = {
-      img: document.querySelector('.task__img'),
-      audio: document.querySelector('.task__audio'),
       desc: document.querySelector('.task__desc'),
+      audio: document.querySelector('.task__audio'),
+      imgContainer: document.querySelector('.task__img'),
+      img: document.querySelector('.task__img img'),
+      word: document.querySelector('.word__eng'),
+      transcription: document.querySelector('.word__transcr'),
+      exampleSentence: document.querySelector('.example__eng'),
+      exampleSentenceRus: document.querySelector('.example__rus'),
+      wordSpeakerSrc: '',
+      exampleSpeakerSrc: '',
+      id: '',
     };
 
     this.errors = 0;
@@ -24,24 +35,63 @@ export class Game {
     this.answersContainer = document.querySelector('.game-field__answers');
     this.controlBtn = document.querySelector('.game-field__control');
 
-    this.words = ['машина', 'очень-очень-длинное-слово', 'компьютер', 'телевизор', 'стол'];
-    this.rightAnswer = 3;
+    this.speakers = {
+      main: document.getElementById('main-speaker'),
+      word: document.getElementById('word-speaker'),
+      example: document.getElementById('example-speaker'),
+    }
+
+    this.wordsAmntInRound = 20;
+    this.data = [];
+    this.words = [];
+    this.rightAnswer = 0;
+    this.currentAnswer = 0;
 
     this.generateAnswers();
     this.addAnswersClickHandler();
     this.addKeyboardEventsHandler();
     this.addControlClickHandler();
-
-    this.startGame();
   }
 
   startGame() {
-    this.clearAnswers();
+    this.prepareGameField();
 
-    this.hideRightAnswer();
+    this.getRoundData().then(() => this.startTask());
+  }
+
+  startTask() {
+    this.prepareGameField();
+
+    this.getRightAnswer();
+    this.getWords();
+
     this.fillAnswers();
+    this.fillTask();
+
+    this.addAudioButtonsClickHandler();
+
+    this.playTask();
+  }
+
+  prepareGameField() {
+    this.clearAnswers();
+    this.hideRightAnswer();
+    this.enableAnswers();
     this.setContolButtonIdnkMode();
-    // words
+    this.removeAudioButtonsClickHandler();
+  }
+
+  getRightAnswer() {
+    this.rightAnswer = getRandomInt(this.answersAmnt);
+  }
+
+  async getRoundData() {
+    this.data = await getFullDataWords(this.level - 1, this.round - 1, this.wordsAmntInRound);
+  }
+
+  getWords() {
+    this.words = ['машина', 'стол', 'стул', 'вилка', 'ложка'];
+    this.words[this.rightAnswer] = this.data[this.currentAnswer].wordTranslate;
   }
 
   fillAnswers() {
@@ -50,6 +100,21 @@ export class Game {
         child.textContent = ind ? this.words[index] : index + 1;
       });
     });
+  }
+
+  fillTask() {
+    const currentData = this.data[this.currentAnswer];
+
+    this.task.img.src = `${GAME_DATA_URL}${currentData.image}`;
+    this.task.word.textContent = currentData.word;
+    this.task.transcription.textContent = currentData.transcription;
+    this.task.exampleSentence.innerHTML = currentData.textExample;
+    this.task.exampleSentenceRus.textContent = currentData.textExampleTranslate;
+
+    this.task.wordSpeakerSrc = `${GAME_DATA_URL}${currentData.audio}`;
+    this.task.exampleSpeakerSrc = `${GAME_DATA_URL}${currentData.audioExample}`;
+
+    this.task.id = currentData.id;
   }
 
   clearAnswers() {
@@ -64,17 +129,17 @@ export class Game {
   }
 
   showRightAnswer() {
-    this.task.audio.classList.add('hidden');
-    this.task.img.classList.remove('hidden');
-    this.task.desc.classList.remove('hidden');
+    hideElement(this.task.audio);
+    showElement(this.task.imgContainer);
+    showElement(this.task.desc);
 
     this.answers[this.rightAnswer].click();
   }
 
   hideRightAnswer() {
-    this.task.img.classList.add('hidden');
-    this.task.desc.classList.add('hidden');
-    this.task.audio.classList.remove('hidden');
+    hideElement(this.task.imgContainer);
+    hideElement(this.task.desc);
+    showElement(this.task.audio);
   }
 
   generateAnswers() {
@@ -105,10 +170,13 @@ export class Game {
           .join('');
         const answerIndex = this.words.indexOf(word);
         
-        if (answerIndex === this.rightAnswer) {
+        if (answer.classList.contains('answer_disabled')) {
+          // do nothing
+        } else if (answerIndex === this.rightAnswer) {
           this.showRightAnswer();
           answer.classList.add('answer_correct');
 
+          this.disableAnswers();
           this.setContolButtonNextMode();
         } else {
           answer.classList.add('answer_wrong');
@@ -118,6 +186,18 @@ export class Game {
         }
       });
     });
+  }
+
+  disableAnswers() {
+    this.answers.forEach((answer) => {
+      answer.classList.add('answer_disabled');
+    })
+  }
+
+  enableAnswers() {
+    this.answers.forEach((answer) => {
+      answer.classList.remove('answer_disabled');
+    })
   }
 
   setContolButtonNextMode() {
@@ -144,9 +224,12 @@ export class Game {
       }
       
       if (target.classList.contains('game-field__control_next')) {
-        // next
-        this.startGame();
-        //
+        this.currentAnswer += 1;
+        if (this.currentAnswer < this.wordsAmntInRound) {
+          this.startTask();
+        } else {
+          // results
+        }
       } else if (target.classList.contains('game-field__control_idnk')) {
         this.errors += 1;
         this.showRightAnswer();
@@ -193,5 +276,28 @@ export class Game {
         this.answers[answer].click();
       }
     });
+  }
+
+  addAudioButtonsClickHandler() {
+    const playAudio = (src) => {
+      const audio = new Audio(src);
+      audio.play();
+    }
+    const playWordAudio = () => playAudio(this.task.wordSpeakerSrc);
+    const playExampleAudio = () => playAudio(this.task.exampleSpeakerSrc);
+
+    this.speakers.main.onclick = playWordAudio;
+    this.speakers.word.onclick = playWordAudio;
+    this.speakers.example.onclick = playExampleAudio;
+  }
+
+  removeAudioButtonsClickHandler() {
+    this.speakers.main.onclick = null;
+    this.speakers.word.onclick = null;
+    this.speakers.example.onclick = null;
+  }
+
+  playTask() {
+    this.speakers.main.click();
   }
 }

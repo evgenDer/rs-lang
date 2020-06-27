@@ -10,10 +10,6 @@ const exitGameBtn = document.querySelector('.audiochallenge__exit > .exit');
 const backGameBtn = document.querySelector('.audiochallenge__exit > .exit__back');
 const exitBtnContainer = document.querySelector('.audiochallenge__exit');
 
-const mainSpeakerBtn = document.getElementById('main-speaker');
-const wordSpeakerBtn = document.getElementById('word-speaker');
-const exampleSpeakerBtn = document.getElementById('example-speaker');
-
 const modeBtn = document.querySelector('.game-control__btn_mode');
 
 
@@ -54,21 +50,8 @@ function addStartButtonClickHandler() {
     showElement(gameField);
     setExitButtonBackMode();
 
-    // eslint-disable-next-line no-unused-vars
     const game = new Game();
-  });
-}
-
-
-function addSpeakerButtonsClickHandler() {
-  mainSpeakerBtn.addEventListener('click', () => {
-    // repeat audio
-  });
-  wordSpeakerBtn.addEventListener('click', () => {
-    // repeat audio
-  });
-  exampleSpeakerBtn.addEventListener('click', () => {
-    // repeat audio
+    game.startGame();
   });
 }
 
@@ -77,6 +60,4 @@ window.onload = () => {
   addStartButtonClickHandler();
   addExitGameBtnClickHandler();
   addGameModeSwitchClickHandler();
-
-  addSpeakerButtonsClickHandler();
 };
