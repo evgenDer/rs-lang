@@ -1,5 +1,5 @@
 import { ERROR_MSG, PASSWORD } from './constants';
-import { setDateToken, setUserId, setToken, setUserPassword, setUserEmail } from '../utils/storage';
+import { setDateToken, setUserPassword, setUserEmail } from '../utils/storage';
 import { loginUser, createUser } from '../api/authorization';
 
 function show() {
@@ -28,9 +28,7 @@ async function logIn(event) {
     const passwordInput = document.querySelector('input[name="password"]');
     const userEmail = emailInput.value;
     const userPassword = passwordInput.value;
-    const infoAboutUser = await loginUser( userEmail, userPassword );
-    setUserId(infoAboutUser);
-    setToken(infoAboutUser);
+    await loginUser( userEmail, userPassword );
     setUserPassword(userPassword);
     setUserEmail(userEmail);
     setDateToken();
