@@ -17,10 +17,10 @@
   @include media-laptop{
     width: $middle-width-puzzle-field;
   }
-  @include media-tablet{
+  @media (max-width: 800px){
     width: $tablet-width-puzzle-field;
   }
-  @include media-mobile{
+  @media (max-width: 480px){
     width: $small-width-puzzle-field;
   }
 }

@@ -2,7 +2,8 @@ import Round from './round';
 import { getDataWords, getCountWordsInGroup } from '../../api/words';
 import { MASTERPIECE_URL } from '../../utils/constants';
 import { addEventsListenerOnHintButtons } from './hints';
-import { removeChild, removeAllButtons, insertNewButtons, removeHidden, addHidden } from '../../utils/helpers';
+import { removeChild, removeAllButtons, insertNewButtons } from '../../utils/helpers';
+import { showElement, hideElement } from '../../helpers/html-helper';
 import { saveCustomConfiguration } from '../../configuration/index';
 import paintings1 from '../levels/level1';
 import paintings2 from '../levels/level2';
@@ -35,18 +36,19 @@ export default class Game {
   }
 
   async getCurrentRound() {
-    const dataPage = await getDataWords(this.numberLevel - 1, this.numberRound - 1);
-
-    await saveCustomConfiguration({})
+    let dataPage = {};
+    dataPage = await getDataWords(this.numberLevel - 1, this.numberRound - 1);
+    showElement(document.querySelector('.play-page'));
     const { name, author, year } = this.pageData[this.numberRound];
     const infoAboutPage = `${name} - ${author} (${year})`;
     const round = new Round(this.numberLevel, this.numberRound, dataPage, infoAboutPage);
     return round;
   }
 
-  async saveConfiguration(){
+  saveConfiguration(){
     const {numberLevel, numberRound} = this;
-    await saveCustomConfiguration('englishPuzzle', {level: numberLevel, round: numberRound });
+    const savedConfiguration = JSON.stringify({ level: numberLevel, round: numberRound + 1 });
+    saveCustomConfiguration('englishPuzzle', savedConfiguration);
   }
 
   async generateRoundsInPage() {
@@ -71,7 +73,7 @@ export default class Game {
         event.target.classList.add('uk-active');
         const textContent = event.target.innerText;
         document.querySelector('.button_round').innerText = textContent;
-        this.numberRound = Number(textContent[textContent.length - 1]);
+        this.numberRound = Number(textContent.substr(textContent.lastIndexOf(' ') + 1));
         this.generateNewRound();
       }
     });
@@ -84,7 +86,7 @@ export default class Game {
     for (let i = 0; i < COUNT_LEVELS; i += 1) {
       const newElementLevel = createElement('li', '', [], [], `Уровень: ${i + 1}`);
       switcherLevel.append(newElementLevel);
-      if (this.numberLevel -1 === i) {
+      if (this.numberLevel - 1 === i) {
         newElementLevel.classList.add('uk-active');
         const activeButton = document.querySelector('.button_level');
         activeButton.textContent = `Уровень: ${i + 1}`;
@@ -97,7 +99,7 @@ export default class Game {
         event.target.classList.add('uk-active');
         const textContent = event.target.innerText;
         document.querySelector('.button_level').innerText = textContent;
-        this.numberLevel = Number(textContent[textContent.length - 1]);
+        this.numberLevel = Number(textContent.substr(textContent.lastIndexOf(' ')+1));
         this.numberRound = 1;
         this.pageData = getPageData(this.numberLevel);
         this.generateRoundsInPage();
@@ -107,19 +109,19 @@ export default class Game {
   }
 
   createNewGame() {
+    hideElement(document.querySelector('.start-page'));
     this.generateLevelsInPage();
     this.generateNewRound();
     this.addEventsListenersOnButtons();
-    removeHidden(document.querySelector('.play-page'));
   }
 
   async generateNewRound() {
-    removeHidden(document.querySelector('.load-page'));
+    showElement(document.querySelector('.load-page'));
+    this.saveConfiguration();
     const imageSrc = `${MASTERPIECE_URL}${this.pageData[this.numberRound].imageSrc}`;
     this.round = await this.getCurrentRound();
     addEventsListenerOnHintButtons();
     this.round.generateNewRoundOnPage(imageSrc);
-    addHidden(document.querySelector('.load-page'));
   }
 
   addEventsListenersOnButtons() {
@@ -151,5 +153,6 @@ export default class Game {
       const nextRound = activeRound.nextElementSibling;
       nextRound.click();
     }
+    this.saveConfiguration();
   }
 }

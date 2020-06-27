@@ -20,25 +20,29 @@
   margin: auto;
   margin-top: 40px;
   background-color: lightblue;
-  height: 50px;
+  height: 45px;
+  font-size: 1rem;
   @extend %puzzle-field;
 }
 
 .block-source p{
   color: $color-secondary;
   vertical-align: middle;
-  height: 90px;
+  height: 50px;
   margin-bottom: 20px;
   background-color: lightblue;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
   padding-top: 15px;
   text-align: center;
+  @include media-tablet{
+    height: 80px;
+  }
 }
 .current{
  // border: 1px solid green;
  background: lightblue;
-  height: 50px;
+  height: 45px;
 }
 
 .block-results{
@@ -46,9 +50,9 @@
   text-align: center;
   background-color: $color-background;
   // padding-left: 0px;
-  height: 500px;
-  @include media-tablet{
-    margin: 40px auto;
+  height: 450px;
+  @include media-laptop{
+    margin: 40px auto 40px;
   }
   @extend %puzzle-field;
 }
@@ -127,7 +131,7 @@ option::selection {
 .block-start{
   border-radius: 10px;
   width: 700px;
-  margin: 20vh auto 0px;
+  margin: 10vh auto 0px;
   background-color: rgba(248, 242, 238, 0.8);
   @include media-tablet{
     width: 380px;
@@ -143,12 +147,15 @@ option::selection {
   p{
     margin: 15px;
     @include media-tablet{
-      margin: 0 0 40px;
+      margin: 20px 0 40px;
       font-size: 20px;
     }
   }
   height: 100px;
-  margin-top: 0px;
+  margin-top: -10px;
+  @include media-tablet{
+    margin-top: 0px;
+  }
   font-size: 2em;
   color: $color-primary;
   text-align: center;
@@ -161,6 +168,7 @@ option::selection {
   color: $color-secondary;
   margin-bottom: 0.5em;
   line-height: 1em;
+  font-family: 'Montserrat';
   @include media-tablet{
     font-size: 3em;
   }
@@ -208,11 +216,13 @@ option::selection {
 .block-btns{
   justify-content: center;
   display: flex;
-  margin: 40px;
+  margin: 10px 10px -10px;
   overflow: hidden;
   margin-bottom: 0px;
-  @media (max-width: 480px){
-    margin: 20px;
+  @include media-tablet{
+  }
+  @media(max-width: 560px){
+    margin: 40px 0px;
     display: block;
     text-align: center;
   }
@@ -230,7 +240,7 @@ option::selection {
 .game-puzzle
 {
   li{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   .uk-button-default:hover {
   background-color: transparent;
@@ -245,7 +255,7 @@ option::selection {
 }
 
 .uk-button{
-    font-size: 1.5em;
+    font-size: 1.2em;
     height: 50px;
     border-radius: 5px;
     background-color: $color-additional;
@@ -264,3 +274,51 @@ option::selection {
   0% {opacity: 0;}
   100% {opacity: 1;}
 }
+
+.game-control__btn {
+  border-radius: 10px;
+  padding: 5px!important;
+  width: 300px!important;
+  color: $color-primary!important;
+  &:hover {
+    cursor: pointer;
+    transition: all 0.4s;
+    color: $color-active!important;
+  }
+  transition: all 0.4s;
+}
+
+.game-control__list {
+  background: $color-secondary;
+  opacity: 0.8;
+  border-radius: 10px;
+  color: $color-primary;
+  padding: 15px 25px;
+  min-width: fit-content;
+  max-width: 250px;
+  ul li {
+    @include font(1.1rem, 1.4rem, 400);
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  .list__active {
+    color: $color-active;
+  }
+}
+.btn_close:hover{
+  color: $color-additional;
+}
+
+.game-control__list_desc {
+  div p {
+    @include font(1.1rem, 1.4rem, 400);
+    margin: 0;
+    width: 200px;
+    word-break: break-all;
+    overflow: hidden;
+    text-align: center;
+  }
+}
+

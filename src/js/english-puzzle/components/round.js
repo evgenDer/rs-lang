@@ -8,6 +8,7 @@ import { addHintShowImage, addHints } from './hints';
 import { DEFAULT_SETTINGS_PUZZLE } from '../../constants/defaul-settings';
 import Sortable from '../../../../node_modules/sortablejs';
 import { createStaticticRound } from './statistic';
+import { hideElement } from '../../helpers/html-helper';
 
 
 const COUNT_SENTENCE = 10;
@@ -92,6 +93,7 @@ export default class Round {
       const unknownButton = createElement('button', 'btn_unknown');
       insertNewButtons([unknownButton]);
       this.unknownButtonEventListeners();
+      hideElement(document.querySelector('.load-page'));
     };
   }
 

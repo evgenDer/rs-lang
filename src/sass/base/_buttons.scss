@@ -10,6 +10,7 @@
   letter-spacing: 0.05em;
   color: $color-primary;
   opacity: 1;
+  font-family: 'Montserrat';
 }
 
 .sign-up {
@@ -49,9 +50,6 @@ button:hover {
 .btn_translation::before{
   content: "\f1ab";
 }
-.btn_pronoucing::before{
-  content: "\f028";
-}
 
 .modal-round .btn_pronoucing{
   background: transparent;
@@ -78,7 +76,7 @@ button:hover {
 
 
 .btn_exit, .btn_pronoucing{
-  font-family: FontAwesome;
+  font-family: 'FontAwesome';
 }
 
 .disable{
@@ -90,7 +88,7 @@ button:hover {
   margin-right: 10px;
   background-color: $color-additional;
   font-size: 2rem;
-  font-family: FontAwesome;
+  font-family: 'FontAwesome';
   color: white;
   text-align: center;
   padding: 0px;
@@ -120,10 +118,10 @@ button.btn_unknown::before{
 .block-btns button{
   color: white;
   width: 300px;
-  height: 80px;
-  margin: 30px;
+  height: 60px;
+  margin: 30px 30px 0px;
   background-color: $color-additional;
-  font-size: 2rem;
+  font-size: 1.8rem;
   @media (max-width: $tablet-width){
     font-size: 1.5rem;
     margin: 10px;
@@ -132,22 +130,33 @@ button.btn_unknown::before{
 }
 
 .btn_close{
-  position: absolute;
   background-color: transparent!important;
-  left: 10vw!important;
-  top: 20px;
-  @include media-tablet{
-    padding: 0px!important;
-    margin: -15px 0 5px!important;
+  &:hover{
+    color: $color-additional!important;
   }
-
   svg{
     width: 30px;
     height: 30px;
   }
 }
 
-.btn_close:hover{
-  color: $color-additional;
+.game-control{
+  .game-control__btn{
+    width: 180px;
+    @include media-mobile{
+      font-size: 0.5rem;
+    }
+  }
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+  margin-top: -20px;
+
+}
+
+.btn_pronoucing::before{
+  content: "\f028";
+  font-family: 'FontAwesome';
 }
 

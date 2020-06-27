@@ -21,3 +21,12 @@ export const removeClassesFromElement = (selector, ...classes) => {
   const element = document.querySelector(selector);
   element.classList.remove(...classes);
 };
+
+
+export const hideElement = (element) => {
+  element.classList.add('hidden');
+}
+
+export const showElement = (element) => {
+  element.classList.remove('hidden');
+}
