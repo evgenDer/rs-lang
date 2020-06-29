@@ -2,7 +2,7 @@
 
 import { createElement } from '../utils/create';
 import { GAME_MODES, GAME_DATA_URL } from '../games/constants';
-import { getFullDataWords } from '../api/words';
+import { getFullDataWords, getWordDetalization } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt } from '../helpers/math-hepler';
 
@@ -51,6 +51,8 @@ export class Game {
     this.addAnswersClickHandler();
     this.addKeyboardEventsHandler();
     this.addControlClickHandler();
+
+    getWordDetalization('cat');
   }
 
   startGame() {

@@ -1,5 +1,6 @@
 const APP_NAME = 'RS LANG';
 const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
+const AUX_API_URL = 'https://dictionary.skyeng.ru/api/public/v1';
 
 const PAGES = [
   {
@@ -65,4 +66,4 @@ const PAGES = [
 ];
 
 
-export { PAGES, APP_NAME, BACKEND_URL };
+export { PAGES, APP_NAME, BACKEND_URL, AUX_API_URL };
