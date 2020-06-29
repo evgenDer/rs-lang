@@ -27,21 +27,21 @@ export default class LearningLineElement extends HTMLElement {
     this.shadowRoot.innerHTML = `<style>
     :host {display: flex; flex-direction: row;}
     div {text-align: center;}
-    #background {margin:0px 5px ;padding: 0px 5px 0px; position: relative; left:0; top:0; background-color: ${style.inputColor}; border-radius: 5px; user-select: none;}
+    
+    #background {position: relative; left:0; top:0;
+       background-color: ${style.inputColor}; border-radius: 5px; user-select: none;}
     #background .hidden {visibility: hidden;}
     #wordContainer {position: absolute; left:0; top:0;}
-    ::slotted(span[slot=word2]) {padding-left: 10px; opacity: 0.3;}
+    ::slotted(span[slot=word1]) {padding: 2px 5px 2px 10px; opacity: 0.3;}
+    ::slotted(span[slot=word2]) {padding: 2px 5px 2px 10px; opacity: 0.3;}
     #errorAnimationContainer {position: absolute; left:0; top:0;}
-    ::slotted(span[slot=word3]) {padding-left: 10px; opacity: 1; transition: opacity; transition-duration: 1s;}
+    ::slotted(span[slot=word3]) {padding: 2px 5px 2px 10px; opacity: 1; transition: opacity; transition-duration: 1s;}
     ::slotted(span.animatted) {opacity: 0;}
-    ::slotted(input) {padding-left: 10px; width: 100%; position:absolute; left:0; top:0; background: transparent; border: none; outline: none; }
-    ::slotted(span[slot=input]) {color: ${style.correctLetterColor};}
+    ::slotted(input) {padding: 1px 5px 2px 11px; width: 100%; position:absolute; left:0; top:0;
+       background: transparent; border: none; outline: none; }
+    ::slotted(span[slot=input]) {padding: 2px 5px 2px 10px; color: ${style.correctLetterColor};}
     ::slotted(span[slot=input].deleted) {color: ${style.deletedWordColor};}
     </style>
-
-      <div id='textBefore'>
-        <slot name='textBefore'></slot>
-      </div>
 
       <div id='background'>
         <slot name='word1' class='hidden'></slot>
@@ -55,10 +55,6 @@ export default class LearningLineElement extends HTMLElement {
         </div>
 
         <slot name='input' ></slot>
-      </div>
-
-      <div id='after'>
-        <slot name='textAfter'></slot>
       </div>
     `;
   }
@@ -83,7 +79,9 @@ export default class LearningLineElement extends HTMLElement {
   setState(propName, newPropState) {
     if (this.state[propName] !== newPropState) {
       this.state[propName] = newPropState;
-      this.setAttribute(propName, this.state[propName]);
+      if (propName === 'word' ) {
+        this.setAttribute(propName, this.state[propName]);
+      }
     }
   }
 

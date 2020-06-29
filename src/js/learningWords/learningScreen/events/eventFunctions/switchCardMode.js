@@ -7,10 +7,11 @@ export default function switchCardMode(learningScreenElement, target = null) {
       card.audio.word.pause();
       card.audio.example.pause();
       card.audio.meaning.pause();
-
+      /*
       card.audio.word.src = null;
       card.audio.example.src = null;
       card.audio.meaning.src = null;
+      */
     }
 
     let isSwitch = false;

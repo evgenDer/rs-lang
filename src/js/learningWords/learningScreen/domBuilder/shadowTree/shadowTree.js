@@ -32,7 +32,7 @@ const styles = {
 
 const learningScreenShadowTreeHTML = `
 <style>
-  :host {margin-top: 50px; width: 100vw; height:calc(100vh - ${styles.topBarHeight});
+  :host {margin: 50px auto 0px; width: 100%; max-width: 1400px; height:calc(100vh - ${styles.topBarHeight});
      position: relative; display: flex; flex-direction: column; align-items:center; color:${styles.fontColor}}
   div{display: flex; justify-content: center;}
   ::slotted(learning-results) {position: fixed; z-index:10;}
@@ -76,10 +76,11 @@ const learningScreenShadowTreeHTML = `
   #statusBarDeadZone {width: 60px; height: 40px;}
   #lineStatusBlock {width:100%; min-width: 160px; max-width: 500px; position: relative;}
   #lineStatus {margin: 15px; width: 100%; height: 10px; border:3px solid pink; border-radius:10px;}
-  ::slotted([slot=progressLine]) {margin: 15px; max-width: 470px; height:16px; position: absolute; left:0;
-     background: pink; border:3px solid pink; border-radius:10px;
+  ::slotted([slot=progressLine]) {margin: 18px; max-width: 470px; height:10px; position: absolute; left:0;
+     background: pink; border-radius:10px;
     transition:width; transition-duration:1s;}
   #numberStatusBlock {width:60px; height: 40px; align-items: center;}
+  ::slotted([slot=numberStatus]) {margin-top: 3px;}
   .deadZone {width: 10%; min-width: 30px; height: 40px;}
   </style>
 

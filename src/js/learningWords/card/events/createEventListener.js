@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-globals */
-import readIt from '../../learningScreen/functions/readWord';
 
 export default function createEventListener(card) {
   card.addEventListener('click', () => {
@@ -7,4 +6,9 @@ export default function createEventListener(card) {
       card.audio.word.play();
     }
   });
+
+  card.addEventListener('keydown', () => {
+    const word2 = card.querySelector('[slot=word2]');
+    if(word2!=null ){word2.remove()}
+  })
 }

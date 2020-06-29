@@ -1,7 +1,16 @@
-import cardShadowTreeHTML from "../../../card/domBuilder/shadowTree/shadowTree";
+import { updateUserWord } from '../../../../api/userWords';
 
 export default function chooseWordDifficulty(learningScreenElement, eventTarget) {
-  const difficulty = eventTarget.classList[1];
+  const newDifficulty = eventTarget.classList[1];
   const card = learningScreenElement.querySelector('card-word');
-  card.state.difficulty = difficulty;
+  const wordId = card.state.id;
+  const wordDifficulty = card.state.difficulty;
+  const wordOptions = card.state.optional;
+  const word = {
+    difficulty: wordDifficulty,
+    optional: wordOptions,
+  };
+  card.state.difficulty = newDifficulty;
+  updateUserWord(wordId, word);
+  saveDayLocalState(learningScreenElement);
 }

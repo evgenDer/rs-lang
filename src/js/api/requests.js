@@ -21,7 +21,6 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     const rawResponse = await fetch(urlRequest, params);
     return rawResponse.json();
   } catch (error) {
-    alert(error);
     return error;
   }
 }

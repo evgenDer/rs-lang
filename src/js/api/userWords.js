@@ -9,16 +9,15 @@ async function createUserWord(wordId, word) {
     const content = await sendRequest('POST', urlRequest, true, word);
     return content;
   } catch (error) {
-    alert(error);
     return error;
   }
 }
 
-async function makeRequestByWordId(methodRequest, wordId) {
+async function makeRequestByWordId(methodRequest, wordId, word) {
   try {
     const userId = getUserId();
     const urlRequest = `${BACKEND_URL}/users/${userId}/words/${wordId}`;
-    const content = await sendRequest(methodRequest, urlRequest, true);
+    const content = await sendRequest(methodRequest, urlRequest, true, word);
     return content;
   } catch (error) {
     return error;
@@ -50,7 +49,9 @@ async function updateUserWord(wordId, word) {
   } catch (error) {
     alert(error);
     return error;
-  }
+  }/*
+  const result = await makeRequestByWordId('PUT', wordId, word);
+  return result;*/
 }
 
 async function deleteUserWord(wordId) {

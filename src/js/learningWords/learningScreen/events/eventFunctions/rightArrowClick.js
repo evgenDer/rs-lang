@@ -8,9 +8,11 @@ import createResults from '../../domBuilder/lightTree/createResults';
 import { updateStatusBar } from '../../domBuilder/lightTree/createStatusBar';
 
 import { createUserWord, updateUserWord, deleteUserWord } from '../../../../api/userWords';
-import { increaseWordErrorCount, increaseWordRightSequenceCount, increaseRepeatCount }
-  from '../../../../words/updateWordState';
-
+import {
+  increaseWordErrorCount,
+  increaseWordRightSequenceCount,
+  increaseRepeatCount,
+} from '../../../../words/updateWordState';
 
 import saveDayLocalState from '../../functions/saveDayLocalState';
 import addWordNeedToRepeat from './addWordNeedToRepeat';
@@ -34,7 +36,8 @@ export default function rightClick(learningScreenElement) {
   } else if (screenMode === 'learning') {
     isCardDone = learningScreenElement.localState.learningProgressArr[currentLearningCardIndex];
   } else {
-    isCardDone = learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex];
+    isCardDone =
+      learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex];
   }
 
   if (!isCardDone) {
@@ -42,79 +45,84 @@ export default function rightClick(learningScreenElement) {
     const wordDifficulty = card.state.difficulty;
     const wordOptions = card.state.optional;
     const word = {
-      "difficulty": wordDifficulty,
-      "optional": wordOptions,
-    }
+      difficulty: wordDifficulty,
+      optional: wordOptions,
+    };
 
-    isAnswerCorrect = checkAnswer(learningScreenElement.querySelector('card-word'));
-    if (isAnswerCorrect) {
-
-      if (card.settings.enableAutomaticAudio && isFirstTimeDone) {
-        card.audio.word.play();
-        card.audio.word.onended = () => {
-          if (card.settings.showExplanationExample && card.audio.example !== null) {
-            card.audio.example.play();
-            card.audio.example.onended = () => {
-              if (card.settings.showSentenceExplanation && card.audio.meaning !== null) {
-                card.audio.meaning.play();
-              }
-            };
-          }
-        };
-      }
-      isFirstTimeDone = false;
-
-      difficultyButtons.forEach((element) => element.classList.add('active'));
-      if (card.state.isFirstAnswer) {
-        increaseWordRightSequenceCount(word);
-        increaseRepeatCount(word);
-        if (cardMode === 'newWord') {
-          createUserWord(wordId, word);
-        } else {
-          console.log(word);
-          updateUserWord(wordId, word);
+    if (card.querySelector('input').value.length != 0) {
+      isAnswerCorrect = checkAnswer(learningScreenElement.querySelector('card-word'));
+      if (isAnswerCorrect) {
+        if (card.settings.enableAutomaticAudio && isFirstTimeDone) {
+          card.audio.word.play();
+          card.audio.word.onended = () => {
+            if (card.settings.showExplanationExample && card.audio.example !== null) {
+              card.audio.example.play();
+              card.audio.example.onended = () => {
+                if (card.settings.showSentenceExplanation && card.audio.meaning !== null) {
+                  card.audio.meaning.play();
+                }
+              };
+            }
+          };
         }
-      }
+        isFirstTimeDone = false;
 
-      if (screenMode === 'learning') {
-        learningScreenElement.localState.learningProgressArr[currentLearningCardIndex] = true;
-      } else if (screenMode === 'newWord') {
-        learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex] = true;
-      } else {
-        learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex] = true;
-      }
+        difficultyButtons.forEach((element) => element.classList.add('active'));
+        if (card.state.isFirstAnswer) {
+          increaseWordRightSequenceCount(word);
+          increaseRepeatCount(word);
+          if (cardMode === 'newWord') {
+            createUserWord(wordId, word);
+          } else {
+            console.log(word);
+            updateUserWord(wordId, word);
+          }
+        }
 
-      if (screenMode !== 'repeating') {
-        updateStatusBar(learningScreenElement);
-        saveDayLocalState(learningScreenElement);
-      }
-
-      updateCard(learningScreenElement);
-    } else {
-      if (card.state.isFirstAnswer) {
-        increaseWordErrorCount(word);
-        increaseRepeatCount(word);
-        addWordNeedToRepeat(learningScreenElement);
-
-        if (cardMode === 'newWord') {
-          createUserWord(wordId, word);
+        if (screenMode === 'learning') {
+          learningScreenElement.localState.learningProgressArr[currentLearningCardIndex] = true;
+        } else if (screenMode === 'newWord') {
+          learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex] = true;
         } else {
-          console.log(word);
-          updateUserWord(wordId, word);
+          learningScreenElement.localState.needToRepeatProgressArr[
+            currentRepeatingCardIndex
+          ] = true;
         }
 
         if (screenMode !== 'repeating') {
+          updateStatusBar(learningScreenElement);
           saveDayLocalState(learningScreenElement);
         }
 
         updateCard(learningScreenElement);
-      }
-    }
+      } else {
+        if (card.state.isFirstAnswer) {
+          increaseWordErrorCount(word);
+          increaseRepeatCount(word);
+          addWordNeedToRepeat(learningScreenElement);
 
-    console.log(learningScreenElement.wordArrs.needToRepeat);
-    console.log(currentRepeatingCardIndex);
-    console.log(learningScreenElement.localState.needToRepeatProgressArr)
-    card.state.isFirstAnswer = false;
+          if (cardMode === 'newWord') {
+            createUserWord(wordId, word);
+          } else {
+            console.log(word);
+            updateUserWord(wordId, word);
+          }
+
+          if (screenMode !== 'repeating') {
+            saveDayLocalState(learningScreenElement);
+          }
+
+          updateCard(learningScreenElement);
+        }
+      }
+
+      console.log(learningScreenElement.wordArrs.needToRepeat);
+      console.log(currentRepeatingCardIndex);
+      console.log(learningScreenElement.localState.needToRepeatProgressArr);
+      card.state.isFirstAnswer = false;
+    } else {
+      console.log('freeeee');
+    }
   } else {
     if (screenMode === 'repeating' && card.state.optional.mode === 'needToRepeat') {
       card.state.isDone = false;
@@ -127,18 +135,20 @@ export default function rightClick(learningScreenElement) {
       card.audio.word.pause();
       card.audio.example.pause();
       card.audio.meaning.pause();
-
+      /*
       card.audio.word.src = null;
       card.audio.example.src = null;
       card.audio.meaning.src = null;
-
+      */
       difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));
       difficultyButtons.forEach((element) => element.classList.remove('active'));
-      setTimeout(() => difficultyButtons.forEach((element) => element.classList.add('readyToMove')), 600);
+      setTimeout(
+        () => difficultyButtons.forEach((element) => element.classList.add('readyToMove')),
+        600,
+      );
 
       createCard(learningScreenElement);
     }
-
   }
 
   /*if (
