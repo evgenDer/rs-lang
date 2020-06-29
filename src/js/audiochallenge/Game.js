@@ -5,6 +5,7 @@ import { GAME_MODES, GAME_DATA_URL } from '../games/constants';
 import { getFullDataWords, getWordDetalization } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt } from '../helpers/math-hepler';
+import * as ProgressBar from './progress-bar';
 
 
 // eslint-disable-next-line import/prefer-default-export
@@ -27,6 +28,10 @@ export class Game {
       wordSpeakerSrc: '',
       exampleSpeakerSrc: '',
       id: '',
+      progress: {
+        bar: document.querySelector('.game-progress'),
+        points: [],
+      },
     };
 
     this.errors = 0;
@@ -56,6 +61,7 @@ export class Game {
   }
 
   startGame() {
+    this.generateProgressBar();
     this.prepareGameField();
 
     this.getRoundData().then(() => this.startTask());
@@ -81,6 +87,8 @@ export class Game {
     this.enableAnswers();
     this.setContolButtonIdnkMode();
     this.removeAudioButtonsClickHandler();
+
+    ProgressBar.setCurrentProgressPoint(this.task.progress.points[this.currentAnswer]);
   }
 
   getRightAnswer() {
@@ -177,6 +185,7 @@ export class Game {
         } else if (answerIndex === this.rightAnswer) {
           this.showRightAnswer();
           answer.classList.add('answer_correct');
+          ProgressBar.setRightProgressPoint(this.task.progress.points[this.currentAnswer]);
 
           this.disableAnswers();
           this.setContolButtonNextMode();
@@ -185,6 +194,7 @@ export class Game {
           answer.classList.add('uk-animation-shake');
 
           this.errors += 1;
+          ProgressBar.setWrongProgressPoint(this.task.progress.points[this.currentAnswer]);
         }
       });
     });
@@ -234,6 +244,8 @@ export class Game {
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
         this.errors += 1;
+        ProgressBar.setWrongProgressPoint(this.task.progress.points[this.currentAnswer]);
+
         this.showRightAnswer();
         this.setContolButtonNextMode();
       }
@@ -301,5 +313,13 @@ export class Game {
 
   playTask() {
     this.speakers.main.click();
+  }
+
+  generateProgressBar() {
+    this.task.progress.bar.innerHTML = '';
+    for (let i = 0; i < this.wordsAmntInRound; i += 1) {
+      this.task.progress.bar.append(createElement('span', 'game-progress__point'));
+    }
+    this.task.progress.points = document.querySelectorAll('.game-progress__point');
   }
 }
