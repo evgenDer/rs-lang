@@ -1,5 +1,5 @@
 import createUserWord from '../api/userWords';
-import updateUserWord from '../'
+import updateUserWord from '../';
 
 import getUserWordById from '../api/userWords';
 import getWordById from '../api/words';
@@ -8,7 +8,7 @@ import getWordById from '../api/words';
 const newWordOptionsTemplate = {
   "difficulty": 'normal', // easy, normal, hard
   "options": {
-    mode: null, //deleted,null,needToRepeat
+    mode: null, //deleted,learning,needToRepeat
     lastUpdateDate: null,
     referenceCount: 0,
     errorCount: 0,
@@ -50,7 +50,7 @@ function increaseWordRightSequenceCount(word) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
   word.optional['rightSequence'] += 1;
-  word.optional['mode'] = 0;
+  word.optional['mode'] = 'learning';
   calculateSuccessPoint(word, 'success');
 }
 
@@ -62,20 +62,20 @@ function calculateSuccessPoint(word, mode) {
   let mark = 0;
   const currentMark = word.optional['successPoint'];
   const difficultyToSuccessPoint = {
-    'hard': 0.2,
-    'normal': 0.6,
-    'easy': 1,
-  }
+    hard: 0.2,
+    normal: 0.6,
+    easy: 1,
+  };
   const difficultyToErrorPoint = {
-    'hard': 1,
-    'normal': 0.6,
-    'easy': 0.2,
-  }
+    hard: 1,
+    normal: 0.6,
+    easy: 0.2,
+  };
 
   if (word.optional['referenceCount'] === 1) {
     mark = 1;
-  } else if ((word.optional['referenceCount'] - word.optional['errorCount']) <= 5) {
-    mark = 1 + ((word.optional['referenceCount'] - word.optional['errorCount']) / 5);
+  } else if (word.optional['referenceCount'] - word.optional['errorCount'] <= 5) {
+    mark = 1 + (word.optional['referenceCount'] - word.optional['errorCount']) / 5;
     console.log(mark);
   } else if (currentMark <= 4) {
     if (mode == 'success') {
@@ -83,7 +83,9 @@ function calculateSuccessPoint(word, mode) {
     } else {
       mark = word.optional['successPoint'] - difficultyToErrorPoint[word.difficulty];
     }
-    if (mark < 1) { mark = 1; }
+    if (mark < 1) {
+      mark = 1;
+    }
   } else if (currentMark > 4) {
     mark = 3.8 + word.optional['rightSequence'] / 5;
   } else if (currentMark > 5) {
@@ -93,7 +95,7 @@ function calculateSuccessPoint(word, mode) {
 }
 
 function calculateRepeatTiming(word) {
-  const timing = 30 * word.optional['successPoint'] / 5; //days
+  const timing = (30 * word.optional['successPoint']) / 5; //days
   const repeatRating = Math.floor(timing * 24 * 3600 * 1000 + word.optional['lastUpdateDate']);
   return repeatRating;
 }
@@ -106,6 +108,12 @@ function openCardUpdate(word) {
 }
 
 export {
-  getUpdatedUserWord, increaseWordErrorCount, increaseWordReferenceCount, switchDeleteModeUserWord,
-  increaseWordRightSequenceCount, calculateRepeatTiming, increaseRepeatCount, openCardUpdate
-}
+  getUpdatedUserWord,
+  increaseWordErrorCount,
+  increaseWordReferenceCount,
+  switchDeleteModeUserWord,
+  increaseWordRightSequenceCount,
+  calculateRepeatTiming,
+  increaseRepeatCount,
+  openCardUpdate,
+};

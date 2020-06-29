@@ -15,6 +15,11 @@ export default function createCard(learningScreenElement) {
   learningScreenElement.insertAdjacentHTML('beforeend', "<card-word slot='card'></card-word>");
   const card = learningScreenElement.querySelector('card-word');
 
+  for (let prop in card.settings) {
+    card.settings[prop] = learningScreenElement.settings[prop];
+  }
+  console.log(card.settings);
+
   card.setState('mode', mode);
   if (mode === 'newWord') {
     card.setState(
@@ -38,7 +43,9 @@ export default function createCard(learningScreenElement) {
   } else if (mode === 'repeating') {
     const { currentRepeatingCardIndex } = learningScreenElement.state;
     console.log(currentRepeatingCardIndex);
-    console.log(learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex]);
+    console.log(
+      learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex],
+    );
     card.setState(
       'isDone',
       learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex],

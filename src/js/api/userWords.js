@@ -49,7 +49,7 @@ async function updateUserWord(wordId, word) {
   } catch (error) {
     alert(error);
     return error;
-  }/*
+  } /*
   const result = await makeRequestByWordId('PUT', wordId, word);
   return result;*/
 }

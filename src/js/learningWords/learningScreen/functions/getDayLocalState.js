@@ -38,13 +38,18 @@ export default async function getDayLocalState(learningScreenElemen) {
     learningScreenElemen.setState('currentNewWordCardIndex', 0);
     learningScreenElemen.setState('currentLearningCardIndex', 0);
 
+    let cardToRepeatCount =
+      learningScreenElemen.settings.wordCount - learningScreenElemen.settings.newWordCount;
+    if (cardToRepeatCount < 0) {
+      cardToRepeatCount = 0;
+    }
 
-    let cardToRepeatCount = learningScreenElemen.settings.wordCount - learningScreenElemen.settings.newWordCount;
-    if (cardToRepeatCount < 0) { cardToRepeatCount = 0 }
-
-    let wordArrs = await createNewWordsPack(learningScreenElemen.settings.newWordCount,
+    let wordArrs = await createNewWordsPack(
+      learningScreenElemen.settings.newWordCount,
       cardToRepeatCount,
-      learningScreenElemen.settings.difficultyLevel, currentDate);
+      learningScreenElemen.settings.difficultyLevel,
+      currentDate,
+    );
     const dayWordArrs = wordArrs;
 
     const newWordProgressArr = Array(+learningScreenElemen.settings.newWordCount).fill(false);
