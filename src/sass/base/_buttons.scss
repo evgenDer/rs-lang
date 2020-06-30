@@ -27,7 +27,7 @@
 .frgt-pass {background: transparent;}
 
 /* buttons hover Animation */
-button:hover {
+button:not(.active):hover {
   animation: ani9 0.4s ease-in-out infinite alternate;
 }
 @keyframes ani9 {

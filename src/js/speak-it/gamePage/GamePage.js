@@ -6,6 +6,8 @@ import Results from './Results';
 import { createElement } from '../../utils/create';
 import { getGameStatistics} from '../../utils/storage';
 
+const MAX_ATTEMTS_COUNT = 4;
+
 export default class GamePage {
   constructor() {
     this.isGameMode = false;
@@ -73,6 +75,49 @@ export default class GamePage {
     this.results.show();
   }
 
+  restart() {
+    if (this.isGameMode) {
+      this.statusBar.stopGameMode();
+      this.display.stopGameMode();
+      this.microphone.turnOff();
+      this.gameBoard.stopGameMode();
+      this.startGameModeBtn.innerHTML = 'Start speaking';
+      this.startGameModeBtn.classList.remove('game-mode_btn');
+    }
+    this.gameBoard.makeInactiveAllCards();
+    this.display.update({translate: ''});
+    this.isGameMode = false;
+  }
+
+  checkAvailableWords() {
+    this.gameBoard.increaseCurrentWordIndex();
+    if (this.gameBoard.isAllWordsPass()) {
+      this.updateDisplay();
+    } else {
+      this.showResults();
+    }
+  }
+
+  updateDisplay() {
+    this.attemptsСount = 0;
+    this.display.update(this.gameBoard.getCurrentWordInfo());
+  }
+
+  turnOnMicrophone() {
+    this.microphone.turnOn((word) => {
+      if (this.gameBoard.checkAnswers(word)) {
+        this.statusBar.addStar();
+        this.checkAvailableWords();
+        this.microphone.clearInput();
+      } else {
+        this.attemptsСount += 1;
+        if (this.attemptsСount >= MAX_ATTEMTS_COUNT) {
+          this.checkAvailableWords();
+        }
+      }
+    });
+  }
+
   addListeners() {
     this.gameBoard.getCardsContainer().addEventListener('click', (event) => {
       if (!this.isGameMode) {
@@ -84,5 +129,20 @@ export default class GamePage {
         this.gameBoard.cardOnClickHandler(event);
     });
 
+    this.startGameModeBtn.addEventListener('click', () => {
+      if (!this.isGameMode) {
+        this.isGameMode = !this.isGameMode;
+        this.startGameModeBtn.innerHTML = 'Пропустить';
+        this.startGameModeBtn.classList.add('game-mode_btn');
+        this.gameBoard.startGameMode();
+        this.statusBar.startGameMode();
+        this.display.startGameMode();
+        this.updateDisplay();
+        this.turnOnMicrophone();
+      } else {
+        this.checkAvailableWords();
+      }
+
+    });
   }
 }

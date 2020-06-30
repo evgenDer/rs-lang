@@ -16,8 +16,9 @@ export default class Card {
     const containerIcon =  createElement({ tagName: 'div', classNames: 'container-speaker-icon', children: [icon] });
     const word = createElement({ tagName: 'p', classNames: 'word', textContent: this.word });
     const transcription = createElement({ tagName: 'p', classNames: 'transcription', textContent: this.transcription });
-    const wordContainer = createElement({ tagName: 'div', classNames: 'word-container', children: [ word, transcription] });
-    this.card = createElement({ tagName: 'div', classNames: 'card', children: [containerIcon, wordContainer] });
+    this.translate = createElement({ tagName: 'p', classNames: 'translate', textContent: this.wordTranslate });
+    const wordContainer = createElement({ tagName: 'div', classNames: 'word-container', children: [ word, transcription, this.translate] });
+    this.card = createElement({ tagName: 'div', classNames: 'card uk-animation-fade', children: [containerIcon, wordContainer] });
     return this.card;
   }
 
@@ -33,21 +34,36 @@ export default class Card {
     return this.word;
   }
 
+  getTranslate() {
+    return this.wordTranslate;
+  }
+
+  getTranscription() {
+    return this.transcription;
+  }
+
   getElement() {
     return this.card;
+  }
+
+  changeElementForResults() {
+    this.card.classList.add('result_card');
+  }
+
+  removeChangeForResults() {
+    this.card.classList.remove('result_card');
   }
 
   wasAnswered() {
   return this.isCorrectAnswer;
   }
 
-  getTranslate() {
-    return this.wordTranslate;
-  }
-
   markAsGuessed() {
     this.isCorrectAnswer = true;
-    this.card.classList.add('card_active');
+  }
+
+  markAsNotGuessed() {
+    this.isCorrectAnswer = false;
   }
 
   makeInactive() {

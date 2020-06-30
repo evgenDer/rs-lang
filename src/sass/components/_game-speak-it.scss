@@ -1,18 +1,27 @@
+.header {
+  display:none;
+}
+
 .speak-it_main {
   width: 100vw;
-  height: calc( 100vh - 77px);
-  padding: 10px;
+  height: 100vh;
+  padding: 5px;
   position: relative;
 }
 
-.start-screen {
+.start-screen,
+.game-results {
   position: absolute;
   top: 0;
   left: 0;
-  height: calc( 100vh - 77px);
+  height: 100vh;
   width: 100vw;
   background-size: cover;
   background-image: url(../img/bg-img-game-speakit.png);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .intro {
@@ -21,6 +30,7 @@
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  margin-top: -70px;
 }
 
 .intro__title {
@@ -40,7 +50,7 @@
 
 .btn {
   padding: 11px 30px;
-  margin: 0 20px;
+  margin: 8px;
   border-radius: 10px;
   outline: none;
   border: none;
@@ -49,7 +59,7 @@
   transition: all 0.2s linear;
   color: $color-primary;
   background: $color-green;
-  opacity: .8;
+  opacity: .7;
   font-size: 1.5rem;
 }
 
@@ -63,19 +73,15 @@
   opacity: 1;
 }
 
-.hidden {
-  display: none;
-}
-
 .game-container{
   max-width: 1200px;
   margin: 0 auto;
+  height: 100%;
+  padding: 10px;
 }
 
 .game-control {
   display: flex;
-  justify-content: flex-end;
-  margin: 60px 30px 40px;
 }
 
 .game-control-dropdown {
@@ -83,18 +89,30 @@
 }
 
 .game-control__btn {
-  width: 150px;
+  width: 137px;
+  padding: 1px 0;
   outline: none;
   border: none;
   border-radius: 10px;
   background-color: $color-primary;
-	color: $color-additional;
-	transition: all 0.4s;
+  color: $color-blue;
+  border: 1px solid;
+  opacity: .9;
+  transition: all 0.4s;
 }
 
-.game-control__btn:hover {
-  background-color: $color-additional;
+.game-control__btn:disabled {
+  background-color: $color-primary;
+  color: $color-blue;
+  opacity: .6;
+  transition: all 0.6s;
+}
+
+.game-control__btn:not(.active):hover {
   color: $color-primary;
+  background: $color-blue;
+  border: 1px solid $color-primary;
+  opacity: .7;
   cursor: pointer;
   transition: all 0.4s;
 }
@@ -126,9 +144,69 @@
 .status-bar_container {
   display: flex;
   justify-content: space-between;
-  margin: 5px 0px;
+  margin: 20px 0px 43px;
   align-items: center;
   height: 40px;
+}
+
+.btn_restart {
+  padding: 5px 18px;
+  color: $color-red;
+  background: $color-primary;
+  border: 1px solid $color-red;
+}
+
+.btn_restart:hover {
+  color: $color-primary;
+  background: $color-red;
+  border: 1px solid $color-primary;
+  opacity: .7;
+}
+
+.btn_statistic {
+  padding: 5px 18px;
+  color: $color-violet;;
+  background: $color-primary;
+  border: 1px solid $color-violet;;
+}
+
+.btn_statistic:hover {
+  color: $color-primary;;
+  background: $color-violet;
+  border: 1px solid $color-primary;
+  opacity: .7;
+}
+
+.btn_exit {
+  padding: 5px 18px;
+  color: $color-green;
+  background: $color-primary;
+  border: 1px solid $color-green;
+}
+
+.btn_exit:hover {
+  color: $color-primary;
+  background: $color-green;
+  border: 1px solid $color-primary;
+  opacity: .7;
+}
+
+.btn_microphone {
+  padding: 5px 18px;
+  color: $color-blue;
+  background: $color-primary;
+  border: 1px solid $color-blue;
+}
+
+.btn_microphone:hover {
+  color: $color-primary;
+  background: $color-blue;
+  border: 1px solid $color-primary;
+  opacity: .7;
+}
+
+.stars_container {
+  margin-top: 60px;
 }
 
 .star {
@@ -140,6 +218,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .image {
@@ -147,14 +226,34 @@
   height: 260px;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 5px 5px 25px #767676;
+  box-shadow: 5px 5px 25px $color-black;
   margin-bottom: 10px;
+}
+
+.display_word-container {
+  margin-top: 5px;
+}
+
+.display_translate {
+  font-size: 1.5rem;
+  color: $color-secondary;
+  text-align: center;
+  font-weight: 500;
+  padding: 2px 5px;
+  margin: 0;
+  height: 32px;
+}
+
+.microphone {
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
 .input {
   border: 0;
   padding: 5px 20px;
-  margin: 0 auto;
+  margin: 48px auto;
   width: 380px;
   height: 40px;
   font-size: 1.5rem;
@@ -163,21 +262,22 @@
   text-align: center;
   font-weight: 500;
   outline: none;
-}
-
-.input_active {
-  border-bottom: 1px solid rgba(150, 214, 224, 1);
-  position: relative;
+  border-bottom: 1px solid $color-blue;
   background-image: url(../img/icons/microphone.svg);
   background-size: 9%;
   background-repeat: no-repeat;
 }
 
+.wrapper_game-board {
+  margin: 10px;
+  min-height: 208px;
+  position: relative;
+}
+
 .cards_container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 10px;
+  justify-content: space-around;
 }
 
 .card {
@@ -196,7 +296,7 @@
 
 .card_active {
   background-color: rgba(150, 214, 224, 0.3);
-  border: 1px solid rgb(126, 198, 209);
+  border: 1px solid $color-blue;
 
   .speaker-icon {
     filter: opacity(100%);
@@ -213,9 +313,9 @@
   transition: all 0.5s;
 }
 
-.card:not(.card_active):hover {
+.card:not(.card_active):not(.result_card):hover {
   box-shadow: 0 5px 15px rgba(0,0,0,.08);
-  border: 1px solid rgb(126, 198, 209);
+  border: 1px solid $color-blue;
 
   .speaker-icon {
     filter: opacity(90%);
@@ -237,15 +337,21 @@
   font-weight: 500;
 }
 
-.transcription {
+.transcription,
+.translate {
   color: $color-secondary;
   font-size: 1.3rem;
   padding: 2px 5px;
   margin: 0;
 }
 
-.speaker-icon path {
-  stroke: red;
+.display_word,
+.display_transcription {
+  font-size: 0;
+}
+
+.translate {
+  font-size: 0rem;
 }
 
 .btns {
@@ -254,14 +360,288 @@
   margin: 0 10px;
 }
 
-.btn_restart  {
+.game-results_wrapper {
+  margin: 20px auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-background-additinal;
+  border-radius: 10px;
+  width: 600px;
+  padding: 20px;
+  color: $color-secondary;
+}
+
+.game-results-answers_wrapper {
+  margin: 10px 20px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.game-results_title {
+  display: flex;
+  margin: 15px 0 10px;
+}
+
+.game-results_text {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.results_answers_count {
+  color: $color-primary;
+  padding: 3px 14px;
+  border-radius: 1.5rem;
+  margin-left: 12px;
+  height: 23px;
+}
+
+.correct-answers_count {
+  background-color: $color-green;
+}
+
+.incorrect-answers_count {
   background-color: $color-red;
 }
 
-.btn_speak {
-  flex-grow: 1;
+.result_control-btn{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.btn_result {
+.btn-results {
+  font-size: 1rem;
+}
+
+.result_card {
+  border: none;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  min-height: 50px;
+  & .container-speaker-icon {
+    width: 32px;
+    height: 32px;
+  }
+  & .word-container {
+    flex-direction: row;
+  }
+  & .word {
+    color: $color-secondary;
+    font-size: 1.4rem;
+  }
+  & .translate {
+    font-size: 1.3rem;
+  }
+}
+
+.info-wrapper {
+  padding: 15px;
+  padding-bottom: 5px;
+}
+
+.game-mode_info-wrapper {
+  min-width: 483px;
+  min-height: 401px;
+  background-color: rgba(150, 214, 224, 0.1);
+  border: 1px solid $color-blue;
+  border-radius: 10px;
+  transition: all .5s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & .image {
+    box-shadow: none;
+  }
+
+  & .display_word {
+    font-size: 1.6rem;
+  }
+
+  & .display_transcription,
+  .display_translate {
+    font-size: 1.3rem;
+  }
+}
+
+.game-mode_btn {
+  width: 20%;
+  color: $color-green;
+  background: $color-primary;
+  border: 1px solid $color-green;
+  margin-top: 32px;
+}
+
+.game-mode_btn:hover {
+  color: $color-primary;
+  background: $color-green;
+  border: 1px solid $color-primary;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .8s, opacity .8s linear;
+}
+
+.invisible {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .5s, opacity .5s linear;
+}
+
+.microphone_active {
+  display: flex;
+}
+
+.loader-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  left: 0;
+  top: 0;
+}
+
+.circle-loader {
+  width: 100px;
+  height: 15px;
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  margin: -7px 0 0 -50px;
+  text-align: center;
+}
+
+.circle {
+  height: 10px;
+  width: 10px;
+  background-color: $color-blue;
+  border-radius: 50%;
+  position: absolute;
+  -webkit-animation: 0.8s opaque ease-in-out infinite both;
+  animation: 0.8s opaque ease-in-out infinite both;
+}
+
+.circle-1 {
+  top: -25px;
+  left: 0;
+}
+.circle-2 {
+  top: -17px;
+  left: 17px;
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+.circle-3 {
+  top: 0;
+  left: 25px;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+.circle-4 {
+  top: 17px;
+  left: 17px;
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+.circle-5 {
+  top: 25px;
+  left: 0;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+.circle-6 {
+  top: 17px;
+  left: -17px;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+.circle-7 {
+  top: 0;
+  left: -25px;
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+.circle-8 {
+  top: -17px;
+  left: -17px;
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
+}
+
+@keyframes opaque {
+  0% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+.circle-loader-line {
+  left: 50%;
+}
+
+.circle-loader-line .circle-line {
+  width: 15px;
+  height: 15px;
+  background-color: $color-blue;
+  display: inline-block;
+  margin: 0 5px;
+  border-radius: 50%;
+  opacity: 0.5;
+  transform: scale(0.5);
+  animation-name: loaderAnim;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(.26,.63,.94,.66);
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+
+.circle-loader-line  .circle-line-2 {
+  animation-delay: 0.25s;
+  background-color: $color-green;
+}
+
+.circle-loader-line  .circle-line-3 {
+  animation-delay: 0.5s;
+  background-color: $color-red;
+}
+
+.circle-loader-line  .circle-line-4 {
+  animation-delay: 0.75s;
   background-color: $color-violet;
+}
+
+@keyframes loaderAnim {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+}
+
+.uk-animation-scale-up,
+.uk-animation-scale-down {
+  animation-duration: 1s;
 }

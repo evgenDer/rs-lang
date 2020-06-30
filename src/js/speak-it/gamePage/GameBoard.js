@@ -1,23 +1,29 @@
 import { getDataWords } from '../../api/words';
 import Card from './Card';
+import Loader from './Loader';
 import { createElement } from '../../utils/create';
+import shuffleArray from '../../utils/shuffleArray';
 
 export default class GameBoard {
   constructor() {
     this.currentCards = [];
     this.mixedСards = [];
     this.audioObj = new Audio();
+    this.loader = new Loader(true);
   }
 
   generate() {
     this.cardsContainer = createElement({ tagName: 'div', classNames: 'cards_container'});
-    this.wrapper = createElement({ tagName: 'div', classNames: 'wrapper_game-board', children: [this.cardsContainer ]});
+    this.wrapper = createElement({ tagName: 'div', classNames: 'wrapper_game-board', children: [this.cardsContainer, this.loader.getElement() ]});
     return this.wrapper;
   }
 
   cahgeCards(data) {
+    this.cardsContainer.classList.add('hidden');
+    this.loader.show();
     this.cardsContainer.innerHTML = '';
     this.currentCards.length = 0;
+    this.mixedСards.length = 0;
     getDataWords(data.level, data.page)
     .then((result) => {
       if(result.length > 0) {
@@ -25,11 +31,13 @@ export default class GameBoard {
           this.currentCards.push(new Card(cardData));
         });
         this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
+        this.loader.hide();
+        this.cardsContainer.classList.remove('hidden');
       }
     });
   }
 
-  getContainer() {
+  getCardsContainer() {
     return this.cardsContainer;
   }
 
@@ -52,11 +60,31 @@ export default class GameBoard {
 
   startGameMode(){
     this.makeInactiveAllCards();
-    this.getWordsWithCorrectAnswer().forEach((card)=> card.markAsGuessed())
+    this.wrapper.classList.add('hidden');
+    this.mixedСards = shuffleArray(this.currentCards);
+    this.gameModeCurrentWordIndex = 0;
+  }
+
+  stopGameMode() {
+    this.wrapper.classList.remove('hidden');
+    this.currentCards.forEach((card) => card.markAsNotGuessed());
+  }
+
+  getCurrentWordInfo() {
+    const currentCard = this.mixedСards[this.gameModeCurrentWordIndex];
+    return {img: currentCard.getImgUrl(),
+      translate: currentCard.getTranslate(),
+      word: currentCard.getWord(),
+      transcription: currentCard.getTranscription(),
+    };
   }
 
   getWordsWithCorrectAnswer() {
     return this.currentCards.filter((card) => card.wasAnswered());
+  }
+
+  getWordsWithNotCorrectAnswer() {
+    return this.currentCards.filter((card) => !card.wasAnswered());
   }
 
   cardOnClickHandler(event, callback) {
@@ -65,15 +93,35 @@ export default class GameBoard {
       this.makeInactiveAllCards();
       currentCard.makeActive();
       this.playAudio(currentCard.getAudioSrc());
-      callback({img: currentCard.getImgUrl(), translate: currentCard.getTranslate()});
+      if (callback) {
+        callback({img: currentCard.getImgUrl(), translate: currentCard.getTranslate()});
+      }
     }
   }
 
-  checkAnswers(inputValue, callback) {
-   const currentCard = this.currentCards.find((card) => card.getWord() === inputValue.toLowerCase() && !card.wasAnswered());
-   if (currentCard) {
-    currentCard.markAsGuessed();
-    callback({img: currentCard.getImgUrl()});
-  }
+  checkAnswers(inputValue) {
+    const currentCard = this.mixedСards[this.gameModeCurrentWordIndex];
+    if (currentCard.getWord().toLowerCase() === inputValue.toLowerCase()) {
+      currentCard.markAsGuessed();
+      return true;
+    }
+    return false;
 }
+
+  increaseCurrentWordIndex(){
+    this.gameModeCurrentWordIndex += 1;
+  }
+
+  isAllWordsPass() {
+    return this.mixedСards.length > this.gameModeCurrentWordIndex;
+  }
+
+  updateCards() {
+    this.cardsContainer.innerHTML = '';
+    this.currentCards.forEach((card) => {
+      card.removeChangeForResults();
+      this.cardsContainer.append(card.getElement());
+    });
+    this.makeInactiveAllCards();
+  }
 }
