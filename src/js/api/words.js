@@ -11,7 +11,6 @@ async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, w
   }
 }
 
-// eslint-disable-next-line max-len
 async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 10, wordsPerPage = 10) {
   try {
     const urlRequest = `${BACKEND_URL}/words/?group=${numberGroup}&page=${numberPage}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`;
@@ -20,6 +19,10 @@ async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 1
   } catch (error) {
     return error;
   }
+}
+
+async function getFullDataWords(numberGroup, numberPage, wordsPerPage = 10) {
+  return getDataWords(numberGroup, numberPage, '', wordsPerPage);
 }
 
 async function getWordById(idWord) {
@@ -32,4 +35,4 @@ async function getWordById(idWord) {
   }
 }
 
-export { getCountWordsInGroup, getWordById, getDataWords };
+export { getCountWordsInGroup, getWordById, getDataWords, getFullDataWords };
