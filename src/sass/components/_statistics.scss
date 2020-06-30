@@ -17,11 +17,16 @@
   margin: 20px 0 0 10px;
 }
 
-.stat__info{
+.stat__info {
   padding: 20px;
   text-align: center;
 }
 
-.canvasjs-chart-credit{
+.canvasjs-chart-credit {
   display: none;
+}
+
+.results-count {
+  color: $color-secondary;
+  font-weight: 700;
 }

@@ -5,21 +5,21 @@ async function initNewStatisticsData(prevStatisticsObject, gameName, dateTime) {
   let statistics = prevStatisticsObject;
   const currentStatistics = statisticsUtils.getNewStatisticsDataValue(dateTime);
 
-  if (!prevStatisticsObject.optional || !prevStatisticsObject.optional.statisticsData) {
+  if (!prevStatisticsObject || !prevStatisticsObject.optional || !prevStatisticsObject.optional.sd) {
     statistics = statisticsUtils.getNewStatisticsValue(currentStatistics, gameName);
   } else {
     statistics = statisticsUtils.parseStatisticsData(statistics);
 
-    const statisticsData = statistics.optional.statisticsData
-      .find((d) => d.name.toLowerCase() === gameName.toLowerCase());
+    const statisticsData = statistics.optional.sd
+      .find((d) => d.n.toLowerCase() === gameName.toLowerCase());
 
     if (!statisticsData) {
-      statistics.optional.statisticsData.push({
-        name: gameName,
-        data: [currentStatistics]
+      statistics.optional.sd.push({
+        n: gameName,
+        d: [currentStatistics]
       })
     } else {
-      statisticsData.data.push(currentStatistics);
+      statisticsData.d.push(currentStatistics);
     }
   }
 

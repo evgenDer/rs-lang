@@ -2,9 +2,10 @@ import {
   Statistics
 } from './components/statistics';
 
-export default async function initStatistics() {
-  const stat = new Statistics('daily-2');
+let stat = null;
 
+export default async function initStatistics() {
+  stat = new Statistics('daily-2');
   const data = await stat.getDateTimeStatistics('daily-2');
 
   if (!data) {

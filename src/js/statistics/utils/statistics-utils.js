@@ -1,6 +1,6 @@
 export const stringifyStatisticsData = (statistics) => {
-  const statisticsData = JSON.stringify(statistics.optional.statisticsData);
-  statistics.optional.statisticsData = statisticsData;
+  const statisticsData = JSON.stringify(statistics.optional.sd);
+  statistics.optional.sd = statisticsData;
 
   return statistics;
 };
@@ -16,8 +16,8 @@ export const parseStatisticsData = (statistics) => {
 
 
   try {
-    const statisticsData = JSON.parse(statistics.optional.statisticsData);
-    parsedStatistics.optional.statisticsData = statisticsData;
+    const statisticsData = JSON.parse(statistics.optional.sd);
+    parsedStatistics.optional.sd = statisticsData;
 
     return parsedStatistics;
   } catch (e) {
@@ -29,9 +29,9 @@ export const getNewStatisticsValue = (currentStatistics, gameName) => {
   const statistics = {
     learnedWords: 0,
     optional: {
-      statisticsData: [{
-        name: gameName,
-        data: [currentStatistics],
+      sd: [{
+        n: gameName,
+        d: [currentStatistics],
       }],
     },
   };
@@ -41,12 +41,13 @@ export const getNewStatisticsValue = (currentStatistics, gameName) => {
 
 export const getNewStatisticsDataValue = (dateTime) => {
   const statistics = {
-    dateTime,
-    totalCardsEnded: 0,
-    totalNewWords: 0,
-    totalCorrect: 0,
-    totalErrors: 0,
-    wordData: [],
+    dt: dateTime,
+    tce: 0,
+    tnw: 0,
+    tc: 0,
+    te: 0,
+    ts: 0,
+    wd: [],
   };
 
   return statistics;
@@ -54,16 +55,16 @@ export const getNewStatisticsDataValue = (dateTime) => {
 
 export const getNewWordData = (word, isCorrect, wordLevel) => {
   const wordData = {
-    word,
-    correct: 0,
-    error: 0,
-    level: wordLevel,
+    w: word,
+    c: 0,
+    e: 0,
+    l: wordLevel,
   };
 
   if (isCorrect) {
-    wordData.correct += 1;
+    wordData.c += 1;
   } else {
-    wordData.error += 1;
+    wordData.e += 1;
   }
 
   return wordData;
@@ -73,9 +74,9 @@ export const updateWordData = (wordValue, isCorrect) => {
   const wordData = wordValue;
 
   if (isCorrect) {
-    wordData.correct += 1;
+    wordData.c += 1;
   } else {
-    wordData.error += 1;
+    wordData.e += 1;
   }
 
   return wordData;
@@ -84,38 +85,42 @@ export const updateWordData = (wordValue, isCorrect) => {
 export const getCurrentStatistics = (globalStatistics, gameName, dateTime) => {
   const parsed = parseStatisticsData(globalStatistics);
 
-  const statisticsData = parsed.optional.statisticsData
-    .find((n) => n.name.toLowerCase() === gameName.toLowerCase());
+  const statisticsData = parsed.optional.sd
+    .find((n) => n.n.toLowerCase() === gameName.toLowerCase());
 
   if (!statisticsData) {
     return null;
   }
 
-  const currentStatistics = statisticsData.data.find((f) => f.dateTime === dateTime);
+  const currentStatistics = statisticsData.d.find((f) => f.dt === dateTime);
 
   return currentStatistics;
 }
 
-export const updateStatisticsValues = (statisticsToUpdate, word, isCorrect, wordLevel) => {
+export const updateStatisticsValues = (statisticsToUpdate, word, isCorrect, wordLevel, isStrike) => {
   const updatedStatistics = statisticsToUpdate;
 
-  updatedStatistics.totalCardsEnded += 1;
+  updatedStatistics.tce += 1;
 
   if (wordLevel !== -1) {
-    updatedStatistics.totalNewWords += 1;
+    updatedStatistics.tnw += 1;
   }
 
   if (isCorrect) {
-    updatedStatistics.totalCorrect += 1;
+    updatedStatistics.tc += 1;
   } else {
-    updatedStatistics.totalErrors += 1;
+    updatedStatistics.te += 1;
   }
 
-  let wordValue = updatedStatistics.wordData.find((w) => w.word.toLowerCase() === word.toLowerCase());
+  if (isStrike) {
+    updatedStatistics.ts += 1;
+  }
+
+  let wordValue = updatedStatistics.wd.find((w) => w.w.toLowerCase() === word.toLowerCase());
 
   if (!wordValue) {
     wordValue = getNewWordData(word, isCorrect, wordLevel);
-    updatedStatistics.wordData.push(wordValue);
+    updatedStatistics.wd.push(wordValue);
   } else {
     wordValue = updateWordData(wordValue, isCorrect);
   }
