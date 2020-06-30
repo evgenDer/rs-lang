@@ -26,8 +26,19 @@ export default class StatusBar {
        ],
      });
 
+    const iconMicrophone = createElement({ tagName: 'span', attrs: [['uk-icon', 'icon: microphone']]});
+    this.btnMicrophone = createElement({ tagName: 'button', classNames: 'btn btn_microphone', children: [iconMicrophone]});
+    const iconRestart = createElement({ tagName: 'span', attrs: [['uk-icon', 'icon: refresh']]});
+    this.btnRestart = createElement({ tagName: 'button', classNames: 'btn btn_restart', children: [iconRestart]});
+    const iconStatistic = createElement({ tagName: 'span', attrs: [['uk-icon', 'icon: file-text']]});
+    this.btnStatistic = createElement({ tagName: 'button', classNames: 'btn btn_statistic', children: [iconStatistic]});
+    const iconHome = createElement({ tagName: 'span', attrs: [['uk-icon', 'icon: home']]});
+    this.btnExit = createElement({ tagName: 'button', classNames: 'btn btn_exit', children: [iconHome]});
+    const cont = createElement({ tagName: 'div', children: [ this.btnRestart, this.btnStatistic, this.btnExit, this.btnMicrophone]});
+
     this.starsContainer = createElement({ tagName: 'div', classNames: 'stars_container' });
-    const statusBarContainer = createElement({ tagName: 'div', classNames: 'status-bar_container', children: [ gameControl, this.starsContainer] });
+    const statusBarContainer = createElement({ tagName: 'div', classNames: 'status-bar_container', children: [ gameControl, this.starsContainer, cont] });
+    this.addListeners(callbackFunctions);
     return statusBarContainer;
   }
 
@@ -51,4 +62,22 @@ export default class StatusBar {
   removeProgress() {
     this.starsContainer.innerHTML = '';
   }
+
+  startGameMode() {
+    this.levelsDropdoun.disableСhange();
+    this.roundsDropdoun.disableСhange();
+  }
+
+  stopGameMode() {
+    this.levelsDropdoun.enableСhange();
+    this.roundsDropdoun.enableСhange();
+    this.removeProgress();
+  }
+
+  addListeners(callbackFunctions) {
+    this.btnRestart.addEventListener('click', callbackFunctions.onClickRestart);
+
+    this.btnStatistic.addEventListener('click', callbackFunctions.onClickStatistics);
+
+}
 }

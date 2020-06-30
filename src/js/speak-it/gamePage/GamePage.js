@@ -14,10 +14,8 @@ export default class GamePage {
   this.statusBar = new StatusBar();
   this.gameBoard = new GameBoard();
   this.display = new Display();
-  this.restartBtn = createElement({ tagName: 'button', classNames: 'btn btn_restart', textContent: 'Restart' });
-  this.speakBtn = createElement({ tagName: 'button', classNames: 'btn btn_speak', textContent: 'Start speaking' });
-  this.resultBtn = createElement({ tagName: 'button', classNames: 'btn btn_result', textContent: 'Results' });
-  const buttons = createElement({ tagName: 'div', classNames: 'btns', children: [this.restartBtn, this.speakBtn, this.resultBtn] });
+  this.startGameModeBtn = createElement({ tagName: 'button', classNames: 'btn btn_speak', textContent: 'Start speaking' });
+  const buttons = createElement({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
 
   const callbacksForStatusBar = {
     onChangeLevel: (result)=> {
@@ -45,27 +43,10 @@ export default class GamePage {
   }
 
   addListeners() {
-    this.gameBoard.getContainer().addEventListener('click', (event) => {
-      if (!this.isPronunciationMode) {
-        this.gameBoard.cardOnClickHandler(event, (data) =>  this.display.updateDisplay(data));
+    this.gameBoard.getCardsContainer().addEventListener('click', (event) => {
+      if (!this.isGameMode) {
+        this.gameBoard.cardOnClickHandler(event, (data) =>  this.display.update(data));
       }
-    });
-
-    this.speakBtn.addEventListener('click', () => {
-      if (!this.isPronunciationMode) {
-        this.speakBtn.innerHTML = 'Pause';
-        this.gameBoard.startGameMode();
-        this.display.turnOnMicrophone((word) => {
-            this.gameBoard.checkAnswers(word, (data) => {
-              this.display.updateDisplay(data);
-              this.statusBar.addStar();
-            });
-          });
-      } else {
-        this.display.turnOffMicrophone();
-        this.speakBtn.innerHTML ='Start speaking';
-      }
-      this.isPronunciationMode = !this.isPronunciationMode;
     });
   }
 }
