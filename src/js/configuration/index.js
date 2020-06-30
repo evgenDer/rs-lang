@@ -6,9 +6,9 @@ import * as page from './page';
 import * as configurationService from '../api/settings';
 
 export async function getConfiguration() {
-  const configuration = (await configurationService.getSettings()).optional;
+  const configuration = await configurationService.getSettings();
 
-  if (!configuration) {
+  if (!configuration || !configuration.optional) {
     const configurationModel = {
       optional: DEFAULT_CONFIGURATION
     };
@@ -17,7 +17,7 @@ export async function getConfiguration() {
     return DEFAULT_CONFIGURATION;
   }
 
-  return configuration;
+  return configuration.optional;
 };
 
 export async function saveCustomConfiguration(gameName, gameConfiguration) {
