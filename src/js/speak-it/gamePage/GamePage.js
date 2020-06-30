@@ -1,6 +1,7 @@
 import StatusBar from './StatusBar';
 import Display from './Display';
 import GameBoard from './GameBoard';
+import Microphone from './Microphone';
 import Results from './Results';
 import { createElement } from '../../utils/create';
 import { getGameStatistics} from '../../utils/storage';
@@ -15,6 +16,7 @@ export default class GamePage {
   this.statusBar = new StatusBar();
   this.gameBoard = new GameBoard();
   this.display = new Display();
+  this.microphone = new Microphone();
   this.results = new Results();
   this.startGameModeBtn = createElement({ tagName: 'button', classNames: 'btn btn_speak', textContent: 'Start speaking' });
   const buttons = createElement({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
@@ -35,6 +37,8 @@ export default class GamePage {
     onReturn: () => {
       if (!this.isGameMode) {
         this.display.update({translate: ''});
+      } else {
+        this.turnOnMicrophone();
       }
       this.gameBoard.updateCards();
     },
@@ -43,6 +47,7 @@ export default class GamePage {
   this.gameContainer = createElement({ tagName: 'div', classNames: 'game-container hidden', children: [
     this.statusBar.generate(localData, callbacksForStatusBar),
     this.display.generate(),
+    this.microphone.generate(),
     this.gameBoard.generate(),
     buttons,
     this.results.generate( callbacksForResults ),
@@ -58,6 +63,7 @@ export default class GamePage {
   }
 
   showResults() {
+    if (this.isGameMode) this.microphone.turnOff();
     this.gameBoard.makeInactiveAllCards();
     const data = {
       correctAnswers: this.gameBoard.getWordsWithCorrectAnswer(),
@@ -77,5 +83,6 @@ export default class GamePage {
     this.results.getContainer().addEventListener('click', (event) => {
         this.gameBoard.cardOnClickHandler(event);
     });
+
   }
 }
