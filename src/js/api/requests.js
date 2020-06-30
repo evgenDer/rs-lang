@@ -17,11 +17,16 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     if (withCredentials) {
       params.withCredentials = true;
     }
+
     const rawResponse = await fetch(urlRequest, params);
-    console.log(rawResponse);
+
+    if (rawResponse.status === 404) {
+      return null;
+    }
+
     return rawResponse.json();
   } catch (error) {
-    alert(error);
+    console.error(error.toString());
     return error;
   }
 }

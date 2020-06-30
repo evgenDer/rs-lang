@@ -25,18 +25,15 @@ export class Statistics {
     return this.currentStatistics;
   }
 
-  async getDateTimeStatistics(gameName) {
+  async getDateTimeStatistics() {
     const statistics = await statisticsHelper.getStatistics();
 
-    if (!statistics.optional || !statistics.optional.statisticsData) {
+    if (!statistics || !statistics.optional ||
+      !statistics.optional.statisticsData) {
       return null;
     }
 
-    const dateTime = statistics.optional.statisticsData
-
-    const gamedata = statistics.optional.statisticsData.find(f => f.name.toLowerCase() === gameName.toLowerCase());
-    console.log(gamedata);
-
+    const gamedata = statistics.optional.statisticsData.find(f => f.name.toLowerCase() === this.gameName.toLowerCase());
     const data = gamedata.data.map(function (f) {
       return {
         x: f.dateTime,

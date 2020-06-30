@@ -6,13 +6,14 @@ export const stringifyStatisticsData = (statistics) => {
 };
 
 export const parseStatisticsData = (statistics) => {
+  if (!statistics || !statistics.optional) {
+    return statistics;
+  }
+
   const parsedStatistics = {};
   parsedStatistics.optional = statistics.optional;
   parsedStatistics.learnedWords = statistics.learnedWords;
 
-  if (!statistics.optional) {
-    return statistics;
-  }
 
   try {
     const statisticsData = JSON.parse(statistics.optional.statisticsData);

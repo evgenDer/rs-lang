@@ -14,8 +14,7 @@ async function upserStatistic(statistics) {
 
     return content;
   } catch (error) {
-    console.error(`Error during update statistics. Error: ${error}`);
-
+    console.error(`Error during update statistics. Error: ${error.message}`);
     return error;
   }
 }
@@ -28,7 +27,8 @@ async function getStatistics() {
 
     return content;
   } catch (error) {
-    return error;
+    console.error(`Error during get statistics. Error: ${error.message}`);
+    return null;
   }
 }
 
