@@ -20,6 +20,33 @@ export async function getConfiguration() {
   return configuration;
 };
 
+export async function saveCustomConfiguration(gameName, gameConfiguration) {
+  const oldConfiguration = await configurationService.getSettings();
+
+  const configuration = {};
+  configuration.optional = oldConfiguration.optional;
+
+  if (!configuration.optional) {
+    return;
+  }
+
+  configuration.optional[gameName] = JSON.stringify(gameConfiguration);
+
+  await configurationService.upserSettings(configuration);
+}
+
+export async function getCustomConfiguration(gameName) {
+  const configuration = await configurationService.getSettings();
+
+  if (!configuration.optional || !configuration.optional[gameName]) {
+    return null;
+  }
+
+  const value = JSON.parse(configuration.optional[gameName]);
+
+  return value;
+}
+
 export async function updateConfigurationValues() {
   const configuration = await getConfiguration();
 

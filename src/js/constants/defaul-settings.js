@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const DEFAULT_CONFIGURATION = {
   maxNewWordsPerDay: 10,
   maxCardsWithWordsPerDay: 40,
@@ -14,4 +15,10 @@ export const DEFAULT_CONFIGURATION = {
   deleteWords: true,
   markAsDifficultWord: true,
   possibilityToMarkWord: true,
+  englishPuzzle: '{}',
+  savannah: '{}',
+  sprint: '{}',
+  speakit: '{}',
+  audioCall: '{}',
+  mygame: '{}',
 };
