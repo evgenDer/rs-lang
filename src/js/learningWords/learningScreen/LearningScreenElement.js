@@ -8,8 +8,6 @@ import createDifficultyButtons from './domBuilder/lightTree/createDifficultyButt
 import createResults from './domBuilder/lightTree/createResults';
 import createEvents from './events/createEvents';
 
-import { getUserConfiguration } from '../../data-access/local-storage';
-
 import whatsNext from './events/eventFunctions/whatsNext';
 import getDayLocalState from './functions/getDayLocalState';
 import { getConfiguration } from '../../configuration';
@@ -79,8 +77,17 @@ export default class LearningScreenElement extends HTMLElement {
                   createResults(this);
                 }*/
   async init() {
+    this.insertAdjacentHTML(
+      'afterbegin',
+      `<img slot='loadingIcon' src='assets/img/icons/loading.gif'>
+      <span slot='loadingIcon'>Секундочу, формируем карточки на сегодня...</span>`,
+    );
+    const loadingIcon = this.shadowRoot.querySelector('div#loading');
+
     await this.setSettingsFromLocalStorage();
     await getDayLocalState(this);
+    loadingIcon.remove();
+
     console.log(this.settings);
     const willCreateCard = whatsNext(this);
     if (willCreateCard) {

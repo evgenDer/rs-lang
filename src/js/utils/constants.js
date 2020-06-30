@@ -1,5 +1,5 @@
 const APP_NAME = 'RS LANG';
-const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
+const BACKEND_URL = 'http://pacific-castle-12388.herokuapp.com';
 
 const PAGES = [
   {

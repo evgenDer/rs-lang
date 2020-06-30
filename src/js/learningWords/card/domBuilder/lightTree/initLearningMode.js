@@ -11,28 +11,32 @@ import createAudio from './createAudio';
 export default function initLearning(cardElement, isJustUpdated = false) {
   console.log(cardElement.state);
   if (isJustUpdated) {
-
     updateStatusBar(cardElement);
     cardElement.querySelector('learning-line').setState('isDone', cardElement.state.isDone);
     cardElement.querySelector('learning-line').setState('isDeleted', cardElement.state.isDeleted);
   } else {
-
     cardElement.innerHTML = "<learning-line slot='ENitem'></learning-line>";
     const learningline = cardElement.querySelector('learning-line');
 
     for (const prop in cardElement.state) {
       learningline.setState(prop, cardElement.state[prop]);
     }
-    cardElement.insertAdjacentHTML(`afterbegin`, `
+    cardElement.insertAdjacentHTML(
+      `afterbegin`,
+      `
       <span slot='statusText'>Очень клево все</span>
-    `)
+    `,
+    );
 
     for (let i = 0; i < 5; i += 1) {
-      cardElement.insertAdjacentHTML(`afterbegin`, `
+      cardElement.insertAdjacentHTML(
+        `afterbegin`,
+        `
       <div slot='statusDot' class='dot'></div>
-      `)
+      `,
+      );
     }
-    updateStatusBar(cardElement)
+    updateStatusBar(cardElement);
 
     console.log(cardElement.settings);
     if (cardElement.settings.showWordTranslation) {
@@ -50,15 +54,32 @@ export default function initLearning(cardElement, isJustUpdated = false) {
     }
 
     if (cardElement.settings.showAnswer && !cardElement.state.isDone) {
-      cardElement.insertAdjacentHTML('beforeend', "<div slot='openWord'>Ответ</div>");
-    }
-
-    if (cardElement.settings.deleteWords) {
-      cardElement.insertAdjacentHTML('beforeend', "<div slot='deleteWord'>Удалить</div>");
+      cardElement.insertAdjacentHTML(
+        'beforeend',
+        "<div slot='openWord' class='hovered'>Ответ</div>",
+      );
     }
 
     if (cardElement.state.isDone) {
-      cardElement.insertAdjacentHTML('beforeend', "<div slot='repeatWord'>Снова</div>");
+      if (cardElement.state.optional.mode !== 'needToRepeat') {
+        console.log(cardElement.state.optional.mode);
+        cardElement.insertAdjacentHTML(
+          'beforeend',
+          "<div slot='repeatWord' class='hovered'>Снова</div>",
+        );
+      } else {
+        cardElement.insertAdjacentHTML(
+          'beforeend',
+          "<div slot='repeatWord'>Придется повторить</div>",
+        );
+      }
+    }
+
+    if (cardElement.settings.deleteWords) {
+      cardElement.insertAdjacentHTML(
+        'beforeend',
+        "<div slot='deleteWord' class='hovered'>Удалить</div>",
+      );
     }
 
     if (cardElement.settings.deleteWords && cardElement.state.isDeleted) {
@@ -68,7 +89,6 @@ export default function initLearning(cardElement, isJustUpdated = false) {
     createImg(cardElement);
     createAudio(cardElement);
   }
-
 
   if (cardElement.settings.showExplanationExample) {
     const example = cardElement.state.textExample;
@@ -88,7 +108,6 @@ export default function initLearning(cardElement, isJustUpdated = false) {
         );
       }
     } else {
-
       exampleUpdated = example.replace(regexp, '____');
     }
     cardElement.insertAdjacentHTML(
@@ -116,7 +135,6 @@ export default function initLearning(cardElement, isJustUpdated = false) {
         );
       }
     } else {
-
       exampleUpdated = example.replace(regexp, '____');
     }
     cardElement.insertAdjacentHTML(

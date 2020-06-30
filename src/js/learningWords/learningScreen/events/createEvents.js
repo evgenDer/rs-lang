@@ -11,6 +11,8 @@ import checkAnswer from './eventFunctions/checkAnswer';
 import addWordNeedToRepeat from './eventFunctions/addWordNeedToRepeat';
 
 export default function createEvents(learningScreenElement) {
+  const card = learningScreenElement.querySelector('card-word');
+
   learningScreenElement.addEventListener('click', () => {
     let item = null;
     if (event.target.closest('img.arrow') != null) {
@@ -27,10 +29,10 @@ export default function createEvents(learningScreenElement) {
       deleteCard(learningScreenElement);
     } else if (event.target.closest('div[slot=restoreWord]') != null) {
       restoreCard(learningScreenElement);
-    } else if (event.target.closest('div[slot=repeatWord]') != null) {
+    } else if (event.target.closest('div.hovered[slot=repeatWord]') != null) {
+      console.log('asdasdasd');
       addWordNeedToRepeat(learningScreenElement);
     }
-
 
     if (item != null) {
       switch (item.classList[0]) {
@@ -42,7 +44,7 @@ export default function createEvents(learningScreenElement) {
           }
           break;
         case 'difficultyButton':
-          chooseWordDifficulty(learningScreenElement, item)
+          chooseWordDifficulty(learningScreenElement, item);
           break;
         case 'modeButton':
           const prevMode = learningScreenElement.state.mode;

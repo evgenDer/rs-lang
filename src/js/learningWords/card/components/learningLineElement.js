@@ -1,7 +1,7 @@
 import removeAnswer from '../../learningScreen/events/eventFunctions/removeAnswer';
 
 const style = {
-  inputColor: '#b9f3fc',
+  backgroundColor: '#338c9930',
   correctLetterColor: '#61bd4f',
   deletedWordColor: '#fe5c55',
 };
@@ -29,7 +29,7 @@ export default class LearningLineElement extends HTMLElement {
     div {text-align: center;}
     
     #background {position: relative; left:0; top:0;
-       background-color: ${style.inputColor}; border-radius: 5px; user-select: none;}
+       background-color: ${style.backgroundColor}; border-radius: 5px; user-select: none;}
     #background .hidden {visibility: hidden;}
     #wordContainer {position: absolute; left:0; top:0;}
     ::slotted(span[slot=word1]) {padding: 2px 5px 2px 10px; opacity: 0.3;}
@@ -38,7 +38,7 @@ export default class LearningLineElement extends HTMLElement {
     ::slotted(span[slot=word3]) {padding: 2px 5px 2px 10px; opacity: 1; transition: opacity; transition-duration: 1s;}
     ::slotted(span.animatted) {opacity: 0;}
     ::slotted(input) {padding: 1px 5px 2px 11px; width: 100%; position:absolute; left:0; top:0;
-       background: transparent; border: none; outline: none; }
+       background: transparent; border: none; outline: none; color: inherit}
     ::slotted(span[slot=input]) {padding: 2px 5px 2px 10px; color: ${style.correctLetterColor};}
     ::slotted(span[slot=input].deleted) {color: ${style.deletedWordColor};}
     </style>
@@ -79,7 +79,7 @@ export default class LearningLineElement extends HTMLElement {
   setState(propName, newPropState) {
     if (this.state[propName] !== newPropState) {
       this.state[propName] = newPropState;
-      if (propName === 'word' ) {
+      if (propName === 'word') {
         this.setAttribute(propName, this.state[propName]);
       }
     }

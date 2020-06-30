@@ -37,6 +37,9 @@ const learningScreenShadowTreeHTML = `
   div{display: flex; justify-content: center;}
   ::slotted(learning-results) {position: fixed; z-index:10;}
 
+  #loading {align-items: center;}
+  ::slotted([slot=loadingIcon]) {margin: 10px;}
+
   #cardContentBlock {margin-top: 20px; width: 100%; height:90%; position:relative;
      flex-direction: column; justify-content: flex-start; align-items: center;}
   #mainBlock {width: 100%; min-width: 300px; max-width: 600px; z-index:10;}
@@ -60,7 +63,7 @@ const learningScreenShadowTreeHTML = `
   ::slotted([slot=difficultyButton].active.normal:hover) {background: ${styles.difficultyButtons.normalButtonHoverColor};}
   ::slotted([slot=difficultyButton].active.hard:hover) {background: ${styles.difficultyButtons.hardButtonHoverColor};}
 
-  #modeBlock {max-width: 600px; height: 40px; position: absolute; top:-55px; right:0; flex-direction: row;}
+  #modeBlock {max-width: 600px; height: 40px; position: absolute; top:-55px; left: 100px; flex-direction: row;}
   ::slotted(div.modeButton) {width:100px; height: 100%; display:flex; justify-content: center; align-items: center;
   border: 3px solid; border-radius:10px;}
   ::slotted(div[slot=modeButtonLeft]) {background-color:${styles.modeButtons.leftButtonColor}; border-color:${styles.modeButtons.leftButtonColor}; }
@@ -75,9 +78,9 @@ const learningScreenShadowTreeHTML = `
   #statusBlock {width: 100%; min-width: 300px; max-width: 720px; height: 40px;}
   #statusBarDeadZone {width: 60px; height: 40px;}
   #lineStatusBlock {width:100%; min-width: 160px; max-width: 500px; position: relative;}
-  #lineStatus {margin: 15px; width: 100%; height: 10px; border:3px solid pink; border-radius:10px;}
-  ::slotted([slot=progressLine]) {margin: 18px; max-width: 470px; height:10px; position: absolute; left:0;
-     background: pink; border-radius:10px;
+  #lineStatus {margin: 15px; width: 100%; height: 10px; border:3px solid #338c9965; border-radius:10px;}
+  ::slotted([slot=progressLine]) {margin: 18px; max-width: 464px; height:10px; position: absolute; left:0;
+     background: #338c9935; border-radius:10px;
     transition:width; transition-duration:1s;}
   #numberStatusBlock {width:60px; height: 40px; align-items: center;}
   ::slotted([slot=numberStatus]) {margin-top: 3px;}
@@ -87,6 +90,10 @@ const learningScreenShadowTreeHTML = `
   <slot name='results'></slot>
 
 <div id='cardContentBlock'>
+
+<div id='loading'>
+    <slot name='loadingIcon'></slot>
+</div>
 
 <div id='mainBlock'>
   <div id='leftArrow' class='arrow'>

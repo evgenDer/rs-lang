@@ -68,6 +68,7 @@ export default function rightClick(learningScreenElement) {
         isFirstTimeDone = false;
 
         difficultyButtons.forEach((element) => element.classList.add('active'));
+
         if (card.state.isFirstAnswer) {
           increaseWordRightSequenceCount(word);
           increaseRepeatCount(word);
@@ -83,16 +84,17 @@ export default function rightClick(learningScreenElement) {
           learningScreenElement.localState.learningProgressArr[currentLearningCardIndex] = true;
         } else if (screenMode === 'newWord') {
           learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex] = true;
-        } else {
+        } else if (screenMode === 'repeating') {
           learningScreenElement.localState.needToRepeatProgressArr[
             currentRepeatingCardIndex
           ] = true;
         }
 
-        if (screenMode !== 'repeating') {
-          updateStatusBar(learningScreenElement);
-          saveDayLocalState(learningScreenElement);
-        }
+        console.log(learningScreenElement.wordArrs.needToRepeat);
+        console.log(learningScreenElement.localState.needToRepeatProgressArr);
+
+        updateStatusBar(learningScreenElement);
+        saveDayLocalState(learningScreenElement);
 
         updateCard(learningScreenElement);
       } else {
@@ -119,6 +121,7 @@ export default function rightClick(learningScreenElement) {
       console.log(learningScreenElement.wordArrs.needToRepeat);
       console.log(currentRepeatingCardIndex);
       console.log(learningScreenElement.localState.needToRepeatProgressArr);
+
       card.state.isFirstAnswer = false;
     } else {
       console.log('freeeee');
