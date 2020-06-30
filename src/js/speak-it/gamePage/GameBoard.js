@@ -1,27 +1,31 @@
 import { getDataWords } from '../../api/words';
 import Card from './Card';
 import { createElement } from '../../utils/create';
-import { getGameStatistics} from '../../utils/storage';
 
 export default class GameBoard {
   constructor() {
     this.currentCards = [];
+    this.mixedСards = [];
     this.audioObj = new Audio();
   }
 
-  generateGameBoard() {
-
-    this.cardsContainer = createElement({ tagName: 'div', classNames: 'cards_container' });
-    return this.cardsContainer;
+  generate() {
+    this.cardsContainer = createElement({ tagName: 'div', classNames: 'cards_container'});
+    this.wrapper = createElement({ tagName: 'div', classNames: 'wrapper_game-board', children: [this.cardsContainer ]});
+    return this.wrapper;
   }
 
-  addCards() {
-    const localData = getGameStatistics('speakitStatistic');
-    getDataWords(localData.level, localData.page).then((data) => {
-      data.forEach((cardData) => {
-        this.currentCards.push(new Card(cardData));
-      });
-      this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
+  cahgeCards(data) {
+    this.cardsContainer.innerHTML = '';
+    this.currentCards.length = 0;
+    getDataWords(data.level, data.page)
+    .then((result) => {
+      if(result.length > 0) {
+        result.forEach((cardData) => {
+          this.currentCards.push(new Card(cardData));
+        });
+        this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
+      }
     });
   }
 
