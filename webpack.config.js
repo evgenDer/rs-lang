@@ -94,7 +94,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
-    htmlWebpackPluginCreator('game-speak-it.html', 'index', 'game_speakit'),
+    htmlWebpackPluginCreator('game-speak-it.html', 'game_speakit'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),

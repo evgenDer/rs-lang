@@ -45,6 +45,9 @@ export default class Results {
       this.gameResults.classList.add('hidden');
       this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
     });
+
+    this.exitBtn.addEventListener('click', callbacks.onClickHome);
+
   }
 
   show() {

@@ -32,8 +32,8 @@ export default class StatusBar {
     this.btnRestart = createElement({ tagName: 'button', classNames: 'btn btn_restart', children: [iconRestart]});
     const iconStatistic = createElement({ tagName: 'span', attrs: [['uk-icon', 'icon: file-text']]});
     this.btnStatistic = createElement({ tagName: 'button', classNames: 'btn btn_statistic', children: [iconStatistic]});
-    const iconHome = createElement({ tagName: 'span', attrs: [['uk-icon', 'icon: home']]});
-    this.btnExit = createElement({ tagName: 'button', classNames: 'btn btn_exit', children: [iconHome]});
+    const linkHome = createElement({ tagName: 'span', attrs: [['uk-icon', 'icon: home']]});
+    this.btnExit = createElement({ tagName: 'button', classNames: 'btn btn_exit', children: [linkHome]});
     const cont = createElement({ tagName: 'div', children: [ this.btnRestart, this.btnStatistic, this.btnExit, this.btnMicrophone]});
 
     this.starsContainer = createElement({ tagName: 'div', classNames: 'stars_container' });
@@ -79,5 +79,6 @@ export default class StatusBar {
 
     this.btnStatistic.addEventListener('click', callbackFunctions.onClickStatistics);
 
+    this.btnExit.addEventListener('click', callbackFunctions.onClickHome);
 }
 }
