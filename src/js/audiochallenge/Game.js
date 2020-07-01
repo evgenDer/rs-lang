@@ -71,7 +71,7 @@ export class Game {
 
     this.getRightAnswer();
     this.getWords();
-    
+
     this.fillAnswers();
     this.fillTask();
 
@@ -199,18 +199,25 @@ export class Game {
   clearGameField() {
     this.answersContainer.innerHTML = '';
   }
+
+  getAnswerIndex(text) {
+    const word = text
+      .trim()
+      .split(' ')
+      .pop()
+      .split('')
+      .filter((element) => element !== '' && !Number.isInteger(+element))
+      .join('');
+    return this.words.indexOf(word);
+  }
   
   addAnswersClickHandler() {
     this.answers.forEach((answer) => {
       answer.onclick = ({ target }) => {
-        const word = target.textContent
-          .trim()
-          .split(' ')
-          .pop()
-          .split('')
-          .filter((element) => element !== '' && !Number.isInteger(+element))
-          .join('');
-        const answerIndex = this.words.indexOf(word);
+        let answerIndex = this.getAnswerIndex(target.textContent);
+        if (answerIndex === -1) {
+          answerIndex = this.getAnswerIndex(target.nextSibling.textContent);
+        }
         
         if (answer.classList.contains('answer_disabled')) {
           // do nothing
