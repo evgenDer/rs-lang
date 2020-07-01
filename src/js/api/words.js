@@ -23,7 +23,7 @@ export async function getDataWords(numberGroup, numberPage, wordsPerExampleSente
 }
 
 export async function getFullDataWords(numberGroup, numberPage, wordsPerPage = 10) {
-  return getDataWords(numberGroup, numberPage, '', wordsPerPage);
+  return getDataWords(numberGroup, numberPage, 1000, wordsPerPage);
 }
 
 export async function getWordById(idWord) {
@@ -41,7 +41,6 @@ export async function getWordDetalization(word) {
     const urlRequest = `${AUX_API_URL}/words/search?search=${word}`;
     const result = await fetch(urlRequest);
     const content = await result.json();
-    console.log(content);
     return content;
   } catch (error) {
     return error;

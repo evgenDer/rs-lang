@@ -49,6 +49,7 @@ export class Game {
     this.wordsAmntInRound = 20;
     this.data = [];
     this.words = [];
+    this.allRoundTranslations = [];
     this.rightAnswer = 0;
     this.currentAnswer = 0;
 
@@ -70,7 +71,7 @@ export class Game {
 
     this.getRightAnswer();
     this.getWords();
-
+    
     this.fillAnswers();
     this.fillTask();
 
@@ -96,11 +97,43 @@ export class Game {
   async getRoundData() {
     this.data = await getFullDataWords(this.level, this.round, this.wordsAmntInRound);
     shuffleArray(this.data);
+
+    this.allRoundTranslations = await this.getAllGroupWordTranslatons();
+  }
+
+  async getAllGroupWordTranslatons() {
+    const dataWords = this.data.map(({ wordTranslate }) => wordTranslate);
+
+    const allData = await getFullDataWords(this.level, 0, 1000);
+
+    const allWords = allData
+      .map(({ wordTranslate }) => wordTranslate)
+      .filter((word) => !dataWords.includes(word));
+
+    return allWords;
+  }
+
+  static getSimilarWords(sample, words) {
+    const ending = sample.slice(-2);
+    const begining = sample.slice(0, 2);
+
+    let similarWords = words.filter((word) => word.slice(-2) === ending || word.slice(0, 2) === begining);
+    similarWords = [...new Set(similarWords)];
+    shuffleArray(similarWords);
+    similarWords = similarWords.slice(0, 5);
+
+    while (similarWords.length < 5) {
+      similarWords.push(words[getRandomInt(words.length - 1)]);
+    }
+
+    return similarWords;
   }
 
   getWords() {
-    this.words = ['машина', 'стол', 'стул', 'вилка', 'ложка'];
-    this.words[this.rightAnswer] = this.data[this.currentAnswer].wordTranslate;
+    const currentWord = this.data[this.currentAnswer].wordTranslate;
+        
+    this.words = Game.getSimilarWords(currentWord, this.allRoundTranslations);
+    this.words[this.rightAnswer] = currentWord;
   }
 
   fillAnswers() {
