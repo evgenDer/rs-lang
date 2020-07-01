@@ -1,0 +1,284 @@
+#game-sprint {
+  header {
+    display: none;
+  }
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  min-height: 100vh;
+  padding-top: 1px;
+  margin-top: -1px;
+  animation: 2s ease-in-out;
+  background:
+    linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%) center center / cover fixed,
+    url(../img/bg-game-sprint.png) center center no-repeat;
+  background-size: cover;
+}
+.game-sprint__start_header{
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  @include media-tablet{
+    //justify-content: ;
+    // display: block;
+  }
+}
+
+.header__game-controls{
+  margin-left: 80px;
+  @include media-tablet{
+    margin-left: 350px;
+  }
+  @media(max-width: 670px){
+    margin-left: 240px;
+  }
+  @media(max-width: 560px){
+    margin-left: 160px;
+  }
+
+  @media(max-width: 500px){
+    margin-left: 120px;
+  }
+
+  @media(max-width: 480px){
+    margin-left: 40px;
+  }
+
+  .game-control:first-child{
+    @include media-tablet{
+      margin-bottom: 6px;
+    }
+  }
+}
+
+.btn_pronoucing::before{
+  content: "\f028";
+  font-family: 'FontAwesome';
+  color: $color-secondary;
+}
+
+.game-sprint__play_mark{
+  text-align: center;
+  margin-top: 10vh;
+  display: flex;
+  justify-content: center;
+  @include media-laptop{
+    margin-top: 6vh;
+  }
+  @media(max-width: 840px){
+    margin-top: -3vh;
+    margin-bottom: -2vh;
+  }
+  @include media-tablet{
+    margin: -20px 0 -22px;
+  }
+  p{
+    color: $color-green;
+    font-size: 45px;
+    width: 100px;
+    @include media-tablet{
+      position: sticky;
+      margin: 25px;
+    }
+  }
+  .base-timer{
+    position: absolute;
+    margin: 200px 0 0 30vw;
+    @include media-tablet{
+      position: sticky;
+      margin: 0;
+      margin-top: 25px;
+    }
+  }
+}
+
+.game-sprint__start_main{
+  display: flex;
+  font-size: 25px;
+  p{
+    color: $color-background-additinal;
+  }
+  h3{
+    font-size: 2.6em;
+    font-weight: 700;
+    color: $color-yellow;
+  }
+  justify-content: center;
+}
+
+.game-sprint__load{
+  display: flex;
+  justify-content: center;
+  margin-top: 30vh;
+  color: $color-primary;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 25px;
+}
+
+.game-sprint__start_main .uk-card{
+  text-align: center;
+  margin: 10vh 20px 20px;
+  border-radius: 10px;
+  width: 700px;
+  background-color: $color-additional;
+  button{
+    color: $color-secondary!important;
+    background-color: $color-yellow!important;
+  }
+  @include media-mobile{
+    width: 280px;
+
+  }
+}
+.card__answers{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.body__images{
+  background-color: $color-background-additinal;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  padding: 15px 15px 0 10px;
+  margin-left: -20px;
+}
+
+.circle{
+  margin: 3px;
+  width: 10px;
+  height: 10px;
+  // border: 2px solid rgb(187, 184, 184);
+  background-color: rgb(211, 203, 203);
+  background-image: url('../img/icons/correct.svg');
+  border-radius: 50%;
+}
+
+.card__result{
+  margin-top: 10px;
+}
+
+.correct{
+  text-align: center;
+  height: 100px;
+  position: inherit;
+  width: relative;
+  border-radius: 10px 10px 0 0;
+}
+
+.correct::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: repeat-x;
+  height: 10px;
+  background-size: 20px 20px;
+  background-image: radial-gradient(circle at 10px -5px, transparent 14px, $color-background -1px);
+}
+.correct::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: repeat-x;
+  height: 5px;
+  background-size: 40px 20px;
+  background-image: radial-gradient(circle at 10px 15px, $color-background 5px, transparent 13px);
+}
+
+.correct_first{
+  background: #fdb104;
+}
+
+.correct_second{
+  background: #ed8047;
+}
+
+.correct_third{
+  background-color: #c96b88;
+}
+
+hr{
+  height: 0.8px;
+  background-color: $color-line;
+  width: inherit;
+}
+
+.body__words{
+  margin-top: 20px;
+  text-align: center;
+  color: $color-secondary;
+  font-size: 25px;
+  .word_translate{
+    font-size: 20px;
+  }
+}
+
+
+.body__images{
+  display: grid;
+  text-align: center;
+  grid-template-rows: 20px 30px;
+  grid-template-columns: 30px 30px;
+  margin: 0 130px;
+  background-color: rgb(248, 248, 184);
+  @include media-mobile{
+    margin: 0 90px;
+  }
+  img{
+    width: 30px;
+    height: 30px;
+  }
+}
+
+img[alt="spruce"]{
+  height: 25px;
+  margin: 5px 0 0 -15px;
+}
+
+img[alt="sun"]{
+  height: 20px;
+  margin: 0px 0 0 -5px;
+}
+
+img[alt="bird"]{
+  height: 25px;
+  margin: 5px 0 0 ;
+}
+
+#game-sprint .card__icons{
+  display: grid;
+  margin-left: 70px;
+  width: relative;
+  grid-template-columns: 135px 90px 5px;
+  @include media-mobile{
+    margin-left: 20px;
+    grid-template-columns: 150px 60px 5px;
+  }
+}
+
+#game-sprint .card__icons img{
+  width: 50px;
+  height: 20px;
+}
+
+.circle{
+  img{
+    margin-top: -11px;
+  }
+}
+
+.icon_result{
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: -50px;
+  opacity: 0.8;
+}
+

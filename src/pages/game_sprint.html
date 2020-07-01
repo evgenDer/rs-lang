@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <title>Cпринт</title>
+</head>
+<body id="game-sprint">
+  <div class = "wrapper">
+    <div class = "game-sprint__start">
+      <div class = "game-sprint__start_header">
+        <button class = 'btn_close' uk-close></button>
+        <div class = "header__game-controls">
+          <div class="uk-inline game-control">
+            <button
+              class="uk-button uk-button-default game-control__btn game-control__btn_mode game-control__btn_mode_disabled"
+              type="button"
+              >
+              Cлова: <span id="game-mode-switch">изученные</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_desc">
+              <div class="uk-nav uk-dropdown-nav">
+                <p class="desc_active hidden">В игре будут задей- <br> ствованы слова из <br> всей коллекции</p>
+                <p class="desc_disabled">В игре будут задей- <br> ствованы только <br> изученные слова</p>
+              </div>
+            </div>
+          </div>
+          <div class="uk-inline game-control">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_level" type="button">
+              Уровень: <span id="game-control__current_level">1</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_level">
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="list__active">Уровень 1</li>
+                <li>Уровень 2</li>
+                <li>Уровень 3</li>
+                <li>Уровень 4</li>
+                <li>Уровень 5</li>
+                <li>Уровень 6</li>
+              </ul>
+            </div>
+          </div>
+          <div class="uk-inline game-control">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_round" type="button">
+              Раунд: <span id="game-control__current_round">1</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_round">
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="list__active">Раунд 1</li>
+                <li>Раунд 2</li>
+                <li>Раунд 3</li>
+                <li>Раунд 4</li>
+                <li>Раунд 5</li>
+                <li>Раунд 6</li>
+              </ul>
+            </div>
+          </div>
+          <button class ="btn_statistic"><img src = 'assets/img/icons/statistic.svg'></button>
+        </div>
+      </div>
+      <div class = "game-sprint__start_main">
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-card-title">Спринт</h3>
+          <p>Выберите соответствует ли перевод предложенному слову</p>
+          <button class = "uk-button uk-button-default game-control__btn  game-control__btn_start">Начать</button>
+      </div>
+      </div>
+    </div>
+    <div class ="game-sprint__load hidden"></div>
+    <div class = "game-sprint__play hidden">
+      <div class = "play__source">
+        <div class = "game-sprint__play_mark">
+          <button class = 'btn_exit btn_close' uk-close></button>
+          <p>0</p>
+          <div class = "play__time"></div>
+        </div>
+        </div>
+        <div class="uk-card uk-card-default uk-width-1-3@m card">
+          <div class="uk-card-header card__header">
+            <div class="card__answers">
+              <div class = "circle"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
+              <div class = "circle"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
+              <div class = "circle"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
+            </div>
+            <div class="card__result">
+              <p></p>
+            </div>
+          </div>
+          <div class="uk-card-body card__body">
+            <div class = "body__images">
+              <img src="assets/img/icons/sun.svg" class="hidden" alt="sun">
+              <img src="assets/img/icons/bird.svg" class= "" alt="bird">
+              <img src="assets/img/icons/mountain.svg" class = "hidden" alt="mountain">
+              <img src="assets/img/icons/spruce.svg" class="hidden" alt="spruce">
+            </div>
+            <div class="body__words">
+              <p class="word_learn">remove</p>
+              <p class="word_translate">улетать</p>
+            </div>
+          </div>
+          <div class="uk-card-footer">
+              <img class = "icon_result" alt="result">
+              <hr>
+              <div class="card__btns">
+                <button class = "btn_wrong">Неверно</button>
+                <button class = "btn_correct">Верно</button>
+              </div>
+              <div class="card__icons">
+                <img src="assets/img/icons/left.svg">
+                <img src="assets/img/icons/right.svg">
+                <button class ="btn_pronoucing"></button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+</body>
+</html>

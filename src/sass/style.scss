@@ -14,9 +14,12 @@
 @import "./components/navigation";
 @import "./components/progres-bar";
 @import "./components/configuration";
+@import "./components/countdown";
+@import "./components/card";
 
 // layouts
 @import "./layouts/wrapper";
+@import "./layouts/games";
+@import "./layouts/game-sprint";
 @import "./layouts/main-page";
 @import "./layouts/authorization";
-@import "./layouts/games";
