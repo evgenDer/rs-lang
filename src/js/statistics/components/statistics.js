@@ -2,8 +2,19 @@
 import * as statisticsHelper from '../utils/statistics-helper';
 import * as statisticsUtils from '../utils/statistics-utils';
 
+
 // eslint-disable-next-line import/prefer-default-export
 export class Statistics {
+  /**
+   * Creates statistics model with temporary and global data.
+   * @param {string} gameName - Name for statistics object
+   * @example
+   * // Creates statistics for game 'SpeakIt'
+   * new Statistics("SpeakIt");
+   * @example
+   * // Creates statistics for words
+   * new Statistics("Learning");
+   */
   constructor(gameName) {
     this.gameName = gameName;
     this.dateTime = Date.now();
@@ -11,6 +22,13 @@ export class Statistics {
     this.currentStatistics = null;
   }
 
+  /**
+   * Updates statistics with provided values.
+   * @param {string} word - Word
+   * @param {boolean} isCorrect - Is correct answer or not
+   * @param {number} wordLevel - Difficulty level of the word. -1 if word is not new
+   * @param {boolean} isStrike - Is answer is correct again (previous answer was correct)
+   */
   async updateStatistics(word, isCorrect, wordLevel = -1, isStrike = false) {
     if (!this.globalStatistics) {
       this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
@@ -22,10 +40,18 @@ export class Statistics {
     await statisticsHelper.updateStatisticsData(this.globalStatistics);
   }
 
-  async endStatistics() {
+  /**
+   * Gets temporary statistics for current game
+   * @return {object} Temporary statistics objects
+   */
+  async getCurrentStatistics() {
     return this.currentStatistics;
   }
 
+  /**
+   * Gets statistics by date time periods
+   * @return {Array} Array of object {x: date time, y: new words count}
+   */
   async getDateTimeStatistics() {
     const statistics = await statisticsHelper.getStatistics();
 
@@ -35,7 +61,7 @@ export class Statistics {
     }
 
     const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === this.gameName.toLowerCase());
-    const data = gamedata.d.map(function (f) {
+    const data = gamedata.d.map(function map(f) {
       return {
         x: f.dt,
         y: f.tnw
@@ -45,11 +71,14 @@ export class Statistics {
     return data;
   }
 
+  /**
+   * Shows modal with temporary statistics for current game
+   */
   async showTemporaryStatistics() {
     let modalElement = null;
 
     const mainElement = document.querySelector(".wrapper");
-    const prevModal = document.querySelector('#temporaty-statistics-modal');
+    const prevModal = document.querySelector('#temporary-statistics-modal');
 
     if (prevModal !== null) {
       prevModal.remove();
@@ -57,7 +86,7 @@ export class Statistics {
 
     if (this.currentStatistics === null) {
       modalElement = `
-        <div id="temporaty-statistics-modal" uk-modal>
+        <div id="temporary-statistics-modal" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
           <button class="uk-modal-close-default" type="button" uk-close></button>
           <h2 class="uk-modal-title">Извините, результатов нет</h2>
@@ -65,7 +94,7 @@ export class Statistics {
       </div>`
     } else {
       modalElement = `
-      <div id="temporaty-statistics-modal" uk-modal>
+      <div id="temporary-statistics-modal" uk-modal>
       <div class="uk-modal-dialog uk-modal-body">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <h2 class="uk-modal-title">Ваши результаты</h2>
@@ -79,6 +108,6 @@ export class Statistics {
     }
 
     mainElement.innerHTML += modalElement;
-    UIkit.modal("#temporaty-statistics-modal").show();
+    UIkit.modal("#temporary-statistics-modal").show();
   }
 }

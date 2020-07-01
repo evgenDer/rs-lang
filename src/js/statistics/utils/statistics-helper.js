@@ -28,7 +28,7 @@ async function initNewStatisticsData(prevStatisticsObject, gameName, dateTime) {
 
 export async function updateStatisticsData(globalStatistics) {
   const statisticsForUpdate = statisticsUtils.stringifyStatisticsData(globalStatistics);
-  await statisticsService.upserStatistic(statisticsForUpdate);
+  await statisticsService.updateStatistic(statisticsForUpdate);
 }
 
 export async function initStatistics(gameName, dateTime) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export const stringifyStatisticsData = (statistics) => {
   const statisticsData = JSON.stringify(statistics.optional.sd);
   statistics.optional.sd = statisticsData;
@@ -13,7 +14,6 @@ export const parseStatisticsData = (statistics) => {
   const parsedStatistics = {};
   parsedStatistics.optional = statistics.optional;
   parsedStatistics.learnedWords = statistics.learnedWords;
-
 
   try {
     const statisticsData = JSON.parse(statistics.optional.sd);

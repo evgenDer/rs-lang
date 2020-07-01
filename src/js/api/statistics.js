@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   getUserId
 } from '../utils/storage';
@@ -6,7 +7,7 @@ import {
   BACKEND_URL
 } from '../utils/constants';
 
-async function upserStatistic(statistics) {
+async function updateStatistic(statistics) {
   try {
     const userId = getUserId();
     const urlRequest = `${BACKEND_URL}/users/${userId}/statistics`;
@@ -33,6 +34,6 @@ async function getStatistics() {
 }
 
 export {
-  upserStatistic,
+  updateStatistic,
   getStatistics,
 };
