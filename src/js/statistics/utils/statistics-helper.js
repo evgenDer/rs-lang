@@ -44,3 +44,76 @@ export async function getStatistics() {
   const parsedStatistics = statisticsUtils.parseStatisticsData(statistics);
   return parsedStatistics;
 }
+
+export async function getDateTimeStatistics(gameName) {
+  const statistics = await getStatistics();
+
+  if (!statistics || !statistics.optional ||
+    !statistics.optional.sd) {
+    return null;
+  }
+
+  const data = statisticsUtils.getDateTimeStatisticsForChart(statistics, gameName);
+
+  return data;
+}
+
+export async function getWordLevelStatistics(gameName) {
+  const statistics = await getStatistics();
+
+  if (!statistics || !statistics.optional ||
+    !statistics.optional.sd) {
+    return null;
+  }
+
+  const data = statisticsUtils.getWordLevelStatisticsForChart(statistics, gameName);
+
+  return data;
+}
+
+export function getModalForTemporaryStatistics(currentStatistics) {
+  let modalElement = null;
+
+  if (currentStatistics === null) {
+    modalElement = `
+      <div id="temporary-statistics-modal" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">Извините, результатов нет</h2>
+      </div>
+    </div>`
+  } else {
+    modalElement = `
+    <div id="temporary-statistics-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <h2 class="uk-modal-title">Ваши результаты</h2>
+      <p>Всего карточек со словами пройдено: <span class="results-count" data-totalCardsEnded>${currentStatistics.tce}</span></p>
+      <p>Всего новых слов изучено: <span class="results-count" data-totalNewWords>${currentStatistics.tnw}</span></p>
+      <p>Правильных ответов: <span class="results-count" data-totalCorrect>${currentStatistics.tc}</span></p>
+      <p>Неправильных ответов: <span class="results-count" data-totalErrors>${currentStatistics.te}</span></p>
+      <p>Самая длинная серия: <span class="results-count" data-totalStrike>${currentStatistics.ts}</span></p>
+    </div>
+  </div>`;
+  }
+
+  return modalElement;
+}
+
+export function getModalForGlobalStatistics() {
+  const modalElement = `
+  <div id="global-statistics-modal" class="uk-modal-container" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <h2 class="uk-modal-title">Общая статистика</h2>
+      <div id="chartContainer">
+        <p class="stat__info">Данные отсутствуют</p>
+      </div>
+      <div id="wordLevelChart" class=" uk-margin">
+        <p class="stat__info">Данные отсутствуют</p>
+      </div>
+    </div>
+  </div>`;
+
+  return modalElement;
+}
