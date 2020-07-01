@@ -1,6 +1,7 @@
 import { Game } from './Game';
-import { addGameModeSwitchClickHandler } from '../games/index';
+import { addGameModeSwitchClickHandler, getGameMode } from '../games/index';
 import { showElement, hideElement } from '../helpers/html-helper';
+import * as Dropdown from './dropdown';
 
 
 const startBtn = document.querySelector('.description__start');
@@ -54,7 +55,7 @@ function addStartButtonClickHandler() {
     showElement(gameField);
     setExitButtonBackMode();
 
-    game = new Game();
+    game = new Game(getGameMode(), Dropdown.getCurrentLevel(), Dropdown.getCurrentRound());
     game.startGame();
   });
 }
@@ -64,4 +65,5 @@ window.onload = () => {
   addStartButtonClickHandler();
   addExitGameBtnClickHandler();
   addGameModeSwitchClickHandler();
+  Dropdown.addDropdownsEventHandlers();
 };

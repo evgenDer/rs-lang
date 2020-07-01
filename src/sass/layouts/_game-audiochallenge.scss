@@ -188,6 +188,23 @@
   .list__active {
     color: $color-active;
   }
+
+  max-height: 200px;
+  overflow: overlay;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $color-primary;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-active;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: $color-red;
+  }
 }
 
 

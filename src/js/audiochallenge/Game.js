@@ -2,15 +2,15 @@
 
 import { createElement } from '../utils/create';
 import { GAME_MODES, GAME_DATA_URL } from '../games/constants';
-import { getFullDataWords, getWordDetalization } from '../api/words';
+import { getFullDataWords } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
-import { getRandomInt } from '../helpers/math-hepler';
+import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 import * as ProgressBar from './progress-bar';
 
 
 // eslint-disable-next-line import/prefer-default-export
 export class Game {
-  constructor(mode = GAME_MODES.all, level = 1, round = 1) {
+  constructor(mode = GAME_MODES.all, level = 0, round = 0) {
     this.mode = mode;
     this.level = level;
     this.round = round;
@@ -56,8 +56,6 @@ export class Game {
     this.addAnswersClickHandler();
     this.addKeyboardEventsHandler();
     this.addControlClickHandler();
-
-    getWordDetalization('cat');
   }
 
   startGame() {
@@ -96,7 +94,8 @@ export class Game {
   }
 
   async getRoundData() {
-    this.data = await getFullDataWords(this.level - 1, this.round - 1, this.wordsAmntInRound);
+    this.data = await getFullDataWords(this.level, this.round, this.wordsAmntInRound);
+    shuffleArray(this.data);
   }
 
   getWords() {

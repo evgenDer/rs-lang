@@ -32,3 +32,7 @@ export function addGameModeSwitchClickHandler() {
     switchGameMode();
   });
 }
+
+export function getGameMode() {
+  return toSwitch.textContent;
+}
