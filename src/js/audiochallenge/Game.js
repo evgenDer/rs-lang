@@ -170,7 +170,7 @@ export class Game {
   
   addAnswersClickHandler() {
     this.answers.forEach((answer) => {
-      answer.addEventListener('click', ({ target }) => {
+      answer.onclick = ({ target }) => {
         const word = target.textContent
           .trim()
           .split(' ')
@@ -196,7 +196,7 @@ export class Game {
           this.errors += 1;
           ProgressBar.setWrongProgressPoint(this.task.progress.points[this.currentAnswer]);
         }
-      });
+      };
     });
   }
 
@@ -223,7 +223,7 @@ export class Game {
   }
 
   addControlClickHandler() {
-    this.controlBtn.addEventListener('click', ({ path }) => {
+    this.controlBtn.onclick = ({ path }) => {
       let target;
 
       path = path.reverse();
@@ -249,11 +249,11 @@ export class Game {
         this.showRightAnswer();
         this.setContolButtonNextMode();
       }
-    });
+    };
   }
 
   addKeyboardEventsHandler() {
-    document.addEventListener('keydown', (event) => {
+    document.onkeydown = (event) => {
       event.preventDefault();
       
       let answer = -1;
@@ -289,7 +289,7 @@ export class Game {
       if (answer !== -1) {
         this.answers[answer].click();
       }
-    });
+    };
   }
 
   addAudioButtonsClickHandler() {
@@ -321,5 +321,13 @@ export class Game {
       this.task.progress.bar.append(createElement('span', 'game-progress__point'));
     }
     this.task.progress.points = document.querySelectorAll('.game-progress__point');
+  }
+
+  stopGame() {
+    document.onkeydown = null;
+    this.answers.forEach((answer) => {
+      answer.onclick = null;
+    });
+    this.controlBtn.onclick = null;
   }
 }

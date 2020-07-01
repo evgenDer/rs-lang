@@ -12,6 +12,8 @@ const exitBtnContainer = document.querySelector('.audiochallenge__exit');
 
 const modeBtn = document.querySelector('.game-control__btn_mode');
 
+let game;
+
 
 function exitGame() {
   document.location.href = 'games.html';
@@ -37,6 +39,8 @@ function addExitGameBtnClickHandler() {
     hideElement(gameField);
     showElement(description);
     setExitButtonStdMode();
+
+    game.stopGame();
   });
 }
 
@@ -50,7 +54,7 @@ function addStartButtonClickHandler() {
     showElement(gameField);
     setExitButtonBackMode();
 
-    const game = new Game();
+    game = new Game();
     game.startGame();
   });
 }
