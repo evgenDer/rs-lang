@@ -114,15 +114,18 @@ export class Game {
   }
 
   static getSimilarWords(sample, words) {
-    const ending = sample.slice(-2);
-    const begining = sample.slice(0, 2);
+    const significantPartLength = 2;
 
-    let similarWords = words.filter((word) => word.slice(-2) === ending || word.slice(0, 2) === begining);
+    const ending = sample.slice(-significantPartLength);
+    const begining = sample.slice(0, significantPartLength);
+
+    let similarWords = words
+      .filter((word) => word.slice(-significantPartLength) === ending || word.slice(0, significantPartLength) === begining);
     similarWords = [...new Set(similarWords)];
     shuffleArray(similarWords);
-    similarWords = similarWords.slice(0, 5);
+    similarWords = similarWords.slice(0, this.answersAmnt);
 
-    while (similarWords.length < 5) {
+    while (similarWords.length < this.answersAmnt) {
       similarWords.push(words[getRandomInt(words.length - 1)]);
     }
 
