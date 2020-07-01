@@ -49,7 +49,7 @@ export class Statistics {
   }
 
   /**
-   * Gets statistics by date time periods
+   * Gets statistics by date time periods. Used for chart.
    * @return {Array} Array of object {x: date time, y: new words count}
    */
   async getDateTimeStatistics() {
@@ -69,6 +69,67 @@ export class Statistics {
     });
 
     return data;
+  }
+
+  /**
+   * Gets statistics by word levels. Used for chart.
+   * @return {Array} Array of object {label: level description, y: count, id: level number}
+   */
+  async getWordLevelStatistics() {
+    const statistics = await statisticsHelper.getStatistics();
+
+    if (!statistics || !statistics.optional ||
+      !statistics.optional.sd) {
+      return null;
+    }
+
+    const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === this.gameName.toLowerCase());
+
+    const series1 = [];
+    const series2 = [];
+
+    gamedata.d.forEach(data => {
+      data.wd.forEach(wordData => {
+        if (wordData.l !== -1) {
+          const existingData1 = series1.find(f => f.id === wordData.l);
+
+          if (!existingData1) {
+            series1.push({
+              label: `Level ${wordData.l}`,
+              id: wordData.l,
+              y: wordData.c
+            })
+          } else {
+            existingData1.y += wordData.c;
+          }
+
+          const existingData2 = series2.find(f => f.id === wordData.l);
+
+          if (!existingData2) {
+            series2.push({
+              label: `Level ${wordData.l}`,
+              id: wordData.l,
+              y: wordData.e
+            })
+          } else {
+            existingData2.y += wordData.e;
+          }
+        }
+      });
+    });
+
+    const sorted1 = series1.sort((a, b) => {
+      return a.id - b.id;
+    });
+
+    const sorted2 = series2.sort((a, b) => {
+      return a.id - b.id;
+    });
+
+    return {
+      sorted1,
+      sorted2
+    }
   }
 
   /**
