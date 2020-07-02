@@ -12,6 +12,8 @@ const exitBtnContainer = document.querySelector('.audiochallenge__exit');
 
 const modeBtn = document.querySelector('.game-control__btn_mode');
 
+const bgLayer = document.querySelector('.bg-layer');
+
 let game;
 
 
@@ -30,6 +32,29 @@ function setExitButtonStdMode() {
 }
 
 
+let timeOutID;
+
+const bgColor = {
+  rgb: '90, 40, 120',
+  alpha: 0,
+  direction: 1,
+  min: 0,
+  max: 0.3,
+  pitch: 0.01,
+}
+
+function changeBgLayer() {
+  bgLayer.style.background = `rgba(${bgColor.rgb}, ${bgColor.alpha})`;
+
+  bgColor.alpha += bgColor.pitch * bgColor.direction;
+  if (bgColor.alpha > bgColor.max || bgColor.alpha < bgColor.min) {
+    bgColor.direction *= -1;
+  }
+
+  timeOutID = setTimeout(changeBgLayer, 1000);
+}
+
+
 function addExitGameBtnClickHandler() {
   exitGameBtn.addEventListener('click', () => {
     exitGame();
@@ -41,6 +66,8 @@ function addExitGameBtnClickHandler() {
     showElement(modeBtn);
     showElement(description);
     setExitButtonStdMode();
+
+    clearTimeout(timeOutID);
   });
 }
 
@@ -56,6 +83,8 @@ function addStartButtonClickHandler() {
     Dropdown.disableDropdowns();
     game = new Game(getGameMode(), Dropdown.getCurrentLevel(), Dropdown.getCurrentRound());
     game.startGame();
+
+    changeBgLayer();
   });
 }
 
