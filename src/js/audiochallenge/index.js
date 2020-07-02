@@ -1,7 +1,7 @@
 import { Game } from './Game';
-import { addGameModeSwitchClickHandler, getGameMode } from '../games/index';
+import { addGameModeSwitchClickHandler, getGameMode } from '../games/gameModeSwitch';
 import { showElement, hideElement } from '../helpers/html-helper';
-import * as Dropdown from './dropdown';
+import * as Dropdown from '../games/dropdown';
 
 
 const startBtn = document.querySelector('.description__start');

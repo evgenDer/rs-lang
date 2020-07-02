@@ -5,7 +5,7 @@ import { GAME_MODES, GAME_DATA_URL } from '../games/constants';
 import { getFullDataWords } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
-import * as ProgressBar from './progress-bar';
+import * as ProgressBar from '../games/progress-bar';
 
 
 // eslint-disable-next-line import/prefer-default-export
