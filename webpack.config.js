@@ -91,9 +91,10 @@ const plugins = () => {
       filename: 'index.html',
     }),
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
-    htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
+    htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
+    htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('game-audiochallenge.html', 'game_audiochallenge'),
 
     new CleanWebpackPlugin(),

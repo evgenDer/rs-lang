@@ -35,7 +35,7 @@ const PAGES = [
   },
   {
     id: 'statistics-page',
-    href: '#',
+    href: 'statistics.html',
     img: './assets/img/icons/statistics.svg',
     text: 'Статистика',
   },

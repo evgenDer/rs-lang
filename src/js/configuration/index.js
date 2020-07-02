@@ -1,14 +1,15 @@
+/* eslint-disable no-undef */
 import {
   DEFAULT_CONFIGURATION,
-} from '../constants/defaul-settings';
+} from '../constants/default-settings';
 
 import * as page from './page';
 import * as configurationService from '../api/settings';
 
 export async function getConfiguration() {
-  const configuration = (await configurationService.getSettings()).optional;
+  const configuration = await configurationService.getSettings();
 
-  if (!configuration) {
+  if (!configuration || !configuration.optional) {
     const configurationModel = {
       optional: DEFAULT_CONFIGURATION
     };
@@ -17,19 +18,34 @@ export async function getConfiguration() {
     return DEFAULT_CONFIGURATION;
   }
 
-  return configuration;
+  return configuration.optional;
 };
 
 export async function saveCustomConfiguration(gameName, gameConfiguration) {
-  const configuration = await configurationService.getSettings();
+  const oldConfiguration = await configurationService.getSettings();
 
-  if(!configuration.optional){
+  const configuration = {};
+  configuration.optional = oldConfiguration.optional;
+
+  if (!configuration.optional) {
     return;
   }
 
-  configuration.optional[gameName] = gameConfiguration;
+  configuration.optional[gameName] = JSON.stringify(gameConfiguration);
 
   await configurationService.upserSettings(configuration);
+}
+
+export async function getCustomConfiguration(gameName) {
+  const configuration = await configurationService.getSettings();
+
+  if (!configuration.optional || !configuration.optional[gameName]) {
+    return null;
+  }
+
+  const value = JSON.parse(configuration.optional[gameName]);
+
+  return value;
 }
 
 export async function updateConfigurationValues() {
@@ -41,6 +57,8 @@ export async function updateConfigurationValues() {
 };
 
 async function saveConfiguration() {
+  const prevConfiguration = await getConfiguration();
+
   const userConfiguration = page.getUserConfiguration();
   const cardsConfiguration = page.getCardsConfiguration();
 
@@ -52,10 +70,19 @@ async function saveConfiguration() {
   }
 
   const appConfiguration = page.getAppConfiguration();
+  let {
+    dayLearningDate
+  } = prevConfiguration;
+
+  if (prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
+    prevConfiguration.maxCardsWithWordsPerDay !== userConfiguration.maxCardsWithWordsPerDay) {
+    dayLearningDate = Date.now();
+  }
 
   const configuration = {
     maxNewWordsPerDay: userConfiguration.maxNewWordsPerDay,
     maxCardsWithWordsPerDay: userConfiguration.maxCardsWithWordsPerDay,
+    dayLearningDate,
     difficultyLevel: userConfiguration.difficultyLevel,
     showWordTranslation: cardsConfiguration.showWordTranslation,
     showSentenceExplanation: cardsConfiguration.showSentenceExplanation,
