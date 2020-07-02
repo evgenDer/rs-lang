@@ -207,10 +207,8 @@ export class Game {
   getAnswerIndex(text) {
     const word = text
       .trim()
-      .split(' ')
-      .pop()
       .split('')
-      .filter((element) => element !== '' && !Number.isInteger(+element))
+      .filter((element) => element !== '' && !Number.isInteger(parseFloat(element)))
       .join('');
     return this.words.indexOf(word);
   }
