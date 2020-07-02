@@ -1,4 +1,5 @@
 import { updateUserWord } from '../../../../api/userWords';
+import saveDayLocalState from '../../functions/saveDayLocalState';
 
 export default function chooseWordDifficulty(learningScreenElement, eventTarget) {
   const newDifficulty = eventTarget.classList[1];

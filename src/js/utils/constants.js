@@ -64,4 +64,10 @@ const PAGES = [
   },
 ];
 
-export { PAGES, APP_NAME, BACKEND_URL };
+const WORD_STATE = {
+  repeating: 'needToRepeat',
+  deleted: 'deleted',
+  learning: 'learning',
+};
+
+export { PAGES, APP_NAME, BACKEND_URL, WORD_STATE };

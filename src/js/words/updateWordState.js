@@ -1,9 +1,7 @@
-import createUserWord from '../api/userWords';
-import updateUserWord from '../';
-
 import getUserWordById from '../api/userWords';
 import getWordById from '../api/words';
 
+import { WORD_STATE } from '../utils/constants';
 /*
 const newWordOptionsTemplate = {
   "difficulty": 'normal', // easy, normal, hard
@@ -30,7 +28,7 @@ function increaseWordErrorCount(word) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
   word.optional['errorCount'] += 1;
-  word.optional['mode'] = 'needToRepeat';
+  word.optional['mode'] = WORD_STATE.repeating;
   word.optional['rightSequence'] = 0;
   calculateSuccessPoint(word);
 }
@@ -43,14 +41,14 @@ function increaseWordReferenceCount(word) {
 
 function switchDeleteModeUserWord(word) {
   word.optional['lastUpdateDate'] = Date.now();
-  word.optional['mode'] = 'deleted';
+  word.optional['mode'] = WORD_STATE.deleted;
 }
 
 function increaseWordRightSequenceCount(word) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
   word.optional['rightSequence'] += 1;
-  word.optional['mode'] = 'learning';
+  word.optional['mode'] = WORD_STATE.learning;
   calculateSuccessPoint(word, 'success');
 }
 
@@ -101,7 +99,7 @@ function calculateRepeatTiming(word) {
 }
 
 function openCardUpdate(word) {
-  word.optional['mode'] = 'needToRepeat';
+  word.optional['mode'] = WORD_STATE.repeating;
   word.optional['rightSequence'] = 0;
   word.optional['repeatCount'] += 1;
   calculateSuccessPoint(word);

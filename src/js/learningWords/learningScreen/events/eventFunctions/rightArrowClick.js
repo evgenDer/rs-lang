@@ -17,6 +17,7 @@ import {
 import saveDayLocalState from '../../functions/saveDayLocalState';
 import addWordNeedToRepeat from './addWordNeedToRepeat';
 import { stopAudio, playAudio } from './Audio';
+import { WORD_STATE } from '../../../../utils/constants';
 
 export default function rightClick(learningScreenElement) {
   let isAnswerCorrect = true;
@@ -61,6 +62,24 @@ export default function rightClick(learningScreenElement) {
         difficultyButtons.forEach((element) => element.classList.add('active'));
 
         if (card.state.isFirstAnswer) {
+          console.log('okkk');
+          if (screenMode === 'learning' || screenMode === 'newWord') {
+            learningScreenElement.statistics.rightAnswers += 1;
+            learningScreenElement.statistics.currentRightAnswerSeries += 1;
+            if (
+              learningScreenElement.statistics.currentRightAnswerSeries >
+              learningScreenElement.statistics.longestRightAnswerSeries
+            ) {
+              const rightAnswerSeries = learningScreenElement.statistics.currentRightAnswerSeries;
+              learningScreenElement.statistics.longestRightAnswerSeries = rightAnswerSeries;
+            }
+            console.log(
+              learningScreenElement.statistics.rightAnswers +
+                ' ' +
+                learningScreenElement.statistics.longestRightAnswerSeries,
+            );
+          }
+
           increaseWordRightSequenceCount(word);
           increaseRepeatCount(word);
           if (cardMode === 'newWord') {
@@ -90,6 +109,10 @@ export default function rightClick(learningScreenElement) {
         updateCard(learningScreenElement);
       } else {
         if (card.state.isFirstAnswer) {
+          if (screenMode === 'learning' || screenMode === 'newWord') {
+            learningScreenElement.statistics.currentRightAnswerSeries = 0;
+          }
+
           increaseWordErrorCount(word);
           increaseRepeatCount(word);
           addWordNeedToRepeat(learningScreenElement);

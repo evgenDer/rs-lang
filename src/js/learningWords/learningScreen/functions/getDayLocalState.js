@@ -15,9 +15,11 @@ export default async function getDayLocalState(learningScreenElemen) {
   if (prevDate === currentDate) {
     const dayLocalState = window.localStorage.getItem('dayLearningLocalState');
     const dayWordArrs = window.localStorage.getItem('dayLearningWordArrs');
+    const dayStat = window.localStorage.getItem('dayLearningStat');
 
     learningScreenElemen.localState = JSON.parse(dayLocalState);
     learningScreenElemen.wordArrs = JSON.parse(dayWordArrs);
+    learningScreenElemen.statistics = JSON.parse(dayStat);
 
     const dayMode = window.localStorage.getItem('dayLearningMode');
     const firstNoLearnedNewWordIndex =

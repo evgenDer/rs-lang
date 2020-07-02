@@ -26,6 +26,10 @@ export default function openCard(learningScreenElement) {
   }
 
   if (card.state.isFirstAnswer) {
+    if (screenMode === 'learning' || screenMode === 'newWord') {
+      learningScreenElement.statistics.currentRightAnswerSeries = 0;
+    }
+
     openCardUpdate(card.state);
     addWordNeedToRepeat(learningScreenElement);
     updateStatusBar(learningScreenElement);

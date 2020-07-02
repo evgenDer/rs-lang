@@ -11,7 +11,6 @@ import createEvents from './events/createEvents';
 import whatsNext from './events/eventFunctions/whatsNext';
 import getDayLocalState from './functions/getDayLocalState';
 import { getConfiguration } from '../../configuration';
-import createOptionButtons from './domBuilder/lightTree/createOptionButtons';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
@@ -52,6 +51,12 @@ export default class LearningScreenElement extends HTMLElement {
       newWords: [],
       learnedWords: [],
       needToRepeat: [],
+    };
+
+    this.statistics = {
+      currentRightAnswerSeries: 0,
+      longestRightAnswerSeries: 0,
+      rightAnswers: 0,
     };
   }
 
@@ -94,8 +99,6 @@ export default class LearningScreenElement extends HTMLElement {
     if (willCreateCard) {
       createModeButtons(this);
       updateModeButtons(this);
-
-      //createOptionButtons(this);
 
       createArrow(this);
       if (this.state.mode === 'repeating') {

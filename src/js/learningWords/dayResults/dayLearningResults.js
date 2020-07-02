@@ -8,8 +8,8 @@ export default class dayLearningResults extends HTMLElement {
     this.state = {
       newWordCount: null,
       wordCount: null,
-      errorCount: null,
-      noAnsweredCount: null,
+      rightAnswers: null,
+      bestSeries: null,
     };
     this.localState = {
       isReadyToRenderArr: [],
