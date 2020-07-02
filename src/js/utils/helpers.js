@@ -13,5 +13,13 @@ function getMistakeResponse(codeError) {
   return 'Такой пользователь уже существует';
 }
 
+function exitGame() {
+  document.location.href = 'games.html';
+}
 
-export { getUser, getMistakeResponse };
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+
+export { getUser, getMistakeResponse, exitGame, shuffle };

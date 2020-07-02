@@ -1,5 +1,6 @@
 const APP_NAME = 'RS LANG';
 const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
+const DATA_URL = 'https://raw.githubusercontent.com/evgenDer/rslang-data/master/';
 
 const PAGES = [
   {
