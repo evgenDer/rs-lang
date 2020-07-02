@@ -47,6 +47,7 @@ export const getNewStatisticsDataValue = (dateTime) => {
     tc: 0,
     te: 0,
     ts: 0,
+    sc: 0,
     wd: [],
   };
 
@@ -97,7 +98,7 @@ export const getCurrentStatistics = (globalStatistics, gameName, dateTime) => {
   return currentStatistics;
 }
 
-export const updateStatisticsValues = (statisticsToUpdate, word, isCorrect, wordLevel, isStrike) => {
+export const updateStatisticsValues = (statisticsToUpdate, word, isCorrect, wordLevel, isStrike, gameScore) => {
   const updatedStatistics = statisticsToUpdate;
 
   updatedStatistics.tce += 1;
@@ -114,6 +115,10 @@ export const updateStatisticsValues = (statisticsToUpdate, word, isCorrect, word
 
   if (isStrike) {
     updatedStatistics.ts += 1;
+  }
+
+  if (gameScore !== 0) {
+    updatedStatistics.gs = gameScore;
   }
 
   let wordValue = updatedStatistics.wd.find((w) => w.w.toLowerCase() === word.toLowerCase());
@@ -144,49 +149,49 @@ export const getDateTimeStatisticsForChart = (statistics, gameName) => {
 export const getWordLevelStatisticsForChart = (statistics, gameName) => {
   const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
 
-    const series1 = [];
-    const series2 = [];
+  const series1 = [];
+  const series2 = [];
 
-    gamedata.d.forEach(data => {
-      data.wd.forEach(wordData => {
-        if (wordData.l !== -1) {
-          const existingData1 = series1.find(f => f.id === wordData.l);
+  gamedata.d.forEach(data => {
+    data.wd.forEach(wordData => {
+      if (wordData.l !== -1) {
+        const existingData1 = series1.find(f => f.id === wordData.l);
 
-          if (!existingData1) {
-            series1.push({
-              label: `Level ${wordData.l}`,
-              id: wordData.l,
-              y: wordData.c
-            })
-          } else {
-            existingData1.y += wordData.c;
-          }
-
-          const existingData2 = series2.find(f => f.id === wordData.l);
-
-          if (!existingData2) {
-            series2.push({
-              label: `Level ${wordData.l}`,
-              id: wordData.l,
-              y: wordData.e
-            })
-          } else {
-            existingData2.y += wordData.e;
-          }
+        if (!existingData1) {
+          series1.push({
+            label: `Level ${wordData.l}`,
+            id: wordData.l,
+            y: wordData.c
+          })
+        } else {
+          existingData1.y += wordData.c;
         }
-      });
-    });
 
-    const sorted1 = series1.sort((a, b) => {
-      return a.id - b.id;
-    });
+        const existingData2 = series2.find(f => f.id === wordData.l);
 
-    const sorted2 = series2.sort((a, b) => {
-      return a.id - b.id;
+        if (!existingData2) {
+          series2.push({
+            label: `Level ${wordData.l}`,
+            id: wordData.l,
+            y: wordData.e
+          })
+        } else {
+          existingData2.y += wordData.e;
+        }
+      }
     });
+  });
 
-    return {
-      sorted1,
-      sorted2
-    }
+  const sorted1 = series1.sort((a, b) => {
+    return a.id - b.id;
+  });
+
+  const sorted2 = series2.sort((a, b) => {
+    return a.id - b.id;
+  });
+
+  return {
+    sorted1,
+    sorted2
+  }
 }

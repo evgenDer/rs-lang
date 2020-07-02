@@ -28,14 +28,15 @@ export class Statistics {
    * @param {boolean} isCorrect - Is correct answer or not
    * @param {number} wordLevel - Difficulty level of the word. -1 if word is not new
    * @param {boolean} isStrike - Is answer is correct again (previous answer was correct)
+   * @param {number} gameScore - Score for the game
    */
-  async updateStatistics(word, isCorrect, wordLevel = -1, isStrike = false) {
+  async updateStatistics(word, isCorrect, wordLevel = -1, isStrike = false, gameScore = 0) {
     if (!this.globalStatistics) {
       this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
     }
 
     this.currentStatistics = statisticsUtils.getCurrentStatistics(this.globalStatistics, this.gameName, this.dateTime);
-    this.currentStatistics = statisticsUtils.updateStatisticsValues(this.currentStatistics, word, isCorrect, wordLevel, isStrike);
+    this.currentStatistics = statisticsUtils.updateStatisticsValues(this.currentStatistics, word, isCorrect, wordLevel, isStrike, gameScore);
 
     await statisticsHelper.updateStatisticsData(this.globalStatistics);
   }
