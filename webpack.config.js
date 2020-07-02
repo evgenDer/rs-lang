@@ -94,7 +94,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
-
+    htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
