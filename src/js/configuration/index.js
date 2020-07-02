@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 import {
   DEFAULT_CONFIGURATION,
-} from '../constants/defaul-settings';
+} from '../constants/default-settings';
 
 import * as page from './page';
 import * as configurationService from '../api/settings';
@@ -56,6 +57,8 @@ export async function updateConfigurationValues() {
 };
 
 async function saveConfiguration() {
+  const prevConfiguration = await getConfiguration();
+
   const userConfiguration = page.getUserConfiguration();
   const cardsConfiguration = page.getCardsConfiguration();
 
@@ -67,10 +70,19 @@ async function saveConfiguration() {
   }
 
   const appConfiguration = page.getAppConfiguration();
+  let {
+    dayLearningDate
+  } = prevConfiguration;
+
+  if (prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
+    prevConfiguration.maxCardsWithWordsPerDay !== userConfiguration.maxCardsWithWordsPerDay) {
+    dayLearningDate = Date.now();
+  }
 
   const configuration = {
     maxNewWordsPerDay: userConfiguration.maxNewWordsPerDay,
     maxCardsWithWordsPerDay: userConfiguration.maxCardsWithWordsPerDay,
+    dayLearningDate,
     difficultyLevel: userConfiguration.difficultyLevel,
     showWordTranslation: cardsConfiguration.showWordTranslation,
     showSentenceExplanation: cardsConfiguration.showSentenceExplanation,
