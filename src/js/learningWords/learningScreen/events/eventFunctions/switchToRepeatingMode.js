@@ -1,13 +1,17 @@
 export default function switchToRepeatingMode(learningScreenElement) {
   learningScreenElement.state.mode = 'repeating';
-  learningScreenElement.querySelectorAll('.modeButton')
-    .forEach((element) => element.classList.add('inactive'));
-  learningScreenElement.querySelector('[slot=leftArrow]').classList.add('inactive');
-
-
   learningScreenElement.wordArrs.needToRepeat.forEach((element) => {
     element.isDone = false;
     element.isFirstAnswer = true;
-  })
-  console.log(learningScreenElement.wordArrs.needToRepeat);
+  });
+  const modeButtons = learningScreenElement.querySelectorAll('[slot=modeButton]');
+  modeButtons.forEach((element) => {
+    if (element.classList.contains('repeating')) {
+      element.classList.add('opened');
+      element.classList.add('active');
+    } else {
+      element.classList.remove('opened');
+      element.classList.remove('active');
+    }
+  });
 }

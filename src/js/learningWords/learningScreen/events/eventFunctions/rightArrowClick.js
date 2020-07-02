@@ -16,6 +16,7 @@ import {
 
 import saveDayLocalState from '../../functions/saveDayLocalState';
 import addWordNeedToRepeat from './addWordNeedToRepeat';
+import { stopAudio, playAudio } from './Audio';
 
 export default function rightClick(learningScreenElement) {
   let isAnswerCorrect = true;
@@ -53,17 +54,7 @@ export default function rightClick(learningScreenElement) {
       isAnswerCorrect = checkAnswer(learningScreenElement.querySelector('card-word'));
       if (isAnswerCorrect) {
         if (card.settings.enableAutomaticAudio && isFirstTimeDone) {
-          card.audio.word.play();
-          card.audio.word.onended = () => {
-            if (card.settings.showExplanationExample && card.audio.example !== null) {
-              card.audio.example.play();
-              card.audio.example.onended = () => {
-                if (card.settings.showSentenceExplanation && card.audio.meaning !== null) {
-                  card.audio.meaning.play();
-                }
-              };
-            }
-          };
+          playAudio(card);
         }
         isFirstTimeDone = false;
 
@@ -110,9 +101,7 @@ export default function rightClick(learningScreenElement) {
             updateUserWord(wordId, word);
           }
 
-          if (screenMode !== 'repeating') {
-            saveDayLocalState(learningScreenElement);
-          }
+          saveDayLocalState(learningScreenElement);
 
           updateCard(learningScreenElement);
         }
@@ -135,9 +124,10 @@ export default function rightClick(learningScreenElement) {
     const willCreateCard = whatsNext(learningScreenElement);
 
     if (willCreateCard) {
-      card.audio.word.pause();
-      card.audio.example.pause();
-      card.audio.meaning.pause();
+      if (card.localState.isAudioPlaying) {
+        stopAudio(card);
+      }
+
       /*
       card.audio.word.src = null;
       card.audio.example.src = null;
@@ -151,36 +141,8 @@ export default function rightClick(learningScreenElement) {
       );
 
       createCard(learningScreenElement);
+    } else {
+      createResults(learningScreenElement);
     }
   }
-
-  /*if (
-    learningScreenElement.state.currentNewWordCardIndex ===
-    learningScreenElement.settings.newWordCount &&
-    learningScreenElement.state.mode === 'newWord'
-  ) {
-    learningScreenElement.setState('currentNewWordCardIndex', 0);
-    switchCardMode(learningScreenElement);
-  }
-
-  if (
-    learningScreenElement.localState.newWordProgressArr.indexOf(false) === -1 &&
-    learningScreenElement.localState.learningProgressArr.indexOf(false) === -1 &&
-    learningScreenElement.state.currentLearningCardIndex >= learningScreenElement.settings.wordCount
-  ) {
-    createResults(learningScreenElement);
-  } else if (isAnswerCorrect) {
-    if (learningScreenElement.settings.enableAutomaticAudio && !isFirstTimeDone) {
-      const card = learningScreenElement.querySelector('card-word');
-      //read
-      if (card.settings.showExplanationExample) {
-        //read
-      }
-      if (card.settings.showSentenceExplanation) {
-        //read
-      }
-    }
-
-    createCard(learningScreenElement);
-  }*/
 }

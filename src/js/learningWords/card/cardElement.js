@@ -6,6 +6,11 @@ import createEventListener from './events/createEventListener';
 
 import { getCardsViewConfiguration, getAppConfiguration } from '../../data-access/local-storage';
 import { getConfiguration } from '../../configuration';
+import {
+  initAudioHelpers,
+  updateEnableAudioHelper,
+  updateStopAudioHelper,
+} from './domBuilder/lightTree/initAudioHelpers';
 
 export default class WordCardElement extends HTMLElement {
   constructor() {
@@ -48,6 +53,7 @@ export default class WordCardElement extends HTMLElement {
 
     this.localState = {
       isReadyToRenderArr: [],
+      isAudioPlaying: false,
     };
 
     this.audio = {
@@ -67,6 +73,10 @@ export default class WordCardElement extends HTMLElement {
     this.innerHTML = '';
     initLearning(this);
     initCardOptions(this);
+
+    initAudioHelpers(this);
+    updateEnableAudioHelper(this);
+    updateStopAudioHelper(this);
   }
 
   setState(propName, newPropState) {
@@ -80,6 +90,12 @@ export default class WordCardElement extends HTMLElement {
       ) {
         this.setAttribute(propName, this.state[propName]);
       }
+    }
+  }
+
+  setSettings(propName, newPropState) {
+    if (this.settings[propName] !== newPropState) {
+      this.settings[propName] = newPropState;
     }
   }
 

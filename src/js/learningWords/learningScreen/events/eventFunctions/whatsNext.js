@@ -9,13 +9,14 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
     const wordIndex = findNexWordIndex(learningScreenElement, 'learning', mode);
 
     if (wordIndex === -1) {
-      const wordIndex = findNexWordIndex(learningScreenElement, 'newWord', mode)
+      const wordIndex = findNexWordIndex(learningScreenElement, 'newWord', mode);
 
       if (wordIndex === -1) {
         // Все слова сделаны
         if (learningScreenElement.wordArrs.needToRepeat.length !== 0) {
           switchToRepeatingMode(learningScreenElement);
           willCreateCard = true;
+        } else {
         }
       } else {
         learningScreenElement.state.currentNewWordCardIndex = wordIndex;
@@ -30,7 +31,7 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
     const wordIndex = findNexWordIndex(learningScreenElement, 'newWord', mode);
 
     if (wordIndex === -1) {
-      const wordIndex = findNexWordIndex(learningScreenElement, 'learning', mode)
+      const wordIndex = findNexWordIndex(learningScreenElement, 'learning', mode);
 
       if (wordIndex === -1) {
         // Все слова сделаны

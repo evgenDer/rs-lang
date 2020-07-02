@@ -1,7 +1,8 @@
 const dayResultsShadowTreeHTML = `
 <style>
+  :host {width:100%; height:100%;}
   div {display:flex; flex-direction: column; justify-content: flex-start; align-items:center;}
-  #background {width:100vw; height:100vh; z-index:10; background-color: #050505c7;}
+  #background {width:100%; height:100%; z-index:10; background-color: #050505c7;}
 
   #contentBlock {margin-top: 100px; width:60%; max-width: 800px; min-width: 500px; min-height: 350px; z-index:11; background-color: white; border-radius: 15px;}
   #header {margin: 0px 10px; width:90%; min-height:20%; font-size:20px; justify-content: center; border-bottom:1px solid #efe6e1}

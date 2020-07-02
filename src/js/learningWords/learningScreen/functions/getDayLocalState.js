@@ -9,8 +9,8 @@ export default async function getDayLocalState(learningScreenElemen) {
   let currentDate = new Date(Date.now());
   currentDate = currentDate.getDate();
 
-  //const prevDate = JSON.parse(localStorage.getItem('dayLearningDate'));
-  const prevDate = 10;
+  const prevDate = JSON.parse(localStorage.getItem('dayLearningDate'));
+  //const prevDate = 10;
 
   if (prevDate === currentDate) {
     const dayLocalState = window.localStorage.getItem('dayLearningLocalState');
@@ -28,7 +28,12 @@ export default async function getDayLocalState(learningScreenElemen) {
       learningScreenElemen.localState.learningProgressArr.indexOf(false) >= 0
         ? learningScreenElemen.localState.learningProgressArr.indexOf(false)
         : 0;
+    const firstNoRepeatedWordIndex =
+      learningScreenElemen.localState.needToRepeatProgressArr.indexOf(false) >= 0
+        ? learningScreenElemen.localState.needToRepeatProgressArr.indexOf(false)
+        : 0;
     learningScreenElemen.setState('mode', dayMode);
+    learningScreenElemen.setState('currentRepeatingCardIndex', firstNoRepeatedWordIndex);
     learningScreenElemen.setState('currentNewWordCardIndex', firstNoLearnedNewWordIndex);
     learningScreenElemen.setState('currentLearningCardIndex', firstNoLearnedWordIndex);
   } else {

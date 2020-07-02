@@ -1,6 +1,6 @@
 export default function createResults(learningScreenElement) {
   learningScreenElement.insertAdjacentHTML(
-    'afterbegin',
+    'beforeend',
     "<learning-results slot='results'></learning-results>",
   );
   const results = learningScreenElement.querySelector('learning-results');

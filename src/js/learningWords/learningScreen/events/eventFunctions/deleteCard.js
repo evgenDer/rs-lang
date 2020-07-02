@@ -6,6 +6,7 @@ import { switchDeleteModeUserWord } from '../../../../words/updateWordState';
 import { createUserWord, updateUserWord } from '../../../../api/userWords';
 
 import whatsNext from './whatsNext';
+import { stopAudio } from './Audio';
 
 export default function daleteCard(learningScreenElement) {
   const card = learningScreenElement.querySelector('card-word');
@@ -60,9 +61,7 @@ export default function daleteCard(learningScreenElement) {
 
   const willCreateCard = whatsNext(learningScreenElement);
   if (willCreateCard) {
-    card.audio.word.pause();
-    card.audio.example.pause();
-    card.audio.meaning.pause();
+    stopAudio(card);
 
     const difficultyButtons = learningScreenElement.querySelectorAll('[slot=difficultyButton]');
     difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));

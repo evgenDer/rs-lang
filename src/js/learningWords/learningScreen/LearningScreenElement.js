@@ -3,7 +3,7 @@ import learningScreenShadowTreeHTML from './domBuilder/shadowTree/shadowTree';
 import createCard from './domBuilder/lightTree/createCard';
 import createStatusBar, { updateStatusBar } from './domBuilder/lightTree/createStatusBar';
 import createArrow from './domBuilder/lightTree/createArrow';
-import createModeButtons from './domBuilder/lightTree/createModeButtons';
+import { createModeButtons, updateModeButtons } from './domBuilder/lightTree/createModeButtons';
 import createDifficultyButtons from './domBuilder/lightTree/createDifficultyButtons';
 import createResults from './domBuilder/lightTree/createResults';
 import createEvents from './events/createEvents';
@@ -11,6 +11,7 @@ import createEvents from './events/createEvents';
 import whatsNext from './events/eventFunctions/whatsNext';
 import getDayLocalState from './functions/getDayLocalState';
 import { getConfiguration } from '../../configuration';
+import createOptionButtons from './domBuilder/lightTree/createOptionButtons';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
@@ -91,16 +92,26 @@ export default class LearningScreenElement extends HTMLElement {
     console.log(this.settings);
     const willCreateCard = whatsNext(this);
     if (willCreateCard) {
+      createModeButtons(this);
+      updateModeButtons(this);
+
+      //createOptionButtons(this);
+
+      createArrow(this);
+      if (this.state.mode === 'repeating') {
+        this.querySelector('[slot=leftArrow]').classList.add('inactive');
+      }
+
       createStatusBar(this);
       updateStatusBar(this);
 
-      createArrow(this);
-      createModeButtons(this);
       createDifficultyButtons(this);
 
       createCard(this);
 
       createEvents(this);
+    } else {
+      createResults(this);
     }
   }
 

@@ -1,13 +1,25 @@
 export default function createAudio(cardElement) {
-  const wordAudio = new Audio(`https://raw.githubusercontent.com/irinainina/rslang-data/master/${cardElement.state.audio}`);
+  const wordAudio = new Audio();
+  if (cardElement.state.audio.length > 20) {
+    wordAudio.src = `data:audio/mp3;base64,${cardElement.state.audio}`;
+  } else {
+    wordAudio.src = `https://raw.githubusercontent.com/irinainina/rslang-data/master/${cardElement.state.audio}`;
+  }
   cardElement.audio.word = wordAudio;
 
-  const exampleAudio = cardElement.settings.showExplanationExample ?
-    new Audio(`https://raw.githubusercontent.com/irinainina/rslang-data/master/${cardElement.state.audioExample}`) : null;
+  const exampleAudio = new Audio();
+  if (cardElement.state.audioExample.length > 20) {
+    exampleAudio.src = `data:audio/mp3;base64,${cardElement.state.audioExample}`;
+  } else {
+    exampleAudio.src = `https://raw.githubusercontent.com/irinainina/rslang-data/master/${cardElement.state.audioExample}`;
+  }
   cardElement.audio.example = exampleAudio;
 
-  const meaningAudio = cardElement.settings.showSentenceExplanation ?
-    new Audio(`https://raw.githubusercontent.com/irinainina/rslang-data/master/${cardElement.state.audioMeaning}`) : null;
+  const meaningAudio = new Audio();
+  if (cardElement.state.audioMeaning.length > 20) {
+    meaningAudio.src = `data:audio/mp3;base64,${cardElement.state.audioMeaning}`;
+  } else {
+    meaningAudio.src = `https://raw.githubusercontent.com/irinainina/rslang-data/master/${cardElement.state.audioMeaning}`;
+  }
   cardElement.audio.meaning = meaningAudio;
-
 }

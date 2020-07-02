@@ -1,6 +1,4 @@
-import {
-  DEFAULT_CONFIGURATION,
-} from '../constants/defaul-settings';
+import { DEFAULT_CONFIGURATION } from '../constants/defaul-settings';
 
 import * as page from './page';
 import * as configurationService from '../api/settings';
@@ -10,7 +8,7 @@ export async function getConfiguration() {
 
   if (!configuration) {
     const configurationModel = {
-      optional: DEFAULT_CONFIGURATION
+      optional: DEFAULT_CONFIGURATION,
     };
 
     await configurationService.upserSettings(configurationModel);
@@ -18,7 +16,7 @@ export async function getConfiguration() {
   }
 
   return configuration;
-};
+}
 
 export async function saveCustomConfiguration(gameName, gameConfiguration) {
   const oldConfiguration = await configurationService.getSettings();
@@ -53,7 +51,7 @@ export async function updateConfigurationValues() {
   page.updateUserConfigurationPageElement(configuration);
   page.updateCardsConfigurationPageElement(configuration);
   page.updateAppConfigurationPageElement(configuration);
-};
+}
 
 async function saveConfiguration() {
   const userConfiguration = page.getUserConfiguration();
@@ -86,16 +84,16 @@ async function saveConfiguration() {
     deleteWords: appConfiguration.deleteWords,
     markAsDifficultWord: appConfiguration.markAsDifficultWord,
     possibilityToMarkWord: appConfiguration.possibilityToMarkWord,
-  }
+  };
 
   const configurationModel = {
-    optional: configuration
+    optional: configuration,
   };
 
   await configurationService.upserSettings(configurationModel);
-
+  window.localStorage.setItem('dayLearningDate', '-1');
   return true;
-};
+}
 
 const addSaveButtonClickHandler = () => {
   document.querySelector('.configuration__save-button').addEventListener('click', async () => {

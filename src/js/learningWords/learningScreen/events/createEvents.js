@@ -9,6 +9,7 @@ import deleteCard from './eventFunctions/deleteCard';
 import restoreCard from './eventFunctions/restoreCard';
 import checkAnswer from './eventFunctions/checkAnswer';
 import addWordNeedToRepeat from './eventFunctions/addWordNeedToRepeat';
+import { updateStatusBar } from '../domBuilder/lightTree/createStatusBar';
 
 export default function createEvents(learningScreenElement) {
   const card = learningScreenElement.querySelector('card-word');
@@ -17,10 +18,11 @@ export default function createEvents(learningScreenElement) {
     let item = null;
     if (event.target.closest('img.arrow') != null) {
       item = event.target.closest('img.arrow');
-    } else if (event.target.closest('div[slot=modeButtonLeft]')) {
-      item = event.target.closest('div[slot=modeButtonLeft]');
-    } else if (event.target.closest('div[slot=modeButtonRight]')) {
-      item = event.target.closest('div[slot=modeButtonRight]');
+    } else if (
+      event.target.closest('div.clickable[slot=modeButton]') &&
+      !event.target.closest('div.clickable[slot=modeButton]').classList.contains('repeating')
+    ) {
+      item = event.target.closest('div.clickable[slot=modeButton]');
     } else if (event.target.closest('div[slot=difficultyButton]')) {
       item = event.target.closest('div[slot=difficultyButton]');
     } else if (event.target.closest('div[slot=openWord]') != null) {
@@ -30,8 +32,8 @@ export default function createEvents(learningScreenElement) {
     } else if (event.target.closest('div[slot=restoreWord]') != null) {
       restoreCard(learningScreenElement);
     } else if (event.target.closest('div.hovered[slot=repeatWord]') != null) {
-      console.log('asdasdasd');
       addWordNeedToRepeat(learningScreenElement);
+    } else if (event.target.closest('.enableAudio[slot=audioHelperButton]') != null) {
     }
 
     if (item != null) {
@@ -65,5 +67,12 @@ export default function createEvents(learningScreenElement) {
     if (event.key === 'Enter') {
       rightClick(learningScreenElement);
     }
+  });
+
+  window.addEventListener('resize', () => {
+    const progressLine = learningScreenElement.querySelector('[slot=progressLine]');
+    progressLine.classList.add('withoutAnimation');
+    updateStatusBar(learningScreenElement);
+    progressLine.classList.remove('withoutAnimation');
   });
 }

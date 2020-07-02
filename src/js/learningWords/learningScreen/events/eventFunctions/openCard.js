@@ -6,6 +6,7 @@ import addWordNeedToRepeat from './addWordNeedToRepeat';
 
 import { createUserWord, updateUserWord } from '../../../../api/userWords';
 import { openCardUpdate } from '../../../../words/updateWordState';
+import { playAudio } from './Audio';
 
 export default function openCard(learningScreenElement) {
   const difficultyButtons = learningScreenElement.querySelectorAll('[slot=difficultyButton]');
@@ -45,22 +46,11 @@ export default function openCard(learningScreenElement) {
   }
 
   if (card.settings.enableAutomaticAudio) {
-    card.audio.word.play();
-    card.audio.word.onended = () => {
-      if (card.settings.showExplanationExample && card.audio.example !== null) {
-        card.audio.example.play();
-        card.audio.example.onended = () => {
-          if (card.settings.showSentenceExplanation && card.audio.meaning !== null) {
-            card.audio.meaning.play();
-          }
-        };
-      }
-    };
+    playAudio(card);
   }
 
-  console.log(learningScreenElement.wordArrs.needToRepeat);
-  console.log(learningScreenElement.localState.needToRepeatProgressArr);
-  saveDayLocalState(learningScreenElement);
   difficultyButtons.forEach((element) => element.classList.add('active'));
+
+  saveDayLocalState(learningScreenElement);
   updateCard(learningScreenElement);
 }

@@ -4,8 +4,8 @@ import { calculateRepeatTiming } from '../../../words/updateWordState';
 
 export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group = 0, page = 0) {
   let allUserWords = await getAllUserWords();
+  console.log(allUserWords);
   let allUpdatedUserWords = [];
-
   let dayNewWordsPack = [];
   dayNewWordsPack = await updateNewWordsPack(
     dayNewWordsPack,
@@ -44,6 +44,7 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
 
   for (let i = 0; i < allUserWords.length; i += 1) {
     const word = await getWordById(allUserWords[i].wordId);
+    console.log(word);
     const updatedWord = Object.assign(allUserWords[i], word);
     allUpdatedUserWords.push(updatedWord);
   }
@@ -59,6 +60,7 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
     learnedWords: allUpdatedUserWords,
     needToRepeat: [],
   };
+
   return wordArrs;
 }
 
