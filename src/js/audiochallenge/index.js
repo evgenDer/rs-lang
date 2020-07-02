@@ -6,7 +6,6 @@ import * as Dropdown from '../games/dropdown';
 
 const startBtn = document.querySelector('.description__start');
 const description = document.querySelector('.audiochallenge__desription');
-const gameField = document.querySelector('.audiochallenge__game-field');
 const exitGameBtn = document.querySelector('.audiochallenge__exit > .exit');
 const backGameBtn = document.querySelector('.audiochallenge__exit > .exit__back');
 const exitBtnContainer = document.querySelector('.audiochallenge__exit');
@@ -36,13 +35,12 @@ function addExitGameBtnClickHandler() {
     exitGame();
   });
   backGameBtn.addEventListener('click', () => {
-    showElement(modeBtn);
-    hideElement(gameField);
-    showElement(description);
-    setExitButtonStdMode();
-
     game.stopGame();
     Dropdown.enableDropdowns();
+
+    showElement(modeBtn);
+    showElement(description);
+    setExitButtonStdMode();
   });
 }
 
@@ -53,7 +51,6 @@ function addStartButtonClickHandler() {
     
     hideElement(modeBtn);
     hideElement(description);
-    showElement(gameField);
     setExitButtonBackMode();
 
     Dropdown.disableDropdowns();

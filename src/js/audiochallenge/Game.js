@@ -8,6 +8,11 @@ import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 import * as ProgressBar from '../games/progress-bar';
 
 
+const loader = document.querySelector('.audiochallenge__load-page');
+const startLoading = () => showElement(loader);
+const stopLoading = () => hideElement(loader);
+
+
 // eslint-disable-next-line import/prefer-default-export
 export class Game {
   constructor(mode = GAME_MODES.all, level = 0, round = 0) {
@@ -37,6 +42,7 @@ export class Game {
     this.errors = 0;
     this.answers = [];
 
+    this.gameField = document.querySelector('.audiochallenge__game-field');
     this.answersContainer = document.querySelector('.game-field__answers');
     this.controlBtn = document.querySelector('.game-field__control');
 
@@ -52,18 +58,26 @@ export class Game {
     this.allRoundTranslations = [];
     this.rightAnswer = 0;
     this.currentAnswer = 0;
-
-    this.generateAnswers();
-    this.addAnswersClickHandler();
-    this.addKeyboardEventsHandler();
-    this.addControlClickHandler();
   }
 
   startGame() {
-    this.generateProgressBar();
-    this.prepareGameField();
+    startLoading();
 
-    this.getRoundData().then(() => this.startTask());
+    this.getRoundData().then(() => {
+      stopLoading();
+
+      showElement(this.gameField);
+
+      this.generateAnswers();
+      this.addAnswersClickHandler();
+      this.addKeyboardEventsHandler();
+      this.addControlClickHandler();
+
+      this.generateProgressBar();
+      this.prepareGameField();
+
+      this.startTask();
+    });
   }
 
   startTask() {
@@ -370,5 +384,7 @@ export class Game {
       answer.onclick = null;
     });
     this.controlBtn.onclick = null;
+
+    hideElement(this.gameField);
   }
 }
