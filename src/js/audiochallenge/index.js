@@ -42,6 +42,7 @@ function addExitGameBtnClickHandler() {
     setExitButtonStdMode();
 
     game.stopGame();
+    Dropdown.enableDropdowns();
   });
 }
 
@@ -55,6 +56,7 @@ function addStartButtonClickHandler() {
     showElement(gameField);
     setExitButtonBackMode();
 
+    Dropdown.disableDropdowns();
     game = new Game(getGameMode(), Dropdown.getCurrentLevel(), Dropdown.getCurrentRound());
     game.startGame();
   });

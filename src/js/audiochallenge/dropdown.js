@@ -2,9 +2,11 @@
 
 const curLvl = document.getElementById('game-control__current_level');
 const listLvl = document.querySelectorAll('.game-control__list_level li');
+const listLvlContainer = document.querySelector('.game-control__list_level');
 
 const curRound = document.getElementById('game-control__current_round');
 const listRound = document.querySelectorAll('.game-control__list_round li');
+const listRoundContainer = document.querySelector('.game-control__list_round');
 
 
 export function getCurrentLevel() {
@@ -56,4 +58,23 @@ function addRoundListEventHandler() {
 export function addDropdownsEventHandlers() {
   addLevelListEventHandler();
   addRoundListEventHandler();
+}
+
+
+function disableList(listContainer) {
+  listContainer.classList.add('game-control__list_disabled')
+}
+
+function enableList(listContainer) {
+  listContainer.classList.remove('game-control__list_disabled')
+}
+
+export function disableDropdowns() {
+  disableList(listLvlContainer);
+  disableList(listRoundContainer);
+}
+
+export function enableDropdowns() {
+  enableList(listLvlContainer);
+  enableList(listRoundContainer);
 }
