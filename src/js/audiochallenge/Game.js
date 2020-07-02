@@ -108,12 +108,12 @@ export class Game {
 
     const allWords = allData
       .map(({ wordTranslate }) => wordTranslate)
-      .filter((word) => !dataWords.includes(word));
+      .filter((word) => word !== '' && !dataWords.includes(word));
 
     return allWords;
   }
 
-  static getSimilarWords(sample, words) {
+  getSimilarWords(sample, words) {
     const significantPartLength = 2;
 
     const ending = sample.slice(-significantPartLength);
@@ -126,7 +126,8 @@ export class Game {
     similarWords = similarWords.slice(0, this.answersAmnt);
 
     while (similarWords.length < this.answersAmnt) {
-      similarWords.push(words[getRandomInt(words.length - 1)]);
+      const availableWords = words.filter((word) => !similarWords.includes(word));
+      similarWords.push(availableWords[getRandomInt(words.length - 1)]);
     }
 
     return similarWords;
@@ -135,7 +136,7 @@ export class Game {
   getWords() {
     const currentWord = this.data[this.currentAnswer].wordTranslate;
         
-    this.words = Game.getSimilarWords(currentWord, this.allRoundTranslations);
+    this.words = this.getSimilarWords(currentWord, this.allRoundTranslations);
     this.words[this.rightAnswer] = currentWord;
   }
 
