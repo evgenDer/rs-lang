@@ -14,9 +14,12 @@ const styles = {
     easyButtonColor: '#61bd4f20',
     normalButtonColor: '#338c9920',
     hardButtonColor: '#ff934d20',
-    easyButtonHoverColor: '#61bd4f60',
-    normalButtonHoverColor: '#338c9960',
-    hardButtonHoverColor: '#ff934d60',
+    easyButtonActiveColor: '#61bd4f80',
+    normalButtonActiveColor: '#338c9980',
+    hardButtonActiveColor: '#ff934d80',
+    easyButtonHoverColor: '#61bd4f90',
+    normalButtonHoverColor: '#338c9990',
+    hardButtonHoverColor: '#ff934d90',
   },
   modeButtons: {
     newWordButtonColor: '#338c9915',
@@ -59,14 +62,17 @@ const learningScreenShadowTreeHTML = `
     transition-property: background, box-shadow;
    transition-duration: 0.3s, 0.3s;}
   ::slotted([slot=difficultyButton].readyToMove){transition-property: background, box-shadow,transform;  transition-duration: 0.3s, 0.3s, 0.6s;}
-  ::slotted([slot=difficultyButton].active) {transform: translateY(0px);}
+  ::slotted([slot=difficultyButton].opened) {transform: translateY(0px);}
   ::slotted([slot=difficultyButton].easy) {background: ${styles.difficultyButtons.easyButtonColor}; border-color: ${styles.difficultyButtons.easyButtonColor};}
   ::slotted([slot=difficultyButton].normal) {background: ${styles.difficultyButtons.normalButtonColor}; border-color: ${styles.difficultyButtons.normalButtonColor};}
   ::slotted([slot=difficultyButton].hard) {background: ${styles.difficultyButtons.hardButtonColor}; border-color: ${styles.difficultyButtons.hardButtonColor};}
-  ::slotted([slot=difficultyButton].active:hover) {cursor:pointer; box-shadow: 0px 0px 15px #cacaca;}
-  ::slotted([slot=difficultyButton].active.easy:hover) {background: ${styles.difficultyButtons.easyButtonHoverColor};}
-  ::slotted([slot=difficultyButton].active.normal:hover) {background: ${styles.difficultyButtons.normalButtonHoverColor};}
-  ::slotted([slot=difficultyButton].active.hard:hover) {background: ${styles.difficultyButtons.hardButtonHoverColor};}
+  ::slotted([slot=difficultyButton].active.easy) {background: ${styles.difficultyButtons.easyButtonActiveColor}; }
+  ::slotted([slot=difficultyButton].active.normal) {background: ${styles.difficultyButtons.normalButtonActiveColor}; }
+  ::slotted([slot=difficultyButton].active.hard) {background: ${styles.difficultyButtons.hardButtonActiveColor}; }
+  ::slotted([slot=difficultyButton].opened:hover) {cursor:pointer; box-shadow: 0px 0px 15px #cacaca;}
+  ::slotted([slot=difficultyButton].opened.easy:hover) {background: ${styles.difficultyButtons.easyButtonHoverColor};}
+  ::slotted([slot=difficultyButton].opened.normal:hover) {background: ${styles.difficultyButtons.normalButtonHoverColor};}
+  ::slotted([slot=difficultyButton].opened.hard:hover) {background: ${styles.difficultyButtons.hardButtonHoverColor};}
 
   #modeBlock {max-width: 600px; height: 40px; position: absolute; top:-5px; left: 100px;
      flex-direction: row; transition: left 0.4s;}

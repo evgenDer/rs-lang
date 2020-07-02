@@ -7,6 +7,8 @@ import { createUserWord, updateUserWord } from '../../../../api/userWords';
 
 import whatsNext from './whatsNext';
 import { stopAudio } from './Audio';
+import updateDifficultyButtons from '../../domBuilder/lightTree/updateDifficultyButtons';
+import createResults from '../../domBuilder/lightTree/createResults';
 
 export default function daleteCard(learningScreenElement) {
   const card = learningScreenElement.querySelector('card-word');
@@ -23,7 +25,9 @@ export default function daleteCard(learningScreenElement) {
       learningScreenElement.state.currentNewWordCardIndex
     ] = true;
   } else if (screenMode === 'repeating') {
-    learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex] = true;
+    learningScreenElement.localState.needToRepeatProgressArr[
+      learningScreenElement.state.currentRepeatingCardIndex
+    ] = true;
   }
 
   //найти другие экземпляры этого слова в повторении
@@ -72,5 +76,8 @@ export default function daleteCard(learningScreenElement) {
     );
 
     createCard(learningScreenElement);
+    updateDifficultyButtons(learningScreenElement);
+  } else {
+    createResults(learningScreenElement);
   }
 }

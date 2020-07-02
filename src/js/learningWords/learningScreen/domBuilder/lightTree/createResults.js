@@ -1,5 +1,4 @@
 import { WORD_STATE } from '../../../../utils/constants';
-import LearningScreenElement from '../../LearningScreenElement';
 
 export default function createResults(learningScreenElement) {
   learningScreenElement.insertAdjacentHTML(

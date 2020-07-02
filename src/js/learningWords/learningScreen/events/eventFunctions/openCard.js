@@ -53,7 +53,7 @@ export default function openCard(learningScreenElement) {
     playAudio(card);
   }
 
-  difficultyButtons.forEach((element) => element.classList.add('active'));
+  difficultyButtons.forEach((element) => element.classList.add('opened'));
 
   saveDayLocalState(learningScreenElement);
   updateCard(learningScreenElement);

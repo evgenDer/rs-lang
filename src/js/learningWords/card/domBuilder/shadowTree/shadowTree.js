@@ -47,7 +47,8 @@ const cardShadowTreeHTML = `
   #optionBlock {margin-bottom: 5px; position: relative; top: -20px; 
     flex-direction: row; justify-content: flex-start;}
   #difficultyButtonsBlock {min-width: 70%;}
-  #difficultyButtonsBlock ::slotted(div) {margin:0px 10px 0px; min-width: 50px; filter: opacity(80%); transition: filter 0.5s; color:#fe5c55}
+  #difficultyButtonsBlock ::slotted(div) {margin:0px 10px 0px; min-width: 50px; filter: opacity(80%);
+    transition-property: filter; transition:0.5s; color:#fe5c55;}
   #difficultyButtonsBlock ::slotted(div.hovered) {color: inherit; filter: opacity(40%);}
   #difficultyButtonsBlock ::slotted(div.hovered:hover) {cursor: pointer; text-decoration: underline; filter: opacity(100%);}
   #optionButtonsBlock {min-width: 30%;}

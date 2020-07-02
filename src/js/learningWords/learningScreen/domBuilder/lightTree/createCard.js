@@ -55,6 +55,6 @@ export default function createCard(learningScreenElement) {
 
   if (card.state.isDone) {
     const difficultyButtons = learningScreenElement.querySelectorAll('[slot=difficultyButton]');
-    difficultyButtons.forEach((element) => element.classList.add('active'));
+    difficultyButtons.forEach((element) => element.classList.add('opened'));
   }
 }

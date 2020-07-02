@@ -18,6 +18,7 @@ import saveDayLocalState from '../../functions/saveDayLocalState';
 import addWordNeedToRepeat from './addWordNeedToRepeat';
 import { stopAudio, playAudio } from './Audio';
 import { WORD_STATE } from '../../../../utils/constants';
+import updateDifficultyButtons from '../../domBuilder/lightTree/updateDifficultyButtons';
 
 export default function rightClick(learningScreenElement) {
   let isAnswerCorrect = true;
@@ -59,7 +60,7 @@ export default function rightClick(learningScreenElement) {
         }
         isFirstTimeDone = false;
 
-        difficultyButtons.forEach((element) => element.classList.add('active'));
+        difficultyButtons.forEach((element) => element.classList.add('opened'));
 
         if (card.state.isFirstAnswer) {
           console.log('okkk');
@@ -151,19 +152,15 @@ export default function rightClick(learningScreenElement) {
         stopAudio(card);
       }
 
-      /*
-      card.audio.word.src = null;
-      card.audio.example.src = null;
-      card.audio.meaning.src = null;
-      */
       difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));
-      difficultyButtons.forEach((element) => element.classList.remove('active'));
+      difficultyButtons.forEach((element) => element.classList.remove('opened'));
       setTimeout(
         () => difficultyButtons.forEach((element) => element.classList.add('readyToMove')),
         600,
       );
 
       createCard(learningScreenElement);
+      updateDifficultyButtons(learningScreenElement);
     } else {
       createResults(learningScreenElement);
     }

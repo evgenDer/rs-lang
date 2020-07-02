@@ -1,5 +1,6 @@
 import { updateUserWord } from '../../../../api/userWords';
 import saveDayLocalState from '../../functions/saveDayLocalState';
+import updateDifficultyButtons from '../../domBuilder/lightTree/updateDifficultyButtons';
 
 export default function chooseWordDifficulty(learningScreenElement, eventTarget) {
   const newDifficulty = eventTarget.classList[1];
@@ -12,6 +13,7 @@ export default function chooseWordDifficulty(learningScreenElement, eventTarget)
     optional: wordOptions,
   };
   card.state.difficulty = newDifficulty;
+  updateDifficultyButtons(learningScreenElement);
   updateUserWord(wordId, word);
   saveDayLocalState(learningScreenElement);
 }

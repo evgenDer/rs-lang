@@ -13,7 +13,6 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     };
     if (objectBody) {
       params.body = JSON.stringify(objectBody);
-      console.log(params.body)
     }
     if (withCredentials) {
       params.withCredentials = true;

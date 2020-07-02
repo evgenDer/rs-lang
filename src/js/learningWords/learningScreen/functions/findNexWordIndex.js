@@ -1,5 +1,4 @@
 export default function findNexWordIndex(learningScreenElement, screenMode, mode = 'right') {
-
   if (mode === 'right') {
     if (screenMode === 'newWord') {
       for (let i = 0; i < learningScreenElement.wordArrs.newWords.length; i += 1) {
@@ -34,7 +33,10 @@ export default function findNexWordIndex(learningScreenElement, screenMode, mode
           return i;
         }
       }
-    } else if (screenMode === 'learning' && learningScreenElement.state.currentLearningCardIndex > 0) {
+    } else if (
+      screenMode === 'learning' &&
+      learningScreenElement.state.currentLearningCardIndex > 0
+    ) {
       for (let i = learningScreenElement.state.currentLearningCardIndex - 1; i >= 0; i -= 1) {
         const word = learningScreenElement.wordArrs.learnedWords[i];
         if (word.optional.mode !== 'deleted') {
@@ -45,5 +47,4 @@ export default function findNexWordIndex(learningScreenElement, screenMode, mode
   }
 
   return -1;
-
 }

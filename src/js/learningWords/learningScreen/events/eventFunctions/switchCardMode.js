@@ -34,7 +34,7 @@ export default function switchCardMode(learningScreenElement, target = null) {
       }
       const difficultyButtons = learningScreenElement.querySelectorAll('[slot=difficultyButton]');
       difficultyButtons.forEach((element) => element.classList.remove('readyToMove'));
-      difficultyButtons.forEach((element) => element.classList.remove('active'));
+      difficultyButtons.forEach((element) => element.classList.remove('opened'));
       setTimeout(
         () => difficultyButtons.forEach((element) => element.classList.add('readyToMove')),
         600,

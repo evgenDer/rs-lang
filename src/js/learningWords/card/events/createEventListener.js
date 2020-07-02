@@ -5,7 +5,10 @@ import { updateEnableAudioHelper } from '../domBuilder/lightTree/initAudioHelper
 
 export default function createEventListener(card) {
   card.addEventListener('click', () => {
-    if (event.target.closest('img[slot=pronunciation]') != null) {
+    if (
+      event.target.closest('[slot=pronunciation]') != null ||
+      event.target.closest('[slot=transcription]') != null
+    ) {
       card.audio.word.play();
     } else if (event.target.closest('.stopAudioButton') != null) {
       stopAudio(card);

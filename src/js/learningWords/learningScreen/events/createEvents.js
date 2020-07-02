@@ -7,14 +7,13 @@ import openCard from './eventFunctions/openCard';
 import chooseWordDifficulty from './eventFunctions/chooseWordDifficulty';
 import deleteCard from './eventFunctions/deleteCard';
 import restoreCard from './eventFunctions/restoreCard';
-import checkAnswer from './eventFunctions/checkAnswer';
 import addWordNeedToRepeat from './eventFunctions/addWordNeedToRepeat';
 import { updateStatusBar } from '../domBuilder/lightTree/createStatusBar';
+import updateDifficultyButtons from '../domBuilder/lightTree/updateDifficultyButtons';
 
 export default function createEvents(learningScreenElement) {
-  const card = learningScreenElement.querySelector('card-word');
-
   learningScreenElement.addEventListener('click', () => {
+    const card = learningScreenElement.querySelector('card-word');
     let item = null;
     if (event.target.closest('img.arrow') != null) {
       item = event.target.closest('img.arrow');
@@ -54,6 +53,7 @@ export default function createEvents(learningScreenElement) {
           const nextMode = learningScreenElement.state.mode;
           if (prevMode !== nextMode) {
             createCard(learningScreenElement);
+            updateDifficultyButtons(learningScreenElement);
           }
 
           break;
@@ -64,7 +64,7 @@ export default function createEvents(learningScreenElement) {
   });
 
   document.addEventListener('keydown', () => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && learningScreenElement.querySelector('learning-results') === null) {
       rightClick(learningScreenElement);
     }
   });

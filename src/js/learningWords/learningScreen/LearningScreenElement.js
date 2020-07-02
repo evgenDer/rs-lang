@@ -5,6 +5,7 @@ import createStatusBar, { updateStatusBar } from './domBuilder/lightTree/createS
 import createArrow from './domBuilder/lightTree/createArrow';
 import { createModeButtons, updateModeButtons } from './domBuilder/lightTree/createModeButtons';
 import createDifficultyButtons from './domBuilder/lightTree/createDifficultyButtons';
+import updateDifficultyButtons from './domBuilder/lightTree/updateDifficultyButtons';
 import createResults from './domBuilder/lightTree/createResults';
 import createEvents from './events/createEvents';
 
@@ -66,22 +67,6 @@ export default class LearningScreenElement extends HTMLElement {
     this.init();
   }
 
-  /*
-        if (this.state.mode === 'learning') {
-          this.state.currentLearningCardIndex =
-            findNextNotDeletedWord(this, this.state.currentLearningCardIndex, 'right');
-        } else {
-          this.state.currentNewWordCardIndex =
-            findNextNotDeletedWord(this, this.state.currentNewWordCardIndex, 'right');
-        }*/
-
-  /*
-                if (
-                  this.localState.newWordProgressArr.indexOf(false) === -1 &&
-                  this.localState.learningProgressArr.indexOf(false) === -1
-                ) {
-                  createResults(this);
-                }*/
   async init() {
     this.insertAdjacentHTML(
       'afterbegin',
@@ -108,9 +93,10 @@ export default class LearningScreenElement extends HTMLElement {
       createStatusBar(this);
       updateStatusBar(this);
 
-      createDifficultyButtons(this);
-
       createCard(this);
+
+      createDifficultyButtons(this);
+      updateDifficultyButtons(this);
 
       createEvents(this);
     } else {

@@ -1,3 +1,5 @@
+import saveDayMode from '../../functions/saveDayMode';
+
 export default function switchToRepeatingMode(learningScreenElement) {
   learningScreenElement.state.mode = 'repeating';
   learningScreenElement.wordArrs.needToRepeat.forEach((element) => {
@@ -14,4 +16,5 @@ export default function switchToRepeatingMode(learningScreenElement) {
       element.classList.remove('active');
     }
   });
+  saveDayMode(learningScreenElement);
 }
