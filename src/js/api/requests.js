@@ -18,9 +18,16 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     if (withCredentials) {
       params.withCredentials = true;
     }
+
     const rawResponse = await fetch(urlRequest, params);
+
+    if (rawResponse.status === 404) {
+      return null;
+    }
+
     return rawResponse.json();
   } catch (error) {
+    console.error(error.toString());
     return error;
   }
 }

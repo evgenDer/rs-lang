@@ -2,6 +2,7 @@
 export const DEFAULT_CONFIGURATION = {
   maxNewWordsPerDay: 10,
   maxCardsWithWordsPerDay: 40,
+  dayLearningDate: Date.now(),
   difficultyLevel: 0,
   showWordTranslation: true,
   showSentenceExplanation: true,
