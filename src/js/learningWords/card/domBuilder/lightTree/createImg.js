@@ -1,5 +1,11 @@
 export default function createImg(card) {
   const img = new Image();
+  if (card.state.image.length > 20) {
+    img.src = `data:image/jpg;base64,${card.state.image}`;
+  } else {
+    img.src = `https://raw.githubusercontent.com/irinainina/rslang-data/master/${card.state.image}`;
+  }
+
   img.onload = () => {
     card.insertAdjacentHTML(
       'beforeend',
@@ -9,11 +15,6 @@ export default function createImg(card) {
     );
   };
   img.onerror = () => {
-    card.insertAdjacentHTML('beforeend', `<img slot=cardImg src=${img.src}>`);
+    card.insertAdjacentHTML('beforeend', `<img slot=cardImg src='assets/img/cardDefaultImg.jpg'>`);
   };
-  if (card.state.image.length > 20) {
-    img.src = `data:image/jpg;base64,${card.state.image}`;
-  } else {
-    img.src = `https://raw.githubusercontent.com/irinainina/rslang-data/master/${card.state.image}`;
-  }
 }
