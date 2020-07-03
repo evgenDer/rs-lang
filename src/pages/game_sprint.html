@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="uk-inline game-control">
-            <button class="uk-button uk-button-default game-control__btn game-control__btn_level" type="button">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_level disable" type="button">
               Уровень: <span id="game-control__current_level">1</span>
             </button>
             <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_level">
@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="uk-inline game-control">
-            <button class="uk-button uk-button-default game-control__btn game-control__btn_round" type="button">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_round  disable" type="button">
               Раунд: <span id="game-control__current_round">1</span>
             </button>
             <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_round">
@@ -81,7 +81,7 @@
         </div>
         <div class="uk-card uk-card-default uk-width-1-3@m card">
           <div class="uk-card-header card__header">
-            <button class = "btn_audioexample" ><img src = "assets/img/icons/headphones.svg"></button>
+            <button class = "btn_audioexample" uk-tooltip="title: Послушать произношение слова; pos: bottom;"><img src = "assets/img/icons/headphones.svg"></button>
             <div class="card__answers">
               <div class = "circle"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
               <div class = "circle"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
@@ -112,7 +112,7 @@
               <div class="card__icons">
                 <img src="assets/img/icons/left.svg">
                 <img src="assets/img/icons/right.svg">
-                <button uk-tooltip="title: Послушать произношение слова; pos: bottom; color: blue;" class ="btn_pronoucing"></button>
+                <button uk-tooltip="title: Послушать произношение слова; pos: bottom;" class ="btn_pronoucing"></button>
               </div>
           </div>
         </div>

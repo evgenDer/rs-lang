@@ -131,9 +131,9 @@
     color: $color-secondary!important;
     background-color: $color-yellow!important;
   }
-  @include media-mobile{
+  @media(max-width: 460px){
     width: 280px;
-
+    margin-top: 3vh;
   }
 }
 .card__answers{
@@ -296,4 +296,13 @@ img[alt="bird"]{
 @-webkit-keyframes OPACITY {
   0%   { opacity: 0.8; }
   100% { opacity: 0; }
+}
+
+.game-control__list_disabled {
+  display: none !important;
+}
+
+.disable{
+  background: grey !important;
+  color: $color-primary !important;
 }

@@ -1,6 +1,6 @@
 import { GAME_MODES } from './constants';
 import { showElement, hideElement } from '../helpers/html-helper';
-
+import { disableDropdowns, enableDropdowns } from './dropdown';
 
 const toSwitch = document.getElementById('game-mode-switch');
 const modeBtn = document.querySelector('.game-control__btn_mode');
@@ -8,7 +8,6 @@ const descAct = document.querySelector('.desc_active');
 const descDis = document.querySelector('.desc_disabled');
 
 export function switchGameMode() {
-  debugger;
   const currentMode = ( GAME_MODES.all === toSwitch.textContent );
 
   if (currentMode) {
@@ -26,10 +25,18 @@ export function switchGameMode() {
   }
 
   toSwitch.textContent = currentMode ? GAME_MODES.learned : GAME_MODES.all;
+  debugger;
+  if(toSwitch.textContent === GAME_MODES.learned){
+    disableDropdowns();
+  } else enableDropdowns();
 }
 
 export function addGameModeSwitchClickHandler() {
   modeBtn.addEventListener('click', () => {
     switchGameMode();
   });
+}
+
+export function getGameMode() {
+  return toSwitch.textContent;
 }

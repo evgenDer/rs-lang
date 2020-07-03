@@ -5,9 +5,9 @@ export const GAME_MODES = {
 };
 
 export const SPRINT_MODES = [
-  { points: 10, сlass: 'correct_first', innerText: '' },
-  { points: 20, сlass: 'correct_first', innerText: '+ 20 баллов' },
-  { points: 40, сlass: 'correct_second', innerText: '+ 40 баллов'},
-  { points: 80, сlass: 'correct_third', innerText: '+ 80 баллов' },
+  { points: 10, сlassElement: '', innerText: '' },
+  { points: 20, сlassElement: 'correct_first', innerText: '+ 20 баллов' },
+  { points: 40, сlassElement: 'correct_second', innerText: '+ 40 баллов'},
+  { points: 80, сlassElement: 'correct_third', innerText: '+ 80 баллов' },
 ];
 
