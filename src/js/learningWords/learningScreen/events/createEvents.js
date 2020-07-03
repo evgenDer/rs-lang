@@ -6,7 +6,6 @@ import createCard from '../domBuilder/lightTree/createCard';
 import openCard from './eventFunctions/openCard';
 import chooseWordDifficulty from './eventFunctions/chooseWordDifficulty';
 import deleteCard from './eventFunctions/deleteCard';
-import restoreCard from './eventFunctions/restoreCard';
 import addWordNeedToRepeat from './eventFunctions/addWordNeedToRepeat';
 import { updateStatusBar } from '../domBuilder/lightTree/createStatusBar';
 import updateDifficultyButtons from '../domBuilder/lightTree/updateDifficultyButtons';
@@ -28,10 +27,10 @@ export default function createEvents(learningScreenElement) {
       openCard(learningScreenElement);
     } else if (event.target.closest('div[slot=deleteWord]') != null) {
       deleteCard(learningScreenElement);
-    } else if (event.target.closest('div[slot=restoreWord]') != null) {
-      restoreCard(learningScreenElement);
     } else if (event.target.closest('div.hovered[slot=repeatWord]') != null) {
       addWordNeedToRepeat(learningScreenElement);
+      event.target.classList.remove('hovered');
+      event.target.classList.add('active');
     } else if (event.target.closest('.enableAudio[slot=audioHelperButton]') != null) {
     }
 

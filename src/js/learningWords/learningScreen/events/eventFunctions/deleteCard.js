@@ -16,6 +16,10 @@ export default function daleteCard(learningScreenElement) {
   const cardMode = card.state.optional.mode;
   const wordId = card.state.id;
 
+  if (card.state.isDone && card.state.optional.mode !== 'needToRepeat') {
+    learningScreenElement.statistics.rightAnswers -= 1;
+  }
+
   if (screenMode === 'learning') {
     learningScreenElement.localState.learningProgressArr[
       learningScreenElement.state.currentLearningCardIndex

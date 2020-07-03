@@ -1,4 +1,4 @@
-import { updateStopAudioHelper } from '../../../card/domBuilder/lightTree/initAudioHelpers';
+import { updateStopAudioHelper } from '../../../card/domBuilder/lightTree/AudioHelpers';
 
 export function stopAudio(card) {
   card.localState.isAudioPlaying = false;

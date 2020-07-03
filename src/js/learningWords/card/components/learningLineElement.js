@@ -4,6 +4,8 @@ const style = {
   backgroundColor: '#338c9930',
   correctLetterColor: '#61bd4f',
   deletedWordColor: '#fe5c55',
+  tabletWidth: '768px',
+  mobileBigWidth: '414px',
 };
 
 export default class LearningLineElement extends HTMLElement {
@@ -12,9 +14,7 @@ export default class LearningLineElement extends HTMLElement {
 
     this.state = {
       word: null,
-      wordTranslate: null,
-      textMeaning: null,
-      textExample: null,
+      isDone: false,
     };
 
     this.localState = {
@@ -41,6 +41,14 @@ export default class LearningLineElement extends HTMLElement {
        background: transparent; border: none; outline: none; color: inherit}
     ::slotted(span[slot=input]) {padding: 2px 5px 2px 10px; color: ${style.correctLetterColor};}
     ::slotted(span[slot=input].deleted) {color: ${style.deletedWordColor};}
+
+    @media screen and (max-width: ${style.tabletWidth}) {
+      :host { font-size: 40px;}
+      }
+    @media screen and (max-width: ${style.mobileBigWidth}) {
+      :host { font-size: 30px;}
+    }
+      
     </style>
 
       <div id='background'>
@@ -79,14 +87,12 @@ export default class LearningLineElement extends HTMLElement {
   setState(propName, newPropState) {
     if (this.state[propName] !== newPropState) {
       this.state[propName] = newPropState;
-      if (propName === 'word') {
-        this.setAttribute(propName, this.state[propName]);
-      }
+      this.setAttribute(propName, this.state[propName]);
     }
   }
 
   static get observedAttributes() {
-    return ['word', 'translation'];
+    return ['word', 'isdone'];
   }
 
   attributeChangedCallback() {

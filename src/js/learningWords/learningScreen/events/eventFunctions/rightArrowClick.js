@@ -3,7 +3,7 @@ import checkAnswer from './checkAnswer';
 import whatsNext from './whatsNext';
 
 import createCard from '../../domBuilder/lightTree/createCard';
-import updateCard from '../../domBuilder/lightTree/updateCard';
+import updateCardState from '../../domBuilder/lightTree/updateCardState';
 import createResults from '../../domBuilder/lightTree/createResults';
 import { updateStatusBar } from '../../domBuilder/lightTree/createStatusBar';
 
@@ -107,7 +107,7 @@ export default function rightClick(learningScreenElement) {
         updateStatusBar(learningScreenElement);
         saveDayLocalState(learningScreenElement);
 
-        updateCard(learningScreenElement);
+        updateCardState(learningScreenElement);
       } else {
         if (card.state.isFirstAnswer) {
           if (screenMode === 'learning' || screenMode === 'newWord') {
@@ -127,7 +127,7 @@ export default function rightClick(learningScreenElement) {
 
           saveDayLocalState(learningScreenElement);
 
-          updateCard(learningScreenElement);
+          updateCardState(learningScreenElement);
         }
       }
 

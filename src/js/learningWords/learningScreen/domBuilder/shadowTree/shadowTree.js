@@ -119,6 +119,7 @@ const learningScreenShadowTreeHTML = `
   
   @media screen and (max-width: ${styles.mobileBigWidth}) {
     #mainBlock{ max-width: 250px;}
+    
   }
 
 

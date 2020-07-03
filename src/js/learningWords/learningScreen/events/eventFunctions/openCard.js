@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import updateCard from '../../domBuilder/lightTree/updateCard';
+import updateCardState from '../../domBuilder/lightTree/updateCardState';
 import { updateStatusBar } from '../../domBuilder/lightTree/createStatusBar';
 import saveDayLocalState from '../../functions/saveDayLocalState';
 import addWordNeedToRepeat from './addWordNeedToRepeat';
@@ -56,5 +56,5 @@ export default function openCard(learningScreenElement) {
   difficultyButtons.forEach((element) => element.classList.add('opened'));
 
   saveDayLocalState(learningScreenElement);
-  updateCard(learningScreenElement);
+  updateCardState(learningScreenElement);
 }

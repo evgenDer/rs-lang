@@ -15,7 +15,12 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
         // Все слова сделаны
         if (learningScreenElement.wordArrs.needToRepeat.length !== 0) {
           switchToRepeatingMode(learningScreenElement);
-          willCreateCard = true;
+          const wordIndex = findNexWordIndex(learningScreenElement, 'repeating');
+          if (wordIndex === -1) {
+          } else {
+            learningScreenElement.state.currentRepeatingCardIndex = wordIndex;
+            willCreateCard = true;
+          }
         } else {
         }
       } else {
@@ -37,7 +42,12 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
         // Все слова сделаны
         if (learningScreenElement.wordArrs.needToRepeat.length !== 0) {
           switchToRepeatingMode(learningScreenElement);
-          willCreateCard = true;
+          const wordIndex = findNexWordIndex(learningScreenElement, 'repeating');
+          if (wordIndex === -1) {
+          } else {
+            learningScreenElement.state.currentRepeatingCardIndex = wordIndex;
+            willCreateCard = true;
+          }
         } else {
           //Все изучено и улажено
           console.log('Дело сделано');

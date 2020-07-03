@@ -59,8 +59,8 @@ export default async function getDayLocalState(learningScreenElemen) {
     );
     const dayWordArrs = wordArrs;
 
-    const newWordProgressArr = Array(+learningScreenElemen.settings.newWordCount).fill(false);
-    const learningProgressArr = Array(+learningScreenElemen.settings.wordCount).fill(false);
+    const newWordProgressArr = Array(+dayWordArrs.newWords.length).fill(false);
+    const learningProgressArr = Array(+dayWordArrs.learnedWords.length).fill(false);
     const dayLocalState = {
       newWordProgressArr,
       learningProgressArr,

@@ -14,6 +14,7 @@ export default function createCard(learningScreenElement) {
 
   learningScreenElement.insertAdjacentHTML('beforeend', "<card-word slot='card'></card-word>");
   const card = learningScreenElement.querySelector('card-word');
+  card.localState.isFirstCreating = true;
 
   for (const prop in card.settings) {
     card.setSettings(prop, learningScreenElement.settings[prop]);

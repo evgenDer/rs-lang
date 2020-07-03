@@ -3,7 +3,7 @@ import saveDayMode from '../../functions/saveDayMode';
 export default function switchToRepeatingMode(learningScreenElement) {
   learningScreenElement.state.mode = 'repeating';
   learningScreenElement.wordArrs.needToRepeat.forEach((element) => {
-    element.isDone = false;
+    element.isDone = element.optional.mode === 'deleted' ? true : false;
     element.isFirstAnswer = true;
   });
   const modeButtons = learningScreenElement.querySelectorAll('[slot=modeButton]');

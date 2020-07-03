@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
 import { stopAudio } from '../../learningScreen/events/eventFunctions/Audio';
-import { updateEnableAudioHelper } from '../domBuilder/lightTree/initAudioHelpers';
+import { updateEnableAudioHelper } from '../domBuilder/lightTree/AudioHelpers';
 
 export default function createEventListener(card) {
   card.addEventListener('click', () => {
@@ -16,10 +16,13 @@ export default function createEventListener(card) {
       card.settings.enableAutomaticAudio = !card.settings.enableAutomaticAudio;
       document.querySelector('learning-screen').settings.enableAutomaticAudio =
         card.settings.enableAutomaticAudio;
-      console.log(card.settings);
-      console.log(document.querySelector('learning-screen').settings);
       stopAudio(card);
       updateEnableAudioHelper(card);
+    } else if (event.target.closest('.translateOptionsButton') != null) {
+      const translateOptionsButton = card.querySelector('[slot=translateOptionsButton]');
+      const translateOptions = card.querySelector('[slot=translateOptions]');
+      translateOptionsButton.classList.toggle('active');
+      translateOptions.classList.toggle('opened');
     }
   });
 

@@ -1,16 +1,7 @@
 import cardShadowTreeHTML from './domBuilder/shadowTree/shadowTree';
-import initNewWord from './domBuilder/lightTree/initNewWord';
 import initLearning from './domBuilder/lightTree/initLearningMode';
-import initCardOptions from './domBuilder/lightTree/initOptions';
+import updateCardContent from './domBuilder/lightTree/updateCardContent';
 import createEventListener from './events/createEventListener';
-
-import { getCardsViewConfiguration, getAppConfiguration } from '../../data-access/local-storage';
-import { getConfiguration } from '../../configuration';
-import {
-  initAudioHelpers,
-  updateEnableAudioHelper,
-  updateStopAudioHelper,
-} from './domBuilder/lightTree/initAudioHelpers';
 
 export default class WordCardElement extends HTMLElement {
   constructor() {
@@ -54,6 +45,7 @@ export default class WordCardElement extends HTMLElement {
     this.localState = {
       isReadyToRenderArr: [],
       isAudioPlaying: false,
+      isFirstCreating: false,
     };
 
     this.audio = {
@@ -66,17 +58,6 @@ export default class WordCardElement extends HTMLElement {
   connectedCallback() {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = cardShadowTreeHTML;
-    createEventListener(this);
-  }
-
-  switchMode() {
-    this.innerHTML = '';
-    initLearning(this);
-    initCardOptions(this);
-
-    initAudioHelpers(this);
-    updateEnableAudioHelper(this);
-    updateStopAudioHelper(this);
   }
 
   setState(propName, newPropState) {
@@ -120,7 +101,11 @@ export default class WordCardElement extends HTMLElement {
       }
       if (isReadyToRender) {
         this.localState.isReadyToRenderArr = [];
-        this.switchMode();
+        if (this.localState.isFirstCreating) {
+          initLearning(this);
+          createEventListener(this);
+        }
+        updateCardContent(this);
       }
     }, 16);
   }
