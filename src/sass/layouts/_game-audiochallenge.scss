@@ -50,6 +50,7 @@
 }
 
 .audiochallenge__exit {
+  min-width: 25px;
   img {
     width: 25px;
     filter: invert(100%);
@@ -161,12 +162,13 @@
 	align-items: center;
   justify-content: center;
   flex-direction: row;
-  @include media-tablet {
+  @include media-mobile {
     flex-direction: column;
   }
   .game-control {
     margin: 5px;
   }
+  flex-wrap: wrap;
 }
 
 .game-control__btn {
@@ -177,8 +179,6 @@
   background-color: $color-primary !important;
 	color: $color-secondary !important;
 	&:hover {
-		background-color: $color-additional;
-		color: $color-primary;
 		cursor: pointer;
 		transition: all 0.4s;
 	}
@@ -255,6 +255,17 @@
 }
 
 // =====
+
+
+.game-control__btn_stat {
+  background-color: $color-primary !important;
+  color: $color-secondary !important;
+  &:hover {
+		background-color: $color-secondary !important;
+		color: $color-primary !important;
+  }
+}
+
 
 
 .audiochallenge__load-page {

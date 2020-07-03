@@ -7,8 +7,13 @@ const modeBtn = document.querySelector('.game-control__btn_mode');
 const descAct = document.querySelector('.desc_active');
 const descDis = document.querySelector('.desc_disabled');
 
+
+export function getGameMode() {
+  return toSwitch.textContent;
+}
+
 export function switchGameMode() {
-  const currentMode = GAME_MODES.all === toSwitch.textContent;
+  const currentMode = GAME_MODES.all === getGameMode();
 
   if (currentMode) {
     modeBtn.classList.remove('game-control__btn_mode_active');
@@ -31,8 +36,4 @@ export function addGameModeSwitchClickHandler() {
   modeBtn.addEventListener('click', () => {
     switchGameMode();
   });
-}
-
-export function getGameMode() {
-  return toSwitch.textContent;
 }

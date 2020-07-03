@@ -6,16 +6,22 @@ import { getFullDataWords } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 import * as ProgressBar from '../games/progress-bar';
+import { selectNextRound } from '../games/dropdown';
+import { Statistics } from '../statistics/components/statistics';
 
 
 const loader = document.querySelector('.audiochallenge__load-page');
 const startLoading = () => showElement(loader);
 const stopLoading = () => hideElement(loader);
 
+const backGameBtn = document.querySelector('.audiochallenge__exit > .exit__back');
+
 
 // eslint-disable-next-line import/prefer-default-export
 export class Game {
   constructor(mode = GAME_MODES.all, level = 0, round = 0) {
+    this.name = 'Аудиовызов';
+
     this.mode = mode;
     this.level = level;
     this.round = round;
@@ -52,12 +58,14 @@ export class Game {
       example: document.getElementById('example-speaker'),
     }
 
-    this.wordsAmntInRound = 20;
+    this.wordsAmntInRound = 5;
     this.data = [];
     this.words = [];
     this.allRoundTranslations = [];
     this.rightAnswer = 0;
     this.currentAnswer = 0;
+
+    this.statistics = new Statistics(this.name);
   }
 
   startGame() {
@@ -291,11 +299,19 @@ export class Game {
       }
       
       if (target.classList.contains('game-field__control_next')) {
+        this.statistics.updateStatistics(
+          this.data[this.currentAnswer].word, 
+          ProgressBar.isRightProgressPoint(this.task.progress.points[this.currentAnswer])
+        );
+
         this.currentAnswer += 1;
         if (this.currentAnswer < this.wordsAmntInRound) {
           this.startTask();
         } else {
-          // results
+          selectNextRound();
+          backGameBtn.click();
+
+          this.statistics.showTemporaryStatistics();
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
         this.errors += 1;

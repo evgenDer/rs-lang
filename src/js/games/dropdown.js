@@ -78,3 +78,23 @@ export function enableDropdowns() {
   enableList(listLvlContainer);
   enableList(listRoundContainer);
 }
+
+
+export function selectNextLevel() {
+  const currentLevel = getCurrentLevel();
+  if (currentLevel !== listLvl.length - 1) {
+    listLvl[currentLevel + 1].click();
+  }
+}
+
+export function selectNextRound() {
+  const currentRound = getCurrentRound();
+  if (currentRound === listRound.length - 1) {
+    if (getCurrentLevel() !== listLvl.length - 1) {
+      listRound[0].click();
+    }
+    selectNextLevel();
+  } else {
+    listRound[currentRound + 1].click();
+  }
+}

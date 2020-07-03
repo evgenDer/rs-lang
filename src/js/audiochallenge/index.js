@@ -2,6 +2,7 @@ import { Game } from './Game';
 import { addGameModeSwitchClickHandler, getGameMode } from '../games/gameModeSwitch';
 import { showElement, hideElement } from '../helpers/html-helper';
 import * as Dropdown from '../games/dropdown';
+import { Statistics } from '../statistics/components/statistics';
 
 
 const startBtn = document.querySelector('.description__start');
@@ -13,6 +14,9 @@ const exitBtnContainer = document.querySelector('.audiochallenge__exit');
 const modeBtn = document.querySelector('.game-control__btn_mode');
 
 const bgLayer = document.querySelector('.bg-layer');
+
+const statBtn = document.querySelector('.game-control__btn_stat');
+const stat = new Statistics('Аудиовызов');
 
 let game;
 
@@ -64,6 +68,7 @@ function addExitGameBtnClickHandler() {
     Dropdown.enableDropdowns();
 
     showElement(modeBtn);
+    showElement(statBtn);
     showElement(description);
     setExitButtonStdMode();
 
@@ -77,6 +82,7 @@ function addStartButtonClickHandler() {
     event.preventDefault();
     
     hideElement(modeBtn);
+    hideElement(statBtn);
     hideElement(description);
     setExitButtonBackMode();
 
@@ -89,9 +95,19 @@ function addStartButtonClickHandler() {
 }
 
 
+function addStatisticsButtonClickHandler() {
+  statBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    stat.showGlobalStatistics();
+  });
+}
+
+
 window.onload = () => {
   addStartButtonClickHandler();
   addExitGameBtnClickHandler();
   addGameModeSwitchClickHandler();
   Dropdown.addDropdownsEventHandlers();
+  addStatisticsButtonClickHandler();
 };
