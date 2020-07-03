@@ -43,6 +43,19 @@ button:hover {
   }
 }
 
+.btn_audioexample{
+  position: absolute;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  width: 30px;
+  height: 30px;
+  margin-left: 300px;
+  @include media-mobile{
+    margin-left: 230px;
+  }
+}
+
 .btn_close{
   background-color: transparent!important;
   &:hover{

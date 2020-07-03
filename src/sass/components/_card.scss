@@ -54,11 +54,13 @@
 }
 
 .card_correct{
-  box-shadow:0px 0px 0px 3px $color-green inset;
+  box-shadow:0px 0px 0px 0px $color-green inset;
+  animation: BORDER_GREEN 2s;
 }
 
 .card_error{
-  box-shadow:0px 0px 0px 3px $color-red inset;
+  box-shadow:0px 0px 0px 0px $color-red inset;
+  animation: BORDER_RED 2s;
 }
 
 .card__header .correct{
@@ -66,6 +68,33 @@
   height: 150px;
   // border: none;
 }
+
+@keyframes BORDER_GREEN {
+  0% {   box-shadow:0px 0px 0px 5px $color-green inset;
+  }
+  100% {
+     box-shadow:0px 0px 0px 0px $color-green inset;
+  }
+}
+
+@keyframes BORDER_RED {
+  0% {   box-shadow:0px 0px 0px 5px $color-red inset;
+ }
+ 100% {
+    box-shadow:0px 0px 0px 0px $color-red inset;
+ }
+}
+
+@-webkit-keyframes BORDER_GREEN {
+  100% {   box-shadow:0px 0px 0px 3px $color-green inset;
+ }
+}
+
+@-webkit-keyframes BORDER_RED {
+  100% {   box-shadow:0px 0px 0px 3px $color-red inset;
+ }
+}
+
 
 
 

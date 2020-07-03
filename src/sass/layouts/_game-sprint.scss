@@ -13,6 +13,11 @@
     linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%) center center / cover fixed,
     url(../img/bg-game-sprint.png) center center no-repeat;
   background-size: cover;
+  .uk-tooltip{
+    background-color: $color-secondary;
+    color: $color-yellow;
+    text-align: center;
+  }
 }
 .game-sprint__start_header{
   margin-top: 40px;
@@ -70,7 +75,7 @@
     margin-bottom: -2vh;
   }
   @include media-tablet{
-    margin: -20px 0 -22px;
+    margin: -20px 0 -20px;
   }
   p{
     color: $color-green;
@@ -277,8 +282,18 @@ img[alt="bird"]{
   width: 35px;
   height: 35px;
   text-align: center;
-  margin-top: 0px;
-  margin-bottom: -50px;
-  opacity: 0.8;
+  position: absolute;
+  margin-left: 45%;
+  bottom: 115px;
+  opacity: 0;
+  animation: OPACITY 1s;
+}
+@keyframes OPACITY {
+  0%   { opacity: 0.8; }
+  100% { opacity: 0; }
 }
 
+@-webkit-keyframes OPACITY {
+  0%   { opacity: 0.8; }
+  100% { opacity: 0; }
+}
