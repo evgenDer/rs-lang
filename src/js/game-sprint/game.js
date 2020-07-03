@@ -5,6 +5,9 @@ import timer from './timer';
 import { shuffleArray, getRandomInt } from '../helpers/math-helper';
 import playAudio from '../helpers/audio';
 import Card from './card';
+import { DATA_URL } from '../utils/constants';
+
+const SERIES_LENGTH = 4;
 
 const playPage = document.querySelector('.game-sprint__play');
 const loadPage = document.querySelector('.game-sprint__load');
@@ -21,7 +24,7 @@ export default class Game {
 
     this.wordsAmntInRound = 100;
     this.answersAmnt = 2;
-    this.rightAnswer = 0;
+    this.currentTranslateAnswer = 0;
     this.currentAnswer = 0;
 
     this.card = new Card();
@@ -33,6 +36,8 @@ export default class Game {
       cardAnswers: document.querySelector('.card__answers'),
       word: document.querySelector('.word_learn'),
       translation: document.querySelector('.word_translate'),
+      btnCorrect: document.querySelector('.btn_correct'),
+      btnWrong: document.querySelector('.btn_wrong'),
     };
 
     this.numberEnhasment = 0;
@@ -41,6 +46,7 @@ export default class Game {
     this.resultPoints = 0;
     this.correct = 0;
     this.errors = 0;
+    this.points = 0;
 
   }
 
@@ -55,28 +61,33 @@ export default class Game {
     const allData = await getFullDataWords(this.level, 0, 600);
     const allWords = allData
       .map(({ wordTranslate }) => wordTranslate)
-      .filter((word) => !dataWords.includes(word));
+      .filter((word) => word !== '' && !dataWords.includes(word));
     return allWords;
   }
 
-  static getSimilarWords(sample, words) {
-    const ending = sample.slice(-2);
-    const begining = sample.slice(0, 2);
+  getSimilarWords(sample, words) {
+    const significantPartLength = 2;
 
-    let similarWords = words.filter((word) => word.slice(-2) === ending || word.slice(0, 2) === begining);
+    const ending = sample.slice(-significantPartLength);
+    const begining = sample.slice(0, significantPartLength);
+
+    let similarWords = words
+      .filter((word) => word.slice(-significantPartLength) === ending || word.slice(0, significantPartLength) === begining);
     similarWords = [...new Set(similarWords)];
     shuffleArray(similarWords);
     similarWords = similarWords.slice(0, this.answersAmnt);
 
     while (similarWords.length < this.answersAmnt) {
-      similarWords.push(words[getRandomInt(words.length - 1)]);
+      const availableWords = words.filter((word) => !similarWords.includes(word));
+      similarWords.push(availableWords[getRandomInt(words.length - 1)]);
     }
+
     return similarWords;
   }
 
   getWords() {
     const currentWord = this.data[this.currentAnswer].wordTranslate;
-    this.words = Game.getSimilarWords(currentWord, this.allRoundTranslations);
+    this.words = this.getSimilarWords(currentWord, this.allRoundTranslations);
     this.words[this.rightAnswer] = currentWord;
   }
 
@@ -88,8 +99,8 @@ export default class Game {
     const currentData = this.data[this.currentAnswer];
     this.playElements.word.innerText = currentData.word;
     // eslint-disable-next-line prefer-destructuring
-    this.playElements.translation.innerText = this.words[0];
-    // this.currentAnswer += 1;
+    this.currentTranslateAnswer = getRandomInt(this.words.length);
+    this.playElements.translation.innerText = this.words[this.currentTranslateAnswer];
   }
 
   startGame(){
@@ -99,17 +110,85 @@ export default class Game {
     playAudio('assets/audio/start.mp3');
     const startTimer = timer(60, 'play__time', '', this, this.generateResults);
     startTimer();
+    this.addButtonClickHandler();
+  }
+
+  increaseCorrectAnswers(){
+    this.correct += 1;
+    this.seriesOfCorrect += 1;
+    this.points += SPRINT_MODES[this.numberEnhasment].points;
+    this.playElements.points.innerText = this.points;
+    this.checkSeries();
+    this.card.addCorrectCard(this.numberEnhasment);
+    const img = document.querySelector('.card__answers .hidden');
+    if(this.numberEnhasment === SPRINT_MODES.length - 1 && this.seriesOfCorrect !== SERIES_LENGTH){
+      playAudio('assets/audio/correctAnswer.mp3');
+    }
+    else if((img && this.seriesOfCorrect > 0) || !this.numberEnhasment){
+      showElement(img);
+      playAudio('assets/audio/correctAnswer.mp3');
+    }
+    this.generateNextWord();
+  }
+
+  increaseErrorAnswers(){
+    this.errors += 1;
+    this.seriesOfCorrect = 0;
+    this.numberEnhasment = 0;
+    this.playElements.enhasment.innerText = '';
+    this.card.addErrorCard();
+    this.generateNextWord();
+  }
+
+  checkSeries(){
+    if (this.seriesOfCorrect === SERIES_LENGTH)
+    {
+      if(this.numberEnhasment !== SPRINT_MODES.length - 1){
+        this.numberEnhasment += 1;
+        this.playElements.enhasment.innerText = SPRINT_MODES[this.numberEnhasment].innerText;
+      }
+      this.card.addNewMode(this.numberEnhasment);
+      this.seriesOfCorrect = 0;
+    }
 
   }
 
-  addClassesOnCard(){
-    if(this.data[this.currentAnswer].wordTranslate === this.words[0]){
-      this.correct += 1;
-      this.card.addCorrectAnswer();
+  addButtonClickHandler(){
+    this.playElements.btnCorrect.addEventListener('click', () => {
+      if(this.data[this.currentAnswer].wordTranslate === this.words[this.currentTranslateAnswer]){
+        this.increaseCorrectAnswers();
+      } else this.increaseErrorAnswers();
+    });
+    this.playElements.btnWrong.addEventListener('click', () => {
+      if(this.data[this.currentAnswer].wordTranslate !== this.words[this.currentTranslateAnswer]){
+        this.increaseCorrectAnswers();
+      } else this.increaseErrorAnswers();
+    });
+    document.addEventListener('keydown', (event) => {
+      const {key} = event;
+      if(key === 'ArrowLeft') {
+        this.playElements.btnWrong.click();
+      }
+      if(key === 'ArrowRight'){
+        this.playElements.btnCorrect.click();
+      }
+    });
+
+    document.querySelector('.btn_pronoucing').addEventListener('click', () => {
+      playAudio(`${DATA_URL}${this.data[this.currentAnswer].audio}`);
+    });
+    document.querySelector('.btn_audioexample').addEventListener('click', () => {
+      playAudio(`${DATA_URL}${this.data[this.currentAnswer].audioExample}`);
+    });
+  }
+
+  generateNextWord(){
+    this.currentAnswer += 1;
+    if (this.currentAnswer === this.wordsAmntInRound) {
+      this.generateResults();
     }
     else {
-      this.errors += 1;
-      this.card.addErrorAnswer();
+      this.generateNewCard();
     }
   }
 
@@ -120,10 +199,10 @@ export default class Game {
     this.playElements.enhasment.innerText = SPRINT_MODES[this.numberEnhasment].innerText;
     const openPage = document.querySelector('img[alt="bird"]');
     openPage.style.marginLeft = '15px';
-    this.getRoundData().then(() => this.generateNewGame());
+    this.getRoundData().then(() => this.generateNewCard());
   }
 
-  generateNewGame(){
+  generateNewCard(){
     this.getRightAnswer();
     this.getWords();
     this.fillDataWord();
