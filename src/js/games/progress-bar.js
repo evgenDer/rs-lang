@@ -5,7 +5,7 @@ export function resetProgressPoint(point) {
 }
 
 export function isRightProgressPoint(point) {
-  return point.classList.contains('game-progress__point_wrong');
+  return !point.classList.contains('game-progress__point_wrong');
 }
 
 export function setCurrentProgressPoint(point) {
@@ -14,7 +14,7 @@ export function setCurrentProgressPoint(point) {
 }
 
 export function setRightProgressPoint(point) {
-  const wasWrong = isRightProgressPoint(point);
+  const wasWrong = !isRightProgressPoint(point);
   if (!wasWrong) {
     resetProgressPoint(point);
     point.classList.add('game-progress__point_right');
