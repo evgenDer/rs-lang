@@ -52,8 +52,8 @@ async function getTokenForRequest() {
   if (!isValidToken()) {
     const email = getUserEmail();
     const password = getUserPassword();
+    // eslint-disable-next-line no-unused-vars
     const infoAboutUser = await loginUser(email, password);
-    setToken(infoAboutUser.token);
   }
   return getToken();
 }

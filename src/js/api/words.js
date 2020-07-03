@@ -22,7 +22,7 @@ async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 1
 }
 
 async function getFullDataWords(numberGroup, numberPage, wordsPerPage = 10) {
-  return getDataWords(numberGroup, numberPage, '', wordsPerPage);
+  return getDataWords(numberGroup, numberPage, 1000, wordsPerPage);
 }
 
 async function getWordById(idWord) {
