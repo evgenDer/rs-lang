@@ -305,7 +305,7 @@ export class Game {
         const currentAnswer = this.data[this.currentAnswer];
         const isRight = ProgressBar.isRightProgressPoint(this.task.progress.points[this.currentAnswer]);
 
-        // this.statistics.updateStatistics(currentAnswer.word, isRight);
+        this.statistics.updateStatistics(currentAnswer.word, isRight, this.level);
         currentAnswer.isCorrect = isRight;
         currentAnswer.isError = !isRight;
 
