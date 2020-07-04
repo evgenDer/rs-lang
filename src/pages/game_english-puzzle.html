@@ -12,7 +12,20 @@
     <body styles = "background: url(assets/img/puzzle.jpg), rgba(255,255,255,0.9)" class = "game-puzzle">
        <div class="start-page">
          <div class="wrapper">
-            <button class = 'btn_close' uk-close></button>
+           <div class="uk-inline game-control">
+              <button class = 'btn_close' uk-close></button>
+              <button
+                class="uk-button uk-button-default game-control__btn game-control__btn_mode game-control__btn_mode_disabled"
+                type="button">
+                Cлова: <span id="game-mode-switch">изученные</span>
+              </button>
+              <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_desc">
+                <div class="uk-nav uk-dropdown-nav">
+                  <p class="desc_active hidden">В игре будут задей- <br> ствованы слова из <br> всей коллекции</p>
+                  <p class="desc_disabled">В игре будут задей- <br> ствованы только <br> изученные слова</p>
+                </div>
+              </div>
+            </div>
             <div class = "block-start">
               <h2>ENGLISH PUZZLE</h2>
               <p>Нажимайте на слова, чтобы собрать фразы.</p>
@@ -32,11 +45,6 @@
                     <div uk-dropdown>
                       <ul class="uk-nav uk-dropdown-nav switcher_level">
                           <li class="uk-active">Уровень 1</li>
-                          <li>Уровень 2</li>
-                          <li>Уровень 3</li>
-                          <li>Уровень 4</li>
-                          <li>Уровень 5</li>
-                          <li>Уровень 6</li>
                       </ul>
                     </div>
                     <button class="uk-button uk-button-default button_round" type="button">Раунд: 1</button>
