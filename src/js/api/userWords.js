@@ -28,7 +28,7 @@ async function getAllUserWords() {
   try {
     const userId = getUserId();
     const urlRequest = `${BACKEND_URL}/users/${userId}/words`;
-    const content = await sendRequest('POST', urlRequest, true);
+    const content = await sendRequest('GET', urlRequest, true);
     return content;
   } catch (error) {
     return error;
@@ -50,6 +50,4 @@ async function deleteUserWord(wordId) {
   return result;
 }
 
-export {
-  getAllUserWords, getUserWordById, updateUserWord, deleteUserWord, createUserWord,
-};
+export { getAllUserWords, getUserWordById, updateUserWord, deleteUserWord, createUserWord };

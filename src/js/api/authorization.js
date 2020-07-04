@@ -6,7 +6,6 @@ import {
 import { isValidToken } from '../utils/checks';
 import { BACKEND_URL } from '../utils/constants';
 
-
 async function createUser(event) {
   event.preventDefault();
   const user = getUser();
@@ -57,6 +56,5 @@ async function getTokenForRequest() {
   }
   return getToken();
 }
-
 
 export { createUser, loginUser, getTokenForRequest };
