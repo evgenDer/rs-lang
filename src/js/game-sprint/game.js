@@ -6,6 +6,7 @@ import { shuffleArray, getRandomInt } from '../helpers/math-helper';
 import playAudio from '../helpers/audio';
 import Card from './card';
 import { DATA_URL } from '../utils/constants';
+import { addStatisticRoundSprint, createStaticticRound } from './statistic';
 
 const SERIES_LENGTH = 4;
 
@@ -86,6 +87,8 @@ export default class Game {
   }
 
   getWords() {
+    this.data[this.currentAnswer].correct = 0;
+
     const currentWord = this.data[this.currentAnswer].wordTranslate;
     this.words = this.getSimilarWords(currentWord, this.allRoundTranslations);
     this.words[this.rightAnswer] = currentWord;
@@ -114,7 +117,8 @@ export default class Game {
   }
 
   increaseCorrectAnswers(){
-    this.correct += 1;
+    this.data[this.currentAnswer].isCorrect = true;
+    this.data[this.currentAnswer].isError = false;
     this.seriesOfCorrect += 1;
     this.points += SPRINT_MODES[this.numberEnhasment].points;
     this.playElements.points.innerText = this.points;
@@ -132,7 +136,8 @@ export default class Game {
   }
 
   increaseErrorAnswers(){
-    this.errors += 1;
+    this.data[this.currentAnswer].isError = true;
+    this.data[this.currentAnswer].isCorrect = false;
     this.seriesOfCorrect = 0;
     this.numberEnhasment = 0;
     this.playElements.enhasment.innerText = '';
@@ -192,7 +197,13 @@ export default class Game {
     }
   }
 
-  generateResults(){}
+  generateResults(){
+    playPage.classList.add('hidden');
+    createStaticticRound(this.points);
+    addStatisticRoundSprint(this.data);
+    // eslint-disable-next-line no-undef
+    UIkit.modal('.modal-round').show();
+  }
 
   generateFieldOfGame() {
     this.playElements.points.innerText = 0;
