@@ -54,7 +54,7 @@ export function createStaticticRound(imageSrc, infoAboutImage){
             <img src = ${imageSrc}>
             <p>${infoAboutImage}</p>
           </div>
-          <div>
+          <div uk-overflow-auto>
           <div class="modal-round__correct">
             <h3>Я знаю <span>0</span></h3>
           </div>
