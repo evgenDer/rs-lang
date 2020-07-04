@@ -69,10 +69,12 @@ export class Game {
   }
 
   startGame() {
+    hideElement(backGameBtn);
     startLoading();
 
     this.getRoundData().then(() => {
       stopLoading();
+      showElement(backGameBtn);
 
       showElement(this.gameField);
 
@@ -311,7 +313,7 @@ export class Game {
           selectNextRound();
           backGameBtn.click();
 
-          this.statistics.showTemporaryStatistics();
+          // this.statistics.showTemporaryStatistics();
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
         this.errors += 1;
