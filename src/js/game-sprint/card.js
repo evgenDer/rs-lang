@@ -24,11 +24,15 @@ export default class Card {
     playAudio('assets/audio/error.mp3');
     this.insertResultIcon(errorIconSrc);
     Card.addImagesCard();
+    Card.removeCardElements();
+    this.numberMode = 0;
+    this.addProgressBar();
+  }
+
+  static removeCardElements() {
     for (let i = 1; i < SPRINT_MODES.length; i+=1){
       removeClassesFromElement('.card__header', SPRINT_MODES[i].сlassElement, 'correct');
     }
-    this.numberMode = 0;
-    this.addProgressBar();
   }
 
   insertResultIcon(imageSrc){

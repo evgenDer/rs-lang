@@ -6,11 +6,14 @@ import { shuffleArray, getRandomInt } from '../helpers/math-helper';
 import playAudio from '../helpers/audio';
 import Card from './card';
 import { DATA_URL } from '../utils/constants';
+import { addStatisticRoundSprint, createStaticticRound } from './statistic';
+import { selectNextRound } from '../games/dropdown';
 
 const SERIES_LENGTH = 4;
 
 const playPage = document.querySelector('.game-sprint__play');
 const loadPage = document.querySelector('.game-sprint__load');
+const startPage = document.querySelector('.game-sprint__start');
 
 export default class Game {
   constructor(mode = GAME_MODES.all, level = 1, round = 1) {
@@ -86,6 +89,8 @@ export default class Game {
   }
 
   getWords() {
+    this.data[this.currentAnswer].correct = 0;
+
     const currentWord = this.data[this.currentAnswer].wordTranslate;
     this.words = this.getSimilarWords(currentWord, this.allRoundTranslations);
     this.words[this.rightAnswer] = currentWord;
@@ -114,7 +119,8 @@ export default class Game {
   }
 
   increaseCorrectAnswers(){
-    this.correct += 1;
+    this.data[this.currentAnswer].isCorrect = true;
+    this.data[this.currentAnswer].isError = false;
     this.seriesOfCorrect += 1;
     this.points += SPRINT_MODES[this.numberEnhasment].points;
     this.playElements.points.innerText = this.points;
@@ -132,7 +138,8 @@ export default class Game {
   }
 
   increaseErrorAnswers(){
-    this.errors += 1;
+    this.data[this.currentAnswer].isError = true;
+    this.data[this.currentAnswer].isCorrect = false;
     this.seriesOfCorrect = 0;
     this.numberEnhasment = 0;
     this.playElements.enhasment.innerText = '';
@@ -192,13 +199,27 @@ export default class Game {
     }
   }
 
-  generateResults(){}
+  generateResults(){
+    hideElement(playPage);
+    selectNextRound();
+    showElement(startPage);
+    createStaticticRound(this.points);
+    addStatisticRoundSprint(this.data);
+    Card.removeCardElements();
+    // eslint-disable-next-line no-undef
+    UIkit.modal('.modal-round').show();
+    const btnClose = document.getElementById('modal-btn-close');
+    btnClose.addEventListener('click', () => {
+      document.querySelector('.modal-round').remove();
+    });
+  }
 
   generateFieldOfGame() {
     this.playElements.points.innerText = 0;
     this.playElements.enhasment.innerText = SPRINT_MODES[this.numberEnhasment].innerText;
     const openPage = document.querySelector('img[alt="bird"]');
     openPage.style.marginLeft = '15px';
+    this.card.addProgressBar();
     this.getRoundData().then(() => this.generateNewCard());
   }
 

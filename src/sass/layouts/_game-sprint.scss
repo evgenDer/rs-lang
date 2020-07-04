@@ -306,3 +306,67 @@ img[alt="bird"]{
   background: grey !important;
   color: $color-primary !important;
 }
+
+#game-sprint {
+  .modal-round {
+    position: absolute;
+    padding: 10px;
+    width: 500px;
+    height: fit-content;
+    max-height: 600px;
+    top: -2vh;
+    overflow: hidden;
+    @include media-tablet {
+      top: 0vh;
+    }
+    @include media-mobile {
+      top: 0vh;
+    }
+
+    .uk-modal-header {
+      padding: 0;
+      padding-bottom: 20px;
+      margin: 10px;
+    }
+    .uk-modal-body {
+      padding: 0;
+      margin: 10px;
+      height: fit-content;
+      max-height: 350px !important;
+      h3 {
+        @include font(1.4rem, 1.9rem);
+        margin: 5px;
+      }
+    }
+    .uk-modal-footer {
+      margin: 10px;
+      padding: 0;
+      button {
+        height: 50px;
+        width: 150px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .line {
+      margin: 10px 0;
+      p {
+        margin: 0;
+        @include font(1.2rem, 1.4rem);
+      }
+    }
+
+    .btn_pronoucing {
+      color: $color-secondary;
+      width: fit-content;
+      animation: none;
+      &:hover {
+        cursor: pointer;
+        &::before {
+          color: $color-secondary !important;
+        }
+      }
+    }
+  }
+}
