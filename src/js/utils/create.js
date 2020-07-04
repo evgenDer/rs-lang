@@ -28,6 +28,5 @@ function createElement(tagName, classNames, children, attrs, textContent) {
   return element;
 }
 
-
 // eslint-disable-next-line import/prefer-default-export
 export { createElement };

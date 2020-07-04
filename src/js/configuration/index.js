@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
-import {
-  DEFAULT_CONFIGURATION,
-} from '../constants/default-settings';
+import { DEFAULT_CONFIGURATION } from '../constants/default-settings';
 
 import * as page from './page';
 import * as configurationService from '../api/settings';
@@ -11,7 +9,7 @@ export async function getConfiguration() {
 
   if (!configuration || !configuration.optional) {
     const configurationModel = {
-      optional: DEFAULT_CONFIGURATION
+      optional: DEFAULT_CONFIGURATION,
     };
 
     await configurationService.upserSettings(configurationModel);
@@ -19,7 +17,7 @@ export async function getConfiguration() {
   }
 
   return configuration.optional;
-};
+}
 
 export async function saveCustomConfiguration(gameName, gameConfiguration) {
   const oldConfiguration = await configurationService.getSettings();
@@ -54,7 +52,7 @@ export async function updateConfigurationValues() {
   page.updateUserConfigurationPageElement(configuration);
   page.updateCardsConfigurationPageElement(configuration);
   page.updateAppConfigurationPageElement(configuration);
-};
+}
 
 async function saveConfiguration() {
   const prevConfiguration = await getConfiguration();
@@ -62,20 +60,22 @@ async function saveConfiguration() {
   const userConfiguration = page.getUserConfiguration();
   const cardsConfiguration = page.getCardsConfiguration();
 
-  if (cardsConfiguration.showWordTranslation === false &&
+  if (
+    cardsConfiguration.showWordTranslation === false &&
     cardsConfiguration.showSentenceExplanation === false &&
-    cardsConfiguration.showExplanationExample === false) {
+    cardsConfiguration.showExplanationExample === false
+  ) {
     page.showValidationErrorMessage();
     return false;
   }
 
   const appConfiguration = page.getAppConfiguration();
-  let {
-    dayLearningDate
-  } = prevConfiguration;
+  let { dayLearningDate } = prevConfiguration;
 
-  if (prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
-    prevConfiguration.maxCardsWithWordsPerDay !== userConfiguration.maxCardsWithWordsPerDay) {
+  if (
+    prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
+    prevConfiguration.maxCardsWithWordsPerDay !== userConfiguration.maxCardsWithWordsPerDay
+  ) {
     dayLearningDate = Date.now();
   }
 
@@ -96,16 +96,16 @@ async function saveConfiguration() {
     deleteWords: appConfiguration.deleteWords,
     markAsDifficultWord: appConfiguration.markAsDifficultWord,
     possibilityToMarkWord: appConfiguration.possibilityToMarkWord,
-  }
+  };
 
   const configurationModel = {
-    optional: configuration
+    optional: configuration,
   };
 
   await configurationService.upserSettings(configurationModel);
-
+  window.localStorage.setItem('dayLearningDate', '-1');
   return true;
-};
+}
 
 const addSaveButtonClickHandler = () => {
   document.querySelector('.configuration__save-button').addEventListener('click', async () => {
@@ -121,11 +121,13 @@ const addSaveButtonClickHandler = () => {
 
 const addCheckboxClickHandler = () => {
   const checkboxes = document.querySelectorAll('.configuration__card .uk-checkbox');
-  checkboxes.forEach((element) => element.addEventListener('click', () => {
-    checkboxes.forEach((checboxEl) => {
-      checboxEl.classList.remove('validation_failed');
-    });
-  }));
+  checkboxes.forEach((element) =>
+    element.addEventListener('click', () => {
+      checkboxes.forEach((checboxEl) => {
+        checboxEl.classList.remove('validation_failed');
+      });
+    }),
+  );
 };
 
 export const initConfigurationPage = () => {
