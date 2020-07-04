@@ -8,6 +8,7 @@ import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 import * as ProgressBar from '../games/progress-bar';
 import { selectNextRound } from '../games/dropdown';
 import { Statistics } from '../statistics/components/statistics';
+import { addStatisticsRound, createStaticticsRound } from './statistics';
 
 
 const loader = document.querySelector('.audiochallenge__load-page');
@@ -58,7 +59,7 @@ export class Game {
       example: document.getElementById('example-speaker'),
     }
 
-    this.wordsAmntInRound = 5;
+    this.wordsAmntInRound = 20;
     this.data = [];
     this.words = [];
     this.allRoundTranslations = [];
@@ -301,10 +302,12 @@ export class Game {
       }
       
       if (target.classList.contains('game-field__control_next')) {
-        this.statistics.updateStatistics(
-          this.data[this.currentAnswer].word, 
-          ProgressBar.isRightProgressPoint(this.task.progress.points[this.currentAnswer])
-        );
+        const currentAnswer = this.data[this.currentAnswer];
+        const isRight = ProgressBar.isRightProgressPoint(this.task.progress.points[this.currentAnswer]);
+
+        // this.statistics.updateStatistics(currentAnswer.word, isRight);
+        currentAnswer.isCorrect = isRight;
+        currentAnswer.isError = !isRight;
 
         this.currentAnswer += 1;
         if (this.currentAnswer < this.wordsAmntInRound) {
@@ -313,7 +316,10 @@ export class Game {
           selectNextRound();
           backGameBtn.click();
 
-          // this.statistics.showTemporaryStatistics();
+          createStaticticsRound();
+          addStatisticsRound(this.data);
+          // eslint-disable-next-line no-undef
+          UIkit.modal('.modal-round').show();
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
         this.errors += 1;

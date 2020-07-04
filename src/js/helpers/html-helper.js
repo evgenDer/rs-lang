@@ -30,3 +30,9 @@ export const hideElement = (element) => {
 export const showElement = (element) => {
   element.classList.remove('hidden');
 }
+
+export function removeChild(parentNode) {
+  while (parentNode.firstChild) {
+    parentNode.removeChild(parentNode.lastChild);
+  }
+}
