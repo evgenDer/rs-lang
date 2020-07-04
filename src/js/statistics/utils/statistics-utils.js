@@ -139,7 +139,7 @@ export const getDateTimeStatisticsForChart = (statistics, gameName) => {
   const data = gamedata.d.map(function map(f) {
     return {
       x: f.dt,
-      y: f.tnw
+      y: f.tce
     };
   });
 
