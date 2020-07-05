@@ -7,7 +7,8 @@ import playAudio from '../helpers/audio';
 import Card from './card';
 import { DATA_URL } from '../utils/constants';
 import { addStatisticRoundSprint, createStaticticRound } from './statistic';
-import { selectNextRound } from '../games/dropdown';
+import { selectNextRound, getCurrentLevel, getCurrentRound } from '../games/dropdown';
+import { saveCustomConfiguration } from '../configuration/index';
 
 const SERIES_LENGTH = 4;
 
@@ -206,6 +207,7 @@ export default class Game {
     createStaticticRound(this.points);
     addStatisticRoundSprint(this.data);
     Card.removeCardElements();
+    saveCustomConfiguration('sprint', { level: getCurrentLevel(), round: getCurrentRound() });
     // eslint-disable-next-line no-undef
     UIkit.modal('.modal-round').show();
     const btnClose = document.getElementById('modal-btn-close');

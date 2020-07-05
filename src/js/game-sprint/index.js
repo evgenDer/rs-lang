@@ -38,8 +38,9 @@ function addStartButtonClickHandler() {
 
 
 window.onload = () => {
+  Dropdown.addDropdownsEventHandlers();
+  Dropdown.addActiveGameControls('sprint');
   addGameModeSwitchClickHandler();
   addExitGameBtnClickHandler();
   addStartButtonClickHandler();
-  Dropdown.addDropdownsEventHandlers();
 }
