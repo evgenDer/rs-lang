@@ -25,7 +25,6 @@ export function switchGameMode() {
   }
 
   toSwitch.textContent = currentMode ? GAME_MODES.learned : GAME_MODES.all;
-  debugger;
   if(toSwitch.textContent === GAME_MODES.learned){
     disableDropdowns();
   } else enableDropdowns();

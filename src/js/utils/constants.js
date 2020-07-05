@@ -11,7 +11,7 @@ const PAGES = [
   },
   {
     id: 'learning-page',
-    href: '#',
+    href: 'learningWords.html',
     img: './assets/img/icons/learning.svg',
     text: 'Изучение',
   },
@@ -35,7 +35,7 @@ const PAGES = [
   },
   {
     id: 'statistics-page',
-    href: '#',
+    href: 'statistics.html',
     img: './assets/img/icons/statistics.svg',
     text: 'Статистика',
   },
@@ -65,5 +65,10 @@ const PAGES = [
   },
 ];
 
+const WORD_STATE = {
+  repeating: 'needToRepeat',
+  deleted: 'deleted',
+  learning: 'learning',
+};
 
-export { PAGES, APP_NAME, BACKEND_URL, DATA_URL };
+export { PAGES, APP_NAME, BACKEND_URL, DATA_URL, WORD_STATE };

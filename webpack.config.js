@@ -33,7 +33,7 @@ const cssLoaders = (extra) => {
       reloadAll: true,
     },
   },
-  'css-loader',
+    'css-loader',
   ];
 
   if (extra) {
@@ -91,10 +91,12 @@ const plugins = () => {
       filename: 'index.html',
     }),
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
+    htmlWebpackPluginCreator('learningWords.html', 'index'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
     htmlWebpackPluginCreator('game_sprint.html', 'index', 'game_sprint'),
+    htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),

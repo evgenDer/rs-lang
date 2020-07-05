@@ -15,7 +15,6 @@ const correctRepeats = document.getElementById('correct-repeats');
 const newWords = document.getElementById('new-words');
 const bestStreak = document.getElementById('best-streak');
 
-
 export function updateLanguageStatBar(learned, all = 3600) {
   learnedWords.textContent = +learned;
   allWords.textContent = +all;
@@ -41,7 +40,6 @@ export function updateTodayBars(learned) {
   updateTodayPlanBar(learned);
   updateTodayMaxBar(learned);
 }
-
 
 export function updateWordsPracticed(val) {
   wordsPracticed.textContent = +val;
