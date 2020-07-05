@@ -1,18 +1,20 @@
 import { removeChild } from '../helpers/html-helper';
 import { GAME_DATA_URL } from '../games/constants';
+import { AUDIO_B64 } from '../utils/constants';
 import playAudio from '../helpers/audio';
 
 
-function createStatisticSentence(audioSrc, textExample, translate){
+function createStatisticSentence(audioSrc, textExample, translate, b64 = false){
+  const helper = b64 ? AUDIO_B64 : GAME_DATA_URL;
   const newElement = `<div class="line">
-    <button class = "btn_pronoucing"><audio src = ${GAME_DATA_URL}${audioSrc}></button>
+    <button class = "btn_pronoucing"><audio src = ${helper}${audioSrc}></button>
     <p>${textExample} - ${translate}</p>
   </div>`;
 
   return newElement;
 }
 
-export function addStatisticsRound(dataPageRound) {
+export function addStatisticsRound(dataPageRound, b64 = false) {
   let correct = 0;
   let error = 0;
 
@@ -26,7 +28,7 @@ export function addStatisticsRound(dataPageRound) {
   errorField.insertAdjacentHTML('beforeend', `<h3>Я не знаю <span>0</span</h3></h3>`);
 
   dataPageRound.forEach((sentence) => {
-    const element = createStatisticSentence(sentence.audio, sentence.word, sentence.wordTranslate);
+    const element = createStatisticSentence(sentence.audio, sentence.word, sentence.wordTranslate, b64);
     if (sentence.isCorrect) {
       correct += 1;
       correctField.insertAdjacentHTML('beforeend', element);

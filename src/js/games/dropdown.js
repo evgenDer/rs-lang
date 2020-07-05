@@ -3,10 +3,12 @@
 const curLvl = document.getElementById('game-control__current_level');
 const listLvl = document.querySelectorAll('.game-control__list_level li');
 const listLvlContainer = document.querySelector('.game-control__list_level');
+export const listLvlBtnContainer = document.querySelector('.game-control__btn_level').parentElement;
 
 const curRound = document.getElementById('game-control__current_round');
 const listRound = document.querySelectorAll('.game-control__list_round li');
 const listRoundContainer = document.querySelector('.game-control__list_round');
+export const listRoundBtnContainer = document.querySelector('.game-control__btn_round').parentElement;
 
 
 export function getCurrentLevel() {

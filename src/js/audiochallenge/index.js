@@ -1,7 +1,7 @@
 import { Game } from './Game';
-import { addGameModeSwitchClickHandler, getGameMode } from '../games/gameModeSwitch';
-import { showElement, hideElement } from '../helpers/html-helper';
 import * as Dropdown from '../games/dropdown';
+import { addGameModeSwitchClickHandler, getGameMode, disableGameModeSwitch, enableGameModeSwitch } from '../games/gameModeSwitch';
+import { showElement, hideElement } from '../helpers/html-helper';
 import { Statistics } from '../statistics/components/statistics';
 
 
@@ -67,7 +67,7 @@ function addExitGameBtnClickHandler() {
     game.stopGame();
     Dropdown.enableDropdowns();
 
-    showElement(modeBtn);
+    enableGameModeSwitch(modeBtn);
     showElement(statBtn);
     showElement(description);
     setExitButtonStdMode();
@@ -81,7 +81,7 @@ function addStartButtonClickHandler() {
   startBtn.addEventListener('click', (event) => {
     event.preventDefault();
     
-    hideElement(modeBtn);
+    disableGameModeSwitch(modeBtn);
     hideElement(statBtn);
     hideElement(description);
     setExitButtonBackMode();

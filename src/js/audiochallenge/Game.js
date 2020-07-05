@@ -2,13 +2,16 @@
 
 import { createElement } from '../utils/create';
 import { GAME_MODES, GAME_DATA_URL } from '../games/constants';
-import { getFullDataWords } from '../api/words';
+import { getFullDataWords, getWordById } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 import * as ProgressBar from '../games/progress-bar';
 import { selectNextRound } from '../games/dropdown';
 import { Statistics } from '../statistics/components/statistics';
 import { addStatisticsRound, createStaticticsRound } from './statistics';
+import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/updateWordState';
+import { getAllUserWords, updateUserWord } from '../api/userWords';
+import { AUDIO_B64, IMG_B64 } from '../utils/constants';
 
 
 const loader = document.querySelector('.audiochallenge__load-page');
@@ -61,6 +64,7 @@ export class Game {
 
     this.wordsAmntInRound = 20;
     this.data = [];
+    this.userData = [];
     this.words = [];
     this.allRoundTranslations = [];
     this.rightAnswer = 0;
@@ -120,8 +124,22 @@ export class Game {
   }
 
   async getRoundData() {
-    this.data = await getFullDataWords(this.level, this.round, this.wordsAmntInRound);
-    shuffleArray(this.data);
+    if (this.mode === GAME_MODES.all) {
+      this.data = await getFullDataWords(this.level, this.round, this.wordsAmntInRound);
+      shuffleArray(this.data);
+    } else {
+      const userData = await getAllUserWords();
+
+      this.userData = userData
+        .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
+        .slice(0, this.wordsAmntInRound);
+      shuffleArray(this.userData);
+
+      const promises = [];
+      this.userData.forEach(({ wordId }) => promises.push(getWordById(wordId)));
+
+      this.data = await Promise.all(promises);
+    }
 
     this.allRoundTranslations = await this.getAllGroupWordTranslatons();
   }
@@ -176,16 +194,18 @@ export class Game {
   fillTask() {
     const currentData = this.data[this.currentAnswer];
 
-    this.task.img.src = `${GAME_DATA_URL}${currentData.image}`;
+    const audioHelper = this.mode === GAME_MODES.all ? GAME_DATA_URL : AUDIO_B64;
+    const imgHelper = this.mode === GAME_MODES.all ? GAME_DATA_URL : IMG_B64;
+
+    this.task.id = currentData.id;
     this.task.word.textContent = currentData.word;
     this.task.transcription.textContent = currentData.transcription;
     this.task.exampleSentence.innerHTML = currentData.textExample;
     this.task.exampleSentenceRus.textContent = currentData.textExampleTranslate;
 
-    this.task.wordSpeakerSrc = `${GAME_DATA_URL}${currentData.audio}`;
-    this.task.exampleSpeakerSrc = `${GAME_DATA_URL}${currentData.audioExample}`;
-
-    this.task.id = currentData.id;
+    this.task.img.src = `${imgHelper}${currentData.image}`;
+    this.task.wordSpeakerSrc = `${audioHelper}${currentData.audio}`;
+    this.task.exampleSpeakerSrc = `${audioHelper}${currentData.audioExample}`;
   }
 
   clearAnswers() {
@@ -309,15 +329,31 @@ export class Game {
         currentAnswer.isCorrect = isRight;
         currentAnswer.isError = !isRight;
 
+        if (this.mode === GAME_MODES.learned) {
+          const currentUserData = this.userData[this.currentAnswer];
+          if (isRight) {
+            increaseWordReferenceCount(currentUserData);
+          } else {
+            increaseWordErrorCount(currentUserData);
+          }
+          this.userData[this.currentAnswer] = currentUserData;
+        }
+
         this.currentAnswer += 1;
         if (this.currentAnswer < this.wordsAmntInRound) {
           this.startTask();
         } else {
           selectNextRound();
           backGameBtn.click();
+          
+          if (this.mode === GAME_MODES.learned) {
+            this.userData.forEach((word) => {
+              updateUserWord(word.wordId, word);
+            });
+          }
 
           createStaticticsRound();
-          addStatisticsRound(this.data);
+          addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
           // eslint-disable-next-line no-undef
           UIkit.modal('.modal-round').show();
         }

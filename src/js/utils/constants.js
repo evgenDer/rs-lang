@@ -72,4 +72,8 @@ const WORD_STATE = {
 };
 
 
-export { PAGES, APP_NAME, BACKEND_URL, AUX_API_URL, WORD_STATE };
+const AUDIO_B64 = 'data:audio/mp3;base64,';
+const IMG_B64 = 'data:image/jpg;base64,';
+
+
+export { PAGES, APP_NAME, BACKEND_URL, AUX_API_URL, WORD_STATE, AUDIO_B64, IMG_B64 };
