@@ -1,22 +1,24 @@
 import moment from 'moment';
 import { createElementObj } from '../utils/create';
 
+const ASSETS_URL = 'https://raw.githubusercontent.com/Marrlika/rslang-data/master/';
+
 export default class Card {
 constructor(data) {
 this.data =  data;
-moment.lang('ru');
+moment.locale('ru');
 }
 
-generate() {
+generate(playAudio) {
   const wordContains = Card.createBlock('word', this.data.word, this.data.wordTranslate, this.data.transcription||'' );
-  const vocabularyWordContains = createElementObj({ tagName: 'div', classNames: `vocabulary__card`,  children: [wordContains]});
+  this.vocabularyWordContains = createElementObj({ tagName: 'div', classNames: `vocabulary__word-container`, children: [wordContains]});
   if (this.data.textExample){
     const contextContains = Card.createBlock('context', this.data.textExample, this.data.textExampleTranslate);
-    vocabularyWordContains.append(contextContains);
+    this.vocabularyWordContains.append(contextContains);
   }
   if(this.data.textMeaning){
     const meaningContains = Card.createBlock('meaning', this.data.textMeaning, this.data.textMeaningTranslate);
-    vocabularyWordContains.append(meaningContains);
+    this.vocabularyWordContains.append(meaningContains);
   }
   const lastRepeat = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Давность: ${moment(this.data.lastUpdateDate).fromNow()}`});
   const repeatCount = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Повторений: ${this.data.repeatCount}`});
@@ -26,15 +28,26 @@ generate() {
     classNames: 'vocabulary__card-info',
     children: [ lastRepeat, repeatCount, nextRepeat ],
   });
-  vocabularyWordContains.append(cardInfoContainer);
-  return vocabularyWordContains;
+  const btnIcon = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: refresh']]});
+  this.btnRestore = createElementObj({ tagName: 'button', classNames: 'btn-restore', children: [btnIcon]});
+  const vocabularyCardContains = createElementObj({ tagName: 'div', classNames: `vocabulary__card`,  children: [this.vocabularyWordContains, this.btnRestore , cardInfoContainer]});
+  if(this.data.image) {
+    const cardImg = createElementObj({
+      tagName: 'img',
+      classNames: `vocabulary__card-img`,
+      attrs: [['src', `${ASSETS_URL}${this.data.image}`], ['alt', `${this.data.word} image`]],
+    });
+    vocabularyCardContains.insertBefore(cardImg, this.btnRestore );
+  }
+  this.addListeners(playAudio);
+  return vocabularyCardContains;
 }
 
 static createBlock(nameBlock, textParam, translateParam, transcriptionParam ) {
   const icon = createElementObj({
     tagName: 'img',
     classNames: `vocabulary__${nameBlock}_icon vocabulary__card-icon`,
-    attrs: [['src', './assets/img/icons/sound.svg'], ['alt', 'sound icon']],
+    attrs: [['src', './assets/img/icons/sound.svg'], ['alt', 'sound icon'], ['id', nameBlock]],
   });
   const text = createElementObj({ tagName: 'span', classNames: `vocabulary__${nameBlock}_text word-text_color`, textContent: textParam});
   const translate = createElementObj({
@@ -48,5 +61,23 @@ static createBlock(nameBlock, textParam, translateParam, transcriptionParam ) {
     container.insertBefore(transcription, translate);
   }
   return container;
+}
+
+
+addListeners(playAudio) {
+  this.vocabularyWordContains.addEventListener('click', (event) => {
+    switch (event.target.id) {
+      case 'word':
+        playAudio(`${ASSETS_URL}${this.data.audio}`);
+        break;
+      case 'context':
+        playAudio(`${ASSETS_URL}${this.data.audioExample}`);
+        break;
+      case 'meaning':
+        playAudio(`${ASSETS_URL}${this.data.audioMeaning}`);
+        break;
+      default:
+    }
+});
 }
 }

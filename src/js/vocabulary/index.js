@@ -9,7 +9,7 @@ const FILTERS = {
 }
 
 
-function generateDataForCards(settingsData, UserWordsData) {
+function generateDataForCards(configuration, UserWordsData) {
   const dataForCards = UserWordsData.map((wordData) => {
     const data = {
       lastUpdateDate: wordData.userWord.optional.lastUpdateDate,
@@ -18,19 +18,21 @@ function generateDataForCards(settingsData, UserWordsData) {
       word: wordData.word,
       wordTranslate: wordData.wordTranslate,
     }
-    if(settingsData.showImageAssociation) {
+    if(configuration.showImageAssociation) {
       data.image = wordData.image;
     }
-    if(settingsData.showWordTranscription) {
+    if(configuration.showWordTranscription) {
       data.transcription = wordData.transcription;
     }
-    if(settingsData.showSentenceExplanation) {
+    if(configuration.showSentenceExplanation) {
       data.textMeaning = wordData.textMeaning;
       data.textMeaningTranslate = wordData.textMeaningTranslate;
+      data.audioMeaning = wordData.audioMeaning;
     }
-    if(settingsData.showExplanationExample) {
+    if(configuration.showExplanationExample) {
       data.textExample = wordData.textExample;
       data.textExampleTranslate = wordData.textExampleTranslate;
+      data.audioExample = wordData.audioExample;
     }
     return data;
   });
@@ -39,15 +41,21 @@ function generateDataForCards(settingsData, UserWordsData) {
 
 export  default async function initVocabularyPage() {
   const wordsWrapper = document.querySelector('.vocabulary_cards-wrapper');
-const settingsData = await getSettings();
+  const audioObj = new Audio();
+  const configuration = await getSettings();
 // getAllUserWords().then((result) => console.log(result));
 // getAggregatedUserWords({'userWord.difficulty':{'$eq':'normal'}}).then((result) => console.log(result));
-const UserWordsData = await getAggregatedUserWords(FILTERS.learning, 3600);
-const dataForCards = generateDataForCards(settingsData.optional, UserWordsData[0].paginatedResults);
-const cards = [];
-dataForCards.forEach((cardData) => {
-  const card = new Card(cardData);
-  cards.push(card);
-  wordsWrapper.append(card.generate());
-});
+  const UserWordsData = await getAggregatedUserWords(FILTERS.learning, 3600);
+  const dataForCards = generateDataForCards(configuration.optional, UserWordsData[0].paginatedResults);
+  const cards = [];
+  dataForCards.forEach((cardData) => {
+    const card = new Card(cardData);
+    cards.push(card);
+    wordsWrapper.append(card.generate((audioSrc) => {
+      audioObj.pause();
+      audioObj.src = audioSrc;
+      audioObj.play();
+    }));
+  });
+
 }
