@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
-import { DEFAULT_CONFIGURATION } from '../constants/default-settings';
+import {
+  DEFAULT_CONFIGURATION
+} from '../constants/default-settings';
 
 import * as page from './page';
 import * as configurationService from '../api/settings';
@@ -46,7 +48,23 @@ export async function getCustomConfiguration(gameName) {
   return value;
 }
 
-export async function updateConfigurationValues() {
+async function updateConfiguration(configuration) {
+  const configurationModel = {
+    optional: configuration,
+  };
+
+  await configurationService.upserSettings(configurationModel);
+}
+
+export async function updatDifficultyLevel(userDifficultyLevel) {
+  const configuration = await getConfiguration();
+
+  configuration.difficultyLevel = userDifficultyLevel;
+
+  await updateConfiguration(configuration);
+}
+
+async function updateConfigurationValues() {
   const configuration = await getConfiguration();
 
   page.updateUserConfigurationPageElement(configuration);
@@ -60,7 +78,7 @@ async function saveConfiguration() {
   const userConfiguration = page.getUserConfiguration();
   const cardsConfiguration = page.getCardsConfiguration();
 
-  if(userConfiguration.maxNewWordsPerDay > userConfiguration.maxCardsWithWordsPerDay){
+  if (userConfiguration.maxNewWordsPerDay > userConfiguration.maxCardsWithWordsPerDay) {
     page.showValidationErrorMessageForUserConfiguration();
     return false;
   }
@@ -75,7 +93,9 @@ async function saveConfiguration() {
   }
 
   const appConfiguration = page.getAppConfiguration();
-  let { dayLearningDate } = prevConfiguration;
+  let {
+    dayLearningDate
+  } = prevConfiguration;
 
   if (
     prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
@@ -103,11 +123,7 @@ async function saveConfiguration() {
     possibilityToMarkWord: appConfiguration.possibilityToMarkWord,
   };
 
-  const configurationModel = {
-    optional: configuration,
-  };
-
-  await configurationService.upserSettings(configurationModel);
+  await updateConfiguration(configuration);
   window.localStorage.setItem('dayLearningDate', '-1');
   return true;
 }
