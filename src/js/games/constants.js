@@ -4,3 +4,5 @@ export const GAME_MODES = {
 };
 
 export const GAME_DATA_URL = 'https://raw.githubusercontent.com/evgender/rslang-data/master/';
+
+export const ERR_MSG = 'Изученных слов недостаточно, чтобы начать игру. Переключите режим.';

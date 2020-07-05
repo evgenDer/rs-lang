@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createElement } from '../utils/create';
-import { GAME_MODES, GAME_DATA_URL } from '../games/constants';
+import { GAME_MODES, GAME_DATA_URL, ERR_MSG } from '../games/constants';
 import { getFullDataWords, getWordById } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
@@ -14,8 +14,6 @@ import { getAllUserWords, updateUserWord } from '../api/userWords';
 import { AUDIO_B64, IMG_B64 } from '../utils/constants';
 import { saveCustomConfiguration } from '../configuration/index';
 
-
-const ERR_MSG = 'Изученных слов недсотаточно, чтобы начать игру. Переключите режим.';
 
 const loader = document.querySelector('.audiochallenge__load-page');
 const startLoading = () => showElement(loader);
