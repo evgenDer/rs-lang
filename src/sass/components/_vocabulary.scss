@@ -1,0 +1,35 @@
+
+.vocabulary {
+  height: 100vh;
+}
+
+.vocabulary__header {
+	font-size: 2rem;
+	font-weight: bold;
+	line-height: 2rem;
+  color: $color-secondary;
+  padding-left: 10px;
+}
+
+.vocabulary__form {
+  margin-top: 20px;
+  padding: 15px 20px;
+  padding-right: 10px;
+  border-radius: 10px;
+  color: $color-secondary;
+}
+
+.vocabulary__switcher {
+  margin-bottom: 5px;
+}
+
+.vocabulary__tab-link a {
+	color: $color-secondary;
+	font-weight: 600;
+	font-size: 1rem;
+}
+
+.vocabulary__tab-link.uk-active a {
+	border-color: $color-active;
+	color: $color-active;
+}

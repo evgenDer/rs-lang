@@ -27,9 +27,9 @@ const PAGES = [
     text: 'Мини-игры',
   },
   {
-    id: 'dictionary-page',
-    href: 'dictionary.html',
-    img: './assets/img/icons/dictionary.svg',
+    id: 'vocabulary-page',
+    href: 'vocabulary.html',
+    img: './assets/img/icons/vocabulary.svg',
     text: 'Словарь',
   },
   {
