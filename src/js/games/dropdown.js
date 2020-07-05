@@ -1,4 +1,7 @@
 /* eslint-disable no-param-reassign */
+import { getCustomConfiguration } from '../configuration/index';
+import { DEFAULT_CONFIGURATION_GAMES } from '../constants/default-settings';
+
 
 const curLvl = document.getElementById('game-control__current_level');
 const listLvl = document.querySelectorAll('.game-control__list_level li');
@@ -99,4 +102,14 @@ export function selectNextRound() {
   } else {
     listRound[currentRound + 1].click();
   }
+}
+
+export async function addActiveGameControls(gameName) {
+  disableDropdowns();
+  let gameConfiguration = await getCustomConfiguration(gameName);
+  if (Object.keys(gameConfiguration).length === 0) {
+    gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
+  }
+  listRound[gameConfiguration.round].click();
+  listLvl[gameConfiguration.level].click();
 }

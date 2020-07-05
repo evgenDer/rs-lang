@@ -108,6 +108,10 @@ window.onload = () => {
   addStartButtonClickHandler();
   addExitGameBtnClickHandler();
   addGameModeSwitchClickHandler();
+
   Dropdown.addDropdownsEventHandlers();
+  Dropdown.addActiveGameControls('audioCall');
+  Dropdown.enableDropdowns();
+  
   addStatisticsButtonClickHandler();
 };

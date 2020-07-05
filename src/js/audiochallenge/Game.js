@@ -6,12 +6,13 @@ import { getFullDataWords, getWordById } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 import * as ProgressBar from '../games/progress-bar';
-import { selectNextRound } from '../games/dropdown';
+import { selectNextRound, getCurrentRound, getCurrentLevel } from '../games/dropdown';
 import { Statistics } from '../statistics/components/statistics';
 import { addStatisticsRound, createStaticticsRound } from './statistics';
 import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/updateWordState';
 import { getAllUserWords, updateUserWord } from '../api/userWords';
 import { AUDIO_B64, IMG_B64 } from '../utils/constants';
+import { saveCustomConfiguration } from '../configuration/index';
 
 
 const loader = document.querySelector('.audiochallenge__load-page');
@@ -351,6 +352,8 @@ export class Game {
               updateUserWord(word.wordId, word);
             });
           }
+
+          saveCustomConfiguration('audioCall', { level: getCurrentLevel(), round: getCurrentRound() });
 
           createStaticticsRound();
           addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
