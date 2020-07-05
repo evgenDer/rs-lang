@@ -33,3 +33,70 @@
 	border-color: $color-active;
 	color: $color-active;
 }
+
+.vocabulary_cards-wrapper {
+  overflow-y: auto;
+  height: 525px;
+}
+
+.vocabulary__card {
+  padding: 10px 5px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.word-text_color {
+  color: $color-additional;
+  padding-left: 5px;
+}
+
+.vocabulary__word_text {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.vocabulary__word_transcription {
+  margin: 5px 10px;
+  font-weight: 500;
+}
+
+.vocabulary__card-icon {
+  width: 20px;
+  filter: opacity(40%);
+  cursor: pointer;
+
+  &:hover {
+    filter: opacity(90%);
+  }
+}
+
+.vocabulary_transcription {
+  font-size: .9rem;
+  padding-left: 27px;
+  margin: 0;
+}
+
+.vocabulary__word_translate {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.vocabulary__block-container {
+  margin: 5px 0 10px;
+}
+
+.vocabulary__card-info {
+  display: flex;
+  flex-direction: row;
+  color: #5b7195;
+  font-size: .875rem;
+  padding: .25rem 0;
+}
+
+.data-point {
+  padding: 0 .5rem;
+  border-right: 1px solid #1a3b71;
+}
+
+.data-point:last-child {
+  border-right: none;
+}
