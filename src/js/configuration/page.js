@@ -111,3 +111,8 @@ export const showValidationErrorMessage = () => {
   htmlHelper.setClassesToElement('#form-showSentenceExplanation', 'validation_failed');
   htmlHelper.setClassesToElement('#form-showExplanationExample', 'validation_failed');
 };
+
+export const showValidationErrorMessageForUserConfiguration = () => {
+  htmlHelper.setClassesToElement('#form-maxNewWordsPerDay', 'validation_failed');
+  htmlHelper.setClassesToElement('#form-maxCardsWithWordsPerDay', 'validation_failed');
+}

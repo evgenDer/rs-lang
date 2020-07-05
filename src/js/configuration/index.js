@@ -60,6 +60,11 @@ async function saveConfiguration() {
   const userConfiguration = page.getUserConfiguration();
   const cardsConfiguration = page.getCardsConfiguration();
 
+  if(userConfiguration.maxNewWordsPerDay > userConfiguration.maxCardsWithWordsPerDay){
+    page.showValidationErrorMessageForUserConfiguration();
+    return false;
+  }
+
   if (
     cardsConfiguration.showWordTranslation === false &&
     cardsConfiguration.showSentenceExplanation === false &&
@@ -130,8 +135,20 @@ const addCheckboxClickHandler = () => {
   );
 };
 
+const addInputClickHandler = () => {
+  const inputs = document.querySelectorAll('.configuration__card .uk-input');
+  inputs.forEach((element) =>
+    element.addEventListener('click', () => {
+      inputs.forEach((input) => {
+        input.classList.remove('validation_failed');
+      });
+    }),
+  );
+};
+
 export const initConfigurationPage = () => {
   updateConfigurationValues();
   addSaveButtonClickHandler();
   addCheckboxClickHandler();
+  addInputClickHandler();
 };
