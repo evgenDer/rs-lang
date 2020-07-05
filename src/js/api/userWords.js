@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { getUserId } from '../utils/storage';
 import sendRequest from './requests';
 import { BACKEND_URL } from '../utils/constants';
@@ -47,7 +48,6 @@ async function updateUserWord(wordId, word) {
   if(Object.prototype.hasOwnProperty.call(word, 'wordId')){
     delete word.wordId;
   }
-  console.log(word);
   const result = await makeRequestByWordId('PUT', wordId, word);
   return result;
 }
