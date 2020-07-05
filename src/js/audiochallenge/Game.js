@@ -15,6 +15,8 @@ import { AUDIO_B64, IMG_B64 } from '../utils/constants';
 import { saveCustomConfiguration } from '../configuration/index';
 
 
+const ERR_MSG = 'Изученных слов недсотаточно, чтобы начать игру. Переключите режим.';
+
 const loader = document.querySelector('.audiochallenge__load-page');
 const startLoading = () => showElement(loader);
 const stopLoading = () => hideElement(loader);
@@ -93,6 +95,16 @@ export class Game {
       this.prepareGameField();
 
       this.startTask();
+    }).catch((err) => {
+      // eslint-disable-next-line no-undef
+      UIkit.notification({
+        message: `<span uk-icon='icon: warning'></span> ${err}`,
+        status: 'warning',
+        pos: 'top-center',
+      });
+
+      stopLoading();
+      backGameBtn.click();
     });
   }
 
@@ -130,6 +142,9 @@ export class Game {
       shuffleArray(this.data);
     } else {
       const userData = await getAllUserWords();
+      if (userData.length < this.wordsAmntInRound) {
+        throw ERR_MSG;
+      }
 
       this.userData = userData
         .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
