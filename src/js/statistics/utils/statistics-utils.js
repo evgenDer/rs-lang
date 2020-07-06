@@ -178,6 +178,30 @@ export const getDateTimeStatisticsForChart = (statistics, gameName) => {
   return {dataTotal, dataCorrect, dataError};
 }
 
+export const getPercentToTotalStatisticsForChart = (statistics, gameName) => {
+  const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
+
+  const totalWordsCount = 3600;
+
+  let totalLearningWordsCount = 0;
+
+  const data = gamedata.d.map(function map(f) {
+    const dateTime = new Date(f.dt);
+    totalLearningWordsCount += f.lwc;
+    const percent = ((totalLearningWordsCount / totalWordsCount).toFixed(2)) * 100;
+
+    console.log(percent);
+
+    return {
+      // x: new Date(dateTime.getUTCFullYear(), dateTime.getUTCMonth(), dateTime.getUTCDay()),
+      x: dateTime,
+      y: percent
+    };
+  });
+
+  return data;
+}
+
 // export const getWordLevelStatisticsForChart = (statistics, gameName) => {
 //   const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
 

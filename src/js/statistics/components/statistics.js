@@ -115,6 +115,11 @@ export class Statistics {
     const dateTimeData = await statisticsHelper.getDateTimeStatistics(this.gameName);
 
     chartHelper.renderDateTimeChart(dateTimeData);
+   }
 
+   async showPercentToAllChart() {
+     const data = await statisticsHelper.getPercentToTotalStatistics(this.gameName);
+
+     chartHelper.renderPercentToAllChart(data);
    }
 }

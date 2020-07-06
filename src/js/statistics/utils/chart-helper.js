@@ -84,3 +84,29 @@ export function renderDateTimeChart(data) {
 
   chart.render();
 }
+
+export function renderPercentToAllChart(data){
+  if (!data) {
+    return;
+  }
+
+  const chart = new CanvasJS.Chart('chartPercentContainer', {
+    animationEnabled: true,
+    title:{
+      text: "Прогресс изученных слов"
+    },
+    axisY: {
+      suffix: "%",
+      // maximum: 100
+    },
+    data: [{
+      type: "stepArea",
+      markerSize: 5,
+      xValueFormatString: "DD MMM",
+      yValueFormatString: "#,##0.##\"%\"",
+      dataPoints: data
+    }]
+  });
+
+  chart.render();
+}

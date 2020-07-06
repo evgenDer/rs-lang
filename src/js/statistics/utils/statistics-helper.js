@@ -71,6 +71,19 @@ export async function getWordLevelStatistics(gameName) {
   return data;
 }
 
+export async function getPercentToTotalStatistics(gameName) {
+  const statistics = await getStatistics();
+
+  if (!statistics || !statistics.optional ||
+    !statistics.optional.sd) {
+    return null;
+  }
+
+  const data = statisticsUtils.getPercentToTotalStatisticsForChart(statistics, gameName);
+
+  return data;
+}
+
 export function getModalForTemporaryStatistics(currentStatistics) {
   let modalElement = null;
 
