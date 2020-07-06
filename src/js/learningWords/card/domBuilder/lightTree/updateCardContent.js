@@ -19,6 +19,19 @@ export default function updateCardContent(cardElement) {
   learningline.setState('isDone', cardElement.state.isDone);
 
   //Обновляем отображение перевода
+  let isTranslationOpened = true;
+  //Перевод слова
+  console.log(cardElement.settings.showWordTranslation);
+  if (
+    (cardElement.settings.showNewWordTranslation &&
+      cardElement.state.optional.mode === 'newWord') ||
+    (cardElement.settings.showWordTranslation && isTranslationOpened)
+  ) {
+    ruWord.classList.add('opened');
+    isTranslationOpened = false;
+  } else {
+    ruWord.classList.remove('opened');
+  }
   //Пример предложения
   if (cardElement.settings.showExplanationExample) {
     const example = cardElement.state.textExample;
@@ -34,7 +47,10 @@ export default function updateCardContent(cardElement) {
     }
     enExample.classList.add('opened');
     enExample.innerHTML = exampleUpdated;
-    if (cardElement.settings.showSentenceTranslation && cardElement.state.isDone) {
+    if (
+      (cardElement.settings.showSentenceTranslation && cardElement.state.isDone) ||
+      isTranslationOpened
+    ) {
       ruExample.classList.add('opened');
     } else {
       ruExample.classList.remove('opened');
@@ -55,27 +71,22 @@ export default function updateCardContent(cardElement) {
     }
     enMeaning.classList.add('opened');
     enMeaning.innerHTML = meaningUpdated;
-    if (cardElement.settings.showSentenceTranslation && cardElement.state.isDone) {
+    if (
+      (cardElement.settings.showSentenceTranslation && cardElement.state.isDone) ||
+      isTranslationOpened
+    ) {
       ruMeaning.classList.add('opened');
     } else {
       ruMeaning.classList.remove('opened');
     }
   }
-  //Перевод слова
-  if (
-    (cardElement.settings.showNewWordTranslation &&
-      cardElement.state.optional.mode === 'newWord') ||
-    (cardElement.settings.showWordTranslation && cardElement.state.isDone)
-  ) {
-    ruWord.classList.add('opened');
-  } else {
-    ruWord.classList.remove('opened');
-  }
+
   //Обновляем опции звука и отображения перевода
   updateEnableAudioHelper(cardElement);
   updateStopAudioHelper(cardElement);
 
   //Обновляем кнопки доп.опций
+
   if (cardElement.state.isDone) {
     if (openButton !== null) {
       openButton.remove();

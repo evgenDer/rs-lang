@@ -39,8 +39,8 @@ export default async function getDayLocalState(learningScreenElemen) {
     learningScreenElemen.setState('currentNewWordCardIndex', firstNoLearnedNewWordIndex);
     learningScreenElemen.setState('currentLearningCardIndex', firstNoLearnedWordIndex);
   } else {
-    learningScreenElemen.localState = [];
-    learningScreenElemen.wordArrs = [];
+    learningScreenElemen.localState = {};
+    learningScreenElemen.wordArrs = {};
     learningScreenElemen.setState('mode', 'newWord');
     learningScreenElemen.setState('currentNewWordCardIndex', 0);
     learningScreenElemen.setState('currentLearningCardIndex', 0);
@@ -51,11 +51,13 @@ export default async function getDayLocalState(learningScreenElemen) {
       cardToRepeatCount = 0;
     }
 
+    console.log(learningScreenElemen.settings.learningWordsPage);
     let wordArrs = await createNewWordsPack(
       learningScreenElemen.settings.newWordCount,
       cardToRepeatCount,
       learningScreenElemen.settings.difficultyLevel,
       currentDate,
+      learningScreenElemen.settings.learningWordsPage,
     );
     const dayWordArrs = wordArrs;
 

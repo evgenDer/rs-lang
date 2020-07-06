@@ -46,6 +46,7 @@ export default class LearningScreenElement extends HTMLElement {
       newWordCount: 3,
       wordCount: 6,
       difficultyLevel: 0,
+      learningWordsPage: 3,
     };
 
     this.wordArrs = {

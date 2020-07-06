@@ -34,6 +34,16 @@ export default function createEvents(learningScreenElement) {
     } else if (event.target.closest('.enableAudio[slot=audioHelperButton]') != null) {
     }
 
+    if (
+      event.target.closest('[slot=translateOptions]') === null &&
+      event.target.closest('.translateOptionsButton') === null
+    ) {
+      try {
+        learningScreenElement.querySelector('.translateOptionsButton').classList.remove('active');
+        learningScreenElement.querySelector('[slot=translateOptions]').classList.remove('opened');
+      } catch {}
+    }
+
     if (item != null) {
       switch (item.classList[0]) {
         case 'arrow':
@@ -63,6 +73,12 @@ export default function createEvents(learningScreenElement) {
   });
 
   document.addEventListener('keydown', () => {
+    if (
+      learningScreenElement.querySelector('.translateOptionsButton').classList.contains('active')
+    ) {
+      learningScreenElement.querySelector('.translateOptionsButton').classList.remove('active');
+      learningScreenElement.querySelector('[slot=translateOptions]').classList.remove('opened');
+    }
     if (event.key === 'Enter' && learningScreenElement.querySelector('learning-results') === null) {
       rightClick(learningScreenElement);
     }

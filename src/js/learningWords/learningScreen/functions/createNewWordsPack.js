@@ -1,16 +1,43 @@
 import { getDataWords, getWordById } from '../../../api/words';
 import { getAllUserWords } from '../../../api/userWords';
 import { calculateRepeatTiming } from '../../../words/updateWordState';
+import saveSettingsFromLearningWords from './saveSettings';
 
 export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group = 0, page = 0) {
   let allUserWords = await getAllUserWords();
-  console.log(allUserWords);
   let allUpdatedUserWords = [];
   let dayNewWordsPack = [];
+  let newWordsNeededCount = dayNewWordsCount;
+
+  if (!Array.isArray(allUserWords)) {
+    allUserWords = [];
+  }
+
+  allUpdatedUserWords = allUserWords.filter((element) => element.optional.mode !== 'deleted');
+  allUpdatedUserWords = sortLearnedWords(allUpdatedUserWords);
+  allUpdatedUserWords = sortLearnedWordsByNeededToRepeat(allUpdatedUserWords);
+
+  if (allUpdatedUserWords.length > dayWordsCount) {
+    allUpdatedUserWords = allUpdatedUserWords.slice(0, dayWordsCount);
+  }
+
+  for (let i = 0; i < allUpdatedUserWords.length; i += 1) {
+    const word = await getWordById(allUpdatedUserWords[i].wordId);
+    const updatedWord = Object.assign(allUpdatedUserWords[i], word, {
+      isDone: false,
+      isFirstAnswer: true,
+    });
+    allUpdatedUserWords.push(updatedWord);
+  }
+
+  if (allUpdatedUserWords.length < dayWordsCount - dayNewWordsCount) {
+    newWordsNeededCount = dayWordsCount - allUpdatedUserWords.length;
+  }
+
   dayNewWordsPack = await updateNewWordsPack(
     dayNewWordsPack,
     allUserWords,
-    dayNewWordsCount,
+    newWordsNeededCount,
     group,
     page,
   );
@@ -32,40 +59,13 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
     }),
   );
 
-  if (!Array.isArray(allUserWords)) {
-    allUserWords = [];
-  }
-
-  allUserWords = allUserWords.filter((element) => element.optional.mode !== 'deleted');
-  allUserWords = sortLearnedWords(allUserWords);
-  allUserWords = sortLearnedWordsByNeededToRepeat(allUserWords);
-
-  if (allUserWords.length > dayWordsCount) {
-    allUserWords = allUserWords.slice(0, dayWordsCount);
-  }
-
-  for (let i = 0; i < allUserWords.length; i += 1) {
-    const word = await getWordById(allUserWords[i].wordId);
-    console.log(word);
-    const updatedWord = Object.assign(allUserWords[i], word, {
-      isDone: false,
-      isFirstAnswer: true,
-    });
-    allUpdatedUserWords.push(updatedWord);
-  }
-
-  if (allUpdatedUserWords.length < dayWordsCount) {
-    allUpdatedUserWords = allUpdatedUserWords.concat(
-      dayNewWordsPack.slice(0, dayWordsCount - allUserWords.length),
-    );
-  }
-
   const wordArrs = {
     newWords: dayNewWordsPack,
     learnedWords: allUpdatedUserWords,
     needToRepeat: [],
   };
 
+  console.log(wordArrs);
   return wordArrs;
 }
 
@@ -96,8 +96,10 @@ async function updateNewWordsPack(
   group = 0,
   page = 0,
 ) {
+  const learningScreen = document.querySelector('learning-screen');
   let localDayNewWordsPack = dayNewWordsPack;
   const newWordsPack = await getDataWords(group, page);
+  let isNewWordLearnedArr = Array(newWordsPack.length).fill(false);
   for (let i = 0; i < newWordsPack.length; i += 1) {
     let isNewWord = true;
     for (let j = 0; j < allUserWords.length; j += 1) {
@@ -108,12 +110,33 @@ async function updateNewWordsPack(
     }
     if (isNewWord) {
       localDayNewWordsPack.push(newWordsPack[i]);
+    } else {
+      isNewWordLearnedArr[i] = true;
     }
   }
+
+  if (isNewWordLearnedArr.indexOf(false) === -1) {
+    if (learningScreen.settings.learningWordsPage >= 30) {
+      learningScreen.settings.learningWordsPage = 0;
+      if (learningScreen.settings.difficultyLevel >= 5) {
+        learningScreen.settings.difficultyLevel = 0;
+      } else {
+        learningScreen.settings.difficultyLevel += 1;
+      }
+    } else {
+      learningScreen.settings.learningWordsPage += 1;
+    }
+    await saveSettingsFromLearningWords(learningScreen);
+    console.log(learningScreen.settings);
+  }
+
   if (localDayNewWordsPack.length >= dayNewWordsCount) {
     return localDayNewWordsPack.filter((element, index) => index < dayNewWordsCount);
   }
   if (page === 30) {
+    if (group === 5) {
+      return await updateNewWordsPack(localDayNewWordsPack, allUserWords, dayNewWordsCount, 0, 0);
+    }
     return await updateNewWordsPack(
       localDayNewWordsPack,
       allUserWords,

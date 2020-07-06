@@ -29,7 +29,6 @@ export default function openCard(learningScreenElement) {
     if (screenMode === 'learning' || screenMode === 'newWord') {
       learningScreenElement.statistics.currentRightAnswerSeries = 0;
     }
-
     openCardUpdate(card.state);
     addWordNeedToRepeat(learningScreenElement);
     updateStatusBar(learningScreenElement);
@@ -54,6 +53,9 @@ export default function openCard(learningScreenElement) {
   }
 
   difficultyButtons.forEach((element) => element.classList.add('opened'));
+
+  console.log(learningScreenElement.wordArrs);
+  console.log(learningScreenElement.localState);
 
   saveDayLocalState(learningScreenElement);
   updateCardState(learningScreenElement);

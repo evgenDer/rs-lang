@@ -70,20 +70,24 @@ async function saveConfiguration() {
   }
 
   const appConfiguration = page.getAppConfiguration();
-  let { dayLearningDate } = prevConfiguration;
 
   if (
     prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
     prevConfiguration.maxCardsWithWordsPerDay !== userConfiguration.maxCardsWithWordsPerDay
   ) {
-    dayLearningDate = Date.now();
+    window.localStorage.setItem('dayLearningDate', '-1');
+  }
+
+  let learningPage = prevConfiguration.learningWordsPage;
+  if (prevConfiguration.difficultyLevel !== userConfiguration.difficultyLevel) {
+    learningPage = 0;
   }
 
   const configuration = {
     maxNewWordsPerDay: userConfiguration.maxNewWordsPerDay,
     maxCardsWithWordsPerDay: userConfiguration.maxCardsWithWordsPerDay,
-    dayLearningDate,
     difficultyLevel: userConfiguration.difficultyLevel,
+    learningWordsPage: learningPage,
     showWordTranslation: cardsConfiguration.showWordTranslation,
     showSentenceExplanation: cardsConfiguration.showSentenceExplanation,
     showExplanationExample: cardsConfiguration.showExplanationExample,
@@ -102,8 +106,10 @@ async function saveConfiguration() {
     optional: configuration,
   };
 
+  console.log(configurationModel);
+
   await configurationService.upserSettings(configurationModel);
-  window.localStorage.setItem('dayLearningDate', '-1');
+
   return true;
 }
 
