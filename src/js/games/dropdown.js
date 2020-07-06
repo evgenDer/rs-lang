@@ -113,6 +113,12 @@ export async function addActiveGameControls(gameName){
   if(gameConfiguration === null){
     gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
   }
-  listRound[gameConfiguration.round + 1].click();
-  listLvl[gameConfiguration.level + 1].click();
+  console.log(gameConfiguration);
+  listLvl[gameConfiguration.level].click();
+  listRound[gameConfiguration.round].click();
+  selectNextRound();
+  console.log(gameConfiguration.level);
 }
+
+export const listLvlBtnContainer = document.querySelector('.game-control__btn_level').parentElement;
+export const listRoundBtnContainer = document.querySelector('.game-control__btn_round').parentElement;

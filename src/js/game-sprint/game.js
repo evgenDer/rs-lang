@@ -11,7 +11,6 @@ import { selectNextRound, getCurrentLevel, getCurrentRound } from '../games/drop
 import { saveCustomConfiguration } from '../configuration/index';
 import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/updateWordState';
 import { getAllUserWords, updateUserWord } from '../api/userWords';
-import { exitGame } from '../utils/helpers';
 
 const SERIES_LENGTH = 4;
 
@@ -211,8 +210,11 @@ export default class Game {
         this.increaseCorrectAnswers();
       } else this.increaseErrorAnswers();
     });
-    document.querySelector('.btn_exit').addEventListener('click', () => {
-      exitGame();
+    playPage.querySelector('.btn_exit').addEventListener('click', () => {
+      stopAudio();
+      hideElement(playPage);
+      showElement(startPage);
+      clearTimer();
     });
     this.playElements.btnWrong.addEventListener('click', () => {
       if(this.data[this.currentAnswer].wordTranslate !== this.words[this.currentTranslateAnswer]){

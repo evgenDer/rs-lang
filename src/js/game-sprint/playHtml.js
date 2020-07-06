@@ -1,6 +1,6 @@
 const playHtml = `<div class = "play__source">
 <div class = "game-sprint__play_mark">
-  <button class = 'btn_exit btn_close' uk-close></button>
+  <button class = 'btn_exit btn_close'><img src="./assets/img/icons/arrow-right.svg"></button>
   <p>0</p>
   <div class = "play__time"></div>
 </div>
