@@ -17,20 +17,11 @@
         <button class = 'btn_close' uk-close></button>
         <div class = "header__game-controls">
           <div class="uk-inline game-control">
-            <button
-              class="uk-button uk-button-default game-control__btn game-control__btn_mode game-control__btn_mode_disabled"
-              type="button"
-              >
-              Cлова: <span id="game-mode-switch">изученные</span>
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_stat" type="button">
+              Статистика
             </button>
-            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_desc">
-              <div class="uk-nav uk-dropdown-nav">
-                <p class="desc_active hidden">В игре будут задей- <br> ствованы слова из <br> всей коллекции</p>
-                <p class="desc_disabled">В игре будут задей- <br> ствованы только <br> изученные слова</p>
-              </div>
-            </div>
           </div>
-          <div class="uk-inline game-control">
+          <div class="uk-inline game-control  hidden">
             <button class="uk-button uk-button-default game-control__btn game-control__btn_level" type="button">
               Уровень: <span id="game-control__current_level">1</span>
             </button>
@@ -45,7 +36,7 @@
               </ul>
             </div>
           </div>
-          <div class="uk-inline game-control">
+          <div class="uk-inline game-control hidden">
             <button class="uk-button uk-button-default game-control__btn game-control__btn_round" type="button">
               Раунд: <span id="game-control__current_round">1</span>
             </button>
@@ -60,9 +51,20 @@
               </ul>
             </div>
           </div>
-          <button class ="btn_statistic"><img src = 'assets/img/icons/statistic.svg'></button>
+          <button
+              class="uk-button uk-button-default game-control__btn game-control__btn_mode game-control__btn_mode_disabled"
+              type="button"
+              >
+              Cлова: <span id="game-mode-switch">изученные</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_desc">
+              <div class="uk-nav uk-dropdown-nav">
+                <p class="desc_active hidden">В игре будут задей- <br> ствованы слова из <br> всей коллекции</p>
+                <p class="desc_disabled">В игре будут задей- <br> ствованы только <br> изученные слова</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
       <div class = "game-sprint__start_main">
         <div class="uk-card uk-card-body">
           <h3 class="uk-card-title">Спринт</h3>
@@ -71,10 +73,12 @@
       </div>
       </div>
     </div>
-    <div class ="game-sprint__load hidden"></div>
+    <div class ="game-sprint__load hidden">
+    </div>
     <div class = "game-sprint__play hidden">
     </div>
   </div>
+</div>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
 </body>
