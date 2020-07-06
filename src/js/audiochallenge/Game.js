@@ -359,14 +359,10 @@ export class Game {
           this.startTask();
         } else {
           selectNextRound();
-          backGameBtn.click();
-
           saveCustomConfiguration('audioCall', { level: getCurrentLevel(), round: getCurrentRound() });
-
-          createStaticticsRound();
-          addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
-          // eslint-disable-next-line no-undef
-          UIkit.modal('.modal-round').show();
+          
+          backGameBtn.click();
+          this.showStatistics();
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
         this.errors += 1;
@@ -457,5 +453,12 @@ export class Game {
     this.controlBtn.onclick = null;
 
     hideElement(this.gameField);
+  }
+
+  showStatistics() {
+    createStaticticsRound();
+    addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
+    // eslint-disable-next-line no-undef
+    UIkit.modal('.modal-round').show();
   }
 }
