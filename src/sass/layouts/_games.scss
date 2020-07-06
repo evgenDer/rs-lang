@@ -70,6 +70,10 @@
     border-radius: 10px 10px 0 0;
   }
 
+  .uk-card-body {
+    min-height: 180px;
+  }
+
   @include media-mobile {
     .uk-card-body {
       padding: 15px 15px;

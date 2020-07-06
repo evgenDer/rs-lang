@@ -96,6 +96,9 @@ const plugins = () => {
     htmlWebpackPluginCreator('vocabulary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
     htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
+    htmlWebpackPluginCreator('games.html', 'index'),
+    htmlWebpackPluginCreator('game-audiochallenge.html', 'game_audiochallenge'),
+
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -127,6 +130,7 @@ module.exports = {
   entry: {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
+    game_audiochallenge: ['@babel/polyfill', './js/audiochallenge/index.js', './sass/style.scss'],
   },
   output: {
     filename: filename('js'),
