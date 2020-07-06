@@ -22,6 +22,14 @@ export class Statistics {
     this.currentStatistics = null;
   }
 
+  async updateGameStatistics(totalCorrect, totalError, gameScore) {
+
+  }
+
+  async updateLearningStatistics(learningWordsCount, newWordsCount, totalCorrect, totalError){
+
+  }
+
   /**
    * Updates statistics with provided values.
    * @param {string} word - Word

@@ -42,46 +42,44 @@ export const getNewStatisticsValue = (currentStatistics, gameName) => {
 export const getNewStatisticsDataValue = (dateTime) => {
   const statistics = {
     dt: dateTime,
-    tce: 0,
-    tnw: 0,
     tc: 0,
     te: 0,
-    ts: 0,
-    sc: 0,
-    wd: [],
+    gs: 0,
+    lwc: 0,
+    nwc: 0
   };
 
   return statistics;
 };
 
-export const getNewWordData = (word, isCorrect, wordLevel) => {
-  const wordData = {
-    w: word,
-    c: 0,
-    e: 0,
-    l: wordLevel,
-  };
+// export const getNewWordData = (word, isCorrect, wordLevel) => {
+//   const wordData = {
+//     w: word,
+//     c: 0,
+//     e: 0,
+//     l: wordLevel,
+//   };
 
-  if (isCorrect) {
-    wordData.c += 1;
-  } else {
-    wordData.e += 1;
-  }
+//   if (isCorrect) {
+//     wordData.c += 1;
+//   } else {
+//     wordData.e += 1;
+//   }
 
-  return wordData;
-};
+//   return wordData;
+// };
 
-export const updateWordData = (wordValue, isCorrect) => {
-  const wordData = wordValue;
+// export const updateWordData = (wordValue, isCorrect) => {
+//   const wordData = wordValue;
 
-  if (isCorrect) {
-    wordData.c += 1;
-  } else {
-    wordData.e += 1;
-  }
+//   if (isCorrect) {
+//     wordData.c += 1;
+//   } else {
+//     wordData.e += 1;
+//   }
 
-  return wordData;
-};
+//   return wordData;
+// };
 
 export const getCurrentStatistics = (globalStatistics, gameName, dateTime) => {
   const parsed = parseStatisticsData(globalStatistics);
@@ -98,40 +96,40 @@ export const getCurrentStatistics = (globalStatistics, gameName, dateTime) => {
   return currentStatistics;
 }
 
-export const updateStatisticsValues = (statisticsToUpdate, word, isCorrect, wordLevel, isStrike, gameScore) => {
-  const updatedStatistics = statisticsToUpdate;
+// export const updateStatisticsValues = (statisticsToUpdate, word, isCorrect, wordLevel, isStrike, gameScore) => {
+//   const updatedStatistics = statisticsToUpdate;
 
-  updatedStatistics.tce += 1;
+//   updatedStatistics.tce += 1;
 
-  if (wordLevel !== -1) {
-    updatedStatistics.tnw += 1;
-  }
+//   if (wordLevel !== -1) {
+//     updatedStatistics.tnw += 1;
+//   }
 
-  if (isCorrect) {
-    updatedStatistics.tc += 1;
-  } else {
-    updatedStatistics.te += 1;
-  }
+//   if (isCorrect) {
+//     updatedStatistics.tc += 1;
+//   } else {
+//     updatedStatistics.te += 1;
+//   }
 
-  if (isStrike) {
-    updatedStatistics.ts += 1;
-  }
+//   if (isStrike) {
+//     updatedStatistics.ts += 1;
+//   }
 
-  if (gameScore !== 0) {
-    updatedStatistics.gs = gameScore;
-  }
+//   if (gameScore !== 0) {
+//     updatedStatistics.gs = gameScore;
+//   }
 
-  let wordValue = updatedStatistics.wd.find((w) => w.w.toLowerCase() === word.toLowerCase());
+//   let wordValue = updatedStatistics.wd.find((w) => w.w.toLowerCase() === word.toLowerCase());
 
-  if (!wordValue) {
-    wordValue = getNewWordData(word, isCorrect, wordLevel);
-    updatedStatistics.wd.push(wordValue);
-  } else {
-    wordValue = updateWordData(wordValue, isCorrect);
-  }
+//   if (!wordValue) {
+//     wordValue = getNewWordData(word, isCorrect, wordLevel);
+//     updatedStatistics.wd.push(wordValue);
+//   } else {
+//     wordValue = updateWordData(wordValue, isCorrect);
+//   }
 
-  return updatedStatistics;
-};
+//   return updatedStatistics;
+// };
 
 export const getDateTimeStatisticsForChart = (statistics, gameName) => {
   const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
@@ -146,52 +144,52 @@ export const getDateTimeStatisticsForChart = (statistics, gameName) => {
   return data;
 }
 
-export const getWordLevelStatisticsForChart = (statistics, gameName) => {
-  const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
+// export const getWordLevelStatisticsForChart = (statistics, gameName) => {
+//   const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
 
-  const series1 = [];
-  const series2 = [];
+//   const series1 = [];
+//   const series2 = [];
 
-  gamedata.d.forEach(data => {
-    data.wd.forEach(wordData => {
-      if (wordData.l !== -1) {
-        const existingData1 = series1.find(f => f.id === wordData.l);
+//   gamedata.d.forEach(data => {
+//     data.wd.forEach(wordData => {
+//       if (wordData.l !== -1) {
+//         const existingData1 = series1.find(f => f.id === wordData.l);
 
-        if (!existingData1) {
-          series1.push({
-            label: `Level ${wordData.l}`,
-            id: wordData.l,
-            y: wordData.c
-          })
-        } else {
-          existingData1.y += wordData.c;
-        }
+//         if (!existingData1) {
+//           series1.push({
+//             label: `Level ${wordData.l}`,
+//             id: wordData.l,
+//             y: wordData.c
+//           })
+//         } else {
+//           existingData1.y += wordData.c;
+//         }
 
-        const existingData2 = series2.find(f => f.id === wordData.l);
+//         const existingData2 = series2.find(f => f.id === wordData.l);
 
-        if (!existingData2) {
-          series2.push({
-            label: `Level ${wordData.l}`,
-            id: wordData.l,
-            y: wordData.e
-          })
-        } else {
-          existingData2.y += wordData.e;
-        }
-      }
-    });
-  });
+//         if (!existingData2) {
+//           series2.push({
+//             label: `Level ${wordData.l}`,
+//             id: wordData.l,
+//             y: wordData.e
+//           })
+//         } else {
+//           existingData2.y += wordData.e;
+//         }
+//       }
+//     });
+//   });
 
-  const sorted1 = series1.sort((a, b) => {
-    return a.id - b.id;
-  });
+//   const sorted1 = series1.sort((a, b) => {
+//     return a.id - b.id;
+//   });
 
-  const sorted2 = series2.sort((a, b) => {
-    return a.id - b.id;
-  });
+//   const sorted2 = series2.sort((a, b) => {
+//     return a.id - b.id;
+//   });
 
-  return {
-    sorted1,
-    sorted2
-  }
-}
+//   return {
+//     sorted1,
+//     sorted2
+//   }
+// }
