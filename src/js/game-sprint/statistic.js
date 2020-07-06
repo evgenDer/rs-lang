@@ -1,10 +1,14 @@
 import { removeChild } from '../helpers/html-helper';
-import { DATA_URL } from '../utils/constants';
-import playAudio from '../helpers/audio';
+import { DATA_URL, AUDIO_B64 } from '../utils/constants';
+import { playAudio } from '../helpers/audio';
+import { GAME_MODES } from '../games/constants';
+import { getGameMode } from '../games/gameModeSwitch';
 
 function createStatisticSentence(audioSrc, textExample, translate){
+  const mode = getGameMode();
+  const audioHelper = mode === GAME_MODES.all ? DATA_URL : AUDIO_B64;
   const newElement = `<div class="line">
-    <button class = "btn_pronoucing"><audio src = ${DATA_URL}${audioSrc}></button>
+    <button class = "btn_pronoucing"><audio src = ${audioHelper}${audioSrc}></button>
     <p>${textExample} - ${translate}</p>
   </div>`;
 

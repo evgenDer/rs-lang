@@ -1,14 +1,17 @@
-import { GAME_MODES, SPRINT_MODES } from '../games/constants';
+import { GAME_MODES, SPRINT_MODES, ERR_MSG } from '../games/constants';
 import { showElement, hideElement, removeChild } from '../helpers/html-helper';
-import { getFullDataWords } from '../api/words';
-import timer from './timer';
+import { getFullDataWords, getWordById } from '../api/words';
+import { timer, clearTimer } from './timer';
 import { shuffleArray, getRandomInt } from '../helpers/math-helper';
-import playAudio from '../helpers/audio';
+import { playAudio, stopAudio } from '../helpers/audio';
 import Card from './card';
-import { DATA_URL } from '../utils/constants';
+import { DATA_URL, AUDIO_B64, WORD_STATE } from '../utils/constants';
 import { addStatisticRoundSprint, createStaticticRound } from './statistic';
 import { selectNextRound, getCurrentLevel, getCurrentRound } from '../games/dropdown';
 import { saveCustomConfiguration } from '../configuration/index';
+import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/updateWordState';
+import { getAllUserWords, updateUserWord } from '../api/userWords';
+import { exitGame } from '../utils/helpers';
 
 const SERIES_LENGTH = 4;
 
@@ -25,6 +28,7 @@ export default class Game {
     this.data = [];
     this.translateWords = [];
     this.words = [];
+    this.userData = [];
 
     this.wordsAmntInRound = 100;
     this.answersAmnt = 2;
@@ -52,13 +56,36 @@ export default class Game {
     this.errors = 0;
     this.points = 0;
 
+    this.isError = false;
+
   }
 
   async getRoundData() {
+
+  if (this.mode === GAME_MODES.all) {
     this.data = await getFullDataWords(this.level, this.round, this.wordsAmntInRound);
     shuffleArray(this.data);
-    this.allRoundTranslations = await this.getAllGroupWordTranslatons();
+    saveCustomConfiguration('sprint', { level: getCurrentLevel(), round: getCurrentRound() });
+  } else {
+    const userData = await getAllUserWords();
+    if (userData.length < this.wordsAmntInRound) {
+      this.isError = true;
+      throw ERR_MSG;
+    }
+    this.userData = userData
+      .filter((word) => word.optional.mode !== WORD_STATE.deleted)
+      .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
+      .slice(0, this.wordsAmntInRound);
+    shuffleArray(this.userData);
+
+    const promises = [];
+    this.userData.forEach(({ wordId }) => promises.push(getWordById(wordId)));
+
+    this.data = await Promise.all(promises);
   }
+
+  this.allRoundTranslations = await this.getAllGroupWordTranslatons();
+}
 
   async getAllGroupWordTranslatons() {
     const dataWords = this.data.map(({ wordTranslate }) => wordTranslate);
@@ -112,11 +139,17 @@ export default class Game {
   startGame(){
     hideElement(loadPage);
     removeChild(loadPage);
-    showElement(playPage);
-    playAudio('assets/audio/start.mp3');
-    const startTimer = timer(60, 'play__time', '', this, this.generateResults);
-    startTimer();
-    this.addButtonClickHandler();
+    if(!this.isError){
+      showElement(playPage);
+      const startTimer = timer(60, 'play__time', '', this, this.generateResults);
+      startTimer();
+      playAudio('assets/audio/start.mp3');
+      this.addButtonClickHandler();
+    }
+    else {
+      stopAudio();
+      showElement(startPage);
+    }
   }
 
   increaseCorrectAnswers(){
@@ -127,6 +160,11 @@ export default class Game {
     this.playElements.points.innerText = this.points;
     this.checkSeries();
     this.card.addCorrectCard(this.numberEnhasment);
+    if (this.mode === GAME_MODES.learned) {
+      const currentUserData = this.userData[this.currentAnswer];
+      increaseWordReferenceCount(currentUserData);
+      updateUserWord(currentUserData.wordId, currentUserData);
+    }
     const img = document.querySelector('.card__answers .hidden');
     if(this.numberEnhasment === SPRINT_MODES.length - 1 && this.seriesOfCorrect !== SERIES_LENGTH){
       playAudio('assets/audio/correctAnswer.mp3');
@@ -136,6 +174,7 @@ export default class Game {
       playAudio('assets/audio/correctAnswer.mp3');
     }
     this.generateNextWord();
+
   }
 
   increaseErrorAnswers(){
@@ -144,8 +183,14 @@ export default class Game {
     this.seriesOfCorrect = 0;
     this.numberEnhasment = 0;
     this.playElements.enhasment.innerText = '';
+    playAudio('assets/audio/error.mp3');
     this.card.addErrorCard();
     this.generateNextWord();
+    if (this.mode === GAME_MODES.learned) {
+      const currentUserData = this.userData[this.currentAnswer];
+      increaseWordErrorCount(currentUserData);
+      updateUserWord(currentUserData.wordId, currentUserData);
+    }
   }
 
   checkSeries(){
@@ -158,7 +203,6 @@ export default class Game {
       this.card.addNewMode(this.numberEnhasment);
       this.seriesOfCorrect = 0;
     }
-
   }
 
   addButtonClickHandler(){
@@ -166,6 +210,9 @@ export default class Game {
       if(this.data[this.currentAnswer].wordTranslate === this.words[this.currentTranslateAnswer]){
         this.increaseCorrectAnswers();
       } else this.increaseErrorAnswers();
+    });
+    document.querySelector('.btn_exit').addEventListener('click', () => {
+      exitGame();
     });
     this.playElements.btnWrong.addEventListener('click', () => {
       if(this.data[this.currentAnswer].wordTranslate !== this.words[this.currentTranslateAnswer]){
@@ -182,11 +229,13 @@ export default class Game {
       }
     });
 
+    const audioHelper = this.mode === GAME_MODES.all ? DATA_URL : AUDIO_B64;
+
     document.querySelector('.btn_pronoucing').addEventListener('click', () => {
-      playAudio(`${DATA_URL}${this.data[this.currentAnswer].audio}`);
+      playAudio(`${audioHelper}${this.data[this.currentAnswer].audio}`);
     });
     document.querySelector('.btn_audioexample').addEventListener('click', () => {
-      playAudio(`${DATA_URL}${this.data[this.currentAnswer].audioExample}`);
+      playAudio(`${audioHelper}${this.data[this.currentAnswer].audioExample}`);
     });
   }
 
@@ -201,13 +250,12 @@ export default class Game {
   }
 
   generateResults(){
+    clearTimer();
     hideElement(playPage);
     selectNextRound();
     showElement(startPage);
     createStaticticRound(this.points);
     addStatisticRoundSprint(this.data);
-    Card.removeCardElements();
-    saveCustomConfiguration('sprint', { level: getCurrentLevel(), round: getCurrentRound() });
     // eslint-disable-next-line no-undef
     UIkit.modal('.modal-round').show();
     const btnClose = document.getElementById('modal-btn-close');
@@ -222,7 +270,16 @@ export default class Game {
     const openPage = document.querySelector('img[alt="bird"]');
     openPage.style.marginLeft = '15px';
     this.card.addProgressBar();
-    this.getRoundData().then(() => this.generateNewCard());
+    this.getRoundData().then(() => this.generateNewCard()).catch((err) => {
+      // eslint-disable-next-line no-undef
+      UIkit.notification({
+        message: `<span uk-icon='icon: warning'></span> ${err}`,
+        status: 'warning',
+        pos: 'top-center',
+      });
+    hideElement(playPage);
+    showElement(loadPage);
+    });
   }
 
   generateNewCard(){

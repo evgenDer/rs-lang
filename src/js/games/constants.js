@@ -11,3 +11,4 @@ export const SPRINT_MODES = [
   { points: 80, сlassElement: 'correct_third', innerText: '+ 80 баллов' },
 ];
 
+export const ERR_MSG = 'Изученных слов недостаточно, чтобы начать игру. Переключите режим.';
