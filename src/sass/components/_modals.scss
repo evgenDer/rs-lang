@@ -1,12 +1,19 @@
 .modal-round{
   border-radius: 10px;
   background: $color-background;
+  margin-top: 25vh;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  h2{
+    color: $color-secondary;
+  }
   .uk-modal-header{
     background: $color-background;
     text-align: center;
     border-radius: 10px;
     p{
       color: $color-secondary;
+      font-size: 15px;
     }
     margin-bottom: 30px;
   }
@@ -15,12 +22,13 @@
     height: 100px;
   }
   h3{
+    font-size: 20px;
     color: $color-secondary;
   }
   .line{
     display: flex;
     color: $color-secondary;
-    margin-top: -10px;
+    margin-top: -20px;
   }
   .uk-close{
     color: $color-secondary
@@ -49,3 +57,45 @@
   }
   margin-top: 20px;
 }
+
+.uk-modal-body{
+  margin-top: 10px;
+  min-height: 280px;
+  max-height: 350px;
+  &::-webkit-scrollbar-track{
+    background-color: $color-primary;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb{
+    background-color: $color-secondary;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar{
+    width: 5px;
+  }
+}
+
+.uk-modal-header {
+  span{
+    color: $color-green;
+  }
+  h3{
+    margin: 0px;
+  }
+}
+
+.uk-modal-footer{
+  background-color: $color-background;
+  display: flex;
+  justify-content: center;
+  button{
+    margin: 10px;
+    background-color: $color-secondary;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    color: $color-primary;
+    height: 50px;
+  }
+}
+

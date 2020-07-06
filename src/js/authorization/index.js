@@ -1,5 +1,5 @@
 import { ERROR_MSG, PASSWORD } from './constants';
-import { setDateToken, setUserId, setToken, setUserPassword, setUserEmail } from '../utils/storage';
+import { setDateToken, setUserPassword, setUserEmail } from '../utils/storage';
 import { loginUser, createUser } from '../api/authorization';
 
 function show() {

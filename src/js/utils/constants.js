@@ -9,6 +9,7 @@ const BUTTONS_CLASSES = {
   showTranslate: 'btn_translation',
   playSound: 'btn_pronoucing',
 };
+const AUX_API_URL = 'https://dictionary.skyeng.ru/api/public/v1';
 
 const PAGES = [
   {
@@ -19,7 +20,7 @@ const PAGES = [
   },
   {
     id: 'learning-page',
-    href: '#',
+    href: 'learningWords.html',
     img: './assets/img/icons/learning.svg',
     text: 'Изучение',
   },
@@ -43,7 +44,7 @@ const PAGES = [
   },
   {
     id: 'statistics-page',
-    href: '#',
+    href: 'statistics.html',
     img: './assets/img/icons/statistics.svg',
     text: 'Статистика',
   },
@@ -73,7 +74,15 @@ const PAGES = [
   },
 ];
 
-
-export {
-  PAGES, APP_NAME, BACKEND_URL, MASTERPIECE_URL, DATA_URL, BUTTONS_CLASSES,
+const WORD_STATE = {
+  repeating: 'needToRepeat',
+  deleted: 'deleted',
+  learning: 'learning',
 };
+
+
+const AUDIO_B64 = 'data:audio/mp3;base64,';
+const IMG_B64 = 'data:image/jpg;base64,';
+
+export { PAGES, APP_NAME, BACKEND_URL, AUX_API_URL, BUTTONS_CLASSES,
+   MASTERPIECE_URL, DATA_URL, WORD_STATE, AUDIO_B64, IMG_B64 };

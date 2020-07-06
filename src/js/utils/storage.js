@@ -21,11 +21,11 @@ function setUserPassword(password) {
   localStorage.setItem('password', password);
 }
 
-function getUserPassword(){
+function getUserPassword() {
   return localStorage.getItem('password');
 }
 
-function getUserEmail(){
+function getUserEmail() {
   return localStorage.getItem('email');
 }
 

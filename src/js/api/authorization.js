@@ -6,7 +6,6 @@ import {
 import { isValidToken } from '../utils/checks';
 import { BACKEND_URL } from '../utils/constants';
 
-
 async function createUser(event) {
   event.preventDefault();
   const user = getUser();
@@ -30,7 +29,6 @@ async function createUser(event) {
 
 async function loginUser(emailUser, passwordUser) {
   try{
-  debugger;
   const user = {email: emailUser, password: passwordUser};
   const rawResponse = await fetch(`${BACKEND_URL}/signin`, {
     method: 'POST',
@@ -59,6 +57,5 @@ async function getTokenForRequest() {
   }
   return getToken();
 }
-
 
 export { createUser, loginUser, getTokenForRequest };

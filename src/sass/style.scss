@@ -14,6 +14,7 @@
 @import "./components/navigation";
 @import "./components/progres-bar";
 @import "./components/configuration";
+@import "./components/statistics";
 @import "./components/modals";
 
 // layouts
@@ -22,3 +23,6 @@
 @import "./layouts/authorization";
 @import './layouts/game-puzzle';
 @import "./layouts/games";
+
+@import "./layouts/game-audiochallenge";
+

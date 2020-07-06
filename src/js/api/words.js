@@ -1,7 +1,8 @@
 import sendRequest from './requests';
-import { BACKEND_URL } from '../utils/constants';
+import { BACKEND_URL, AUX_API_URL } from '../utils/constants';
 
-async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, wordsPerPage = 10) {
+
+export async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, wordsPerPage = 20) {
   try {
     const urlRequest = `${BACKEND_URL}/words/count?group=${numberGroup}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`;
     const content = await sendRequest('GET', urlRequest);
@@ -11,7 +12,7 @@ async function getCountWordsInGroup(numberGroup, wordsPerExampleSentence = 10, w
   }
 }
 
-async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 10, wordsPerPage = 10) {
+export async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 10, wordsPerPage = 10) {
   try {
     const urlRequest = `${BACKEND_URL}/words/?group=${numberGroup}&page=${numberPage}&wordsPerExampleSentenceLTE=${wordsPerExampleSentence}&wordsPerPage=${wordsPerPage}`;
     const result = await sendRequest('GET', urlRequest);
@@ -21,11 +22,11 @@ async function getDataWords(numberGroup, numberPage, wordsPerExampleSentence = 1
   }
 }
 
-async function getFullDataWords(numberGroup, numberPage, wordsPerPage = 10) {
-  return getDataWords(numberGroup, numberPage, '', wordsPerPage);
+export async function getFullDataWords(numberGroup, numberPage, wordsPerPage = 10) {
+  return getDataWords(numberGroup, numberPage, 1000, wordsPerPage);
 }
 
-async function getWordById(idWord) {
+export async function getWordById(idWord) {
   try {
     const urlRequest = `${BACKEND_URL}/words/${idWord}`;
     const result = await sendRequest('GET', urlRequest);
@@ -35,4 +36,14 @@ async function getWordById(idWord) {
   }
 }
 
-export { getCountWordsInGroup, getWordById, getDataWords, getFullDataWords };
+export async function getWordDetalization(word) {
+  try {
+    const urlRequest = `${AUX_API_URL}/words/search?search=${word}`;
+    const result = await fetch(urlRequest);
+    const content = await result.json();
+    return content;
+  } catch (error) {
+    return error;
+  }
+};
+

@@ -13,6 +13,7 @@ function getMistakeResponse(codeError) {
   return 'Такой пользователь уже существует';
 }
 
+<<<<<<< HEAD
 function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
@@ -45,3 +46,6 @@ export {
   getUser, getMistakeResponse, shuffle, removeChild, removeAllButtons,
   insertNewButtons, exitGame,
 };
+=======
+export { getUser, getMistakeResponse };
+>>>>>>> 6c078e3bc7176c82cff0229e92f70e1ddb8cb19f

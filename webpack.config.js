@@ -33,7 +33,7 @@ const cssLoaders = (extra) => {
       reloadAll: true,
     },
   },
-  'css-loader',
+    'css-loader',
   ];
 
   if (extra) {
@@ -90,10 +90,14 @@ const plugins = () => {
       filename: 'index.html',
     }),
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
-    htmlWebpackPluginCreator('games.html', 'index'),
+    htmlWebpackPluginCreator('learningWords.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
     htmlWebpackPluginCreator('game_english-puzzle.html', 'index', 'english_puzzle'),
+    htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
+    htmlWebpackPluginCreator('games.html', 'index'),
+    htmlWebpackPluginCreator('game-audiochallenge.html', 'game_audiochallenge'),
+
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -125,7 +129,8 @@ module.exports = {
   entry: {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
-    english_puzzle: ['@babel/polyfill', './js/english-puzzle/index.js', './sass/style.scss']
+    english_puzzle: ['@babel/polyfill', './js/english-puzzle/index.js', './sass/style.scss'],
+    game_audiochallenge: ['@babel/polyfill', './js/audiochallenge/index.js', './sass/style.scss'],
   },
   output: {
     filename: filename('js'),
