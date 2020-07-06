@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../favicon/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
+  <title>RS Lang</title>
+</head>
+<body id="game-concentration">
+  <div class="bg-layer"></div>
+  <main class="concentration">
+    <div class="wrapper concentration__wrapper">
+      <div class="concentration__primary-row">
+        <div class="concentration__exit concentration__exit_full">
+          <img class="exit" src="./assets/img/icons/close-game.svg" alt="close">
+          <img class="exit__back" src="./assets/img/icons/arrow-right.svg" alt="close">
+        </div>
+        <div class="concentration__game-control">
+          <div class="game-control">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_stat" type="button">
+              Статистика
+            </button>
+          </div>
+          <div class="uk-inline game-control hidden">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_level" type="button">
+              Уровень: <span id="game-control__current_level">1</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_level">
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="list__active">Уровень 1</li>
+                <li>Уровень 2</li>
+                <li>Уровень 3</li>
+                <li>Уровень 4</li>
+                <li>Уровень 5</li>
+                <li>Уровень 6</li>
+              </ul>
+            </div>
+          </div>
+          <div class="uk-inline game-control hidden">
+            <button class="uk-button uk-button-default game-control__btn game-control__btn_round" type="button">
+              Раунд: <span id="game-control__current_round">1</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_round">
+              <ul class="uk-nav uk-dropdown-nav">
+                <li class="list__active">Раунд 1</li>
+                <li>Раунд 2</li>
+                <li>Раунд 3</li>
+                <li>Раунд 4</li>
+                <li>Раунд 5</li>
+                <li>Раунд 6</li>
+                <li>Раунд 7</li>
+                <li>Раунд 8</li>
+                <li>Раунд 9</li>
+                <li>Раунд 10</li>
+                <li>Раунд 11</li>
+                <li>Раунд 12</li>
+                <li>Раунд 13</li>
+                <li>Раунд 14</li>
+                <li>Раунд 15</li>
+                <li>Раунд 16</li>
+                <li>Раунд 17</li>
+                <li>Раунд 18</li>
+                <li>Раунд 19</li>
+                <li>Раунд 20</li>
+                <li>Раунд 21</li>
+                <li>Раунд 22</li>
+                <li>Раунд 23</li>
+                <li>Раунд 24</li>
+                <li>Раунд 25</li>
+                <li>Раунд 26</li>
+                <li>Раунд 27</li>
+                <li>Раунд 28</li>
+                <li>Раунд 29</li>
+                <li>Раунд 30</li>
+                <li>Раунд 31</li>
+                <li>Раунд 32</li>
+                <li>Раунд 33</li>
+                <li>Раунд 34</li>
+                <li>Раунд 35</li>
+                <li>Раунд 36</li>
+                <li>Раунд 37</li>
+                <li>Раунд 38</li>
+                <li>Раунд 39</li>
+                <li>Раунд 40</li>
+                <li>Раунд 41</li>
+                <li>Раунд 42</li>
+                <li>Раунд 43</li>
+                <li>Раунд 44</li>
+                <li>Раунд 45</li>
+                <li>Раунд 46</li>
+                <li>Раунд 47</li>
+                <li>Раунд 48</li>
+                <li>Раунд 49</li>
+                <li>Раунд 50</li>
+                <li>Раунд 51</li>
+                <li>Раунд 52</li>
+                <li>Раунд 53</li>
+                <li>Раунд 54</li>
+                <li>Раунд 55</li>
+                <li>Раунд 56</li>
+                <li>Раунд 57</li>
+                <li>Раунд 58</li>
+                <li>Раунд 59</li>
+                <li>Раунд 60</li>
+              </ul>
+            </div>
+          </div>
+          <div class="uk-inline game-control">
+            <button 
+              class="uk-button uk-button-default game-control__btn game-control__btn_mode game-control__btn_mode_disabled" 
+              type="button">
+              Cлова: <span id="game-mode-switch">изученные</span>
+            </button>
+            <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_desc">
+              <div class="uk-nav uk-dropdown-nav">
+                <p class="desc_active hidden">В игре будут задей- <br> ствованы слова из <br> всей коллекции</p>
+                <p class="desc_disabled">В игре будут задей- <br> ствованы только <br> изученные слова</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="concentration__secondary-row">
+        <div class="concentration__load-page uk-overlay-default hidden">
+          <div uk-spinner="ratio: 3"></div>
+        </div>
+        <div class="concentration__desription">
+          <div class="description__title">
+            <p>Концентрация</p>
+          </div>
+          <div class="description__desc">
+            <p>Найдите все верные пары "слово-перевод", переворачивая карточки</p>
+          </div>
+          <button class="description__start">НАЧАТЬ</button>
+        </div>
+        
+        <div class="concentration__game-field hidden">
+          <div class="game-field__cards">
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+            <div class="concentration-card" data-wordid="516">
+              <div class="concentration-card__front">
+                <img src="./assets/img/card-face.png" alt="card">
+              </div>
+              <div class="concentration-card__back">
+                <div class="concentration-card__inner">
+                  <p class="concentration-card__word">ходить</p>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+</body>
+</html>
