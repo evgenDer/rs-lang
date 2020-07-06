@@ -11,7 +11,7 @@ import { Statistics } from '../statistics/components/statistics';
 import { addStatisticsRound, createStaticticsRound } from './statistics';
 import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/updateWordState';
 import { getAllUserWords, updateUserWord } from '../api/userWords';
-import { AUDIO_B64, IMG_B64 } from '../utils/constants';
+import { AUDIO_B64, IMG_B64, WORD_STATE } from '../utils/constants';
 import { saveCustomConfiguration } from '../configuration/index';
 
 
@@ -145,6 +145,7 @@ export class Game {
       }
 
       this.userData = userData
+        .filter((word) => word.optional.mode !== WORD_STATE.deleted)
         .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
         .slice(0, this.wordsAmntInRound);
       shuffleArray(this.userData);
@@ -350,7 +351,7 @@ export class Game {
           } else {
             increaseWordErrorCount(currentUserData);
           }
-          this.userData[this.currentAnswer] = currentUserData;
+          updateUserWord(currentUserData.wordId, currentUserData);
         }
 
         this.currentAnswer += 1;
@@ -359,12 +360,6 @@ export class Game {
         } else {
           selectNextRound();
           backGameBtn.click();
-          
-          if (this.mode === GAME_MODES.learned) {
-            this.userData.forEach((word) => {
-              updateUserWord(word.wordId, word);
-            });
-          }
 
           saveCustomConfiguration('audioCall', { level: getCurrentLevel(), round: getCurrentRound() });
 
