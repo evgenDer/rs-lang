@@ -35,11 +35,8 @@ button:hover {
   animation: ani9 0.4s ease-in-out infinite alternate;
 }
 @keyframes ani9 {
-  0% {
-      transform: translateY(3px);
-  }
   100% {
-      transform: translateY(5px);
+      transform: translateY(3px);
   }
 }
 

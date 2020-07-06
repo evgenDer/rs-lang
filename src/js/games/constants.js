@@ -10,5 +10,6 @@ export const SPRINT_MODES = [
   { points: 40, сlassElement: 'correct_second', innerText: '+ 40 баллов'},
   { points: 80, сlassElement: 'correct_third', innerText: '+ 80 баллов' },
 ];
+export const GAME_DATA_URL = 'https://raw.githubusercontent.com/evgender/rslang-data/master/';
 
 export const ERR_MSG = 'Изученных слов недостаточно, чтобы начать игру. Переключите режим.';

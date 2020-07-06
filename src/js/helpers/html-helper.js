@@ -22,6 +22,7 @@ export const removeClassesFromElement = (selector, ...classes) => {
   element.classList.remove(...classes);
 };
 
+
 export const hideElement = (element) => {
   element.classList.add('hidden');
 }

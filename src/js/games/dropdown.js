@@ -87,6 +87,7 @@ export function enableDropdowns() {
   enableList(listRoundContainer);
 }
 
+
 export function selectNextLevel() {
   const currentLevel = getCurrentLevel();
   if (currentLevel !== listLvl.length - 1) {
