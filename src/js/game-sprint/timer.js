@@ -1,3 +1,5 @@
+let timerInterval = null;
+
 function timer(time, elementClass, textAfter = '', object, objectMethod){
   const FULL_DASH_ARRAY = 283;
   const WARNING_THRESHOLD = 0;
@@ -20,7 +22,6 @@ function timer(time, elementClass, textAfter = '', object, objectMethod){
   const TIME_LIMIT = time;
   let timePassed = 0;
   let timeLeft = TIME_LIMIT;
-  let timerInterval = null;
   const remainingPathColor = COLOR_CODES.info.color;
 
 
@@ -62,7 +63,7 @@ function timer(time, elementClass, textAfter = '', object, objectMethod){
   function onTimesUp() {
     clearInterval(timerInterval);
     const fnEndOfTime = objectMethod.bind(object);
-    fnEndOfTime()
+    fnEndOfTime();
   }
 
   function setRemainingPathColor(remainingTime) {
@@ -106,7 +107,6 @@ function timer(time, elementClass, textAfter = '', object, objectMethod){
       );
       setCircleDasharray();
       setRemainingPathColor(timeLeft);
-
       if (timeLeft === 0) {
         onTimesUp();
       }
@@ -114,5 +114,9 @@ function timer(time, elementClass, textAfter = '', object, objectMethod){
   }
 }
 
+function clearTimer(){
+  clearInterval(timerInterval);
+}
 
-export default timer;
+
+export { timer, clearTimer };
