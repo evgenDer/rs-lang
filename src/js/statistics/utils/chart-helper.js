@@ -50,13 +50,36 @@ export function renderDateTimeChart(data) {
     },
     axisY: {
       title: 'Колличество слов',
+      includeZero: false
+    },
+    toolTip: {
+      shared: true
     },
     data: [{
-      type: "area",
-      xValueType: "dateTime",
-      xValueFormatString: "DD MMM hh:mm TT",
-      dataPoints: data
-    }]
+        type: "splineArea",
+        showInLegend: true,
+        name: "Изучено слов",
+        xValueType: "dateTime",
+        xValueFormatString: "DD MMM hh:mm TT",
+        dataPoints: data.dataTotal
+      },
+      {
+        type: "splineArea",
+        showInLegend: true,
+        name: "Неправильно",
+        xValueType: "dateTime",
+        xValueFormatString: "DD MMM hh:mm TT",
+        dataPoints: data.dataError
+      },
+      {
+        type: "splineArea",
+        showInLegend: true,
+        name: "Правильно",
+        xValueType: "dateTime",
+        xValueFormatString: "DD MMM hh:mm TT",
+        dataPoints: data.dataCorrect
+      }
+    ]
   });
 
   chart.render();
