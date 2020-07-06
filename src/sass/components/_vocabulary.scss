@@ -26,7 +26,7 @@
 .vocabulary__tab-link a {
 	color: $color-secondary;
 	font-weight: 600;
-	font-size: 1rem;
+  font-size: 1rem;
 }
 
 .vocabulary__tab-link.uk-active a {
@@ -42,15 +42,44 @@
 .vocabulary__card {
   padding: 10px 5px;
   border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-restore {
+  background-color: transparent;
+  border-radius: 10px;
+  color: $color-secondary;
+  border: none;
+  height: 31px;
+  margin-left: 15px;
+  outline: none;
+  transition: all 0.4s;
+
+  &:hover {
+    color: $color-additional;
+    cursor: pointer;
+  }
+}
+
+.vocabulary__card-img  {
+  width: 120px;
+  margin-left: 30px;
+  border-radius: 10px;
+}
+
+.vocabulary__word-container {
+  width: 544px;
 }
 
 .word-text_color {
   color: $color-additional;
-  padding-left: 5px;
+  padding-left: 7px;
 }
 
 .vocabulary__word_text {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
@@ -63,6 +92,7 @@
   width: 20px;
   filter: opacity(40%);
   cursor: pointer;
+  transition: all 0.4s;
 
   &:hover {
     filter: opacity(90%);
@@ -99,4 +129,12 @@
 
 .data-point:last-child {
   border-right: none;
+}
+
+.vocabulary__error-message {
+  text-align: center;
+    margin-top: 130px;
+    color: $color-additional;
+    font-weight: 600;
+    font-size: 1.2rem;
 }
