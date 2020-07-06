@@ -23,11 +23,25 @@ export class Statistics {
   }
 
   async updateGameStatistics(totalCorrect, totalError, gameScore) {
+    if (!this.globalStatistics) {
+      this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
+    }
 
+    this.currentStatistics = statisticsUtils.getCurrentStatistics(this.globalStatistics, this.gameName, this.dateTime);
+    this.currentStatistics = statisticsUtils.updateGameStatisticsValues(this.currentStatistics, totalCorrect, totalError, gameScore);
+
+    await statisticsHelper.updateStatisticsData(this.globalStatistics);
   }
 
-  async updateLearningStatistics(learningWordsCount, newWordsCount, totalCorrect, totalError){
+  async updateLearningStatistics(learningWordsCount, totalCorrect, totalError){
+    if (!this.globalStatistics) {
+      this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
+    }
 
+    this.currentStatistics = statisticsUtils.getCurrentStatistics(this.globalStatistics, this.gameName, this.dateTime);
+    this.currentStatistics = statisticsUtils.updateLearningStatisticsValues(this.currentStatistics, learningWordsCount, totalCorrect, totalError);
+
+    await statisticsHelper.updateStatisticsData(this.globalStatistics);
   }
 
   /**
@@ -96,4 +110,11 @@ export class Statistics {
     const dateTimeData = await statisticsHelper.getDateTimeStatistics(this.gameName);
     chartHelper.renderDateTimeChart(dateTimeData);
   }
+
+   async showDateTimeStatisitcsChart(){
+    const dateTimeData = await statisticsHelper.getDateTimeStatistics(this.gameName);
+
+    chartHelper.renderDateTimeChart(dateTimeData);
+
+   }
 }

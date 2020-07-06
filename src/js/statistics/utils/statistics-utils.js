@@ -45,8 +45,7 @@ export const getNewStatisticsDataValue = (dateTime) => {
     tc: 0,
     te: 0,
     gs: 0,
-    lwc: 0,
-    nwc: 0
+    lwc: 0
   };
 
   return statistics;
@@ -96,6 +95,27 @@ export const getCurrentStatistics = (globalStatistics, gameName, dateTime) => {
   return currentStatistics;
 }
 
+export const updateLearningStatisticsValues = (statisticsToUpdate, learningWordsCount, totalCorrect, totalError) => {
+  const updatedStatistics = statisticsToUpdate;
+
+  updatedStatistics.tc = totalCorrect;
+  updatedStatistics.te = totalError;
+  updatedStatistics.lwc = learningWordsCount;
+
+  return updatedStatistics;
+}
+
+export const updateGameStatisticsValues = (statisticsToUpdate, totalCorrect, totalError, gameScore) => {
+  const updatedStatistics = statisticsToUpdate;
+
+  updatedStatistics.lwc = totalCorrect + totalError;
+  updatedStatistics.tc = totalCorrect;
+  updatedStatistics.te = totalError;
+  updatedStatistics.gs = gameScore;
+
+  return updatedStatistics;
+}
+
 // export const updateStatisticsValues = (statisticsToUpdate, word, isCorrect, wordLevel, isStrike, gameScore) => {
 //   const updatedStatistics = statisticsToUpdate;
 
@@ -134,14 +154,28 @@ export const getCurrentStatistics = (globalStatistics, gameName, dateTime) => {
 export const getDateTimeStatisticsForChart = (statistics, gameName) => {
   const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
 
-  const data = gamedata.d.map(function map(f) {
+  const dataTotal = gamedata.d.map(function map(f) {
     return {
       x: f.dt,
-      y: f.tce
+      y: f.lwc
     };
   });
 
-  return data;
+  const dataCorrect = gamedata.d.map(function map(f) {
+    return {
+      x: f.dt,
+      y: f.tc
+    };
+  });
+
+  const dataError = gamedata.d.map(function map(f) {
+    return {
+      x: f.dt,
+      y: f.te
+    };
+  });
+
+  return {dataTotal, dataCorrect, dataError};
 }
 
 // export const getWordLevelStatisticsForChart = (statistics, gameName) => {
