@@ -4,8 +4,5 @@ import {
 } from './components/statistics';
 
 export default async function initStatistics() {
-  const stat = new Statistics('daily-2');
-
-  await stat.showDateTimeStatisitcsChart();
-  await stat.showPercentToAllChart();
+  const stat = new Statistics('daily-game');
 };

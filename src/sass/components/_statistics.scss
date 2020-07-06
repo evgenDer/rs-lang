@@ -31,7 +31,7 @@
   font-weight: 700;
 }
 
-#chartContainer {
+#chartContainer, #gameChartContainer {
   height: 370px;
   width: 100%;
 }
@@ -44,4 +44,8 @@
 #chartPercentContainer {
   height: 370px;
   width: 100%;
+}
+
+#global-statistics-modal .uk-modal-dialog {
+  max-height: unset;
 }

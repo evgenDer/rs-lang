@@ -104,11 +104,8 @@ export class Statistics {
     mainElement.innerHTML += modalElement;
     UIkit.modal("#global-statistics-modal").show();
 
-    const data = await statisticsHelper.getWordLevelStatistics(this.gameName);
-    chartHelper.renderMultiSeriesColumnChart(data);
-
-    const dateTimeData = await statisticsHelper.getDateTimeStatistics(this.gameName);
-    chartHelper.renderDateTimeChart(dateTimeData);
+    const dateTimeData = await statisticsHelper.getDateTimeStatisticsForGame(this.gameName);
+    chartHelper.renderDateTimeChartForGame(dateTimeData);
   }
 
    async showDateTimeStatisitcsChart(){

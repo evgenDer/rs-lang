@@ -58,7 +58,7 @@ export async function getDateTimeStatistics(gameName) {
   return data;
 }
 
-export async function getWordLevelStatistics(gameName) {
+export async function getDateTimeStatisticsForGame(gameName) {
   const statistics = await getStatistics();
 
   if (!statistics || !statistics.optional ||
@@ -66,7 +66,7 @@ export async function getWordLevelStatistics(gameName) {
     return null;
   }
 
-  const data = statisticsUtils.getWordLevelStatisticsForChart(statistics, gameName);
+  const data = statisticsUtils.getGameDateTimeStatisticsForChart(statistics, gameName);
 
   return data;
 }
@@ -118,11 +118,8 @@ export function getModalForGlobalStatistics() {
   <div id="global-statistics-modal" class="uk-modal-container" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
       <button class="uk-modal-close-default" type="button" uk-close></button>
-      <h2 class="uk-modal-title">Общая статистика</h2>
-      <div id="chartContainer">
-        <p class="stat__info">Данные отсутствуют</p>
-      </div>
-      <div id="wordLevelChart" class=" uk-margin">
+      <h2 class="uk-modal-title">Ваши результаты</h2>
+      <div id="gameChartContainer">
         <p class="stat__info">Данные отсутствуют</p>
       </div>
     </div>
