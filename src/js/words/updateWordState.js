@@ -24,19 +24,19 @@ async function getUpdatedUserWord(wordId) {
   return Object.assign(word, wordOptions);
 }
 
-function increaseWordErrorCount(word) {
+function increaseWordErrorCount(word, isgamemode) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
   word.optional['errorCount'] += 1;
   word.optional['mode'] = WORD_STATE.repeating;
   word.optional['rightSequence'] = 0;
-  calculateSuccessPoint(word);
+  calculateSuccessPoint(word, isgamemode);
 }
 
-function increaseWordReferenceCount(word) {
+function increaseWordReferenceCount(word, isgamemode) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
-  calculateSuccessPoint(word);
+  calculateSuccessPoint(word, isgamemode, true);
 }
 
 function switchDeleteModeUserWord(word) {
@@ -44,56 +44,74 @@ function switchDeleteModeUserWord(word) {
   word.optional['mode'] = WORD_STATE.deleted;
 }
 
-function increaseWordRightSequenceCount(word) {
+function increaseWordRightSequenceCount(word, isgamemode) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
   word.optional['rightSequence'] += 1;
   word.optional['mode'] = WORD_STATE.learning;
-  calculateSuccessPoint(word, 'success');
+  calculateSuccessPoint(word, isgamemode, true);
 }
 
 function increaseRepeatCount(word) {
   word.optional['repeatCount'] += 1;
 }
 
-function calculateSuccessPoint(word, mode) {
+function calculateSuccessPoint(word, isgamemode = false, isSuccess = false) {
   let mark = 0;
   const currentMark = word.optional['successPoint'];
   const difficultyToSuccessPoint = {
     hard: 0.2,
-    normal: 0.6,
+    normal: 0.5,
     easy: 1,
   };
   const difficultyToErrorPoint = {
     hard: 1,
-    normal: 0.6,
+    normal: 0.5,
     easy: 0.2,
   };
 
   if (word.optional['referenceCount'] === 1) {
     mark = 1;
-  } else if (word.optional['referenceCount'] - word.optional['errorCount'] <= 5) {
-    mark = 1 + (word.optional['referenceCount'] - word.optional['errorCount']) / 5;
-    console.log(mark);
   } else if (currentMark <= 4) {
-    if (mode == 'success') {
-      mark = word.optional['successPoint'] + difficultyToSuccessPoint[word.difficulty];
-    } else {
-      mark = word.optional['successPoint'] - difficultyToErrorPoint[word.difficulty];
+    if (isSuccess) {
+      if (isgamemode) {
+        mark = currentMark + difficultyToSuccessPoint[word.difficulty] / 2;
+      } else {
+        mark = currentMark + difficultyToSuccessPoint[word.difficulty];
+      }
+    } else if (currentMark > 2) {
+      if (isgamemode) {
+        mark = currentMark - difficultyToErrorPoint[word.difficulty] / 2;
+      } else {
+        mark = currentMark - difficultyToErrorPoint[word.difficulty];
+      }
     }
-    if (mark < 1) {
-      mark = 1;
+    if (currentMark >= 2 && mark < 2) {
+      mark = 2;
     }
   } else if (currentMark > 4) {
-    mark = 3.8 + word.optional['rightSequence'] / 5;
-  } else if (currentMark > 5) {
+    mark = 3.8 + word.optional['rightSequence'] * 0.4;
+  }
+
+  if (mark > 5) {
     mark = 5;
   }
+
   word.optional['successPoint'] = mark;
 }
 
 function calculateRepeatTiming(word) {
-  const timing = (30 * word.optional['successPoint']) / 5; //days
+  const currentMark = word.optional['successPoint'];
+  let timing = 0;
+  if (currentMark <= 2) {
+    timing = (currentMark * 23 - 22) / 24; //days
+  } else if (currentMark <= 3) {
+    timing = (currentMark * 48 - 72) / 24; //days
+  } else if (currentMark <= 4) {
+    timing = currentMark * 7 - 18; //days
+  } else if (currentMark <= 5) {
+    timing = currentMark * 20 - 70; //days
+  }
   const repeatRating = Math.floor(timing * 24 * 3600 * 1000 + word.optional['lastUpdateDate']);
   return repeatRating;
 }

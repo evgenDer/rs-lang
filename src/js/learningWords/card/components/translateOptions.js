@@ -1,6 +1,7 @@
 import updateCardContent from '../domBuilder/lightTree/updateCardContent';
 import saveDayLocalState from '../../learningScreen/functions/saveDayLocalState';
 import LearningLineElement from './learningLineElement';
+import saveSettingsFromLearningWords from '../../learningScreen/functions/saveSettings';
 
 const style = {
   backgroundColor: '#338c9930',
@@ -75,6 +76,8 @@ export default class TranslateOptions extends HTMLElement {
         screen.settings[element.classList[0]] = this.state[element.classList[0]];
         card.settings[element.classList[0]] = this.state[element.classList[0]];
         updateCardContent(card);
+        saveSettingsFromLearningWords(screen);
+        console.log(screen.settings);
       });
     });
   }
@@ -83,7 +86,6 @@ export default class TranslateOptions extends HTMLElement {
     this.querySelectorAll('input[type=checkbox]').forEach(
       (element) => (element.checked = this.state[element.classList[0]]),
     );
-    console.log(this.state);
   }
 
   setState(propName, newPropState) {
