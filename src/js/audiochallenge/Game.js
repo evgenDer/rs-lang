@@ -341,7 +341,6 @@ export class Game {
         const currentAnswer = this.data[this.currentAnswer];
         const isRight = ProgressBar.isRightProgressPoint(this.task.progress.points[this.currentAnswer]);
 
-        this.statistics.updateStatistics(currentAnswer.word, isRight, this.level);
         currentAnswer.isCorrect = isRight;
         currentAnswer.isError = !isRight;
 
@@ -363,6 +362,7 @@ export class Game {
           saveCustomConfiguration('audioCall', { level: getCurrentLevel(), round: getCurrentRound() });
 
           backGameBtn.click();
+          this.statistics.updateGameStatistics(this.wordsAmntInRound - this.errors, this.errors, 0);
           this.showStatistics();
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
