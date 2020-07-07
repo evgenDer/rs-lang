@@ -63,9 +63,7 @@ export default function rightClick(learningScreenElement) {
         difficultyButtons.forEach((element) => element.classList.add('opened'));
 
         if (card.state.isFirstAnswer) {
-          console.log('okkk');
           if (screenMode === 'learning' || screenMode === 'newWord') {
-            console.log(learningScreenElement.statistics);
             learningScreenElement.statistics.rightAnswers += 1;
             learningScreenElement.statistics.currentRightAnswerSeries += 1;
             if (
@@ -75,11 +73,6 @@ export default function rightClick(learningScreenElement) {
               const rightAnswerSeries = learningScreenElement.statistics.currentRightAnswerSeries;
               learningScreenElement.statistics.longestRightAnswerSeries = rightAnswerSeries;
             }
-            console.log(
-              learningScreenElement.statistics.rightAnswers +
-                ' ' +
-                learningScreenElement.statistics.longestRightAnswerSeries,
-            );
           }
 
           increaseWordRightSequenceCount(word);
@@ -87,7 +80,6 @@ export default function rightClick(learningScreenElement) {
           if (cardMode === 'newWord') {
             createUserWord(wordId, word);
           } else {
-            console.log(word);
             updateUserWord(wordId, word);
           }
         }
@@ -101,9 +93,6 @@ export default function rightClick(learningScreenElement) {
             currentRepeatingCardIndex
           ] = true;
         }
-
-        console.log(learningScreenElement.wordArrs.needToRepeat);
-        console.log(learningScreenElement.localState.needToRepeatProgressArr);
 
         updateStatusBar(learningScreenElement);
         saveDayLocalState(learningScreenElement);
@@ -122,7 +111,6 @@ export default function rightClick(learningScreenElement) {
           if (cardMode === 'newWord') {
             createUserWord(wordId, word);
           } else {
-            console.log(word);
             updateUserWord(wordId, word);
           }
 
@@ -132,13 +120,7 @@ export default function rightClick(learningScreenElement) {
         }
       }
 
-      console.log(learningScreenElement.wordArrs.needToRepeat);
-      console.log(currentRepeatingCardIndex);
-      console.log(learningScreenElement.localState.needToRepeatProgressArr);
-
       card.state.isFirstAnswer = false;
-    } else {
-      console.log('freeeee');
     }
   } else {
     if (screenMode === 'repeating' && card.state.optional.mode === 'needToRepeat') {

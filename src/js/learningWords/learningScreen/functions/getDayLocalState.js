@@ -51,12 +51,11 @@ export default async function getDayLocalState(learningScreenElemen) {
       cardToRepeatCount = 0;
     }
 
-    console.log(learningScreenElemen.settings.learningWordsPage);
     let wordArrs = await createNewWordsPack(
       learningScreenElemen.settings.newWordCount,
       cardToRepeatCount,
-      learningScreenElemen.settings.difficultyLevel,
-      learningScreenElemen.settings.learningWordsPage,
+      learningScreenElemen.settings.learning.groupNumber,
+      learningScreenElemen.settings.learning.learningWordsPage,
     );
     const dayWordArrs = wordArrs;
 

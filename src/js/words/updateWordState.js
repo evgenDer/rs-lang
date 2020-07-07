@@ -20,7 +20,6 @@ const newWordOptionsTemplate = {
 async function getUpdatedUserWord(wordId) {
   const word = await getWordById(wordId);
   const wordOptions = await getUserWordById(wordId);
-  console.log(Object.assign(word, wordOptions));
   return Object.assign(word, wordOptions);
 }
 
@@ -57,8 +56,8 @@ function increaseRepeatCount(word) {
 }
 
 function calculateSuccessPoint(word, isgamemode = false, isSuccess = false) {
-  let mark = 0;
   const currentMark = word.optional['successPoint'];
+  let mark = currentMark;
   const difficultyToSuccessPoint = {
     hard: 0.2,
     normal: 0.5,
@@ -72,21 +71,20 @@ function calculateSuccessPoint(word, isgamemode = false, isSuccess = false) {
 
   if (currentMark <= 4) {
     if (currentMark < 1) {
-      currentMark = 1;
       mark = 1;
     }
 
     if (isSuccess) {
       if (isgamemode) {
-        mark = currentMark + difficultyToSuccessPoint[word.difficulty] / 2;
+        mark = mark + difficultyToSuccessPoint[word.difficulty] / 2;
       } else {
-        mark = currentMark + difficultyToSuccessPoint[word.difficulty];
+        mark = mark + difficultyToSuccessPoint[word.difficulty];
       }
     } else if (currentMark > 2) {
       if (isgamemode) {
-        mark = currentMark - difficultyToErrorPoint[word.difficulty] / 2;
+        mark = mark - difficultyToErrorPoint[word.difficulty] / 2;
       } else {
-        mark = currentMark - difficultyToErrorPoint[word.difficulty];
+        mark = mark - difficultyToErrorPoint[word.difficulty];
       }
     }
     if (currentMark >= 2 && mark < 2) {

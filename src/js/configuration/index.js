@@ -78,16 +78,10 @@ async function saveConfiguration() {
     window.localStorage.setItem('dayLearningDate', '-1');
   }
 
-  let learningPage = prevConfiguration.learningWordsPage;
-  if (prevConfiguration.difficultyLevel !== userConfiguration.difficultyLevel) {
-    learningPage = 0;
-  }
-
   const configuration = {
     maxNewWordsPerDay: userConfiguration.maxNewWordsPerDay,
     maxCardsWithWordsPerDay: userConfiguration.maxCardsWithWordsPerDay,
     difficultyLevel: userConfiguration.difficultyLevel,
-    learningWordsPage: learningPage,
     showWordTranslation: cardsConfiguration.showWordTranslation,
     showSentenceExplanation: cardsConfiguration.showSentenceExplanation,
     showExplanationExample: cardsConfiguration.showExplanationExample,

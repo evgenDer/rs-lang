@@ -77,7 +77,6 @@ export default class TranslateOptions extends HTMLElement {
         card.settings[element.classList[0]] = this.state[element.classList[0]];
         updateCardContent(card);
         saveSettingsFromLearningWords(screen);
-        console.log(screen.settings);
       });
     });
   }

@@ -115,15 +115,15 @@ async function updateNewWordsPack(
   }
 
   if (isNewWordLearnedArr.indexOf(false) === -1) {
-    if (learningScreen.settings.learningWordsPage >= 30) {
-      learningScreen.settings.learningWordsPage = 0;
-      if (learningScreen.settings.difficultyLevel >= 5) {
-        learningScreen.settings.difficultyLevel = 0;
+    if (learningScreen.settings.learning.learningWordsPage >= 30) {
+      learningScreen.settings.learning.learningWordsPage = 0;
+      if (learningScreen.settings.learning.groupNumber >= 5) {
+        learningScreen.settings.learning.groupNumber = 0;
       } else {
-        learningScreen.settings.difficultyLevel += 1;
+        learningScreen.settings.learning.groupNumber += 1;
       }
     } else {
-      learningScreen.settings.learningWordsPage += 1;
+      learningScreen.settings.learning.learningWordsPage += 1;
     }
     await saveSettingsFromLearningWords(learningScreen);
   }
@@ -131,6 +131,7 @@ async function updateNewWordsPack(
   if (localDayNewWordsPack.length >= dayNewWordsCount) {
     return localDayNewWordsPack.filter((element, index) => index < dayNewWordsCount);
   }
+
   if (page === 30) {
     if (group === 5) {
       return await updateNewWordsPack(localDayNewWordsPack, allUserWords, dayNewWordsCount, 0, 0);
