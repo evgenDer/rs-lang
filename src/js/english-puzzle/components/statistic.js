@@ -1,8 +1,8 @@
 import { removeChild } from '../../utils/helpers';
 import { DATA_URL } from '../../utils/constants';
+import { Statistics } from '../../statistics/components/statistics';
 
 function createStatisticSentence(audioSrc, textExample){
-  console.log(`${DATA_URL}${audioSrc}`);
   const newElement = `<div class="line">
     <button class = "btn_pronoucing"><audio src = ${DATA_URL}${audioSrc}></button>
     <p>${textExample}</p>
@@ -12,7 +12,7 @@ function createStatisticSentence(audioSrc, textExample){
 }
 
 export function addStatisticRoundEnglishPuzzle(dataPageRound){
-  console.log(dataPageRound);
+  const statistic = new Statistics('EnglishPuzzle');
   let correct = 0;
   let error = 0;
   const errorField = document.querySelector('.modal-round__error');
@@ -34,6 +34,7 @@ export function addStatisticRoundEnglishPuzzle(dataPageRound){
       errorField.querySelector('span').innerText = `${error}`;
     }
   });
+  statistic.updateGameStatistics(correct, error);
   document.querySelectorAll('.modal-round .btn_pronoucing').forEach((button) => {
     button.addEventListener('click', () => {
       const audio = button.querySelector('audio');
@@ -44,17 +45,16 @@ export function addStatisticRoundEnglishPuzzle(dataPageRound){
 }
 
 export function createStaticticRound(imageSrc, infoAboutImage){
-  console.log(imageSrc, infoAboutImage);
   const resultBlock = document.querySelector('.block-results');
   const statisticElement =
-  `<div id="modal-close-default" uk-modal>
-      <div class="uk-modal-dialog uk-modal-body modal-round">
+  `<div id="modal-close-default" uk-modal class ="modal"  bg-close="false" esc-close="false">
+      <div class="uk-modal-dialog modal-round"">
           <button class="uk-modal-close-default" type="button" uk-close></button>
           <div class="uk-modal-header">
             <img src = ${imageSrc}>
             <p>${infoAboutImage}</p>
           </div>
-          <div uk-overflow-auto>
+          <div uk-overflow-auto class = 'uk-modal-body'>
           <div class="modal-round__correct">
             <h3>Я знаю <span>0</span></h3>
           </div>
@@ -62,8 +62,13 @@ export function createStaticticRound(imageSrc, infoAboutImage){
             <h3>Я не знаю <span>0</span</h3>
           </div>
           </div>
+          <div class="uk-modal-footer">
+            <button id="modal-btn-report">Создать отчет</button>
+        </div>
       </div>
-  </div>`;
+  </div>
+`;
+
   resultBlock.insertAdjacentHTML('beforeend', statisticElement);
 }
 

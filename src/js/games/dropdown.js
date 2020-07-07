@@ -113,6 +113,9 @@ export async function addActiveGameControls(gameName){
   if(gameConfiguration === null){
     gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
   }
+  if(typeof(gameConfiguration) !== "object"){
+    gameConfiguration =  JSON.parse(gameConfiguration);
+  }
   listLvl[gameConfiguration.level].click();
   listRound[gameConfiguration.round].click();
   selectNextRound();
