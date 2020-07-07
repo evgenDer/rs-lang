@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS_PUZZLE } from '../constants/defaul-settings';
+import { DEFAULT_SETTINGS_PUZZLE } from '../constants/default-settings';
 
 function setUserId(infoAboutUser) {
   localStorage.setItem('userId', infoAboutUser.userId);
