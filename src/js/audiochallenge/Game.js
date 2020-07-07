@@ -194,7 +194,7 @@ export class Game {
 
   getWords() {
     const currentWord = this.data[this.currentAnswer].wordTranslate;
-        
+
     this.words = this.getSimilarWords(currentWord, this.allRoundTranslations);
     this.words[this.rightAnswer] = currentWord;
   }
@@ -273,7 +273,7 @@ export class Game {
       .join('');
     return this.words.indexOf(word);
   }
-  
+
   addAnswersClickHandler() {
     this.answers.forEach((answer) => {
       answer.onclick = ({ target }) => {
@@ -281,7 +281,7 @@ export class Game {
         if (answerIndex === -1) {
           answerIndex = this.getAnswerIndex(target.nextSibling.textContent);
         }
-        
+
         if (answer.classList.contains('answer_disabled')) {
           // do nothing
         } else if (answerIndex === this.rightAnswer) {
@@ -336,12 +336,11 @@ export class Game {
           break;
         }
       }
-      
+
       if (target.classList.contains('game-field__control_next')) {
         const currentAnswer = this.data[this.currentAnswer];
         const isRight = ProgressBar.isRightProgressPoint(this.task.progress.points[this.currentAnswer]);
 
-        this.statistics.updateStatistics(currentAnswer.word, isRight, this.level);
         currentAnswer.isCorrect = isRight;
         currentAnswer.isError = !isRight;
 
@@ -361,8 +360,9 @@ export class Game {
         } else {
           selectNextRound();
           saveCustomConfiguration('audioCall', { level: getCurrentLevel(), round: getCurrentRound() });
-          
+
           backGameBtn.click();
+          this.statistics.updateGameStatistics(this.wordsAmntInRound - this.errors, this.errors, 0);
           this.showStatistics();
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
@@ -378,7 +378,7 @@ export class Game {
   addKeyboardEventsHandler() {
     document.onkeydown = (event) => {
       event.preventDefault();
-      
+
       let answer = -1;
       switch (event.code) {
         case 'Digit1':
@@ -404,7 +404,7 @@ export class Game {
         case 'Enter':
           this.controlBtn.click();
           break;
-      
+
         default:
           break;
       }

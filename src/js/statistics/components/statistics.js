@@ -103,7 +103,7 @@ export class Statistics {
   /**
    * Shows modal with global statistics for current game
    */
-  async showGlobalStatistics() {
+  async showGlobalStatistics(withGameScore = false) {
     const mainElement = document.querySelector("body div");
     const prevModal = document.querySelector('#global-statistics-modal');
 
@@ -117,7 +117,7 @@ export class Statistics {
     UIkit.modal("#global-statistics-modal").show();
 
     const dateTimeData = await statisticsHelper.getDateTimeStatisticsForGame(this.gameName);
-    chartHelper.renderDateTimeChartForGame(dateTimeData);
+    chartHelper.renderDateTimeChartForGame(dateTimeData, withGameScore);
   }
 
    async showDateTimeStatisitcsChart(){

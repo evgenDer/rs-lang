@@ -30,18 +30,20 @@ export function renderDateTimeChart(data) {
       {
         type: "splineArea",
         showInLegend: true,
-        name: "Неправильно",
+        name: "Правильно",
+        color: "#61bd4f",
         xValueType: "dateTime",
         xValueFormatString: "DD MMM hh:mm TT",
-        dataPoints: data.dataError
+        dataPoints: data.dataCorrect
       },
       {
         type: "splineArea",
         showInLegend: true,
-        name: "Правильно",
+        name: "Неправильно",
+        color: "#fe5c55",
         xValueType: "dateTime",
         xValueFormatString: "DD MMM hh:mm TT",
-        dataPoints: data.dataCorrect
+        dataPoints: data.dataError
       }
     ]
   });
@@ -49,10 +51,44 @@ export function renderDateTimeChart(data) {
   chart.render();
 }
 
-export function renderDateTimeChartForGame(data) {
+export function renderDateTimeChartForGame(data, withGameScore) {
   if (!data) {
     return;
   }
+
+  const chartData = [];
+
+  if(withGameScore){
+    chartData.push({
+      type: "splineArea",
+      showInLegend: true,
+      name: "Результат",
+      xValueType: "dateTime",
+      xValueFormatString: "DD MMM hh:mm TT",
+      dataPoints: data.dataResult
+    });
+  }
+
+  chartData.push({
+    type: "splineArea",
+    showInLegend: true,
+    name: "Правильно",
+    xValueType: "dateTime",
+    xValueFormatString: "DD MMM hh:mm TT",
+    color: "#61bd4f",
+    dataPoints: data.dataCorrect
+  });
+
+  chartData.push({
+    type: "splineArea",
+    showInLegend: true,
+    name: "Неправильно",
+    color: "#fe5c55",
+    xValueType: "dateTime",
+    xValueFormatString: "DD MMM hh:mm TT",
+    dataPoints: data.dataError
+  });
+
 
   const chart = new CanvasJS.Chart('gameChartContainer', {
     animationEnabled: true,
@@ -69,31 +105,7 @@ export function renderDateTimeChartForGame(data) {
     toolTip: {
       shared: true
     },
-    data: [{
-        type: "splineArea",
-        showInLegend: true,
-        name: "Результат",
-        xValueType: "dateTime",
-        xValueFormatString: "DD MMM hh:mm TT",
-        dataPoints: data.dataResult
-      },
-      {
-        type: "splineArea",
-        showInLegend: true,
-        name: "Неправильно",
-        xValueType: "dateTime",
-        xValueFormatString: "DD MMM hh:mm TT",
-        dataPoints: data.dataError
-      },
-      {
-        type: "splineArea",
-        showInLegend: true,
-        name: "Правильно",
-        xValueType: "dateTime",
-        xValueFormatString: "DD MMM hh:mm TT",
-        dataPoints: data.dataCorrect
-      }
-    ]
+    data: chartData
   });
 
   chart.render();
