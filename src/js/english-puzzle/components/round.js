@@ -5,10 +5,15 @@ import { createElement } from '../../utils/create';
 import { removeChild, removeAllButtons, insertNewButtons } from '../../utils/helpers';
 import { BUTTONS_CLASSES, DATA_URL } from '../../utils/constants';
 import { addHintShowImage, addHints } from './hints';
-import { DEFAULT_SETTINGS_PUZZLE } from '../../constants/defaul-settings';
+import { DEFAULT_SETTINGS_PUZZLE } from '../../constants/default-settings';
 import Sortable from '../../../../node_modules/sortablejs';
 import { createStaticticRound } from './statistic';
 import { hideElement } from '../../helpers/html-helper';
+import { updateUserWord } from '../../api/userWords';
+import { increaseWordReferenceCount, increaseWordErrorCount } from '../../words/updateWordState';
+import { Statistics } from '../../statistics/components/statistics';
+import { getGameMode } from '../../games/gameModeSwitch';
+import { GAME_MODES } from '../../games/constants';
 
 
 const COUNT_SENTENCE = 10;
@@ -138,7 +143,6 @@ export default class Round {
   }
 
   checkCorrectSentence() {
-
     const arraySentence = this.dataPage[this.currentSentenceNumber].textExample.replace(/<\/?[a-zA-Z]+>/gi, '').split(' ');
     const sentenceBlock = document.querySelector('.current').querySelectorAll('canvas');
     let countCorrectSentence = 0;
@@ -180,12 +184,15 @@ export default class Round {
 
   continuationGame() {
     if (this.currentSentenceNumber === COUNT_SENTENCE - 1) {
+      const statistic = new Statistics('EnglishPuzzle');
       removeChild(SOURCE_FIELD);
       removeChild(RESULT_FIELD);
       addImageInPage(this.image, this.infoAboutImage);
       removeAllButtons();
       const resultButton = createElement('button', 'btn_result', [], [['uk-toggle','target: #modal-close-default']]);
       const nextButton = createElement('button', 'btn_next');
+      const { correct, errors } = this;
+      statistic.updateGameStatistics(correct, errors );
       insertNewButtons([resultButton, nextButton]);
     } else {
       this.generateCorrectSentence();
@@ -224,7 +231,19 @@ export default class Round {
   }
 
   continueButtonEventListeners() {
-    document.querySelector('.btn_continue').addEventListener('click', () => {
+    document.querySelector('.btn_continue').addEventListener('click', async() => {
+      const {userWord, _id} = this.dataPage[this.currentSentenceNumber];
+      const mode = getGameMode();
+      if ( mode !== GAME_MODES.all) {
+        if(this.dataPage[this.currentSentenceNumber].result){
+          increaseWordReferenceCount(userWord);
+          this.correct += 1;
+        } else {
+          increaseWordErrorCount(userWord);
+          this.errors += 1;
+        }
+          updateUserWord(_id, userWord);
+      }
       this.continuationGame();
     });
   }
