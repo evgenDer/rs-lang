@@ -29,7 +29,6 @@ export class Game {
     this.mode = mode;
     this.level = level;
     this.round = round;
-    this.answersAmnt = 5;
 
     this.gameField = document.querySelector('.concentration__game-field');
     this.cardsContainer = document.querySelector('.game-field__cards');
@@ -46,6 +45,7 @@ export class Game {
     this.data = [];
     this.userData = [];
     this.words = [];
+    this.score = 0;
 
     this.statistics = new Statistics(this.name);
   }
@@ -164,7 +164,6 @@ export class Game {
                 this.secondCard = undefined;
                 this.isClickable = true;
 
-                // this.statistics.updateStatistics(currentAnswer.word, true);
                 if (this.mode === GAME_MODES.learned) {
                   const currenWordId = card.dataset.wordid;
                   const currentUserData = this.userData.find(({ wordId }) => wordId === currenWordId);
@@ -173,14 +172,11 @@ export class Game {
                     updateUserWord(currentUserData.wordId, currentUserData);
                   }
                 }
-
+                
+                this.score += 10;
                 this.guessed += 1;
                 if (this.guessed === this.wordsAmntInRound) {
-                  selectNextRound();
-                  saveCustomConfiguration('mygame', { level: getCurrentLevel(), round: getCurrentRound() });
-                        
-                  backGameBtn.click();
-                  // this.showStatistics();
+                  this.gameOver();
                 }
               }, 600);
             } else {
@@ -192,6 +188,7 @@ export class Game {
                 this.isClickable = true;
 
                 this.errors += 1;
+                this.score -= 5;
               }, 800);
             }
           }
@@ -226,5 +223,14 @@ export class Game {
     this.cards.forEach((card, index) => {
       setTimeout(() => card.classList.remove('concentration-card_flipped'), (index + 1) * 100);      
     });
+  }
+
+  gameOver() {
+    selectNextRound();
+    saveCustomConfiguration('mygame', { level: getCurrentLevel(), round: getCurrentRound() });
+    
+    this.statistics.updateGameStatistics(this.guessed, 0, this.score);
+    backGameBtn.click();
+    // this.showStatistics();
   }
 }

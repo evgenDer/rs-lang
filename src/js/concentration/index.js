@@ -73,7 +73,7 @@ function addStatisticsButtonClickHandler() {
   statBtn.addEventListener('click', (event) => {
     event.preventDefault();
 
-    stat.showGlobalStatistics();
+    stat.showGlobalStatistics(true);
   });
 }
 
