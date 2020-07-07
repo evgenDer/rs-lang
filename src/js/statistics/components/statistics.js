@@ -22,6 +22,12 @@ export class Statistics {
     this.currentStatistics = null;
   }
 
+  /**
+   * Updates game statistics with provided values.
+   * @param {totalCorrect} totalCorrect - Number of correct answers
+   * @param {totalError} totalError - Number of error answers
+   * @param {number} gameScore - Score for the game
+   */
   async updateGameStatistics(totalCorrect, totalError, gameScore) {
     if (!this.globalStatistics) {
       this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
@@ -33,6 +39,12 @@ export class Statistics {
     await statisticsHelper.updateStatisticsData(this.globalStatistics);
   }
 
+  /**
+   * Updates game statistics with provided values.
+   * @param {learningWordsCount} learningWordsCount - Number of learning words
+   * @param {totalCorrect} totalCorrect - Number of correct answers
+   * @param {totalError} totalError - Number of error answers
+   */
   async updateLearningStatistics(learningWordsCount, totalCorrect, totalError){
     if (!this.globalStatistics) {
       this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
