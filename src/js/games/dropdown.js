@@ -107,9 +107,9 @@ export function selectNextRound() {
 export async function addActiveGameControls(gameName) {
   disableDropdowns();
   let gameConfiguration = await getCustomConfiguration(gameName);
-  if (Object.keys(gameConfiguration).length === 0) {
+  if (gameConfiguration && Object.keys(gameConfiguration).length === 0) {
     gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
+    listRound[gameConfiguration.round].click();
+    listLvl[gameConfiguration.level].click();
   }
-  listRound[gameConfiguration.round].click();
-  listLvl[gameConfiguration.level].click();
 }

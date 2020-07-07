@@ -456,6 +456,7 @@
     transform: rotateY(0deg);
     transform-style: preserve-3d;
   }
+  transition: all .6s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
 .concentration-card_flipped {
@@ -543,5 +544,14 @@
     text-align: center;
     word-break: break-all;
     overflow: hidden;
+    transition: all .6s cubic-bezier(0.4, 0.2, 0.2, 1);
   }
+}
+
+.concentration-card_disabled {
+  p {
+    opacity: 0.8;
+  }
+  opacity: 0.4;
+  transition: all .6s cubic-bezier(0.4, 0.2, 0.2, 1);
 }

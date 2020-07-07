@@ -1,4 +1,4 @@
-// import { Game } from './Game';
+import { Game } from './Game';
 import * as Dropdown from '../games/dropdown';
 import { addGameModeSwitchClickHandler, getGameMode, disableGameModeSwitch, enableGameModeSwitch } from '../games/gameModeSwitch';
 import { showElement, hideElement } from '../helpers/html-helper';
@@ -17,7 +17,7 @@ const modeBtn = document.querySelector('.game-control__btn_mode');
 const statBtn = document.querySelector('.game-control__btn_stat');
 const stat = new Statistics('Концентрация');
 
-// let game;
+let game;
 
 
 function exitGame() {
@@ -40,7 +40,7 @@ function addExitGameBtnClickHandler() {
     exitGame();
   });
   backGameBtn.addEventListener('click', () => {
-    // game.stopGame();
+    game.stopGame();
     Dropdown.enableDropdowns();
 
     enableGameModeSwitch(modeBtn);
@@ -63,8 +63,8 @@ function addStartButtonClickHandler() {
     setExitButtonBackMode();
 
     Dropdown.disableDropdowns();
-    // game = new Game(getGameMode(), Dropdown.getCurrentLevel(), Dropdown.getCurrentRound());
-    // game.startGame();
+    game = new Game(getGameMode(), Dropdown.getCurrentLevel(), Dropdown.getCurrentRound());
+    game.startGame();
   });
 }
 
@@ -77,7 +77,6 @@ function addStatisticsButtonClickHandler() {
   });
 }
 
-const cards = document.querySelectorAll('.concentration-card');
 
 window.onload = () => {
   addStartButtonClickHandler();
@@ -85,14 +84,8 @@ window.onload = () => {
   addGameModeSwitchClickHandler();
 
   Dropdown.addDropdownsEventHandlers();
-  Dropdown.addActiveGameControls('audioCall');
+  Dropdown.addActiveGameControls('mygame');
   Dropdown.enableDropdowns();
   
   addStatisticsButtonClickHandler();
-
-  cards.forEach((card) => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('concentration-card_flipped');
-    });
-  });
 };
