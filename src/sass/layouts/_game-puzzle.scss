@@ -1,4 +1,4 @@
-.game-puzzle{
+#game-puzzle {
   background: linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%)
   center center / cover, url(../img/puzzle_background.jpg)
   center center no-repeat;
@@ -20,24 +20,23 @@
   margin: auto;
   margin-top: 40px;
   background-color: lightblue;
-  height: 45px;
+  min-height: 45px;
+  height: auto;
   font-size: 1rem;
   @extend %puzzle-field;
+  overflow: hidden;
 }
 
 .block-source p{
   color: $color-secondary;
   vertical-align: middle;
-  height: 50px;
-  margin-bottom: 20px;
   background-color: lightblue;
   font-size: 20px;
   font-weight: 700;
-  padding-top: 15px;
   text-align: center;
-  @include media-tablet{
-    height: 80px;
-  }
+  height: auto;
+  margin: auto;
+  margin: 10px auto;
 }
 .current{
  // border: 1px solid green;
@@ -46,13 +45,17 @@
 }
 
 .block-results{
-  margin: 10px auto;
+  overflow: hidden;
+  margin: auto;
   text-align: center;
+  margin-top: 40px;
   background-color: $color-background;
   // padding-left: 0px;
   height: 450px;
-  @include media-laptop{
-    margin: 40px auto 40px;
+  @include media-tablet{
+    font-size: 14px;
+  }
+  @include media-mobile{
   }
   @extend %puzzle-field;
 }
@@ -75,7 +78,7 @@ canvas{
   z-index: 5px;
 }
 
-.load-page{
+#game-puzzle .load-page{
   margin-top: -20px;
   position: absolute;
   height: 100vh;
@@ -120,22 +123,47 @@ option::selection {
   background: transparent !important;
 }
 
-.start-page{
-  text-align: center;
-  align-items: center;
-  @include media-tablet{
-    margin-top:  0px;
+.englishpuzzle__header{
+  width: 100%;
+  display: flex;
+	align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  @include media-mobile {
+    padding: 0 10px;
   }
+  z-index: 4;
+}
+
+.englishpuzzle__game-control{
+  max-width: fit-content;
+  display: flex;
+	align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  @include media-mobile {
+    flex-direction: column;
+  }
+  .game-control {
+    margin: 5px;
+  }
+  flex-wrap: wrap;
 }
 
 .block-start{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   border-radius: 10px;
-  width: 700px;
-  margin: 10vh auto 0px;
+  max-width: 800px;
+  margin: 80px auto 0px;
   background-color: rgba(248, 242, 238, 0.8);
   @include media-tablet{
     width: 380px;
     margin: 10vh auto 0px;
+  }
+  div{
+    text-align: center;
   }
   @include media-mobile{
 
@@ -143,62 +171,69 @@ option::selection {
   }
 }
 
+#game-puzzle main{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .block-hints{
+  // position: absolute;
   p{
-    margin: 15px;
+    // word-break: break-all;
+    // margin: 10px auto 30px;
+    height: auto;
+    margin: auto;
+    font-size: 25px;
+    text-align: center;
     @include media-tablet{
-      margin: 20px 0 40px;
-      font-size: 20px;
+      margin: auto;
+      margin-bottom: 45px;
     }
+    @extend %puzzle-field;
   }
-  height: 100px;
+  .btn_pronoucing{
+    opacity: 1;
+    display: inline;
+    height: 50px;
+    margin-top: 20px;
+    color: $color-primary;
+  }
+
+  // height: 100px;
   margin-top: -10px;
-  @include media-tablet{
-    margin-top: 0px;
-  }
   font-size: 2em;
   color: $color-primary;
   text-align: center;
 }
 
+.btn_hidden{
+  color: transparent!important;
+}
 
-.start-page h2{
-  padding-top: 40px;
-  font-size: 5em;
-  color: $color-secondary;
-  margin-bottom: 0.5em;
-  line-height: 1em;
-  font-family: 'Montserrat';
-  @include media-tablet{
-    font-size: 3em;
+.start-page{
+  h2{
+      font-family: 'Montserrat';
+      font-size: 3.2rem;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 3.2rem;
+      color: $color-secondary;
+      padding: 20px 0 0;
   }
  }
 
 .start-page p{
   font-size: 2em;
+  text-align: center;
   color: $color-additional;
   margin: 0 20px;
-}
-
-.start-page button{
-  margin: 40px 0;
-  background-color: $color-secondary;
-  color: white;
-  font-size: 2em;
 }
 
 .game-puzzle header{
   display: none;
 }
 
-
-.header__game-puzzle{
-  display: flex;
-  justify-content: space-between;
-  @media (max-width: $tablet-width){
-      display: block;
-  }
-}
 
 .game-puzzle .switchers{
   display: flex;
@@ -228,97 +263,140 @@ option::selection {
   }
 }
 
-.game-puzzle .btns{
+#game-puzzle .btns{
   display: flex;
   justify-content: center;
   @include media-tablet{
-    margin-top: 20px;
     margin-right: 10px;
   }
 }
 
-.game-puzzle
-{
-  li{
-    font-size: 1.2rem;
-  }
-  .uk-button-default:hover {
-  background-color: transparent;
-  color: $color-active;
-}
-  .uk-active{
-    color: $color-active;
-  }
-.uk-dropdown.uk-open.uk-dropdown-bottom-left:nth-child(4){
-  height: 420px;
-  overflow-y: scroll;
-}
-
-.uk-button{
-    font-size: 1.2em;
-    height: 50px;
-    border-radius: 5px;
-    background-color: $color-additional;
-    margin-right: 10px;
-    @include media-laptop{
-      font-size: 1em;
-    }
-  }
-  .uk-dropdown{
-    border-radius: 10px;
-    background-color: $color-darken;
-  }
-}
 
 @keyframes Appearance {
   0% {opacity: 0;}
   100% {opacity: 1;}
 }
 
-.game-control__btn {
-  border-radius: 10px;
-  padding: 5px!important;
-  width: 300px!important;
-  color: $color-primary!important;
-  &:hover {
-    cursor: pointer;
-    transition: all 0.4s;
-    color: $color-active!important;
+.header__game-puzzle{
+  display: flex;
+  justify-content: space-between;
+  @include media-mobile{
+      display: block;
   }
-  transition: all 0.4s;
+  button{
+    height: 50px;
+  }
+
 }
 
-.game-control__list {
-  background: $color-secondary;
-  opacity: 0.8;
-  border-radius: 10px;
-  color: $color-primary;
-  padding: 15px 25px;
-  min-width: fit-content;
-  max-width: 250px;
-  ul li {
-    @include font(1.1rem, 1.4rem, 400);
-    &:hover {
-      cursor: pointer;
-      text-decoration: underline;
+.block-start__button{
+  text-align: center;
+  margin: 40px 0 20px;
+  outline: none;
+	border: none;
+	width: 250px;
+	height: 70px;
+	border-radius: 10px;
+	@include font(1.4rem, 1.4rem, 600);
+	@extend %light-shadow;
+  position: relative;
+	background-color: $color-secondary;
+	color: $color-primary;
+	&:hover {
+		background-color: $color-active;
+		color: $color-secondary;
+		cursor: pointer;
+		transition: all 0.4s;
+	}
+	transition: all 0.4s;
+  @include media-mobile{
+    width: 200px;
+  }
+}
+
+#game-puzzle {
+  .modal-round {
+    padding: 10px;
+    width: 500px;
+    height: fit-content;
+    max-height: 600px;
+    top: 0vh;
+    margin-top: 0;
+    margin-bottom: 20px;
+    @include media-tablet {
+      top: 5vh;
+    }
+    .uk-modal-header {
+      padding: 0;
+      padding-bottom: 20px;
+      margin: 10px;
+    }
+    .uk-modal-body {
+      padding: 0;
+      margin: 10px;
+      height: fit-content;
+      max-height: 250px !important;
+      h3 {
+        @include font(1.4rem, 1.9rem);
+        margin: 5px;
+      }
+    }
+    span {
+      padding: 0px 10px;
+      margin-left: 10px;
+      text-align: center;
+      height: 25px;
+      width: 35px!important;
+      border-radius: 20px;
+      color: $color-primary;
+    }
+    .uk-modal-footer {
+      padding: 0;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 20px;
+      button {
+        height: 50px;
+        width: 150px;
+        padding: 10px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .line {
+      margin: 10px 0;
+      p {
+        margin: 0;
+        @include font(1.2rem, 1.4rem);
+      }
+    }
+
+    .btn_pronoucing {
+      background: transparent;
+      color: $color-secondary;
+      border: none;
+      outline: none;
+      width: fit-content;
+      animation: none;
+      &::before {
+        content: "\f028";
+        font-family: 'FontAwesome';
+      }
+      &:hover {
+        cursor: pointer;
+        &::before {
+          color: $color-secondary !important;
+        }
+      }
     }
   }
-  .list__active {
-    color: $color-active;
+
+
+  #global-statistics-modal {
+    .uk-modal-body {
+      max-height: fit-content;
+      border-radius: 10px;
+    }
   }
 }
-.btn_close:hover{
-  color: $color-additional;
-}
-
-.game-control__list_desc {
-  div p {
-    @include font(1.1rem, 1.4rem, 400);
-    margin: 0;
-    width: 200px;
-    word-break: break-all;
-    overflow: hidden;
-    text-align: center;
-  }
-}
-

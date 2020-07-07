@@ -9,62 +9,100 @@
         <link rel="shortcut icon" href="../../favicon/favicon.ico" type="image/x-icon">
         <title>English puzzle</title>
     </head>
-    <body styles = "background: url(assets/img/puzzle.jpg), rgba(255,255,255,0.9)" class = "game-puzzle">
-       <div class="start-page">
-         <div class="wrapper">
-           <div class="uk-inline game-control">
-              <button class = 'btn_close' uk-close></button>
-              <button
-                class="uk-button uk-button-default game-control__btn game-control__btn_mode game-control__btn_mode_disabled"
-                type="button">
-                Cлова: <span id="game-mode-switch">изученные</span>
-              </button>
-              <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_desc">
-                <div class="uk-nav uk-dropdown-nav">
-                  <p class="desc_active hidden">В игре будут задей- <br> ствованы слова из <br> всей коллекции</p>
-                  <p class="desc_disabled">В игре будут задей- <br> ствованы только <br> изученные слова</p>
+    <body styles = "background: url(assets/img/puzzle.jpg), rgba(255,255,255,0.9)" id = "game-puzzle">
+      <div class="start-page">
+        <div class="wrapper">
+          <div class="englishpuzzle__header">
+           <button class = 'btn_close' uk-close></button>
+           <div class="englishpuzzle__game-control">
+              <div class="game-control">
+                <button class="uk-button uk-button-default game-control__btn game-control__btn_stat" type="button">
+                  Статистика
+                </button>
+              </div>
+              <div class="uk-inline game-control hidden">
+                <button class="uk-button uk-button-default game-control__btn game-control__btn_level" type="button">
+                  Уровень: <span id="game-control__current_level">1</span>
+                </button>
+                <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_level">
+                  <ul class="uk-nav uk-dropdown-nav">
+                    <li class="list__active">Уровень 1</li>
+                    <li>Уровень 2</li>
+                    <li>Уровень 3</li>
+                    <li>Уровень 4</li>
+                    <li>Уровень 5</li>
+                    <li>Уровень 6</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="uk-inline game-control hidden">
+                <button class="uk-button uk-button-default game-control__btn game-control__btn_round" type="button">
+                  Раунд: <span id="game-control__current_round">1</span>
+                </button>
+                <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_round">
+                  <ul class="uk-nav uk-dropdown-nav">
+                    <li class="list__active">Раунд 1</li>
+                    <li>Раунд 2</li>
+                    <li>Раунд 3</li>
+                    <li>Раунд 4</li>
+                    <li>Раунд 5</li>
+                    <li>Раунд 6</li>
+                    <li>Раунд 7</li>
+                    <li>Раунд 8</li>
+                    <li>Раунд 9</li>
+                    <li>Раунд 10</li>
+                    <li>Раунд 11</li>
+                    <li>Раунд 12</li>
+                    <li>Раунд 13</li>
+                    <li>Раунд 14</li>
+                    <li>Раунд 15</li>
+                    <li>Раунд 16</li>
+                    <li>Раунд 17</li>
+                    <li>Раунд 18</li>
+                    <li>Раунд 19</li>
+                    <li>Раунд 20</li>
+                    <li>Раунд 21</li>
+                    <li>Раунд 22</li>
+                    <li>Раунд 23</li>
+                    <li>Раунд 24</li>
+                    <li>Раунд 25</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="uk-inline game-control">
+                <button
+                  class="uk-button uk-button-default game-control__btn game-control__btn_mode game-control__btn_mode_disabled"
+                  type="button">
+                  Cлова: <span id="game-mode-switch">изученные</span>
+                </button>
+                <div uk-dropdown="pos: bottom-right" class="game-control__list game-control__list_desc">
+                  <div class="uk-nav uk-dropdown-nav">
+                    <p class="desc_active hidden">В игре будут задей- <br> ствованы слова из <br> всей коллекции</p>
+                    <p class="desc_disabled">В игре будут задей- <br> ствованы только <br> изученные слова</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class = "block-start">
+          </div>
+        </div>
+          <div class = "block-start">
               <h2>ENGLISH PUZZLE</h2>
-              <p>Нажимайте на слова, чтобы собрать фразы.</p>
-              <button class = "block-start__button">Начать</button>
-            </div>
+              <p>Нажимайте или перетягивайте слова, чтобы собрать фразы.</p>
+              <div><button class = "block-start__button">Начать</button></div>
           </div>
         </div>
         <div class="load-page hidden uk-overlay-default">
           <div uk-spinner="ratio: 3"></div>
         </div>
-        </div>
         <div class = "play-page hidden">
             <div class = "wrapper">
                 <div class = "header__game-puzzle">
-                  <div class="switchers">
-                    <button class="uk-button uk-button-default button_level" type="button" >Уровень: 1</button>
-                    <div uk-dropdown>
-                      <ul class="uk-nav uk-dropdown-nav switcher_level">
-                          <li class="uk-active">Уровень 1</li>
-                      </ul>
-                    </div>
-                    <button class="uk-button uk-button-default button_round" type="button">Раунд: 1</button>
-                    <div uk-dropdown>
-                      <ul class="uk-nav uk-dropdown-nav page  switcher_round">
-                          <li class="uk-active">Раунд 1</li>
-                          <li>Раунд 2</li>
-                          <li>Раунд 3</li>
-                          <li>Раунд 4</li>
-                          <li>Раунд 5</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <button class = 'btn_exit btn_close'><img src="./assets/img/icons/arrow-right.svg"></button>
                   <div class = "btns">
-                    <button class ="btn_statistic"><img src = 'assets/img/icons/statistic.svg'></button>
                     <button class="btn_pronoucing"></button>
                     <button class="btn_translation"></button>
                     <button class="btn_autopronoucing"></button>
                     <button class="btn_background"></button>
-                    <button class="btn_exit"></button>
                   </div>
                 </div>
                 <main>
@@ -85,8 +123,8 @@
         </div>
     </div>
   </div>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
-  <script src="dist/dragula.js"></script>
   </body>
 </html>
