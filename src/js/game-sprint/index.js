@@ -6,11 +6,15 @@ import Game from './game';
 import { playAudio } from '../helpers/audio';
 import * as Dropdown from '../games/dropdown';
 import playHtml from './playHtml';
+import { Statistics } from '../statistics/components/statistics';
 
 // const modeBtn = document.querySelector('.game-control__btn_mode');
 const startPage = document.querySelector('.game-sprint__start');
 const loadPage = document.querySelector('.game-sprint__load');
 const playPage = document.querySelector('.game-sprint__play');
+
+const statBtn = document.querySelector('.game-control__btn_stat');
+const stat = new Statistics('Sprint');
 
 function addExitGameBtnClickHandler() {
   document.querySelector('.btn_close').addEventListener('click', () => {
@@ -37,6 +41,13 @@ function addStartButtonClickHandler() {
   });
 }
 
+function addStatisticsButtonClickHandler() {
+  statBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    stat.showGlobalStatistics(true);
+  });
+}
+
 
 window.onload = () => {
   Dropdown.addDropdownsEventHandlers();
@@ -44,4 +55,6 @@ window.onload = () => {
   addGameModeSwitchClickHandler();
   addExitGameBtnClickHandler();
   addStartButtonClickHandler();
+
+  addStatisticsButtonClickHandler();
 }

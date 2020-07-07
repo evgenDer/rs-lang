@@ -3,6 +3,9 @@ import { DATA_URL, AUDIO_B64 } from '../utils/constants';
 import { playAudio } from '../helpers/audio';
 import { GAME_MODES } from '../games/constants';
 import { getGameMode } from '../games/gameModeSwitch';
+import { Statistics } from '../statistics/components/statistics';
+
+const stat = new Statistics('Sprint');
 
 function createStatisticSentence(audioSrc, textExample, translate){
   const mode = getGameMode();
@@ -15,7 +18,7 @@ function createStatisticSentence(audioSrc, textExample, translate){
   return newElement;
 }
 
-export function addStatisticRoundSprint(dataPageRound){
+export function addStatisticRoundSprint(dataPageRound, points){
   let correct = 0;
   let error = 0;
   const errorField = document.querySelector('.modal-round__error');
@@ -37,6 +40,7 @@ export function addStatisticRoundSprint(dataPageRound){
       errorField.querySelector('span').innerText = `${error}`;
     }
   });
+  stat.updateGameStatistics(correct, error, points);
   document.querySelectorAll('.modal-round .btn_pronoucing').forEach((button) => {
     button.addEventListener('click', () => {
       const audio = button.querySelector('audio');
@@ -45,7 +49,34 @@ export function addStatisticRoundSprint(dataPageRound){
 });
 }
 
-export function createStaticticRound(points, compareHTMLElement = ''){
+async function getCompareHTMLElement(points){
+  const maxScore = await stat.getUserMaxScore();
+  let innerTextResult = '';
+  let innerTextComare = '';
+  let resPer = 0;
+  if(maxScore < points){
+    innerTextResult = 'Это ваш лучший результат!';
+    resPer = 1- (maxScore / points);
+    innerTextComare = `Он на<span>${Math.round(resPer * 100)}%</span>лучше максимального`;
+  } else if(maxScore > points){
+    innerTextResult = 'Неплохой результат';
+    resPer = (points === 0) ? 1 : 1 - points / maxScore;
+    innerTextComare = `Он на<span>${Math.round(resPer * 100)}%</span>отстаёт от максимального`;
+  } else {
+    innerTextResult = 'Игра прошла успешно!';
+    innerTextComare = `Вы достигли своего максимального результата`;
+  }
+  const compareElement = `
+    <div class = "modal__results">
+      <h3>${innerTextResult}</h3>
+      <h4>${innerTextComare}</h4>
+    </div>
+  `;
+  return compareElement;
+}
+
+export async function createStaticticRound(points){
+  const compareHTMLElement = await getCompareHTMLElement(points);
   const statisticElement =
   `<div id="modal-close-default" uk-modal class = 'modal'>
       <div class="uk-modal-dialog modal-round" bg-close = "false" esc-close = "false">

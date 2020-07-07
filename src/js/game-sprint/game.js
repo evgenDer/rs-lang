@@ -140,7 +140,7 @@ export default class Game {
     removeChild(loadPage);
     if(!this.isError){
       showElement(playPage);
-      const startTimer = timer(60, 'play__time', '', this, this.generateResults);
+      const startTimer = timer(1, 'play__time', '', this, this.generateResults);
       startTimer();
       playAudio('assets/audio/start.mp3');
       this.addButtonClickHandler();
@@ -255,14 +255,19 @@ export default class Game {
     clearTimer();
     hideElement(playPage);
     selectNextRound();
-    showElement(startPage);
-    createStaticticRound(this.points);
-    addStatisticRoundSprint(this.data);
-    // eslint-disable-next-line no-undef
-    UIkit.modal('.modal-round').show();
-    const btnClose = document.getElementById('modal-btn-close');
-    btnClose.addEventListener('click', () => {
-      document.querySelector('.modal-round').remove();
+    const spinner = `<div style="height: 80px; width: 80px; margin-top: 20vh" uk-spinner="ratio: 4.5"></span>`;
+    loadPage.insertAdjacentHTML('beforeend', spinner);
+    showElement(loadPage);
+    createStaticticRound(this.points).then(() => {
+      hideElement(loadPage);
+      showElement(startPage);
+      addStatisticRoundSprint(this.data, this.points);
+      // eslint-disable-next-line no-undef
+      UIkit.modal('.modal-round').show();
+      const btnClose = document.getElementById('modal-btn-close');
+      btnClose.addEventListener('click', () => {
+        document.querySelector('.modal-round').remove();
+      });
     });
   }
 
