@@ -104,26 +104,26 @@ async function saveConfiguration() {
     dayLearningDate = Date.now();
   }
 
-  const configuration = {
-    maxNewWordsPerDay: userConfiguration.maxNewWordsPerDay,
-    maxCardsWithWordsPerDay: userConfiguration.maxCardsWithWordsPerDay,
-    dayLearningDate,
-    difficultyLevel: userConfiguration.difficultyLevel,
-    showWordTranslation: cardsConfiguration.showWordTranslation,
-    showSentenceExplanation: cardsConfiguration.showSentenceExplanation,
-    showExplanationExample: cardsConfiguration.showExplanationExample,
-    showWordTranscription: cardsConfiguration.showWordTranscription,
-    showImageAssociation: cardsConfiguration.showImageAssociation,
-    enableAutomaticAudio: appConfiguration.enableAutomaticAudio,
-    showNewWordTranslation: appConfiguration.showNewWordTranslation,
-    showSentenceTranslation: appConfiguration.showSentenceTranslation,
-    showAnswer: appConfiguration.showAnswer,
-    deleteWords: appConfiguration.deleteWords,
-    markAsDifficultWord: appConfiguration.markAsDifficultWord,
-    possibilityToMarkWord: appConfiguration.possibilityToMarkWord,
-  };
+  prevConfiguration.maxNewWordsPerDay = userConfiguration.maxNewWordsPerDay;
+  prevConfiguration.maxNewWordsPerDay = userConfiguration.maxNewWordsPerDay;
+  prevConfiguration.maxCardsWithWordsPerDay = userConfiguration.maxCardsWithWordsPerDay;
+  prevConfiguration.dayLearningDate = dayLearningDate;
+  prevConfiguration.difficultyLevel = userConfiguration.difficultyLevel;
+  prevConfiguration.showWordTranslation = cardsConfiguration.showWordTranslation;
+  prevConfiguration.showSentenceExplanation = cardsConfiguration.showSentenceExplanation;
+  prevConfiguration.showExplanationExample = cardsConfiguration.showExplanationExample;
+  prevConfiguration.showWordTranscription = cardsConfiguration.showWordTranscription;
+  prevConfiguration.showImageAssociation = cardsConfiguration.showImageAssociation;
+  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;
+  prevConfiguration.showNewWordTranslation = appConfiguration.showNewWordTranslation;
+  prevConfiguration.showSentenceTranslation = appConfiguration.showSentenceTranslation;
+  prevConfiguration.showAnswer = appConfiguration.showAnswer;
+  prevConfiguration.deleteWords = appConfiguration.deleteWords;
+  prevConfiguration.markAsDifficultWord = appConfiguration.markAsDifficultWord;
+  prevConfiguration.possibilityToMarkWord = appConfiguration.possibilityToMarkWord;
 
-  await updateConfiguration(configuration);
+  await updateConfiguration(prevConfiguration);
+
   window.localStorage.setItem('dayLearningDate', '-1');
   return true;
 }
