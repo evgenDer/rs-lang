@@ -45,7 +45,7 @@ export class Statistics {
    * @param {totalCorrect} totalCorrect - Number of correct answers
    * @param {totalError} totalError - Number of error answers
    */
-  async updateLearningStatistics(learningWordsCount, totalCorrect, totalError){
+  async updateLearningStatistics(learningWordsCount, totalCorrect, totalError) {
     if (!this.globalStatistics) {
       this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
     }
@@ -57,30 +57,27 @@ export class Statistics {
   }
 
   /**
-   * Updates statistics with provided values.
-   * @param {string} word - Word
-   * @param {boolean} isCorrect - Is correct answer or not
-   * @param {number} wordLevel - Difficulty level of the word. -1 if word is not new
-   * @param {boolean} isStrike - Is answer is correct again (previous answer was correct)
-   * @param {number} gameScore - Score for the game
-   */
-  async updateStatistics(word, isCorrect, wordLevel = -1, isStrike = false, gameScore = 0) {
-    if (!this.globalStatistics) {
-      this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
-    }
-
-    this.currentStatistics = statisticsUtils.getCurrentStatistics(this.globalStatistics, this.gameName, this.dateTime);
-    this.currentStatistics = statisticsUtils.updateStatisticsValues(this.currentStatistics, word, isCorrect, wordLevel, isStrike, gameScore);
-
-    await statisticsHelper.updateStatisticsData(this.globalStatistics);
-  }
-
-  /**
    * Gets temporary statistics for current game
    * @return {object} Temporary statistics objects
    */
   async getCurrentStatistics() {
     return this.currentStatistics;
+  }
+
+  /**
+   * Gets user max score for current game
+   * @return {number} User game score
+   */
+  async getUserMaxScore() {
+    const statistics = await statisticsHelper.getGameStatistics(this.gameName);
+
+    if(!statistics){
+      return 0;
+    }
+
+    const maxScore =  statisticsUtils.getUserMaxScore(statistics);
+
+    return maxScore;
   }
 
   /**
@@ -120,15 +117,15 @@ export class Statistics {
     chartHelper.renderDateTimeChartForGame(dateTimeData, withGameScore);
   }
 
-   async showDateTimeStatisitcsChart(){
+  async showDateTimeStatisitcsChart() {
     const dateTimeData = await statisticsHelper.getDateTimeStatistics(this.gameName);
 
     chartHelper.renderDateTimeChart(dateTimeData);
-   }
+  }
 
-   async showPercentToAllChart() {
-     const data = await statisticsHelper.getPercentToTotalStatistics(this.gameName);
+  async showPercentToAllChart() {
+    const data = await statisticsHelper.getPercentToTotalStatistics(this.gameName);
 
-     chartHelper.renderPercentToAllChart(data);
-   }
+    chartHelper.renderPercentToAllChart(data);
+  }
 }

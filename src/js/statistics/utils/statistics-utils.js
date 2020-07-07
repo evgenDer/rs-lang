@@ -111,7 +111,11 @@ export const getDateTimeStatisticsForChart = (statistics, gameName) => {
     };
   });
 
-  return {dataTotal, dataCorrect, dataError};
+  return {
+    dataTotal,
+    dataCorrect,
+    dataError
+  };
 }
 
 export const getGameDateTimeStatisticsForChart = (statistics, gameName) => {
@@ -138,7 +142,11 @@ export const getGameDateTimeStatisticsForChart = (statistics, gameName) => {
     };
   });
 
-  return {dataResult, dataCorrect, dataError};
+  return {
+    dataResult,
+    dataCorrect,
+    dataError
+  };
 }
 
 export const getPercentToTotalStatisticsForChart = (statistics, gameName) => {
@@ -154,11 +162,17 @@ export const getPercentToTotalStatisticsForChart = (statistics, gameName) => {
     const percent = ((totalLearningWordsCount / totalWordsCount).toFixed(2)) * 100;
 
     return {
-      // x: new Date(dateTime.getUTCFullYear(), dateTime.getUTCMonth(), dateTime.getUTCDay()),
       x: dateTime,
       y: percent
     };
   });
 
   return data;
+}
+
+export const getUserMaxScore = (statistics) => {
+  const gameScoreArr = statistics.d.map(f => f.gs);
+  const maxScore = Math.max(...gameScoreArr);
+
+  return maxScore;
 }
