@@ -1,5 +1,5 @@
 import { getSettings } from '../api/settings';
-import { getAggregatedUserWords } from '../api/userWords';
+import { getAggregatedUserWords} from '../api/userWords';
 import { createElementObj } from '../utils/create';
 import { calculateRepeatTiming } from '../words/updateWordState';
 import Card from './Card';
@@ -10,17 +10,19 @@ const FILTERS = {
   learning: {'$and':[{'userWord.difficulty':{'$in':['normal', 'easy']}, 'userWord.optional.mode': {'$not': {'$eq':'deleted'}}}]},
 }
 
-const wordsWrapper = document.querySelector('.vocabulary_cards-wrapper');
+const cardsWrapper = document.querySelector('.vocabulary_cards-wrapper');
 const audioObj = new Audio();
-const cards = [];
+let cards = [];
 let configuration = '';
+let currentlyCategoryWord = 'learning';
 
 function generateDataForCards(UserWordsData, wordCategory) {
   const dataForCards = UserWordsData.map((wordData) => {
-    const data = {
-      lastUpdateDate: wordData.userWord.optional.lastUpdateDate,
-      repeatCount: wordData.userWord.optional.repeatCount,
 
+    const data = {
+      id: wordData._id,
+      optional: wordData.userWord.optional,
+      difficulty: wordData.userWord.difficulty,
       audio: wordData.audio,
       word: wordData.word,
       wordTranslate: wordData.wordTranslate,
@@ -50,47 +52,61 @@ function generateDataForCards(UserWordsData, wordCategory) {
   return dataForCards;
 }
 
-function playAudio(audioSrc) {
-  audioObj.pause();
-  audioObj.src = audioSrc;
-  audioObj.play();
-}
-
 function ErrorMassage() {
-  const errorMessage = createElementObj({ tagName: 'p', classNames: `vocabulary__error-message`, textContent: 'Слова данной категории отсутствуют' });
-  wordsWrapper.innerHTML = '';
-  wordsWrapper.append(errorMessage);
+  const errorMessage = createElementObj({
+    tagName: 'p',
+    classNames: `vocabulary__error-message`,
+    textContent: 'Слова данной категории отсутствуют',
+  });
+  cardsWrapper.innerHTML = '';
+  cardsWrapper.append(errorMessage);
 }
 
-async function drawCards(wordCategory) {
-  const UserWordsData = await getAggregatedUserWords(FILTERS[wordCategory], 3600);
+const callbackFunction = {
+  OnClickRestore: (wordId) => {
+    cards = cards.filter((card) => card.getIdWord() !== wordId);
+    if  (cards.length > 0) {
+      cardsWrapper.innerHTML = '';
+      cards.forEach((card) => cardsWrapper.append(card.getElement()));
+    } else {
+      ErrorMassage();
+    }
+  },
+  OnClickPlayAudio: (audioSrc) => {
+    audioObj.pause();
+    audioObj.src = audioSrc;
+    audioObj.play();
+  },
+}
+
+async function drawCards() {
+  const UserWordsData = await getAggregatedUserWords(FILTERS[currentlyCategoryWord], 3600);
   if(UserWordsData[0].paginatedResults.length === 0) {
     ErrorMassage();
   } else {
-    const dataForCards = generateDataForCards(UserWordsData[0].paginatedResults, wordCategory);
-    wordsWrapper.innerHTML = '';
+    const dataForCards = generateDataForCards(UserWordsData[0].paginatedResults, currentlyCategoryWord);
+    cardsWrapper.innerHTML = '';
     cards.length = 0;
     let displayRestoreButton = false;
-    if(wordCategory !== 'learning') {
+    if(currentlyCategoryWord !== 'learning') {
       displayRestoreButton = true;
     }
     dataForCards.forEach((cardData) => {
       const card = new Card(cardData);
       cards.push(card);
-      wordsWrapper.append(card.generate((audioSrc) => playAudio(audioSrc), displayRestoreButton));
+      cardsWrapper.append(card.generate(callbackFunction, displayRestoreButton));
     });
   }
-
 }
 
 export  default async function initVocabularyPage() {
   configuration = await getSettings();
-  drawCards('learning');
-
   const switcher = document.querySelector('.vocabulary__switcher');
   switcher.addEventListener('click', (event) => {
   if (event.target.tagName === 'A') {
-    drawCards(event.target.id);
+    currentlyCategoryWord = event.target.id;
+    drawCards();
   }
 });
+  drawCards('learning');
 }

@@ -9,6 +9,11 @@
 	line-height: 2rem;
   color: $color-secondary;
   padding-left: 10px;
+
+  @media (max-width: $mobile-big-width){
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
 }
 
 .vocabulary__form {
@@ -23,10 +28,28 @@
   margin-bottom: 5px;
 }
 
+.vocabulary__tab-link {
+  @media (max-width: $tablet-width){
+    padding-left: 11px;
+  }
+  @media (max-width: $mobile-big-width){
+    padding-left: 6px;
+  }
+}
+
 .vocabulary__tab-link a {
 	color: $color-secondary;
 	font-weight: 600;
   font-size: 1rem;
+
+  @media (max-width: $tablet-width){
+    font-size: .85rem;
+    padding: 6px;
+  }
+  @media (max-width: $mobile-big-width){
+    font-size: .75rem;
+    padding: 5px;
+  }
 }
 
 .vocabulary__tab-link.uk-active a {
@@ -41,10 +64,17 @@
 
 .vocabulary__card {
   padding: 10px 5px;
+  margin-right: 5px;
   border-bottom: 1px solid #e5e5e5;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: $tablet-width){
+    flex-direction: column;
+    align-items: flex-start
+  }
 }
 
 .btn-restore {
@@ -53,24 +83,40 @@
   color: $color-secondary;
   border: none;
   height: 31px;
-  margin-left: 15px;
+  margin-left: 5px;
   outline: none;
   transition: all 0.4s;
 
   &:hover {
-    color: $color-additional;
+    color: $color-primary;
+    background-color: $color-secondary;
     cursor: pointer;
+  }
+
+  @media (max-width: $tablet-width){
+    margin: 5px 0;
+    margin-left: calc((100% - 20px)/2);
+    order: 1;
   }
 }
 
 .vocabulary__card-img  {
   width: 120px;
-  margin-left: 30px;
+  margin-left: 10px;
   border-radius: 10px;
+
+  @media (max-width: $tablet-width){
+    margin: 5px 0;
+    margin-left: calc((100% - 120px)/2);
+  }
 }
 
 .vocabulary__word-container {
-  width: 544px;
+  width: 74%;
+
+  @media (max-width: $tablet-width){
+    width: 100%;
+  }
 }
 
 .word-text_color {
@@ -99,15 +145,24 @@
   }
 }
 
-.vocabulary_transcription {
+.vocabulary_translate {
   font-size: .9rem;
   padding-left: 27px;
   margin: 0;
+
+  @media (max-width: $tablet-width){
+    padding-left: 0px;
+    margin: 2px 0;
+  }
 }
 
 .vocabulary__word_translate {
   font-weight: 600;
   font-size: 1rem;
+
+  @media (max-width: $tablet-width){
+    padding-left: 27px;
+  }
 }
 
 .vocabulary__block-container {
@@ -120,11 +175,21 @@
   color: #5b7195;
   font-size: .875rem;
   padding: .25rem 0;
+  width: 100%;
+  @media (max-width: $tablet-width){
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .data-point {
   padding: 0 .5rem;
   border-right: 1px solid #1a3b71;
+
+  @media (max-width: $tablet-width){
+    border-right: none;
+    padding: .1rem .5rem;
+  }
 }
 
 .data-point:last-child {
@@ -133,8 +198,71 @@
 
 .vocabulary__error-message {
   text-align: center;
-    margin-top: 130px;
-    color: $color-additional;
-    font-weight: 600;
-    font-size: 1.2rem;
+  margin-top: 130px;
+  color: $color-additional;
+  font-weight: 600;
+  font-size: 1.2rem;
+
+  @media (max-width: $tablet-width){
+    margin-top: 95px;
+  }
+
+  @media (max-width: $mobile-big-width){
+    margin-top: 70px;
+    font-size: 1rem;
+  }
+}
+
+.vocabulary__progress-bar {
+  display: flex;
+  margin-left: 22px;
+  width: 94px;
+}
+
+.vocabulary__progress-bar_item {
+  border-radius: 50%;
+  margin: 4px;
+  width: 10px;
+  height: 10px;
+  background-color: $color-background;
+
+  @media (max-width: $mobile-big-width){
+    width: 8px;
+    height: 8px;
+  }
+}
+
+.progress-bar_item-1 {
+  background-color: $color-secondary;
+  opacity: .8;
+}
+
+.progress-bar_item-1 {
+  background-color: $color-additional;
+  opacity: .8;
+}
+
+.progress-bar_item-2 {
+  background-color: $color-green;
+  opacity: .8;
+}
+
+.progress-bar_item-3 {
+  background-color: $color-red;
+  opacity: .8;
+}
+
+.progress-bar_item-4 {
+  background-color: $color-violet;
+  opacity: .8;
+}
+
+.progress-bar_item-5 {
+  background-color: $color-active;
+  opacity: .8;
+}
+
+.uk-tooltip {
+  background-color: $color-background-additinal;
+  color: $color-secondary;
 }

@@ -1,5 +1,8 @@
 import moment from 'moment';
+import markToText from '../constants/progressBarTooltipTypes';
 import { createElementObj } from '../utils/create';
+import { WORD_STATE, WORD_DIFFICULTLY } from '../utils/constants';
+import { updateUserWord } from '../api/userWords';
 
 const ASSETS_URL = 'https://raw.githubusercontent.com/Marrlika/rslang-data/master/';
 
@@ -9,9 +12,24 @@ this.data =  data;
 moment.locale('ru');
 }
 
-generate(playAudio, displayRestoreButton) {
+generate(callbackFunction, displayRestoreButton) {
+  const progressBarTooltipTypes = Object.values(markToText);
+  const progressBarItems = [];
+  const progreesBarLevel = Math.round(this.data.optional.successPoint);
+  for( let i = 1; i < progressBarTooltipTypes.length; i += 1) {
+    const progressBarItem = createElementObj({ tagName: 'div', classNames: `vocabulary__progress-bar_item` });
+    if (i <= progreesBarLevel) {
+      progressBarItem.classList.add(`progress-bar_item-${i}`);
+    }
+    progressBarItems.push(progressBarItem);
+  }
+  const progressBar = createElementObj({
+    tagName: 'div',
+    classNames: 'vocabulary__progress-bar',
+    children: progressBarItems,
+    attrs: [[ 'uk-tooltip', `title:${progressBarTooltipTypes[progreesBarLevel]}; pos: top-left; offset: -0.1`]] });
   const wordContains = Card.createBlock('word', this.data.word, this.data.wordTranslate, this.data.transcription||'' );
-  this.vocabularyWordContains = createElementObj({ tagName: 'div', classNames: `vocabulary__word-container`, children: [wordContains]});
+  this.vocabularyWordContains = createElementObj({ tagName: 'div', classNames: `vocabulary__word-container`, children: [progressBar, wordContains]});
   if (this.data.textExample){
     const contextContains = Card.createBlock('context', this.data.textExample, this.data.textExampleTranslate);
     this.vocabularyWordContains.append(contextContains);
@@ -20,8 +38,8 @@ generate(playAudio, displayRestoreButton) {
     const meaningContains = Card.createBlock('meaning', this.data.textMeaning, this.data.textMeaningTranslate);
     this.vocabularyWordContains.append(meaningContains);
   }
-  const lastRepeat = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Давность: ${moment(this.data.lastUpdateDate).fromNow()}`});
-  const repeatCount = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Повторений: ${this.data.repeatCount}`});
+  const lastRepeat = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Давность: ${moment(this.data.optional.lastUpdateDate).fromNow()}`});
+  const repeatCount = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Повторений: ${this.data.optional.repeatCount}`});
   const nextRepeat = createElementObj({
     tagName: 'div',
     classNames: 'data-point',
@@ -32,23 +50,28 @@ generate(playAudio, displayRestoreButton) {
     children: [ lastRepeat, repeatCount, nextRepeat ],
   });
 
-  const vocabularyCardContains = createElementObj({ tagName: 'div', classNames: `vocabulary__card`,  children: [this.vocabularyWordContains, cardInfoContainer]});
+  this.vocabularyCardContains = createElementObj({ tagName: 'div', classNames: `vocabulary__card`,  children: [this.vocabularyWordContains, cardInfoContainer]});
   if(this.data.image) {
     const cardImg = createElementObj({
       tagName: 'img',
       classNames: `vocabulary__card-img`,
       attrs: [['src', `${ASSETS_URL}${this.data.image}`], ['alt', `${this.data.word} image`]],
     });
-    vocabularyCardContains.insertBefore(cardImg, cardInfoContainer );
+    this.vocabularyCardContains.insertBefore(cardImg, cardInfoContainer );
   }
 
   if (displayRestoreButton) {
     const btnIcon = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: refresh']]});
-    this.btnRestore = createElementObj({ tagName: 'button', classNames: 'btn-restore', children: [btnIcon]});
-    vocabularyCardContains.insertBefore(this.btnRestore, cardInfoContainer );
+    this.btnRestore = createElementObj({
+      tagName: 'button',
+      classNames: 'btn-restore',
+      children: [btnIcon],
+      attrs: [[ 'uk-tooltip', 'Восстановить']],
+    });
+    this.vocabularyCardContains.insertBefore(this.btnRestore, cardInfoContainer );
   }
-  this.addListeners(playAudio);
-  return vocabularyCardContains;
+  this.addListeners(callbackFunction, { difficulty: this.data.difficulty, optional: this.data.optional });
+  return this.vocabularyCardContains;
 }
 
 static createBlock(nameBlock, textParam, translateParam, transcriptionParam ) {
@@ -60,7 +83,7 @@ static createBlock(nameBlock, textParam, translateParam, transcriptionParam ) {
   const text = createElementObj({ tagName: 'span', classNames: `vocabulary__${nameBlock}_text word-text_color`, textContent: textParam});
   const translate = createElementObj({
     tagName: 'p',
-    classNames: `vocabulary__${nameBlock}_translate vocabulary_transcription`,
+    classNames: `vocabulary__${nameBlock}_translate vocabulary_translate`,
     textContent: translateParam,
   });
   const container = createElementObj({ tagName: 'div', classNames: `vocabulary__block-container`, children: [ icon, text, translate ]});
@@ -71,21 +94,43 @@ static createBlock(nameBlock, textParam, translateParam, transcriptionParam ) {
   return container;
 }
 
+getIdWord() {
+  return this.data.id;
+}
 
-addListeners(playAudio) {
+getElement() {
+  return this.vocabularyCardContains;
+}
+
+
+addListeners(callbackFunction) {
   this.vocabularyWordContains.addEventListener('click', (event) => {
     switch (event.target.id) {
       case 'word':
-        playAudio(`${ASSETS_URL}${this.data.audio}`);
+        callbackFunction.OnClickPlayAudio(`${ASSETS_URL}${this.data.audio}`);
         break;
       case 'context':
-        playAudio(`${ASSETS_URL}${this.data.audioExample}`);
+        callbackFunction.OnClickPlayAudio(`${ASSETS_URL}${this.data.audioExample}`);
         break;
       case 'meaning':
-        playAudio(`${ASSETS_URL}${this.data.audioMeaning}`);
+        callbackFunction.OnClickPlayAudio(`${ASSETS_URL}${this.data.audioMeaning}`);
         break;
       default:
     }
 });
+
+if (this.btnRestore) {
+  this.btnRestore.addEventListener('click', () => {
+
+    if (this.data.difficulty === WORD_DIFFICULTLY.hard) {
+      this.data.difficulty = WORD_DIFFICULTLY.normal;
+    }
+    if (this.data.optional.mode === WORD_STATE.deleted) {
+      this.data.optional.mode = WORD_STATE.repeating;
+    }
+    updateUserWord(this.data.id, { difficulty: this.data.difficulty, optional: this.data.optional })
+    callbackFunction.OnClickRestore(this.data.id);
+  });
+}
 }
 }
