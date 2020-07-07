@@ -7,7 +7,7 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
   let allUserWords = await getAllUserWords();
   let allUpdatedUserWords = [];
   let dayNewWordsPack = [];
-  let newWordsNeededCount = dayNewWordsCount;
+  let newWordsNeededCount = +dayNewWordsCount;
 
   if (!Array.isArray(allUserWords)) {
     allUserWords = [];
@@ -27,11 +27,11 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
       isDone: false,
       isFirstAnswer: true,
     });
-    allUpdatedUserWords.push(updatedWord);
+    allUpdatedUserWords[i] = updatedWord;
   }
 
-  if (allUpdatedUserWords.length < dayWordsCount - dayNewWordsCount) {
-    newWordsNeededCount = dayWordsCount - allUpdatedUserWords.length;
+  if (allUpdatedUserWords.length < dayWordsCount) {
+    newWordsNeededCount += dayWordsCount - allUpdatedUserWords.length;
   }
 
   dayNewWordsPack = await updateNewWordsPack(
@@ -65,7 +65,6 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
     needToRepeat: [],
   };
 
-  console.log(wordArrs);
   return wordArrs;
 }
 
@@ -127,7 +126,6 @@ async function updateNewWordsPack(
       learningScreen.settings.learningWordsPage += 1;
     }
     await saveSettingsFromLearningWords(learningScreen);
-    console.log(learningScreen.settings);
   }
 
   if (localDayNewWordsPack.length >= dayNewWordsCount) {

@@ -70,9 +70,12 @@ function calculateSuccessPoint(word, isgamemode = false, isSuccess = false) {
     easy: 0.2,
   };
 
-  if (word.optional['referenceCount'] === 1) {
-    mark = 1;
-  } else if (currentMark <= 4) {
+  if (currentMark <= 4) {
+    if (currentMark < 1) {
+      currentMark = 1;
+      mark = 1;
+    }
+
     if (isSuccess) {
       if (isgamemode) {
         mark = currentMark + difficultyToSuccessPoint[word.difficulty] / 2;
@@ -104,19 +107,20 @@ function calculateRepeatTiming(word) {
   const currentMark = word.optional['successPoint'];
   let timing = 0;
   if (currentMark <= 2) {
-    timing = (currentMark * 23 - 22) / 24; //days
+    timing = (currentMark * 40 - 20) / (24 * 60); //mins-days
   } else if (currentMark <= 3) {
-    timing = (currentMark * 48 - 72) / 24; //days
+    timing = (currentMark * 47 - 93) / 24; //hours-days
   } else if (currentMark <= 4) {
-    timing = currentMark * 7 - 18; //days
+    timing = currentMark * 5 - 13; //days
   } else if (currentMark <= 5) {
-    timing = currentMark * 20 - 70; //days
+    timing = currentMark * 23 - 85; //days
   }
   const repeatRating = Math.floor(timing * 24 * 3600 * 1000 + word.optional['lastUpdateDate']);
   return repeatRating;
 }
 
 function openCardUpdate(word) {
+  word.optional['lastUpdateDate'] = Date.now();
   word.optional['mode'] = WORD_STATE.repeating;
   word.optional['rightSequence'] = 0;
   word.optional['repeatCount'] += 1;

@@ -56,7 +56,6 @@ export default async function getDayLocalState(learningScreenElemen) {
       learningScreenElemen.settings.newWordCount,
       cardToRepeatCount,
       learningScreenElemen.settings.difficultyLevel,
-      currentDate,
       learningScreenElemen.settings.learningWordsPage,
     );
     const dayWordArrs = wordArrs;
