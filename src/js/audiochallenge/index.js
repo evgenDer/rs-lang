@@ -80,7 +80,7 @@ function addExitGameBtnClickHandler() {
 function addStartButtonClickHandler() {
   startBtn.addEventListener('click', (event) => {
     event.preventDefault();
-    
+
     disableGameModeSwitch(modeBtn);
     hideElement(statBtn);
     hideElement(description);
@@ -99,7 +99,7 @@ function addStatisticsButtonClickHandler() {
   statBtn.addEventListener('click', (event) => {
     event.preventDefault();
 
-    stat.showGlobalStatistics();
+    stat.showGlobalStatistics(false);
   });
 }
 
@@ -112,6 +112,6 @@ window.onload = () => {
   Dropdown.addDropdownsEventHandlers();
   Dropdown.addActiveGameControls('audioCall');
   Dropdown.enableDropdowns();
-  
+
   addStatisticsButtonClickHandler();
 };
