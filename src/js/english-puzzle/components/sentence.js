@@ -8,22 +8,26 @@ export function fillText(puzzle) {
   const tabletWidth = 768;
   let fontSize = puzzle.height/3;
   context.textAlign = 'center';
-  let width = puzzle.width - puzzle.height / 2;
+  const width = puzzle.width - puzzle.height / 2;
+  const text = puzzle.dataset.word;
   if(document.documentElement.clientWidth < tabletWidth){
     fontSize = puzzle.height / 5;
     context.textAlign = 'right';
-    width = puzzle.width - puzzle.height / 2 - 8;
+    context.font = `bold ${fontSize}px sans-serif`;
+    context.fillText(`${text}`, width / 2 + text.length * fontSize/4, puzzle.height / 1.5, width);
+   // width = puzzle.width/2 - text.length;
+
   }
-  context.font = `bold ${fontSize}px sans-serif`;
-  const text = puzzle.dataset.word;
-  // const width = puzzle.width - puzzle.height / 2;
-  context.fillText(`${text}`, width / 2 + puzzle.height / 4, puzzle.height / 1.5, width);
+  else {
+    context.font = `bold ${fontSize}px sans-serif`;
+    context.fillText(`${text}`, width / 2 + puzzle.height / 4, puzzle.height / 1.5, width);
+  }
 }
 
 
 export function strokePuzzle(puzzle){
   const context = puzzle.getContext('2d');
-  context.lineWidth = 3;
+  context.lineWidth = 2;
   context.strokeStyle = 'white';
   context.stroke();
 }
@@ -98,7 +102,7 @@ export default class Sentence {
   renderSourceGame() {
     this.renderNewSentence();
     const sentenceBlock = createElement('div', 'sentence', shuffle(this.sentenceBlock));
-    sentenceBlock.style.paddingLeft = `${this.height / 2}px`;
+    sentenceBlock.style.paddingLeft = `${this.height / 2 - 2}px`;
     return sentenceBlock;
   }
 
@@ -107,7 +111,7 @@ export default class Sentence {
     this.width = 0;
     this.renderNewSentence();
     const sentenceBlock = createElement('div', 'sentence current', this.sentenceBlock);
-    sentenceBlock.style.paddingLeft = `${ this.height / 2 }px`;
+    sentenceBlock.style.paddingLeft = `${ this.height / 2 - 2}px`;
     return sentenceBlock;
   }
 
@@ -116,15 +120,15 @@ export default class Sentence {
     const minWidth = 3;
     let puzzle;
     arraySentence.forEach((element, index) => {
-      const widthLastElement = this.imageWidth + 1 - this.width;
+      const widthLastElement = this.imageWidth + 1.5 - this.width;
       const widthElement = (index !== arraySentence.length - 1)
         ? (this.imageWidth / this.sentence.length) * element.length : widthLastElement;
       const widthForDrawElement = (element.length < minWidth && index !== arraySentence.length - 1)
         ? widthElement * 2.5 : widthElement;
-      if (index === 0) puzzle = this.drawPuzzle(widthForDrawElement, element, false, true);
+      if (index === 0) puzzle = this.drawPuzzle(Math.ceil(widthForDrawElement), element, false, true);
       else if (index === arraySentence.length - 1) {
-        puzzle = this.drawPuzzle(widthForDrawElement, element, true, false);
-      } else { puzzle = this.drawPuzzle(widthForDrawElement, element); }
+        puzzle = this.drawPuzzle(Math.ceil(widthForDrawElement), element, true, false);
+      } else { puzzle = this.drawPuzzle(Math.ceil(widthForDrawElement), element); }
       this.width += widthForDrawElement;
       this.sentenceBlock.push(puzzle);
     });

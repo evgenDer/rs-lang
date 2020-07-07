@@ -1,6 +1,6 @@
 import { BUTTONS_CLASSES } from '../../utils/constants';
 import { fillPuzzleColor, drawPuzzleImage } from './sentence';
-import { DEFAULT_SETTINGS_PUZZLE } from '../../constants/defaul-settings';
+import { DEFAULT_SETTINGS_PUZZLE } from '../../constants/default-settings';
 import { setDataEnglishPuzzle, getDataEnglishPuzzle } from '../../utils/storage';
 
 const RESULT_FIELD = document.querySelector('.block-results');
@@ -38,9 +38,9 @@ function addHintPlaySound(isHintOn) {
   const hintSoundIcon = document.querySelector('.block-hints .btn_pronoucing');
   if (!isHintOn) {
     hintElement.classList.add('disable');
-    hintSoundIcon.classList.add('hidden');
+    hintSoundIcon.classList.add('btn_hidden');
   } else {
-    hintSoundIcon.classList.remove('hidden');
+    hintSoundIcon.classList.remove('btn_hidden');
     hintElement.classList.remove('disable');
   }
 }
@@ -62,6 +62,7 @@ function addHints() {
 }
 
 function addEventsListenerOnHintButtons() {
+  console.log('lkjhgvcghjkl');
   document.querySelector(`.${BUTTONS_CLASSES.autoPlaySound}`).addEventListener('click', () => {
     const englishPuzzleSettings = getDataEnglishPuzzle();
     englishPuzzleSettings.autoPlaySound = !englishPuzzleSettings.autoPlaySound;
