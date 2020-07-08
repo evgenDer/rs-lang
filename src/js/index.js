@@ -3,9 +3,10 @@ import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
 import  initStatistics from './statistics/index';
+import  { addMainPageClickHandlers, updateMainPage } from './main-page/index';
 
-//импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
-import './learningWords/learningWordsPage.js';
+// импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
+import './learningWords/learningWordsPage';
 
 window.onload = () => {
   addHeaderToPage();
@@ -13,6 +14,8 @@ window.onload = () => {
   switch (activePage) {
     case 0:
       // main-page
+      addMainPageClickHandlers();
+      updateMainPage();
       break;
     case 1:
       // learning-page
