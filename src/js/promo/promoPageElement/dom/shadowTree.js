@@ -12,7 +12,7 @@ const styles = {
   colorLightBlue: '#338c99',
   colorBlack: '#333333',
   colorOpacityBlack: '#33333370',
-  tabletWidth: '768px',
+  tabletWidth: '650px',
   mobileBigWidth: '414px',
   topBarHeight: '83px', //topBar
 };
@@ -37,7 +37,7 @@ const promoPageShadowTree = `
   #aboutSlider .cardText {height: calc(100% - 40px);}
   .cardText span {padding: 0px 5px;}
 
-  .content {width: 100vw; max-width: 800px; height:100vw; max-height:500px; 
+  .content {width: calc(100vw - 80px); max-width: 800px; height:100vw; max-height:500px; 
     }
 
   #aboutVideo .content {background: #ffffff90;  border: 1px solid ${styles.colorOpacityBlack}; border-radius: 20px;}
@@ -70,6 +70,20 @@ const promoPageShadowTree = `
   #feedbacks .cardContent {border-top:1px solid ${styles.colorOpacityBlack};}
   #feedbacks .cardText {height: calc(100% - 30px);}
   #feedbacks .author {filter: opacity(0.5);}
+
+  @media screen and (max-width: ${styles.tabletWidth}) {
+    #aboutVideo .content {max-height:300px;}
+    #aboutLearning .content{max-height: none; flex-direction: column;}
+    #aboutLearningScreen {width: 100%;}
+    #aboutLearningText {width: 100%; text-align:left;}
+  }
+  @media screen and (max-width: ${styles.tabletWidth}){
+    :host {font-size: 14px;}
+    #aboutLearningScreen {min-width:250px;}
+    .header {padding: 30px 0px 30px; font-size:16px; height: auto;}
+    
+  }
+
 
 </style>
 
