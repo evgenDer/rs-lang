@@ -98,7 +98,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('game-audiochallenge.html', 'game_audiochallenge'),
-    htmlWebpackPluginCreator('determinationLevel.html', 'index','determinationLevel'),
+    htmlWebpackPluginCreator('determinationLevel.html', 'index', 'determinationLevel'),
 
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
