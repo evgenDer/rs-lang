@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createElement } from '../utils/create';
-import { GAME_MODES, ERR_MSG } from '../games/constants';
+import { GAME_MODES, ERR_MSG, DATA_ERR_MSG } from '../games/constants';
 import { getFullDataWords, getWordById } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { shuffleArray } from '../helpers/math-hepler';
@@ -135,6 +135,7 @@ export class Game {
     } else {
       const userData = await getAllUserWords();
       this.userData = userData
+        .filter((data) => data !== undefined)
         .filter((word) => word.optional.mode !== WORD_STATE.deleted)
         .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
         .slice(0, this.wordsAmntInRound);
@@ -147,6 +148,11 @@ export class Game {
       this.userData.forEach(({ wordId }) => promises.push(getWordById(wordId)));
 
       this.data = await Promise.all(promises);
+    }
+
+    this.data = this.data.filter((data) => data !== undefined);
+    if (this.data.length !== this.wordsAmntInRound) {
+      throw DATA_ERR_MSG;
     }
   }
 
