@@ -62,6 +62,8 @@ export class Game {
       field: document.querySelector('.game-field__points'),
       pointsTxt: undefined,
     }
+    this.seria = 0;
+    this.scoreBase = 5;
 
     this.gametime = 60;
   }
@@ -201,11 +203,12 @@ export class Game {
                     }
                   }
                   
-                  this.score += 10;
+                  this.seria += 1;
                   this.guessed += 1;
+                  this.score += this.scoreBase * this.getMultiplicator();
                   this.updatePointsField();
                   this.updateScoreField();
-                  
+
                   if (this.guessed === this.wordsAmntInRound) {
                     this.gameOver();
                   }
@@ -219,8 +222,7 @@ export class Game {
                   this.isClickable = true;
 
                   this.errors += 1;
-                  this.score -= 5;
-                  this.updatePointsField();
+                  this.seria = 0;
                 }, 800);
               }
             }
@@ -321,5 +323,9 @@ export class Game {
 
   updatePointsField() {
     this.pointsDisplay.pointsTxt.textContent = this.score;
+  }
+
+  getMultiplicator() {
+    return this.seria > 0 ? this.seria : 1;
   }
 }
