@@ -50,7 +50,7 @@ generate(callbackFunction, displayRestoreButton) {
     children: [ lastRepeat, repeatCount, nextRepeat ],
   });
 
-  this.vocabularyCardContains = createElementObj({ tagName: 'div', classNames: `vocabulary__card`,  children: [this.vocabularyWordContains, cardInfoContainer]});
+  this.vocabularyCardContains = createElementObj({ tagName: 'div', classNames: `vocabulary__card uk-animation-fade`,  children: [this.vocabularyWordContains, cardInfoContainer]});
   if(this.data.image) {
     const cardImg = createElementObj({
       tagName: 'img',
@@ -86,7 +86,7 @@ static createBlock(nameBlock, textParam, translateParam, transcriptionParam ) {
     classNames: `vocabulary__${nameBlock}_translate vocabulary_translate`,
     textContent: translateParam,
   });
-  const container = createElementObj({ tagName: 'div', classNames: `vocabulary__block-container`, children: [ icon, text, translate ]});
+  const container = createElementObj({ tagName: 'div', classNames: `vocabulary__block-container ${nameBlock}_block-container`, children: [ icon, text, translate ]});
   if(transcriptionParam) {
     const transcription = createElementObj({ tagName: 'span', classNames: `vocabulary__word_transcription`, textContent: transcriptionParam});
     container.insertBefore(transcription, translate);
@@ -100,6 +100,18 @@ getIdWord() {
 
 getElement() {
   return this.vocabularyCardContains;
+}
+
+getlastUpdateDate() {
+  return this.data.optional.lastUpdateDate;
+}
+
+getWord() {
+  return this.data.word;
+}
+
+getRepeatCount() {
+  return this.data.optional.repeatCount;
 }
 
 

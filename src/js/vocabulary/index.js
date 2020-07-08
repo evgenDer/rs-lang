@@ -1,24 +1,24 @@
+/* eslint-disable no-underscore-dangle */
 import { getSettings } from '../api/settings';
 import { getAggregatedUserWords} from '../api/userWords';
 import { createElementObj } from '../utils/create';
 import { calculateRepeatTiming } from '../words/updateWordState';
+import { SORTING_OPTIONS, CATEGORIES_WORDS} from './constant';
 import Card from './Card';
+import ControlBar from './ControlBar';
 
-const FILTERS = {
-  deleted: {'userWord.optional.mode':{'$eq':'deleted'}},
-  hard: {'$and':[{'userWord.difficulty':'hard', 'userWord.optional.mode': {'$not': {'$eq':'deleted'}}}]},
-  learning: {'$and':[{'userWord.difficulty':{'$in':['normal', 'easy']}, 'userWord.optional.mode': {'$not': {'$eq':'deleted'}}}]},
-}
-
+const main = document.querySelector('.vocabulary__form');
 const cardsWrapper = document.querySelector('.vocabulary_cards-wrapper');
 const audioObj = new Audio();
+const isSortAscendingDefault = true;
+const sortNameDefault = 'prescription';
+const categoryDefault = 'learning';
+let controlBtns = '';
 let cards = [];
 let configuration = '';
-let currentlyCategoryWord = 'learning';
 
 function generateDataForCards(UserWordsData, wordCategory) {
   const dataForCards = UserWordsData.map((wordData) => {
-
     const data = {
       id: wordData._id,
       optional: wordData.userWord.optional,
@@ -62,7 +62,7 @@ function ErrorMassage() {
   cardsWrapper.append(errorMessage);
 }
 
-const callbackFunction = {
+const callbackFunctionForCard = {
   OnClickRestore: (wordId) => {
     cards = cards.filter((card) => card.getIdWord() !== wordId);
     if  (cards.length > 0) {
@@ -70,43 +70,66 @@ const callbackFunction = {
       cards.forEach((card) => cardsWrapper.append(card.getElement()));
     } else {
       ErrorMassage();
+      controlBtns.hideRepeatButton();
     }
   },
   OnClickPlayAudio: (audioSrc) => {
-    audioObj.pause();
     audioObj.src = audioSrc;
     audioObj.play();
   },
 }
 
-async function drawCards() {
-  const UserWordsData = await getAggregatedUserWords(FILTERS[currentlyCategoryWord], 3600);
+function sortArr(nameFunction, isSortAscending) {
+  cards.sort((a, b) => {
+    if (a[nameFunction]() > b[nameFunction]()) {
+      return (isSortAscending) ? 1 : -1;
+    }
+    if (a[nameFunction]() === b[nameFunction]()) { return 0; }
+    return (isSortAscending) ? -1 : 1;
+  });
+}
+
+function sortСards(sortName, isSortAscending) {
+  if (cards.length > 0) {
+    const {nameFunction} = SORTING_OPTIONS[sortName];
+    sortArr(nameFunction, isSortAscending);
+    cardsWrapper.innerHTML = '';
+    cards.forEach((card) => cardsWrapper.append(card.getElement()));
+  }
+}
+
+async function drawCards(categoryWord, sortName, isSortAscending) {
+  const UserWordsData = await getAggregatedUserWords(CATEGORIES_WORDS[categoryWord].filter, 3600);
   if(UserWordsData[0].paginatedResults.length === 0) {
     ErrorMassage();
   } else {
-    const dataForCards = generateDataForCards(UserWordsData[0].paginatedResults, currentlyCategoryWord);
-    cardsWrapper.innerHTML = '';
+    const dataForCards = generateDataForCards(UserWordsData[0].paginatedResults, categoryWord);
     cards.length = 0;
     let displayRestoreButton = false;
-    if(currentlyCategoryWord !== 'learning') {
+    if(categoryWord !== 'learning') {
       displayRestoreButton = true;
     }
     dataForCards.forEach((cardData) => {
       const card = new Card(cardData);
       cards.push(card);
-      cardsWrapper.append(card.generate(callbackFunction, displayRestoreButton));
+      card.generate(callbackFunctionForCard, displayRestoreButton);
     });
+    sortСards(sortName, isSortAscending);
+    if(categoryWord === 'hard') {
+      controlBtns.showRepeatButton();
+    }
   }
 }
 
+const callbackForControlBar = {
+  onClickCategoryWord: (categoryWord, sortName, isSortAscending) => drawCards(categoryWord, sortName, isSortAscending),
+  onClickSorting: (sortName, isSortAscending) => sortСards(sortName, isSortAscending),
+  onClickRepetitionWords: () => {},
+  }
+
 export  default async function initVocabularyPage() {
   configuration = await getSettings();
-  const switcher = document.querySelector('.vocabulary__switcher');
-  switcher.addEventListener('click', (event) => {
-  if (event.target.tagName === 'A') {
-    currentlyCategoryWord = event.target.id;
-    drawCards();
-  }
-});
-  drawCards('learning');
+  controlBtns = new ControlBar(isSortAscendingDefault, sortNameDefault, categoryDefault);
+  main.insertBefore(controlBtns.generate(callbackForControlBar), cardsWrapper);
+  drawCards(categoryDefault, sortNameDefault, isSortAscendingDefault);
 }
