@@ -30,6 +30,5 @@ function createElement({
   return element;
 }
 
-
 // eslint-disable-next-line import/prefer-default-export
 export { createElement };

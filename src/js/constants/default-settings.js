@@ -2,6 +2,7 @@
 export const DEFAULT_CONFIGURATION = {
   maxNewWordsPerDay: 10,
   maxCardsWithWordsPerDay: 40,
+  dayLearningDate: Date.now(),
   difficultyLevel: 0,
   showWordTranslation: true,
   showSentenceExplanation: true,
@@ -21,4 +22,10 @@ export const DEFAULT_CONFIGURATION = {
   speakit: '{}',
   audioCall: '{}',
   mygame: '{}',
+  learning: '{}'
 };
+
+export const DEFAULT_CONFIGURATION_GAMES = {
+  level: 0,
+  round: 0,
+}
