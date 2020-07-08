@@ -1,6 +1,7 @@
 const APP_NAME = 'RS LANG';
 const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
 const AUX_API_URL = 'https://dictionary.skyeng.ru/api/public/v1';
+const DATA_URL = 'https://raw.githubusercontent.com/evgender/rslang-data/master/';
 
 const PAGES = [
   {
@@ -76,4 +77,4 @@ const AUDIO_B64 = 'data:audio/mp3;base64,';
 const IMG_B64 = 'data:image/jpg;base64,';
 
 
-export { PAGES, APP_NAME, BACKEND_URL, AUX_API_URL, WORD_STATE, AUDIO_B64, IMG_B64 };
+export { PAGES, APP_NAME, BACKEND_URL, AUX_API_URL, WORD_STATE, AUDIO_B64, IMG_B64, DATA_URL };
