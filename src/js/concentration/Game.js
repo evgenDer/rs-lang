@@ -8,10 +8,11 @@ import { shuffleArray } from '../helpers/math-hepler';
 import { selectNextRound, getCurrentRound, getCurrentLevel } from '../games/dropdown';
 import { Statistics } from '../statistics/components/statistics';
 import { addStatisticsRound, createStaticticsRound } from './statistics';
-import { increaseWordReferenceCount } from '../words/updateWordState';
+import { increaseWordReferenceCount, increaseWordErrorCount } from '../words/updateWordState';
 import { getAllUserWords, updateUserWord } from '../api/userWords';
 import { WORD_STATE } from '../utils/constants';
 import { saveCustomConfiguration } from '../configuration/index';
+import { timer, clearTimer } from '../games/timer';
 
 
 const loader = document.querySelector('.concentration__load-page');
@@ -45,9 +46,24 @@ export class Game {
     this.data = [];
     this.userData = [];
     this.words = [];
-    this.score = 0;
-
+    
     this.statistics = new Statistics(this.name);
+    
+    this.scoreDisplay = {
+      field: document.querySelector('.game-field__score'),
+      all: this.wordsAmntInRound,
+      allTxt: undefined,
+      done: 0,
+      doneTxt: undefined,
+    }
+
+    this.score = 0;
+    this.pointsDisplay = {
+      field: document.querySelector('.game-field__points'),
+      pointsTxt: undefined,
+    }
+
+    this.gametime = 60;
   }
 
   startGame() {
@@ -58,11 +74,14 @@ export class Game {
       stopLoading();
       showElement(backGameBtn);
 
-      showElement(this.gameField);
+      this.createScoreField();
+      this.createPointsField();
 
+      showElement(this.gameField);
+      
       this.generateCards();
       this.addCardsClickHandler();
-
+      
       this.startTask();
     }).catch((err) => {
       // eslint-disable-next-line no-undef
@@ -78,6 +97,7 @@ export class Game {
   }
 
   startTask() {
+    const startTimer = timer(this.gametime, 'game-field__timer', '', this, this.gameOver);
     this.getCardsData();
     this.fillCards();
 
@@ -86,6 +106,7 @@ export class Game {
       this.closeAllCards();
       setTimeout(() => {
         this.isClickable = true;
+        startTimer();
       }, 2000);
     }, 7000);
   }
@@ -128,7 +149,6 @@ export class Game {
   }
 
   generateCards() {
-    this.clearGameField();
     for (let i = 0; i < this.wordsAmntInRound * 2; i += 1) {
       const face = createElement('img', '', [], [['src', './assets/img/card-face.png'], ['alt', 'card']]);
       const front = createElement('div', 'concentration-card__front', [face])
@@ -168,8 +188,10 @@ export class Game {
                   const currenWordId = card.dataset.wordid;
 
                   const currentAnswer = this.data.find(({ id }) => id === currenWordId);
-                  currentAnswer.isCorrect = true;
-                  currentAnswer.isError = false;
+                  if (currentAnswer !== undefined) {
+                    currentAnswer.isCorrect = true;
+                    currentAnswer.isError = false;
+                  }
 
                   if (this.mode === GAME_MODES.learned) {
                     const currentUserData = this.userData.find(({ wordId }) => wordId === currenWordId);
@@ -181,6 +203,9 @@ export class Game {
                   
                   this.score += 10;
                   this.guessed += 1;
+                  this.updatePointsField();
+                  this.updateScoreField();
+                  
                   if (this.guessed === this.wordsAmntInRound) {
                     this.gameOver();
                   }
@@ -195,6 +220,7 @@ export class Game {
 
                   this.errors += 1;
                   this.score -= 5;
+                  this.updatePointsField();
                 }, 800);
               }
             }
@@ -206,6 +232,9 @@ export class Game {
 
   clearGameField() {
     this.cardsContainer.innerHTML = '';
+    this.pointsDisplay.field.innerHTML = '';
+    this.scoreDisplay.field.innerHTML = '';
+    document.querySelector('.game-field__timer').innerHTML = '';
   }
 
   stopGame() {
@@ -234,11 +263,63 @@ export class Game {
   }
 
   gameOver() {
+    clearTimer();
+    this.stopGame();
+
+    this.data.forEach((data) => {
+      if (data.isCorrect === undefined || data.isError === undefined) {
+        data.isCorrect = false;
+        data.isError = true;
+
+        if (this.mode === GAME_MODES.learned) {
+          const currentUserData = this.userData.find(({ wordId }) => wordId === data.id);
+          if (currentUserData !== undefined) {
+            increaseWordErrorCount(currentUserData);
+            updateUserWord(currentUserData.wordId, currentUserData);
+          }
+        }
+      }
+    })
+
     selectNextRound();
     saveCustomConfiguration('mygame', { level: getCurrentLevel(), round: getCurrentRound() });
     
-    this.statistics.updateGameStatistics(this.guessed, 0, this.score);
+    this.statistics.updateGameStatistics(this.guessed, this.wordsAmntInRound - this.guessed, this.score);
     backGameBtn.click();
     this.showStatistics();
+  }
+
+  createScoreField() {
+    const score = `
+      <p><span id="score-done"></span>/<span id="score-all"></span></p>
+    `;
+    this.scoreDisplay.field.insertAdjacentHTML('beforeend', score);
+
+    this.scoreDisplay.doneTxt = document.getElementById('score-done');
+    this.scoreDisplay.allTxt = document.getElementById('score-all');
+
+    this.updateScoreField();
+  }
+
+  updateScoreField() {
+    this.scoreDisplay.done = this.guessed;
+
+    this.scoreDisplay.doneTxt.textContent = this.scoreDisplay.done;
+    this.scoreDisplay.allTxt.textContent = this.scoreDisplay.all;
+  }
+
+  createPointsField() {
+    const points = `
+      <p>Баллы:<span id="poins-amnt"></span></p>
+    `;
+    this.pointsDisplay.field.insertAdjacentHTML('beforeend', points);
+
+    this.pointsDisplay.pointsTxt = document.getElementById('poins-amnt');
+
+    this.updatePointsField();
+  }
+
+  updatePointsField() {
+    this.pointsDisplay.pointsTxt.textContent = this.score;
   }
 }

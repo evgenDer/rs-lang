@@ -287,9 +287,9 @@
 
 
   .concentration__game-field {
-    margin: 80px 0 10px;
+    margin: 40px 0 10px;
     @include media-tablet {
-      margin: 50px 0 10px;
+      margin: 20px 0 10px;
     }
   }
 
@@ -338,6 +338,40 @@
     border-color: $color-yellow;
   }
 
+
+  .game-field__head {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 10px;
+  }
+
+  .game-field__score {
+    margin: 10px;
+    p {
+      margin: 0;
+    }
+    span {
+      margin: 0 5px;
+    }
+    @include font(2rem, 2.1rem, bold);
+    color: $color-primary;
+  }
+
+  .game-field__points {
+    margin: 10px;
+    p {
+      margin: 0;
+      @include font(2rem, 2.1rem);
+    }
+    span {
+      margin: 0 5px;
+      @include font(2rem, 2.1rem, bold);
+    }
+    color: $color-primary;
+  }
 }
 
 #game-concentration {
