@@ -346,13 +346,13 @@
     padding: 10px;
     width: 500px;
     height: fit-content;
-    max-height: 600px;
-    top: 5vh;
-    @include media-tablet {
-      top: 15vh;
+    max-height: 620px;
+    top: 3vh;
+    @media (max-width: 790px) {
+      top: 10vh;
     }
-    @include media-mobile {
-      top: 25vh;
+    @media (max-width: 460px) {
+      top: 20vh;
     }
   
     .uk-modal-header {
@@ -364,7 +364,7 @@
       padding: 0;
       margin: 10px;
       height: fit-content;
-      max-height: 350px !important;
+      max-height: 250px !important;
       h3 {
         @include font(1.4rem, 1.9rem);
         margin: 5px;
@@ -378,6 +378,12 @@
       width: 35px!important;
       border-radius: 20px;
       color: $color-primary;
+    }
+    .points {
+      padding: 0;
+      margin: 0 5px;
+      color: $color-secondary;
+      font-weight: 700;
     }
     .uk-modal-footer {
       margin: 10px;
@@ -427,6 +433,18 @@
           color: $color-secondary !important;
         }
       }
+    }
+
+    .modal__results {
+      h4 {
+        margin: 0;
+      }
+      span {
+        margin: 0 5px;
+        padding: 0;
+        color: $color-secondary;
+      }
+      margin: 5px 0;
     }
   }
 

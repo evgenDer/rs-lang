@@ -156,45 +156,47 @@ export class Game {
             this.hasBeenCardFlipped = false;
             this.secondCard = card === this.firstCard ? undefined : card;
 
-            if (this.firstCard.dataset.wordid === this.secondCard.dataset.wordid) {
-              setTimeout(() => {
-                this.firstCard.classList.add('concentration-card_disabled');
-                this.secondCard.classList.add('concentration-card_disabled');
-                this.firstCard = undefined;
-                this.secondCard = undefined;
-                this.isClickable = true;
+            if (this.firstCard && this.secondCard) {
+              if (this.firstCard.dataset.wordid === this.secondCard.dataset.wordid) {
+                setTimeout(() => {
+                  this.firstCard.classList.add('concentration-card_disabled');
+                  this.secondCard.classList.add('concentration-card_disabled');
+                  this.firstCard = undefined;
+                  this.secondCard = undefined;
+                  this.isClickable = true;
 
-                const currenWordId = card.dataset.wordid;
+                  const currenWordId = card.dataset.wordid;
 
-                const currentAnswer = this.data.find(({ id }) => id === currenWordId);
-                currentAnswer.isCorrect = true;
-                currentAnswer.isError = false;
+                  const currentAnswer = this.data.find(({ id }) => id === currenWordId);
+                  currentAnswer.isCorrect = true;
+                  currentAnswer.isError = false;
 
-                if (this.mode === GAME_MODES.learned) {
-                  const currentUserData = this.userData.find(({ wordId }) => wordId === currenWordId);
-                  if (currentUserData !== undefined) {
-                    increaseWordReferenceCount(currentUserData);
-                    updateUserWord(currentUserData.wordId, currentUserData);
+                  if (this.mode === GAME_MODES.learned) {
+                    const currentUserData = this.userData.find(({ wordId }) => wordId === currenWordId);
+                    if (currentUserData !== undefined) {
+                      increaseWordReferenceCount(currentUserData);
+                      updateUserWord(currentUserData.wordId, currentUserData);
+                    }
                   }
-                }
-                
-                this.score += 10;
-                this.guessed += 1;
-                if (this.guessed === this.wordsAmntInRound) {
-                  this.gameOver();
-                }
-              }, 600);
-            } else {
-              setTimeout(() => {
-                this.firstCard.classList.remove('concentration-card_flipped');
-                this.secondCard.classList.remove('concentration-card_flipped');
-                this.firstCard = undefined;
-                this.secondCard = undefined;
-                this.isClickable = true;
+                  
+                  this.score += 10;
+                  this.guessed += 1;
+                  if (this.guessed === this.wordsAmntInRound) {
+                    this.gameOver();
+                  }
+                }, 600);
+              } else {
+                setTimeout(() => {
+                  this.firstCard.classList.remove('concentration-card_flipped');
+                  this.secondCard.classList.remove('concentration-card_flipped');
+                  this.firstCard = undefined;
+                  this.secondCard = undefined;
+                  this.isClickable = true;
 
-                this.errors += 1;
-                this.score -= 5;
-              }, 800);
+                  this.errors += 1;
+                  this.score -= 5;
+                }, 800);
+              }
             }
           }
         }
@@ -212,10 +214,11 @@ export class Game {
   }
 
   showStatistics() {
-    createStaticticsRound();
-    addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
-    // eslint-disable-next-line no-undef
-    UIkit.modal('.modal-round').show();
+    createStaticticsRound(this.score).then(() => {
+      addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
+      // eslint-disable-next-line no-undef
+      UIkit.modal('.modal-round').show();
+    });
   }
 
   openAllCards() {
