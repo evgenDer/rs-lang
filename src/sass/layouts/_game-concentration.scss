@@ -346,6 +346,7 @@
     align-items: center;
     justify-content: space-evenly;
     margin: 10px;
+    flex-wrap: wrap;
   }
 
   .game-field__score {
@@ -371,6 +372,18 @@
       @include font(2rem, 2.1rem, bold);
     }
     color: $color-primary;
+  }
+
+  #poins-amnt {
+    display: inline-block;
+    min-width: 30px;
+    text-align: left;
+  }
+
+  #score-done {
+    display: inline-block;
+    min-width: 30px;
+    text-align: right;
   }
 }
 

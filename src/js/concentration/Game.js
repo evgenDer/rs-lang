@@ -65,7 +65,8 @@ export class Game {
     this.seria = 0;
     this.scoreBase = 5;
 
-    this.gametime = 60;
+    this.gametime = 90;
+    clearTimer();
   }
 
   startGame() {
@@ -248,6 +249,7 @@ export class Game {
     this.cardsContainer.innerHTML = '';
     this.pointsDisplay.field.innerHTML = '';
     this.scoreDisplay.field.innerHTML = '';
+    clearTimer();
     document.querySelector('.game-field__timer').innerHTML = '';
   }
 
