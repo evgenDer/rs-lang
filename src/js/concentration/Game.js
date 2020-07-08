@@ -174,15 +174,21 @@ export class Game {
     this.cards.forEach((card) => {
       card.onclick = () => {
         if (this.isClickable && !card.classList.contains('concentration-card_disabled')) {
+          this.isClickable = false;
           card.classList.add('concentration-card_flipped');
 
           if (!this.hasBeenCardFlipped) {
             this.hasBeenCardFlipped = true;
             this.firstCard = card;
+            this.isClickable = true;
           } else {
-            this.isClickable = false;
             this.hasBeenCardFlipped = false;
             this.secondCard = card === this.firstCard ? undefined : card;
+
+            if (this.secondCard === undefined) {
+              this.isClickable = true;
+              this.hasBeenCardFlipped = true;
+            }
 
             if (this.firstCard && this.secondCard) {
               if (this.firstCard.dataset.wordid === this.secondCard.dataset.wordid) {
