@@ -164,8 +164,13 @@ export class Game {
                 this.secondCard = undefined;
                 this.isClickable = true;
 
+                const currenWordId = card.dataset.wordid;
+
+                const currentAnswer = this.data.find(({ id }) => id === currenWordId);
+                currentAnswer.isCorrect = true;
+                currentAnswer.isError = false;
+
                 if (this.mode === GAME_MODES.learned) {
-                  const currenWordId = card.dataset.wordid;
                   const currentUserData = this.userData.find(({ wordId }) => wordId === currenWordId);
                   if (currentUserData !== undefined) {
                     increaseWordReferenceCount(currentUserData);
@@ -231,6 +236,6 @@ export class Game {
     
     this.statistics.updateGameStatistics(this.guessed, 0, this.score);
     backGameBtn.click();
-    // this.showStatistics();
+    this.showStatistics();
   }
 }

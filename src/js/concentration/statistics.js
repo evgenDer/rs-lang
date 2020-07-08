@@ -2,7 +2,9 @@ import { removeChild } from '../helpers/html-helper';
 import { GAME_DATA_URL } from '../games/constants';
 import { AUDIO_B64 } from '../utils/constants';
 import playAudio from '../helpers/audio';
+import { Statistics } from '../statistics/components/statistics';
 
+const stat = new Statistics('Концентрация');
 
 function createStatisticSentence(audioSrc, textExample, translate, b64 = false){
   const helper = b64 ? AUDIO_B64 : GAME_DATA_URL;
@@ -49,12 +51,42 @@ export function addStatisticsRound(dataPageRound, b64 = false) {
   });
 }
 
-export function createStaticticsRound() {
+async function getCompareHTMLElement(points){
+  const maxScore = await stat.getUserMaxScore();
+  let innerTextResult = '';
+  let innerTextComare = '';
+  let resPer = 0;
+  if(maxScore < points){
+    innerTextResult = 'Это ваш лучший результат!';
+    resPer = 1- (maxScore / points);
+    innerTextComare = `Он на<span>${Math.round(resPer * 100)}%</span>лучше максимального`;
+  } else if(maxScore > points){
+    innerTextResult = 'Неплохой результат';
+    resPer = (points === 0) ? 1 : 1 - points / maxScore;
+    innerTextComare = `Он на<span>${Math.round(resPer * 100)}%</span>отстаёт от максимального`;
+  } else {
+    innerTextResult = 'Игра прошла успешно!';
+    innerTextComare = `Вы достигли своего максимального результата`;
+  }
+  const compareElement = `
+    <div class = "modal__results">
+      <h3>${innerTextResult}</h3>
+      <h4>${innerTextComare}</h4>
+    </div>
+  `;
+  return compareElement;
+}
+
+export async function createStaticticsRound(points) {
+  const compareHTMLElement = await getCompareHTMLElement(points);
   const statisticElement = `
   <div id="modal-close-default" uk-modal class='modal audiochallenge__modal-game-stat'>
     <div class="uk-modal-dialog modal-round" bg-close="false" esc-close="false">
       <div class="uk-modal-header">
         <h2>Результаты</h2>
+        <h3>Вы набрали</h3>
+        <h3><span class="points">${points}</span>баллов</h3>
+        ${compareHTMLElement}
       </div>
       <div uk-overflow-auto class="uk-modal-body">
         <div class="modal-round__correct">
