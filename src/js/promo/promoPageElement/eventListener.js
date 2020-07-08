@@ -1,10 +1,10 @@
+import updateCanvas from './dom/updateCanvas';
+
 export default function initEventListener(promoPage) {
   const liArr = promoPage.querySelectorAll('li');
-  console.log(liArr);
   const aboutLearningScreenElementArr = promoPage.shadowRoot.querySelectorAll(
     '#aboutLearningScreen > div',
   );
-  console.log(aboutLearningScreenElementArr);
   promoPage.addEventListener('click', () => {
     if (event.target.closest('li') != null) {
       const target = event.target.closest('li');
@@ -17,5 +17,9 @@ export default function initEventListener(promoPage) {
         }
       });
     }
+  });
+
+  window.addEventListener('resize', () => {
+    updateCanvas(promoPage);
   });
 }
