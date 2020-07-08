@@ -302,7 +302,6 @@ export class Game {
           answer.classList.add('answer_wrong');
           answer.classList.add('uk-animation-shake');
 
-          this.errors += 1;
           ProgressBar.setWrongProgressPoint(this.task.progress.points[this.currentAnswer]);
         }
       };
@@ -351,6 +350,8 @@ export class Game {
         currentAnswer.isCorrect = isRight;
         currentAnswer.isError = !isRight;
 
+        this.errors += isRight ? 0 : 1;
+
         if (this.mode === GAME_MODES.learned) {
           const currentUserData = this.userData[this.currentAnswer];
           if (isRight) {
@@ -373,7 +374,6 @@ export class Game {
           this.showStatistics();
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
-        this.errors += 1;
         ProgressBar.setWrongProgressPoint(this.task.progress.points[this.currentAnswer]);
 
         this.showRightAnswer();
