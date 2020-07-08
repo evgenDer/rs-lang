@@ -2,11 +2,15 @@ import { addHeaderToPage, defineActivePage } from './navigation/index';
 import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
-import  initStatistics from './statistics/index';
+import initStatistics from './statistics/index';
 
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage.js';
+<<<<<<< HEAD
 import { getTokenTime } from './helpers/tokenHeleper';
+=======
+import './promo/promoPageCreating.js';
+>>>>>>> 831bee8... init: create promoPage v.1.0
 
 window.onload = () => {
   addHeaderToPage();

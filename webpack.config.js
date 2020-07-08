@@ -17,22 +17,20 @@ const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
 const optimization = () => {
   const config = {};
   if (isProd) {
-    config.minimizer = [
-      new OptimizeCssAssetWebpackPlugin(),
-      new TerserWebpackPlugin(),
-    ];
+    config.minimizer = [new OptimizeCssAssetWebpackPlugin(), new TerserWebpackPlugin()];
   }
   return config;
 };
 
 const cssLoaders = (extra) => {
-  const loaders = [{
-    loader: MiniCssExtractPlugin.loader,
-    options: {
-      hmr: isDev,
-      reloadAll: true,
+  const loaders = [
+    {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        hmr: isDev,
+        reloadAll: true,
+      },
     },
-  },
     'css-loader',
   ];
 
@@ -45,12 +43,8 @@ const cssLoaders = (extra) => {
 
 const babelOptions = (preset) => {
   const opts = {
-    presets: [
-      '@babel/preset-env',
-    ],
-    plugins: [
-      '@babel/plugin-proposal-class-properties',
-    ],
+    presets: ['@babel/preset-env'],
+    plugins: ['@babel/plugin-proposal-class-properties'],
   };
 
   if (preset) {
@@ -61,23 +55,26 @@ const babelOptions = (preset) => {
 };
 
 const jsLoaders = () => {
-  const loaders = [{
-    loader: 'babel-loader',
-    options: babelOptions(),
-  }];
+  const loaders = [
+    {
+      loader: 'babel-loader',
+      options: babelOptions(),
+    },
+  ];
 
   return loaders;
 };
 
-const htmlWebpackPluginCreator = (template, ...args) => new HtmlWebpackPlugin({
-  chunks: [...args],
-  template: `./pages/${template}`,
-  minify: {
-    collapseWhitespace: isProd,
-  },
-  inject: 'body',
-  filename: template,
-});
+const htmlWebpackPluginCreator = (template, ...args) =>
+  new HtmlWebpackPlugin({
+    chunks: [...args],
+    template: `./pages/${template}`,
+    minify: {
+      collapseWhitespace: isProd,
+    },
+    inject: 'body',
+    filename: template,
+  });
 
 const plugins = () => {
   const base = [
@@ -92,6 +89,7 @@ const plugins = () => {
     }),
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
     htmlWebpackPluginCreator('learningWords.html', 'index'),
+    htmlWebpackPluginCreator('promo.html', 'index'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
@@ -148,42 +146,44 @@ module.exports = {
   devtool: isDev ? 'source-map' : '',
   plugins: plugins(),
   module: {
-    rules: [{
-      test: /\.css$/, //  на всякий случай
-      use: cssLoaders(),
-    },
-    {
-      test: /\.s[ac]ss$/,
-      use: cssLoaders('sass-loader'),
-    },
-    {
-      test: /\.(png|jpg|svg|gif)$/,
-      use: ['file-loader'],
-    },
-    {
-      test: /\.(ttf|woff|woff2|eot)$/, // для шрифтов
-      use: ['file-loader'],
-    },
-    {
-      test: /\.csv$/,
-      use: ['csv-loader'],
-    },
-    {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: jsLoaders(),
-    },
-    {
-      test: /.(mp3)$/,
-      use: [{
-        loader: 'file-loader',
-        options: {
-          outputPath: 'audio',
-          name: filename('mp3'),
-        },
-      }],
-    },
-
+    rules: [
+      {
+        test: /\.css$/, //  на всякий случай
+        use: cssLoaders(),
+      },
+      {
+        test: /\.s[ac]ss$/,
+        use: cssLoaders('sass-loader'),
+      },
+      {
+        test: /\.(png|jpg|svg|gif)$/,
+        use: ['file-loader'],
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot)$/, // для шрифтов
+        use: ['file-loader'],
+      },
+      {
+        test: /\.csv$/,
+        use: ['csv-loader'],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: jsLoaders(),
+      },
+      {
+        test: /.(mp3)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'audio',
+              name: filename('mp3'),
+            },
+          },
+        ],
+      },
     ],
   },
 };
