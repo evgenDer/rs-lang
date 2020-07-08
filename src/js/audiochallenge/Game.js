@@ -146,6 +146,7 @@ export class Game {
       }
 
       this.userData = userData
+        .filter((data) => data !== undefined)
         .filter((word) => word.optional.mode !== WORD_STATE.deleted)
         .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
         .slice(0, this.wordsAmntInRound);
