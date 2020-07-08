@@ -118,7 +118,7 @@ export function getModalForGlobalStatistics() {
   <div id="global-statistics-modal" class="uk-modal-container" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
       <button class="uk-modal-close-default" type="button" uk-close></button>
-      <h2 class="uk-modal-title">Ваши результаты</h2>
+      <h2 class="uk-modal-title">Ваши результаты <span uk-icon="info" uk-tooltip="title: Временной промежуток графика можно приближать - используйте выделение мышкой нужного вам отрезка "></span></h2>
       <div id="gameChartContainer">
         <p class="stat__info">Данные отсутствуют</p>
       </div>
