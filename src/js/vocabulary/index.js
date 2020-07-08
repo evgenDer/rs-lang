@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import { getSettings } from '../api/settings';
-import { getAggregatedUserWords} from '../api/userWords';
+import { getAggregatedUserWords } from '../api/userWords';
 import { createElementObj } from '../utils/create';
 import { calculateRepeatTiming } from '../words/updateWordState';
-import { SORTING_OPTIONS, CATEGORIES_WORDS, CATEGORIES} from '../constants/vocobularConstants';
+import { SORTING_OPTIONS, CATEGORIES_WORDS, CATEGORIES } from '../constants/vocobularConstants';
 import Card from './Card';
 import ControlBar from './ControlBar';
 import Loader from './Loader';
@@ -29,22 +29,22 @@ function generateDataForCards(UserWordsData, wordCategory) {
       word: wordData.word,
       wordTranslate: wordData.wordTranslate,
     }
-    if(wordCategory !== CATEGORIES.deleted) {
+    if (wordCategory !== CATEGORIES.deleted) {
       data.repeatTiming = calculateRepeatTiming(wordData.userWord);
     }
 
-    if(configuration.optional.showImageAssociation) {
+    if (configuration.optional.showImageAssociation) {
       data.image = wordData.image;
     }
-    if(configuration.optional.showWordTranscription) {
+    if (configuration.optional.showWordTranscription) {
       data.transcription = wordData.transcription;
     }
-    if(configuration.optional.showSentenceExplanation) {
+    if (configuration.optional.showSentenceExplanation) {
       data.textMeaning = wordData.textMeaning;
       data.textMeaningTranslate = wordData.textMeaningTranslate;
       data.audioMeaning = wordData.audioMeaning;
     }
-    if(configuration.optional.showExplanationExample) {
+    if (configuration.optional.showExplanationExample) {
       data.textExample = wordData.textExample;
       data.textExampleTranslate = wordData.textExampleTranslate;
       data.audioExample = wordData.audioExample;
@@ -67,7 +67,7 @@ function showErrorMassage() {
 const callbackFunctionForCard = {
   OnClickRestore: (wordId) => {
     cards = cards.filter((card) => card.getIdWord() !== wordId);
-    if  (cards.length > 0) {
+    if (cards.length > 0) {
       cardsWrapper.innerHTML = '';
       cards.forEach((card) => cardsWrapper.append(card.getElement()));
     } else {
@@ -93,7 +93,7 @@ function sortArr(nameFunction, isSortAscending) {
 
 function sortСards(sortName, isSortAscending) {
   if (cards.length > 0) {
-    const {nameFunction} = SORTING_OPTIONS[sortName];
+    const { nameFunction } = SORTING_OPTIONS[sortName];
     sortArr(nameFunction, isSortAscending);
     cardsWrapper.innerHTML = '';
     cards.forEach((card) => cardsWrapper.append(card.getElement()));
@@ -101,16 +101,16 @@ function sortСards(sortName, isSortAscending) {
 }
 
 async function updateCards(categoryWord, sortName, isSortAscending) {
-  cardsWrapper.innerHTML='';
+  cardsWrapper.innerHTML = '';
   cardsWrapper.append(loader.getElement());
   const UserWordsData = await getAggregatedUserWords(CATEGORIES_WORDS[categoryWord].filter, 3600);
-  if(UserWordsData[0].paginatedResults.length === 0) {
+  if (UserWordsData[0].paginatedResults.length === 0) {
     showErrorMassage();
   } else {
     const dataForCards = generateDataForCards(UserWordsData[0].paginatedResults, categoryWord);
     cards.length = 0;
     let displayRestoreButton = false;
-    if(categoryWord !== CATEGORIES.learning) {
+    if (categoryWord !== CATEGORIES.learning) {
       displayRestoreButton = true;
     }
     dataForCards.forEach((cardData) => {
@@ -119,7 +119,7 @@ async function updateCards(categoryWord, sortName, isSortAscending) {
       card.generate(callbackFunctionForCard, displayRestoreButton);
     });
     sortСards(sortName, isSortAscending);
-    if(categoryWord === CATEGORIES.hard) {
+    if (categoryWord === CATEGORIES.hard) {
       controlBtns.showRepeatButton();
     }
   }
@@ -128,10 +128,10 @@ async function updateCards(categoryWord, sortName, isSortAscending) {
 const callbackForControlBar = {
   onClickCategoryWord: (categoryWord, sortName, isSortAscending) => updateCards(categoryWord, sortName, isSortAscending),
   onClickSorting: (sortName, isSortAscending) => sortСards(sortName, isSortAscending),
-  onClickRepetitionWords: () => {},
-  }
+  onClickRepetitionWords: () => { },
+}
 
-export  default async function initVocabularyPage() {
+export default async function initVocabularyPage() {
   configuration = await getSettings();
   controlBtns = new ControlBar(isSortAscendingDefault, sortNameDefault, categoryDefault);
   main.insertBefore(controlBtns.generate(callbackForControlBar), cardsWrapper);
