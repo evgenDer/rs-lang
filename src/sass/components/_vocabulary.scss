@@ -418,3 +418,94 @@
   color: $color-active;
   transition: all 0.4s;
 }
+
+.loader-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  left: 0;
+  top: 0;
+}
+
+.circle-loader {
+  width: 100px;
+  height: 15px;
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  margin: -7px 0 0 -50px;
+  text-align: center;
+}
+
+.circle {
+  height: 11px;
+  width: 11px;
+  background-color: $color-secondary;
+  border-radius: 50%;
+  position: absolute;
+  -webkit-animation: 0.8s opaque ease-in-out infinite both;
+  animation: 0.8s opaque ease-in-out infinite both;
+}
+
+.circle-8 {
+  top: -25px;
+  left: 0;
+}
+.circle-7 {
+  top: -17px;
+  left: 17px;
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+.circle-6 {
+  top: 0;
+  left: 25px;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+.circle-5 {
+  top: 17px;
+  left: 17px;
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+.circle-4 {
+  top: 25px;
+  left: 0;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+.circle-3 {
+  top: 17px;
+  left: -17px;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+.circle-2 {
+  top: 0;
+  left: -25px;
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+.circle-1 {
+  top: -17px;
+  left: -17px;
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
+}
+
+@keyframes opaque {
+  0% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}

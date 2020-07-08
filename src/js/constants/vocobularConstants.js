@@ -1,13 +1,19 @@
+export const CATEGORIES = {
+  learning: 'learning',
+  hard: 'hard',
+  deleted: 'deleted',
+}
+
 export const CATEGORIES_WORDS = {
-  learning: {
+  [CATEGORIES.learning]: {
     filter: {'$and':[{'userWord.difficulty':{'$in':['normal', 'easy']}, 'userWord.optional.mode': {'$not': {'$eq':'deleted'}}}]},
     text: 'Изучаемые',
   },
-  hard: {
+  [CATEGORIES.hard]: {
     filter: {'$and':[{'userWord.difficulty':'hard', 'userWord.optional.mode': {'$not': {'$eq':'deleted'}}}]},
     text: 'Сложные',
   },
-  deleted: {
+  [CATEGORIES.deleted]: {
     filter: {'userWord.optional.mode':{'$eq':'deleted'}},
     text: 'Удаленные',
   },

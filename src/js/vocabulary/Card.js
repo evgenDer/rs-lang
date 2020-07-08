@@ -140,6 +140,7 @@ if (this.btnRestore) {
     if (this.data.optional.mode === WORD_STATE.deleted) {
       this.data.optional.mode = WORD_STATE.repeating;
     }
+    this.data.optional.lastUpdateDate = Date.now();
     updateUserWord(this.data.id, { difficulty: this.data.difficulty, optional: this.data.optional })
     callbackFunction.OnClickRestore(this.data.id);
   });

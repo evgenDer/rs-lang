@@ -3,16 +3,18 @@ import { getSettings } from '../api/settings';
 import { getAggregatedUserWords} from '../api/userWords';
 import { createElementObj } from '../utils/create';
 import { calculateRepeatTiming } from '../words/updateWordState';
-import { SORTING_OPTIONS, CATEGORIES_WORDS} from './constant';
+import { SORTING_OPTIONS, CATEGORIES_WORDS, CATEGORIES} from '../constants/vocobularConstants';
 import Card from './Card';
 import ControlBar from './ControlBar';
+import Loader from './Loader';
 
 const main = document.querySelector('.vocabulary__form');
 const cardsWrapper = document.querySelector('.vocabulary_cards-wrapper');
 const audioObj = new Audio();
 const isSortAscendingDefault = true;
 const sortNameDefault = 'prescription';
-const categoryDefault = 'learning';
+const categoryDefault = CATEGORIES.learning;
+const loader = new Loader();
 let controlBtns = '';
 let cards = [];
 let configuration = '';
@@ -27,7 +29,7 @@ function generateDataForCards(UserWordsData, wordCategory) {
       word: wordData.word,
       wordTranslate: wordData.wordTranslate,
     }
-    if(wordCategory !== 'deleted') {
+    if(wordCategory !== CATEGORIES.deleted) {
       data.repeatTiming = calculateRepeatTiming(wordData.userWord);
     }
 
@@ -52,7 +54,7 @@ function generateDataForCards(UserWordsData, wordCategory) {
   return dataForCards;
 }
 
-function ErrorMassage() {
+function showErrorMassage() {
   const errorMessage = createElementObj({
     tagName: 'p',
     classNames: `vocabulary__error-message`,
@@ -69,7 +71,7 @@ const callbackFunctionForCard = {
       cardsWrapper.innerHTML = '';
       cards.forEach((card) => cardsWrapper.append(card.getElement()));
     } else {
-      ErrorMassage();
+      showErrorMassage();
       controlBtns.hideRepeatButton();
     }
   },
@@ -98,15 +100,17 @@ function sortСards(sortName, isSortAscending) {
   }
 }
 
-async function drawCards(categoryWord, sortName, isSortAscending) {
+async function updateCards(categoryWord, sortName, isSortAscending) {
+  cardsWrapper.innerHTML='';
+  cardsWrapper.append(loader.getElement());
   const UserWordsData = await getAggregatedUserWords(CATEGORIES_WORDS[categoryWord].filter, 3600);
   if(UserWordsData[0].paginatedResults.length === 0) {
-    ErrorMassage();
+    showErrorMassage();
   } else {
     const dataForCards = generateDataForCards(UserWordsData[0].paginatedResults, categoryWord);
     cards.length = 0;
     let displayRestoreButton = false;
-    if(categoryWord !== 'learning') {
+    if(categoryWord !== CATEGORIES.learning) {
       displayRestoreButton = true;
     }
     dataForCards.forEach((cardData) => {
@@ -115,14 +119,14 @@ async function drawCards(categoryWord, sortName, isSortAscending) {
       card.generate(callbackFunctionForCard, displayRestoreButton);
     });
     sortСards(sortName, isSortAscending);
-    if(categoryWord === 'hard') {
+    if(categoryWord === CATEGORIES.hard) {
       controlBtns.showRepeatButton();
     }
   }
 }
 
 const callbackForControlBar = {
-  onClickCategoryWord: (categoryWord, sortName, isSortAscending) => drawCards(categoryWord, sortName, isSortAscending),
+  onClickCategoryWord: (categoryWord, sortName, isSortAscending) => updateCards(categoryWord, sortName, isSortAscending),
   onClickSorting: (sortName, isSortAscending) => sortСards(sortName, isSortAscending),
   onClickRepetitionWords: () => {},
   }
@@ -131,5 +135,5 @@ export  default async function initVocabularyPage() {
   configuration = await getSettings();
   controlBtns = new ControlBar(isSortAscendingDefault, sortNameDefault, categoryDefault);
   main.insertBefore(controlBtns.generate(callbackForControlBar), cardsWrapper);
-  drawCards(categoryDefault, sortNameDefault, isSortAscendingDefault);
+  updateCards(categoryDefault, sortNameDefault, isSortAscendingDefault);
 }

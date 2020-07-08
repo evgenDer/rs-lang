@@ -1,5 +1,5 @@
 import { createElementObj } from '../utils/create';
-import { SORTING_OPTIONS, CATEGORIES_WORDS} from './constant';
+import { SORTING_OPTIONS, CATEGORIES_WORDS, CATEGORIES} from '../constants/vocobularConstants';
 
 export default class ControlBar {
   constructor(isSortAscendingDefault, sortNameDefault, categoryDefault) {
@@ -25,11 +25,11 @@ export default class ControlBar {
     children: categoriesWordsItems,
   attrs: [['uk-tab']] });
 
-  const imgRepeatWords = createElementObj({ tagName: 'img', attrs:[['src', './assets/img/icons/learning.svg'], ['alt', 'изучение']] });
+  const imgRepeatWords = createElementObj({ tagName: 'img', attrs:[['src', './assets/img/icons/learning.svg'], ['alt', 'изучить слова']] });
   this.repetitionWordsBtn = createElementObj({
     tagName: 'button',
     classNames: 'hidden uk-button uk-button-default repetition-words-btn',
-    attrs: [['uk-tooltip', 'title: Повторить сложные; offset: -0.1']],
+    attrs: [['uk-tooltip', 'title: Повторить сложные слова; offset: -0.1']],
     children: [imgRepeatWords],
   });
 
@@ -94,7 +94,7 @@ export default class ControlBar {
     this.wordCategorySwitch.addEventListener('click', (event) => {
       if (event.target.tagName === 'A') {
         this.currentCategory = event.target.id;
-        if( this.currentCategory !== 'hard') {
+        if( this.currentCategory !== CATEGORIES.hard) {
           this.hideRepeatButton();
         }
         callback.onClickCategoryWord(this.currentCategory, this.currentSortName, this.isSortAscending);
