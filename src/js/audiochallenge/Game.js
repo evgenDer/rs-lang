@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createElement } from '../utils/create';
-import { GAME_MODES, GAME_DATA_URL, ERR_MSG } from '../games/constants';
+import { GAME_MODES, GAME_DATA_URL, ERR_MSG, DATA_ERR_MSG } from '../games/constants';
 import { getFullDataWords, getWordById } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
@@ -146,6 +146,7 @@ export class Game {
       }
 
       this.userData = userData
+        .filter((data) => data !== undefined)
         .filter((word) => word.optional.mode !== WORD_STATE.deleted)
         .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
         .slice(0, this.wordsAmntInRound);
@@ -157,6 +158,11 @@ export class Game {
       this.data = await Promise.all(promises);
     }
 
+    this.data = this.data.filter((data) => data !== undefined);
+    if (this.data.length !== this.wordsAmntInRound) {
+      throw DATA_ERR_MSG;
+    }
+
     this.allRoundTranslations = await this.getAllGroupWordTranslatons();
   }
 
@@ -166,6 +172,7 @@ export class Game {
     const allData = await getFullDataWords(this.level, 0, 1000);
 
     const allWords = allData
+      .filter((data) => data !== undefined)
       .map(({ wordTranslate }) => wordTranslate)
       .filter((word) => word !== '' && !dataWords.includes(word));
 

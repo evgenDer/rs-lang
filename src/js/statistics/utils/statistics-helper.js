@@ -45,6 +45,19 @@ export async function getStatistics() {
   return parsedStatistics;
 }
 
+export async function getGameStatistics(gameName){
+  const statistics = await getStatistics();
+
+  if (!statistics || !statistics.optional ||
+    !statistics.optional.sd) {
+    return null;
+  }
+
+  const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
+
+  return gamedata;
+}
+
 export async function getDateTimeStatistics(gameName) {
   const statistics = await getStatistics();
 
