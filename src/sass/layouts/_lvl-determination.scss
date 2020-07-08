@@ -1,0 +1,76 @@
+#lvl-determination{
+  min-height: 100vh;
+  height: 100%;
+}
+
+.lvl-determination__main{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.main-card__header{
+  h3{
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 2rem;
+    color: $color-secondary;
+    font-family: 'Monteserrat';
+  }
+  text-align: start;
+  margin: 0 0 20px;
+}
+.main-card{
+  margin: 40px 0;
+  // width: 700px;
+  min-height: 400px;
+  height: auto;
+  border-radius: 10px;
+  background-color: $color-primary;
+  text-align: center;
+  .main-card__body_desc{
+    text-align: justify;
+    font-size: 1.4rem;
+    color: $color-secondary;
+    margin-bottom: 40px;
+  }
+  .uk-align-right{
+    margin-bottom: 0px;
+  }
+}
+
+.main-card__body_btn-start, .main-card__body_btn-next{
+  border: none;
+  outline: none;
+  background-color: $color-secondary;
+  color: $color-primary;
+  padding: 0 30px;
+  border-radius: 10px;
+  line-height: 38px;
+  width: 180px;
+}
+
+.answers-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.answers-field__row{
+  // background-color: $color-background-additinal;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  color: $color-secondary;
+  text-align: center;
+  p{
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  label{
+    font-size: 1.3rem;
+    margin-left: 10px;
+  }
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+}
