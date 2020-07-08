@@ -1,21 +1,37 @@
-@import '../base/select';
+@import "../base/select";
+@import "../components/loader-savannah";
 
-.body {
+.game-container {
     height: 100vh;
     overflow: hidden;
-}
-.game-container {
-    height: 100%;
     background-image: url(../img/savannah-bg.svg);
     background-position: bottom;
     text-align: center;
+    &__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 10%;
+    }
+    &__dagger-container {
+        display: flex;
+        align-items: center;
+        
+    }
+    &__dagger-img {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
     &__start {
         width: 400px;
         margin: auto;
         position: relative;
         top: 30%;
-        color: $color-light-green;
         transition: 1s;
+    }
+    &__title {
+        color: $color-light-green !important;
     }
     &__text {
         color: $color-darken;
@@ -35,6 +51,28 @@
             outline: none;
         }
     }
+    .select-container {
+        width: 270px;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__hearts {
+        display: flex;
+
+    }
+    &__heart {
+        width: 30px;
+        height: 30px;
+        // padding: 0 px;
+        background-repeat: no-repeat;
+        background-size: 90%;
+        background-position: center;
+    }
+}
+.close {
+    &__alert {
+        text-align: center;
+    }
 }
 
 .timer {
@@ -50,6 +88,7 @@
         top: calc(50% - 1rem);
         left: calc(50% - 1rem);
         z-index: 1000;
+        color: white;
     }
 }
 
@@ -57,36 +96,67 @@
     transform: scale3d(0, 0, 1);
     transition: 1s;
     color: white;
+    height: 100%;
     &__header {
-        padding: 30px 30px;
-        display: flex;
-        justify-content: space-between;
+        position: relative;
+        height: 10%;
+    }
+    &__general-word {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        color: white;
+        transition: 1s;
+        font-size: 35px;
     }
     &__main {
         height: 50%;
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: center;
         color: white;
         & > h3 {
             cursor: pointer;
         }
+    }
+    &__answers {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        font-size: 30px;
+        z-index: 2000;
+    }
+    &__answer {
+        cursor: pointer;
+    }
+    &__note {
+        cursor: pointer;
     }
     &__footer {
         height: 25%;
         display: flex;
         justify-content: center;
     }
-    &__hearts {
-        display: flex;
+    
+    &__switcher {
+        margin: 0;
+        font-size: 20px;
+        color: white;
     }
-    &__heart {
-        width: 40px;
-        padding: 0 5px;
-    }
+    
     .crystal {
-        width: 40%;
+        width: 300px;
+        height: 150px;
         animation: ani9 0.4s ease-in-out infinite alternate;
+    }
+}
+
+.newgame-button {
+    border-radius: 5px;
+    box-shadow: none;
+    display: none;
+    &__arrow {
+        width: 22px;
     }
 }
 
@@ -94,18 +164,11 @@
 .animated-hide {
     transform: rotateZ(720deg) scale3d(0, 0, 1);
 }
-
-// <---------Spinner ------------>
-
-.loader {
-    width: 100%;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: scale3d(0, 0, 1);
-    transition: 1s;
-    z-index: 1;
+.display-block {
+    display: block;
+}
+.display-none {
+    display: none !important;
 }
 .opacity-one {
     opacity: 1;
@@ -119,6 +182,10 @@
 .shake {
     animation: ani9 0.4s ease-in-out infinite alternate;
 }
+// <<<<<<< word down >>>>>>>
+.animation-down {
+    animation: wordDown infinite 5s cubic-bezier(0, 0, 1, 1);
+}
 
 // <<<<<< crystal shake >>>>>>>>>
 .crystal-shake {
@@ -126,11 +193,31 @@
     animation-duration: 1s;
 }
 
+// hide header menu
+.hide-header {
+    transition: 1s;
+    transform: translateY(-100px);
+    opacity: 0;
+}
 
+// heart error
 
+.error-heart {
+    filter: grayscale(0);
+}
+
+//  error animation
+.bounce {
+    color: red;
+    animation-name: bounce;
+    animation-duration: 0.5s;
+    animation-delay: 0.25s;
+}
+
+// <--------------- animations --------------->
 @keyframes wordDown {
     100% {
-        transform: translateY(50vh)
+        transform: translateY(50vh);
     }
 }
 
@@ -167,5 +254,40 @@
     }
     100% {
         transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateX(0px);
+        timing-function: ease-in;
+    }
+    37% {
+        transform: translateX(5px);
+        timing-function: ease-out;
+    }
+    55% {
+        transform: translateX(-5px);
+        timing-function: ease-in;
+    }
+    73% {
+        transform: translateX(4px);
+        timing-function: ease-out;
+    }
+    82% {
+        transform: translateX(-4px);
+        timing-function: ease-in;
+    }
+    91% {
+        transform: translateX(2px);
+        timing-function: ease-out;
+    }
+    96% {
+        transform: translateX(-2px);
+        timing-function: ease-in;
+    }
+    100% {
+        transform: translateX(0px);
+        timing-function: ease-in;
     }
 }

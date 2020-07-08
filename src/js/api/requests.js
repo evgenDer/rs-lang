@@ -6,6 +6,7 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     const params = {
       method: methodRequest,
       headers: {
+        'Access-Control-Allow-Origin': 'https://afternoon-falls-25894.herokuapp.com',
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',

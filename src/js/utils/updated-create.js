@@ -28,7 +28,13 @@ function createElement({
   }
 
   if (onClick) {
-    element.addEventListener('click', onClick);
+    if (Array.isArray(onClick)) {
+      onClick.forEach((item) => {
+        element.addEventListener('click', item);
+      });
+    } else {
+      element.addEventListener('click', onClick);
+    }
   }
 
   if (onChange) {

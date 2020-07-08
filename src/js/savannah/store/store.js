@@ -1,5 +1,8 @@
 import fetchWordsReducer from './reducers/fetch-words';
 import { changeRoundSelectReducer, changeLevelSelectReducer } from './reducers/change-select';
+import onSoundReducer from './reducers/on-sound';
+import checkOnDublicateReducer from './reducers/dublicate';
+import errorsReducer from './reducers/errors';
 
 // Инициализация хранилища
 
@@ -31,6 +34,9 @@ const initState = {
   words: [],
   complexity: '0',
   round: '0',
+  sound: true,
+  dublicate: [],
+  errors: 0,
 };
 
 const thunk = (store) => (dispatch) => (action) => {
@@ -58,6 +64,9 @@ const reducers = combineReducers({
   words: fetchWordsReducer,
   complexity: changeLevelSelectReducer,
   round: changeRoundSelectReducer,
+  sound: onSoundReducer,
+  dublicate: checkOnDublicateReducer,
+  errors: errorsReducer,
 });
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers, initState);
