@@ -15,10 +15,10 @@ export default class Card {
   generate(callbackFunction, displayRestoreButton) {
     const progressBarTooltipTypes = Object.values(markToText);
     const progressBarItems = [];
-    const progreesBarLevel = Math.round(this.data.optional.successPoint);
+    const progressBarLevel = Math.floor(this.data.optional.successPoint);
     for (let i = 1; i < progressBarTooltipTypes.length; i += 1) {
       const progressBarItem = createElementObj({ tagName: 'div', classNames: `vocabulary__progress-bar_item` });
-      if (i <= progreesBarLevel) {
+      if (i <= progressBarLevel) {
         progressBarItem.classList.add(`progress-bar_item-${i}`);
       }
       progressBarItems.push(progressBarItem);
@@ -27,7 +27,7 @@ export default class Card {
       tagName: 'div',
       classNames: 'vocabulary__progress-bar',
       children: progressBarItems,
-      attrs: [['uk-tooltip', `title:${progressBarTooltipTypes[progreesBarLevel]}; pos: top-left; offset: -0.1`]]
+      attrs: [['uk-tooltip', `title:${progressBarTooltipTypes[progressBarLevel]}; pos: top-left; offset: -0.1`]]
     });
     const wordContains = Card.createBlock('word', this.data.word, this.data.wordTranslate, this.data.transcription || '');
     this.vocabularyWordContains = createElementObj({ tagName: 'div', classNames: `vocabulary__word-container`, children: [progressBar, wordContains] });
