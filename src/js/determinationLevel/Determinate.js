@@ -50,7 +50,7 @@ async getData (){
 
   start() {
     removeChild(this.elements.card);
-    const spinner = `<div style="height: 80px; width: 80px; margin-top: 10vh" uk-spinner="ratio: 4.5"></span>`;
+    const spinner = `<div style="height: 80px; width: 80px; margin-top: 5vh" uk-spinner="ratio: 4.5"></span>`;
     this.elements.card.insertAdjacentHTML('beforeend', spinner);
     // startLoading();
     this.getData().then(() => {
@@ -73,15 +73,15 @@ async getData (){
           const wordString = textElememnt.innerText;
           const word = wordString.trim();
           if(word === this.data[i].word){
-            this.data.result = true;
+            this.data[i].result = true;
             this.totalCorrect += 1;
             this.correct[this.level] += 1;
           }
-        }
-        else {
-          this.data.result = false;
-          this.totalCorrect += 1;
-          this.errors[this.level] += 1;
+          else {
+            this.data[i].result = false;
+            this.totalErrors += 1;
+            this.errors[this.level] += 1;
+          }
         }
       });
     }
@@ -92,15 +92,13 @@ async getData (){
     const dataPage = this.resultDataPage.flat(Infinity);
     createStaticticRound(this.totalCorrect, this.totalErrors, this.errors).then(() =>{
       addStatisticRound(dataPage);
-      // eslint-disable-next-line no-undef
-
     });
   }
 
   addEventLestenersOnButtons() {
     document.querySelector('.main-card__body_btn-next').addEventListener('click', () => {
       this.checkAnswers();
-      if(this.level === 0){
+      if(this.level === this.wordsAmntInRound){
         this.addResults();
       } else {
         this.level += 1;

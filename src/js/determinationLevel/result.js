@@ -1,6 +1,5 @@
 import { removeChild } from '../helpers/html-helper';
 import playAudio from '../helpers/audio';
-import { getMaxIndexValue } from  '../helpers/math-hepler';
 import { updatDifficultyLevel } from '../configuration';
 import { DATA_URL } from '../utils/constants';
 
@@ -44,14 +43,14 @@ export function addStatisticRound(dataPageRound){
 });
 }
 
-async function getHTMLElement(totalCorrect, totalErrors, errorArray){
-  const maxIndex = getMaxIndexValue(errorArray);
+async function getHTMLElement(totalCorrect){
+  const countSentence = 30;
+  const countLevels = 6;
   let innerTextResult = '';
-  console.log(totalCorrect, totalErrors);
-  let lvl = Math.ceil(totalCorrect/(totalCorrect + totalErrors)) - 1;
-  console.log(lvl);
-  if(lvl > maxIndex){
-    lvl = maxIndex;
+  let lvl = Math.ceil(totalCorrect/countSentence * (countLevels)) - 1;
+  console.log(lvl, totalCorrect);
+  if(totalCorrect === 0){
+    lvl = 0;
   }
   innerTextResult = `Ваш уровень для слов равен ${lvl}`;
   const compareElement = `
@@ -89,6 +88,7 @@ export async function createStaticticRound(totalCorrect, totalErrors, errorArray
   </div>
   `;
   document.body.insertAdjacentHTML('beforeend', statisticElement);
+  // eslint-disable-next-line no-undef
   UIkit.modal('#modal', { bgclose: false, center: true}).show();
   document.getElementById('modal-btn-learn').addEventListener('click', () => {
     window.location.href = 'learningWords.html';
