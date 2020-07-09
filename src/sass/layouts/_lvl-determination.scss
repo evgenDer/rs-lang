@@ -3,6 +3,8 @@
   height: 100%;
 }
 
+
+
 .lvl-determination__main{
   width: 100%;
   display: flex;
@@ -38,6 +40,11 @@
     margin-bottom: 0px;
   }
 }
+input[type="radio"]{
+  &:hover{
+    cursor: pointer;
+  }
+}
 
 .main-card__body_btn-start, .main-card__body_btn-next{
   border: none;
@@ -48,6 +55,10 @@
   border-radius: 10px;
   line-height: 38px;
   width: 180px;
+  height: 50px;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .answers-field {
