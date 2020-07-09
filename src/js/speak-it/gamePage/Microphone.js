@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/create';
+import { createElementObj } from '../../utils/create';
 
 export default class Microphone {
   constructor() {
@@ -6,8 +6,8 @@ export default class Microphone {
   }
 
   generate() {
-    this.input = createElement({ tagName: 'input', classNames: 'input', attrs: [['type', 'text'], ['disabled', 'true']] });
-    this.microphone= createElement({ tagName: 'div', classNames: 'microphone', children: [ this.input] });
+    this.input = createElementObj({ tagName: 'input', classNames: 'input', attrs: [['type', 'text'], ['disabled', 'true']] });
+    this.microphone= createElementObj({ tagName: 'div', classNames: 'microphone', children: [ this.input] });
     return this.microphone;
   }
 

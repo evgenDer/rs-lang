@@ -1,7 +1,7 @@
 import { getDataWords } from '../../api/words';
 import Card from './Card';
 import Loader from './Loader';
-import { createElement } from '../../utils/create';
+import { createElementObj } from '../../utils/create';
 import shuffleArray from '../../utils/shuffleArray';
 
 export default class GameBoard {
@@ -13,8 +13,8 @@ export default class GameBoard {
   }
 
   generate() {
-    this.cardsContainer = createElement({ tagName: 'div', classNames: 'cards_container'});
-    this.wrapper = createElement({ tagName: 'div', classNames: 'wrapper_game-board', children: [this.cardsContainer, this.loader.getElement() ]});
+    this.cardsContainer = createElementObj({ tagName: 'div', classNames: 'cards_container'});
+    this.wrapper = createElementObj({ tagName: 'div', classNames: 'wrapper_game-board', children: [this.cardsContainer, this.loader.getElement() ]});
     return this.wrapper;
   }
 

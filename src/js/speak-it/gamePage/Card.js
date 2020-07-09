@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/create';
+import { createElementObj } from '../../utils/create';
 
 export default class Card {
   constructor(data) {
@@ -12,13 +12,13 @@ export default class Card {
   }
 
   generateCard() {
-    const icon = createElement({ tagName: 'img', classNames: 'speaker-icon', attrs: [['src', './assets/img/icons/speaker.svg']] });
-    const containerIcon =  createElement({ tagName: 'div', classNames: 'container-speaker-icon', children: [icon] });
-    const word = createElement({ tagName: 'p', classNames: 'word', textContent: this.word });
-    const transcription = createElement({ tagName: 'p', classNames: 'transcription', textContent: this.transcription });
-    this.translate = createElement({ tagName: 'p', classNames: 'translate', textContent: this.wordTranslate });
-    const wordContainer = createElement({ tagName: 'div', classNames: 'word-container', children: [ word, transcription, this.translate] });
-    this.card = createElement({ tagName: 'div', classNames: 'card uk-animation-fade', children: [containerIcon, wordContainer] });
+    const icon = createElementObj({ tagName: 'img', classNames: 'speaker-icon', attrs: [['src', './assets/img/icons/speaker.svg']] });
+    const containerIcon =  createElementObj({ tagName: 'div', classNames: 'container-speaker-icon', children: [icon] });
+    const word = createElementObj({ tagName: 'p', classNames: 'word', textContent: this.word });
+    const transcription = createElementObj({ tagName: 'p', classNames: 'transcription', textContent: this.transcription });
+    this.translate = createElementObj({ tagName: 'p', classNames: 'translate', textContent: this.wordTranslate });
+    const wordContainer = createElementObj({ tagName: 'div', classNames: 'word-container', children: [ word, transcription, this.translate] });
+    this.card = createElementObj({ tagName: 'div', classNames: 'card uk-animation-fade', children: [containerIcon, wordContainer] });
     return this.card;
   }
 

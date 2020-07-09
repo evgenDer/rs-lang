@@ -37,9 +37,9 @@ export function defineActivePage() {
 function generateNavigation() {
   const activePageNum = defineActivePage();
 
-  const hambLine = createElement({ tagName: 'span', classNames: 'hamburger__line' });
-  const hambrLineContainer = createElement({ tagName: 'div', classNames: 'hamburger', children: [hambLine] });
-  const hamb = createElement({ tagName: 'div', classNames: 'header__hamburger', children: [hambrLineContainer] });
+  const hambLine = createElement('span', 'hamburger__line');
+  const hambrLineContainer = createElement('div', 'hamburger', [hambLine]);
+  const hamb = createElement('div', 'header__hamburger', [hambrLineContainer]);
 
   const list = [];
   PAGES.forEach((page, num) => {
@@ -60,16 +60,16 @@ function generateNavigation() {
       };
     }
 
-    const link = createElement({ tagName: 'li', classNames: 'navigation__link', children: [anchor] });
+    const link = createElement('li', 'navigation__link', [anchor]);
     if (num === activePageNum) {
       link.classList.add('navigation__link_active');
     }
     list.push(link);
   });
 
-  const navList = createElement({ tagName: 'ul', classNames: 'navigation navigation_hidden', children: list });
+  const navList = createElement('ul', 'navigation navigation_hidden', list);
 
-  const navigation = createElement({ tagName: 'nav', classNames: 'header__navigation', children: [navList, hamb] });
+  const navigation = createElement('nav', 'header__navigation', [navList, hamb]);
   return navigation;
 }
 
@@ -80,10 +80,10 @@ export function addHeaderToPage() {
   }
 
   const navigation = generateNavigation();
-  const aligner = createElement({ tagName: 'div', classNames: 'header__aligner' });
+  const aligner = createElement('div', 'header__aligner');
 
-  const logo = createElement({ tagName: 'h1', classNames: 'logo', textContent: APP_NAME });
-  const logoContainer = createElement({ tagName: 'div', classNames: 'header__logo', children: [logo] });
+  const logo = createElement('h1', 'logo', [], [], APP_NAME);
+  const logoContainer = createElement('div', 'header__logo', [logo]);
 
   const wrapper = createElement('div', 'wrapper header__wrapper', [
     navigation,
@@ -91,7 +91,7 @@ export function addHeaderToPage() {
     aligner,
   ]);
 
-  const header = createElement({ tagName: 'header', classNames: 'header', children: [wrapper] });
+  const header = createElement('header', 'header', [wrapper]);
   document.body.prepend(header);
 
   addNavigationClickHandler();

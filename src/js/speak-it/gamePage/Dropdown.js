@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/create';
+import { createElementObj } from '../../utils/create';
 
 export default class Dropdoun {
   constructor(nameItem , amountElements, numCurrentItem) {
@@ -10,21 +10,21 @@ export default class Dropdoun {
   generate(callback) {
     this.items = [];
     for (let i = 0; i < this.amountElements; i += 1) {
-      const item = createElement({ tagName: 'li', classNames: `list_item`, textContent: `${this.nameItem} ${i + 1}` });
+      const item = createElementObj({ tagName: 'li', classNames: `list_item`, textContent: `${this.nameItem} ${i + 1}` });
       if( i === this.numCurrentItem) {
         item.classList.add('list-item_active');
       }
       this.items.push(item);
     }
-    this.list = createElement({ tagName: 'ul', classNames: 'uk-nav uk-dropdown-nav', children: this.items });
-    this.listContainer = createElement({
+    this.list = createElementObj({ tagName: 'ul', classNames: 'uk-nav uk-dropdown-nav', children: this.items });
+    this.listContainer = createElementObj({
       tagName: 'div',
       classNames: 'game-control_list-container',
       children: [this.list],
       attrs:[['uk-dropdown', 'animation: uk-animation-slide-top-small; duration: 1000']],
     });
-    this.btn = createElement({ tagName: 'button', classNames: 'uk-button uk-button-default game-control__btn', textContent: `${this.nameItem} ${this.numCurrentItem + 1}`});
-    const gameControlDropdown= createElement({ tagName: 'div', classNames: 'game-control-dropdown', children: [this.btn, this.listContainer] });
+    this.btn = createElementObj({ tagName: 'button', classNames: 'uk-button uk-button-default game-control__btn', textContent: `${this.nameItem} ${this.numCurrentItem + 1}`});
+    const gameControlDropdown= createElementObj({ tagName: 'div', classNames: 'game-control-dropdown', children: [this.btn, this.listContainer] });
     this.addListeners(callback);
     return gameControlDropdown;
   }

@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/create';
+import { createElementObj } from '../../utils/create';
 import Loader from './Loader';
 
 export default class Display {
@@ -8,17 +8,17 @@ export default class Display {
   }
 
   generate() {
-    this.image = createElement({ tagName: 'img', classNames: 'image', attrs: [['src', this.defaultImageSrc]] });
-    this.word = createElement({ tagName: 'p', classNames: 'word display_word'});
-    this.transcription = createElement({ tagName: 'p', classNames: 'transcription display_transcription'});
-    this.translate = createElement({ tagName: 'p', classNames: 'display_translate'});
-    this.wordContainer = createElement({
+    this.image = createElementObj({ tagName: 'img', classNames: 'image', attrs: [['src', this.defaultImageSrc]] });
+    this.word = createElementObj({ tagName: 'p', classNames: 'word display_word'});
+    this.transcription = createElementObj({ tagName: 'p', classNames: 'transcription display_transcription'});
+    this.translate = createElementObj({ tagName: 'p', classNames: 'display_translate'});
+    this.wordContainer = createElementObj({
       tagName: 'div',
       classNames: 'display_word-container word-container',
       children: [ this.word, this.transcription, this.translate],
     });
-    this.wrapper = createElement({ tagName: 'div', classNames: 'info-wrapper', children: [this.image, this.wordContainer] });
-    const display = createElement({ tagName: 'div', classNames: 'display', children: [this.wrapper,  this.loader.getElement()] });
+    this.wrapper = createElementObj({ tagName: 'div', classNames: 'info-wrapper', children: [this.image, this.wordContainer] });
+    const display = createElementObj({ tagName: 'div', classNames: 'display', children: [this.wrapper,  this.loader.getElement()] });
     return display;
   }
 

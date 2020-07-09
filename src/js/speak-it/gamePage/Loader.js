@@ -1,4 +1,4 @@
-import { createElement } from '../../utils/create';
+import { createElementObj } from '../../utils/create';
 
 export default class Loader {
   constructor(line) {
@@ -12,21 +12,21 @@ export default class Loader {
   generate() {
     const circles = [];
     for(let i=0; i < 8; i += 1) {
-      const circle = createElement({ tagName: 'div', classNames: `circle circle-${i + 1}`});
+      const circle = createElementObj({ tagName: 'div', classNames: `circle circle-${i + 1}`});
       circles.push(circle);
     }
-    const loading = createElement({ tagName: 'div', classNames: 'circle-loader', children: circles });
-    this.wrapper = createElement({ tagName: 'div', classNames: 'loader-wrapper hidden', children: [loading] });
+    const loading = createElementObj({ tagName: 'div', classNames: 'circle-loader', children: circles });
+    this.wrapper = createElementObj({ tagName: 'div', classNames: 'loader-wrapper hidden', children: [loading] });
   }
 
   generateLine() {
       const circles = [];
       for(let i=0; i < 4; i += 1) {
-        const circle = createElement({ tagName: 'div', classNames: `circle-line circle-line-${i + 1}`});
+        const circle = createElementObj({ tagName: 'div', classNames: `circle-line circle-line-${i + 1}`});
         circles.push(circle);
       }
-      const loading = createElement({ tagName: 'div', classNames: 'circle-loader circle-loader-line', children: circles });
-      this.wrapper = createElement({ tagName: 'div', classNames: 'loader-wrapper hidden', children: [loading] });
+      const loading = createElementObj({ tagName: 'div', classNames: 'circle-loader circle-loader-line', children: circles });
+      this.wrapper = createElementObj({ tagName: 'div', classNames: 'loader-wrapper hidden', children: [loading] });
     }
 
   show() {

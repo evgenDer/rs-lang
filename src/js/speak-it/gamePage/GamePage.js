@@ -3,7 +3,7 @@ import Display from './Display';
 import GameBoard from './GameBoard';
 import Microphone from './Microphone';
 import Results from './Results';
-import { createElement } from '../../utils/create';
+import { createElementObj } from '../../utils/create';
 import { getGameStatistics} from '../../utils/storage';
 
 const MAX_ATTEMTS_COUNT = 4;
@@ -20,8 +20,8 @@ export default class GamePage {
   this.display = new Display();
   this.microphone = new Microphone();
   this.results = new Results();
-  this.startGameModeBtn = createElement({ tagName: 'button', classNames: 'btn btn_speak', textContent: 'Тренировака произношение' });
-  const buttons = createElement({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
+  this.startGameModeBtn = createElementObj({ tagName: 'button', classNames: 'btn btn_speak', textContent: 'Тренировака произношение' });
+  const buttons = createElementObj({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
 
   const callbacksForStatusBar = {
     onChangeLevel: (result)=> {
@@ -49,7 +49,7 @@ export default class GamePage {
     onClickHome: () => GamePage.goToHomePage(),
   }
 
-  this.gameContainer = createElement({ tagName: 'div', classNames: 'game-container hidden', children: [
+  this.gameContainer = createElementObj({ tagName: 'div', classNames: 'game-container hidden', children: [
     this.statusBar.generate(localData, callbacksForStatusBar),
     this.display.generate(),
     this.microphone.generate(),
