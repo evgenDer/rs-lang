@@ -1,0 +1,104 @@
+#aboutTeam {
+  min-height: 100vh;
+  height: 100%;
+  color: $color-secondary;
+
+  h4 {
+  margin: 0px 0;
+  color: $color-secondary;
+  }
+  h2,
+   h3{
+    text-align: center;
+    color: $color-secondary;
+  }
+  h2{
+    margin-top: 40px;
+    margin-bottom: 0px;
+  }
+  h3{
+    margin-top: 10px;
+    font-size: 25px;
+  }
+p {
+	font-size: 18px;
+	line-height: 21px;
+}
+}
+.aboutTeam__cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card-container {
+  margin: 20px 30px;
+	background-color: $color-primary;
+	border-radius: 10px;
+	box-shadow: 0px 10px 20px -10px rgba(0,0,0,0.75);
+	color: $color-secondary;
+	padding-top: 30px;
+	position: relative;
+	width: 280px;
+	max-width: 100%;
+  text-align: center;
+}
+
+.main{
+  margin-top: 30px;
+  height: 80vh;
+}
+
+.card-container .round {
+//	border: 1px solid $color-additional;
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  //padding: 7px;
+
+  object-fit: cover;
+  img{
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.card__body{
+
+}
+
+button.primary.ghost {
+	background-color: transparent;
+	color: #02899C;
+}
+
+.card__footer{
+  background-color: $color-darken;
+  text-align: left;
+  text-align: center;
+	padding: 15px;
+  margin-top: -60px;
+  height: 86%;
+  border-radius:  0 0 10px 10px;
+}
+
+.card__footer ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.card__footer_info{
+  margin-top: 70px;
+}
+
+.card__footer ul li {
+  border: 1px solid $color-additional;
+  color: $color-secondary!important;
+  background-color: $color-background-additinal;
+	border-radius: 2px;
+	display: inline-block;
+	font-size: 14px;
+	margin: 0 7px 7px 0;
+  padding: 7px;
+  border-radius: 10px;
+}

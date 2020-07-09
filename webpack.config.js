@@ -93,6 +93,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
     htmlWebpackPluginCreator('learningWords.html', 'index'),
     htmlWebpackPluginCreator('games.html', 'index'),
+    htmlWebpackPluginCreator('aboutTeam.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
     htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
