@@ -46,7 +46,23 @@ export async function getCustomConfiguration(gameName) {
   return value;
 }
 
-export async function updateConfigurationValues() {
+async function updateConfiguration(configuration) {
+  const configurationModel = {
+    optional: configuration,
+  };
+
+  await configurationService.upserSettings(configurationModel);
+}
+
+export async function updatDifficultyLevel(userDifficultyLevel) {
+  const configuration = await getConfiguration();
+
+  configuration.difficultyLevel = userDifficultyLevel;
+
+  await updateConfiguration(configuration);
+}
+
+async function updateConfigurationValues() {
   const configuration = await getConfiguration();
 
   page.updateUserConfigurationPageElement(configuration);
@@ -60,6 +76,11 @@ async function saveConfiguration() {
   const userConfiguration = page.getUserConfiguration();
   const cardsConfiguration = page.getCardsConfiguration();
 
+  if (userConfiguration.maxNewWordsPerDay > userConfiguration.maxCardsWithWordsPerDay) {
+    page.showValidationErrorMessageForUserConfiguration();
+    return false;
+  }
+
   if (
     cardsConfiguration.showWordTranslation === false &&
     cardsConfiguration.showSentenceExplanation === false &&
@@ -70,6 +91,7 @@ async function saveConfiguration() {
   }
 
   const appConfiguration = page.getAppConfiguration();
+  let { dayLearningDate } = prevConfiguration;
 
   if (
     prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
@@ -78,32 +100,27 @@ async function saveConfiguration() {
     window.localStorage.setItem('dayLearningDate', '-1');
   }
 
-  const configuration = {
-    maxNewWordsPerDay: userConfiguration.maxNewWordsPerDay,
-    maxCardsWithWordsPerDay: userConfiguration.maxCardsWithWordsPerDay,
-    difficultyLevel: userConfiguration.difficultyLevel,
-    showWordTranslation: cardsConfiguration.showWordTranslation,
-    showSentenceExplanation: cardsConfiguration.showSentenceExplanation,
-    showExplanationExample: cardsConfiguration.showExplanationExample,
-    showWordTranscription: cardsConfiguration.showWordTranscription,
-    showImageAssociation: cardsConfiguration.showImageAssociation,
-    enableAutomaticAudio: appConfiguration.enableAutomaticAudio,
-    showNewWordTranslation: appConfiguration.showNewWordTranslation,
-    showSentenceTranslation: appConfiguration.showSentenceTranslation,
-    showAnswer: appConfiguration.showAnswer,
-    deleteWords: appConfiguration.deleteWords,
-    markAsDifficultWord: appConfiguration.markAsDifficultWord,
-    possibilityToMarkWord: appConfiguration.possibilityToMarkWord,
-  };
+  prevConfiguration.maxNewWordsPerDay = userConfiguration.maxNewWordsPerDay;
+  prevConfiguration.maxNewWordsPerDay = userConfiguration.maxNewWordsPerDay;
+  prevConfiguration.maxCardsWithWordsPerDay = userConfiguration.maxCardsWithWordsPerDay;
+  prevConfiguration.dayLearningDate = dayLearningDate;
+  prevConfiguration.difficultyLevel = userConfiguration.difficultyLevel;
+  prevConfiguration.showWordTranslation = cardsConfiguration.showWordTranslation;
+  prevConfiguration.showSentenceExplanation = cardsConfiguration.showSentenceExplanation;
+  prevConfiguration.showExplanationExample = cardsConfiguration.showExplanationExample;
+  prevConfiguration.showWordTranscription = cardsConfiguration.showWordTranscription;
+  prevConfiguration.showImageAssociation = cardsConfiguration.showImageAssociation;
+  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;
+  prevConfiguration.showNewWordTranslation = appConfiguration.showNewWordTranslation;
+  prevConfiguration.showSentenceTranslation = appConfiguration.showSentenceTranslation;
+  prevConfiguration.showAnswer = appConfiguration.showAnswer;
+  prevConfiguration.deleteWords = appConfiguration.deleteWords;
+  prevConfiguration.markAsDifficultWord = appConfiguration.markAsDifficultWord;
+  prevConfiguration.possibilityToMarkWord = appConfiguration.possibilityToMarkWord;
 
-  const configurationModel = {
-    optional: configuration,
-  };
+  await updateConfiguration(prevConfiguration);
 
-  console.log(configurationModel);
-
-  await configurationService.upserSettings(configurationModel);
-
+  window.localStorage.setItem('dayLearningDate', '-1');
   return true;
 }
 
@@ -130,8 +147,20 @@ const addCheckboxClickHandler = () => {
   );
 };
 
+const addInputClickHandler = () => {
+  const inputs = document.querySelectorAll('.configuration__card .uk-input');
+  inputs.forEach((element) =>
+    element.addEventListener('click', () => {
+      inputs.forEach((input) => {
+        input.classList.remove('validation_failed');
+      });
+    }),
+  );
+};
+
 export const initConfigurationPage = () => {
   updateConfigurationValues();
   addSaveButtonClickHandler();
   addCheckboxClickHandler();
+  addInputClickHandler();
 };

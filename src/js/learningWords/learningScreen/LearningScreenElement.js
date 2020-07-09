@@ -79,7 +79,7 @@ export default class LearningScreenElement extends HTMLElement {
     );
     const loadingIcon = this.shadowRoot.querySelector('div#loading');
 
-    await this.setSettingsFromLocalStorage();
+    await this.setSettings();
     await getDayLocalState(this);
     loadingIcon.remove();
     const willCreateCard = whatsNext(this);
@@ -106,7 +106,7 @@ export default class LearningScreenElement extends HTMLElement {
     }
   }
 
-  async setSettingsFromLocalStorage() {
+  async setSettings() {
     let config = await getConfiguration();
     for (let prop in config) {
       if (this.settings.hasOwnProperty(prop)) {
@@ -117,6 +117,7 @@ export default class LearningScreenElement extends HTMLElement {
         this.settings.wordCount = config[prop];
       }
     }
+    this.settings.learning['groupNumber'] = config.difficultyLevel;
     return;
   }
 

@@ -45,6 +45,19 @@ export async function getStatistics() {
   return parsedStatistics;
 }
 
+export async function getGameStatistics(gameName){
+  const statistics = await getStatistics();
+
+  if (!statistics || !statistics.optional ||
+    !statistics.optional.sd) {
+    return null;
+  }
+
+  const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
+
+  return gamedata;
+}
+
 export async function getDateTimeStatistics(gameName) {
   const statistics = await getStatistics();
 
@@ -58,7 +71,7 @@ export async function getDateTimeStatistics(gameName) {
   return data;
 }
 
-export async function getWordLevelStatistics(gameName) {
+export async function getDateTimeStatisticsForGame(gameName) {
   const statistics = await getStatistics();
 
   if (!statistics || !statistics.optional ||
@@ -66,7 +79,20 @@ export async function getWordLevelStatistics(gameName) {
     return null;
   }
 
-  const data = statisticsUtils.getWordLevelStatisticsForChart(statistics, gameName);
+  const data = statisticsUtils.getGameDateTimeStatisticsForChart(statistics, gameName);
+
+  return data;
+}
+
+export async function getPercentToTotalStatistics(gameName) {
+  const statistics = await getStatistics();
+
+  if (!statistics || !statistics.optional ||
+    !statistics.optional.sd) {
+    return null;
+  }
+
+  const data = statisticsUtils.getPercentToTotalStatisticsForChart(statistics, gameName);
 
   return data;
 }
@@ -105,11 +131,8 @@ export function getModalForGlobalStatistics() {
   <div id="global-statistics-modal" class="uk-modal-container" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
       <button class="uk-modal-close-default" type="button" uk-close></button>
-      <h2 class="uk-modal-title">Общая статистика</h2>
-      <div id="chartContainer">
-        <p class="stat__info">Данные отсутствуют</p>
-      </div>
-      <div id="wordLevelChart" class=" uk-margin">
+      <h2 class="uk-modal-title">Ваши результаты <span uk-icon="info" uk-tooltip="title: Временной промежуток графика можно приближать - используйте выделение мышкой нужного вам отрезка "></span></h2>
+      <div id="gameChartContainer">
         <p class="stat__info">Данные отсутствуют</p>
       </div>
     </div>
