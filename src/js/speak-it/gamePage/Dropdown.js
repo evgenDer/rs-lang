@@ -44,13 +44,13 @@ export default class Dropdoun {
   disableСhange() {
     this.listContainer.setAttribute('uk-dropdown','mode: click');
     this.btn.setAttribute('disabled','true');
-    this.btn.classList.add('active');
+    this.btn.classList.add('disabled');
   }
 
   enableСhange() {
     this.listContainer.setAttribute('uk-dropdown','animation: uk-animation-slide-top-small; duration: 1000; mode: hover');
     this.btn.removeAttribute('disabled');
-    this.btn.classList.remove('active');
+    this.btn.classList.remove('disabled');
   }
 
   makeItemActive(index) {

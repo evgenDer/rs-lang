@@ -29,16 +29,24 @@ export default class GamePage {
       this.display.update({translate: ''});
     },
     onClickRestart: () => this.restart(),
+    onClickMicrophoneToggle: (microphoneOn) => {
+      if (this.isGameMode) {
+        if(!microphoneOn) {
+        this.microphone.turnOnPause();
+      } else {
+        this.turnOnMicrophone();
+      }}
+    },
     onClickStatistics: () => this.showResults(),
     onClickHome: () => GamePage.goToHomePage(),
 
   }
   const callbacksForResults = {
-    onNewRaund: ()=> {
+    onClickNewRaund: ()=> {
       this.restart();
       this.statusBar.chageRound();
     },
-    onReturn: () => {
+    onClickReturn: () => {
       if (!this.isGameMode) {
         this.display.update({translate: ''});
       } else {

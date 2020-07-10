@@ -118,34 +118,42 @@
   opacity: .9;
   transition: all 0.4s;
   font-size: .98rem;
+
+  &:disabled {
+    background-color: $color-primary;
+    color: $color-light-blue;
+    opacity: .8;
+    transition: all 0.6s;
+  }
 }
 
-.speakit_game-control__btn-mode {
-  color: $color-green;
-  margin-right: 4px;
-}
-
-.speakit_game-control__btn:disabled {
-  background-color: $color-primary;
-  color: $color-light-blue;
-  opacity: .6;
-  transition: all 0.6s;
-}
-
-.speakit_game-control__btn:hover {
+.speakit_game-control__btn:not(.disabled):hover {
   color: $color-primary;
   background: $color-light-blue;
   border: 1px solid $color-primary;
-  opacity: .7;
+  opacity: .8;
   cursor: pointer;
   transition: all 0.4s;
 }
 
-.speakit_game-control__btn-mode:hover {
+
+.speakit_game-control__btn-mode {
+  color: $color-green;
+  margin-right: 4px;
+
+  &:disabled {
+    background-color: $color-primary;
+    color: $color-green;
+    opacity: .8;
+    transition: all 0.6s;
+  }
+}
+
+.speakit_game-control__btn-mode:not(.disabled):hover {
   color: $color-primary;
   background: $color-green;
   border: 1px solid $color-primary;
-  opacity: .7;
+  opacity: .8;
   cursor: pointer;
   transition: all 0.4s;
 }
@@ -252,22 +260,23 @@
 
 .btn_microphone {
   padding: 5px 18px;
-  color: $color-light-blue;
-  background: $color-primary;
-  border: 1px solid $color-light-blue;
-}
-
-.btn_microphone .active {
-  background-color: transparent;
-  color: #999;
-  border: 1px solid #999;
-}
-
-.btn_microphone:not(.active):hover {
   color: $color-primary;
   background: $color-light-blue;
   border: 1px solid $color-primary;
-  opacity: .7;
+  opacity: .8;
+}
+
+.btn_microphone.disabled {
+  background-color: transparent;
+  color: rgb(171, 172, 173);
+  border: 1px solid rgb(171, 172, 173);
+  cursor: auto;
+}
+
+.btn_microphone.pushed {
+  color: $color-light-blue;
+  background: $color-primary;
+  border: 1px solid $color-light-blue;
 }
 
 .stars_container {
@@ -339,6 +348,12 @@
   width: 35px;
   height: 35px;
   filter: invert(99%) sepia(6%) saturate(340%) hue-rotate(262deg) brightness(119%) contrast(100%);
+  transition: all .5s;
+}
+
+.input_microphone-img_off {
+  filter: invert(51%) sepia(86%) saturate(2629%) hue-rotate(328deg) brightness(104%) contrast(102%);
+  transition: all .5s;
 }
 
 .wrapper_game-board {

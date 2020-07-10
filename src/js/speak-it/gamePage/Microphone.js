@@ -6,9 +6,9 @@ export default class Microphone {
   }
 
   generate() {
-    const microphoneImg = createElementObj({ tagName: 'img', classNames: 'input_microphone-img', attrs: [['src', './assets/img/icons/microphone.svg'], ['alt', 'microphone']] });
+    this.microphoneImg = createElementObj({ tagName: 'img', classNames: 'input_microphone-img', attrs: [['src', './assets/img/icons/microphone.svg'], ['alt', 'microphone']] });
     this.input = createElementObj({ tagName: 'input', classNames: 'input', attrs: [['type', 'text'], ['disabled', 'true']] });
-    const container = createElementObj({ tagName: 'div', classNames: 'microphone-container', children: [ microphoneImg, this.input] });
+    const container = createElementObj({ tagName: 'div', classNames: 'microphone-container', children: [ this.microphoneImg, this.input] });
     this.microphone= createElementObj({ tagName: 'div', classNames: 'microphone', children: [ container] });
     return this.microphone;
   }
@@ -17,15 +17,25 @@ export default class Microphone {
     this.input.value = '';
   }
 
+  turnOnPause() {
+    this.speechRecognition.stop();
+    this.speechRecognition.onend = null;
+    this.input.placeholder = 'Микрофон отключен';
+    this.input.value = '';
+    this.microphoneImg.src ='./assets/img/icons/microphoneOff.svg'
+    this.microphoneImg.classList.add('input_microphone-img_off');
+  }
+
   turnOff() {
     this.speechRecognition.stop();
     this.speechRecognition.onend = null;
     this.microphone.classList.remove('microphone_active');
-    this.input.placeholder = '';
     this.input.value = '';
   }
 
   turnOn(callback) {
+    this.microphoneImg.src ='./assets/img/icons/microphone.svg'
+    this.microphoneImg.classList.remove('input_microphone-img_off');
     this.input.value = '';
     this.input.placeholder = 'Говорите';
     this.microphone.classList.add('microphone_active');

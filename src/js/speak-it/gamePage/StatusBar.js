@@ -29,11 +29,11 @@ export default class StatusBar {
       textContent: MODE_INFO.studied.textBtn,
     });
     this.modeMessage = createElementObj({ tagName: 'p', classNames: 'mode-info', textContent: MODE_INFO.studied.textMessage });
-    const modeMessageContainer = createElementObj({
+    this.modeMessageContainer = createElementObj({
       tagName: 'div',
       classNames: 'game-control_list-container game-control_list-container_mode',
       children: [this.modeMessage],
-      attrs: [['uk-dropdown', 'animation: uk-animation-slide-top-small; duration: 1000; pos: bottom-right"']],
+      attrs: [['uk-dropdown', 'animation: uk-animation-slide-top-small; duration: 1000; pos: bottom-right']],
     });
 
     this.levelsDropdoun = new Dropdoun('Уровень', LEVELS_NUMBER, localData.level);
@@ -43,7 +43,7 @@ export default class StatusBar {
       classNames: 'game-control',
       children: [
         this.modeBtn,
-        modeMessageContainer,
+        this.modeMessageContainer,
         this.levelsDropdoun.generate(() => this.roundsDropdoun.makeItemActive(0)),
         this.roundsDropdoun.generate(() => {
           const data = { studied: false, level: this.levelsDropdoun.getNumCurrentItem(), page: this.roundsDropdoun.getNumCurrentItem() };
@@ -53,7 +53,7 @@ export default class StatusBar {
     });
 
     const iconMicrophone = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: microphone']] });
-    this.btnMicrophone = createElementObj({ tagName: 'button', classNames: 'btn btn_microphone', children: [iconMicrophone] });
+    this.btnMicrophone = createElementObj({ tagName: 'button', classNames: 'btn btn_microphone disabled', children: [iconMicrophone] });
     const iconRestart = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: refresh']] });
     this.btnRestart = createElementObj({ tagName: 'button', classNames: 'btn btn_restart', children: [iconRestart] });
     const iconStatistic = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: file-text']] });
@@ -89,15 +89,34 @@ export default class StatusBar {
     this.starsContainer.innerHTML = '';
   }
 
+  disableСhangeModeBtn() {
+    this.modeMessageContainer.setAttribute('uk-dropdown','mode: click');
+    this.modeBtn.setAttribute('disabled','true');
+    this.modeBtn.classList.add('disabled');
+  }
+
+  enableСhangeModeBtn() {
+    this.modeMessageContainer.setAttribute('uk-dropdown', 'animation: uk-animation-slide-top-small; duration: 1000; pos: bottom-right');
+    this.modeBtn.removeAttribute('disabled');
+    this.modeBtn.classList.remove('disabled');
+  }
+
   startGameMode() {
     this.levelsDropdoun.disableСhange();
     this.roundsDropdoun.disableСhange();
+    this.disableСhangeModeBtn();
+    this.btnMicrophone.classList.remove('disabled');
+    this.isMicrophoneOn = true;
   }
 
   stopGameMode() {
     this.levelsDropdoun.enableСhange();
     this.roundsDropdoun.enableСhange();
+    this.enableСhangeModeBtn();
     this.removeProgress();
+    this.btnMicrophone.classList.remove('pushed')
+    this.btnMicrophone.classList.add('disabled');
+    this.isMicrophoneOn = false;
   }
 
   addListeners(callbackFunctions) {
@@ -117,6 +136,16 @@ export default class StatusBar {
         callbackFunctions.onChangeLevel({studied: true});
       }
       this.isRepeatLearnedWords = !this.isRepeatLearnedWords;
+    });
+
+    this.btnMicrophone.addEventListener('click', () => {
+      if (this.isMicrophoneOn) {
+        this.btnMicrophone.classList.add('pushed');
+      } else {
+        this.btnMicrophone.classList.remove('pushed');
+      }
+      this.isMicrophoneOn  = !this.isMicrophoneOn;
+      callbackFunctions.onClickMicrophoneToggle(this.isMicrophoneOn);
     });
 
     this.btnRestart.addEventListener('click', callbackFunctions.onClickRestart);
