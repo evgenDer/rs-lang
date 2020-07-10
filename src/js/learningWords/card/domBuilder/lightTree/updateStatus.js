@@ -1,3 +1,5 @@
+import markToText from '../../../../constants/progressBarTooltipTypes';
+
 const markToStyle = {
   '0': 'white',
   '1': '#338c99',
@@ -5,14 +7,6 @@ const markToStyle = {
   '3': '#0f2c5c',
   '4': '#c377e0',
   '5': '#ff934d',
-}
-const markToText = {
-  '0': 'Новое слово',
-  '1': 'Начинаем изучать',
-  '2': 'Знакомое слово',
-  '3': 'Изучаемое слово',
-  '4': 'Изученное слово',
-  '5': 'Полностью владею',
 }
 
 export default function initLearning(cardElement) {
