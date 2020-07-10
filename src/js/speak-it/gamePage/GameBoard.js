@@ -1,8 +1,10 @@
-import { getDataWords } from '../../api/words';
+import { getFullDataWords } from '../../api/words';
+import { getAggregatedUserWords } from '../../api/userWords';
 import Card from './Card';
 import Loader from './Loader';
 import { createElementObj } from '../../utils/create';
-import shuffleArray from '../../utils/shuffleArray';
+import { shuffleArray } from '../../helpers/math-hepler';
+import { ERR_MSG } from '../../games/constants';
 
 export default class GameBoard {
   constructor() {
@@ -10,31 +12,54 @@ export default class GameBoard {
     this.mixedСards = [];
     this.audioObj = new Audio();
     this.loader = new Loader(true);
+    this.wordsAmntInRound = 10;
+    this.filter = { '$and': [{ 'userWord.difficulty': { '$in': ['normal', 'easy', 'hard'] }, 'userWord.optional.mode': { '$not': { '$eq': 'deleted' } } }] };
   }
 
   generate() {
-    this.cardsContainer = createElementObj({ tagName: 'div', classNames: 'cards_container'});
-    this.wrapper = createElementObj({ tagName: 'div', classNames: 'wrapper_game-board', children: [this.cardsContainer, this.loader.getElement() ]});
+    this.cardsContainer = createElementObj({ tagName: 'div', classNames: 'cards_container' });
+    this.wrapper = createElementObj({ tagName: 'div', classNames: 'wrapper_game-board', children: [this.cardsContainer, this.loader.getElement()] });
     return this.wrapper;
   }
 
-  cahgeCards(data) {
+  async cahgeCards(data) {
     this.cardsContainer.classList.add('hidden');
     this.loader.show();
     this.cardsContainer.innerHTML = '';
     this.currentCards.length = 0;
     this.mixedСards.length = 0;
-    getDataWords(data.level, data.page)
-    .then((result) => {
-      if(result.length > 0) {
-        result.forEach((cardData) => {
-          this.currentCards.push(new Card(cardData));
-        });
-        this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
-        this.loader.hide();
-        this.cardsContainer.classList.remove('hidden');
-      }
+    let userData = '';
+    if (data.studied) {
+      userData = await this.getUserWords();
+    } else {
+      userData = await this.getWordsByLevelAndRound(data);
+    }
+    shuffleArray(userData);
+    userData.forEach((cardData) => {
+      this.currentCards.push(new Card(cardData));
     });
+    this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
+    this.loader.hide();
+    this.cardsContainer.classList.remove('hidden');
+  }
+
+  async getUserWords() {
+    const result = await getAggregatedUserWords(this.filter, 3600);
+    const UserWordsData = result[0].paginatedResults;
+    if (UserWordsData.length < this.wordsAmntInRound) {
+      throw ERR_MSG;
+    }
+    return UserWordsData
+      .sort((a, b) => a.userWord.optional.successPoint - b.userWord.optional.successPoint)
+      .slice(0, this.wordsAmntInRound);
+  }
+
+  async getWordsByLevelAndRound(data) {
+    const result = await getFullDataWords(data.level, data.page, this.wordsAmntInRound);
+      if (result.length < this.wordsAmntInRound) {
+        throw ERR_MSG;
+      }
+      return result;
   }
 
   getCardsContainer() {
@@ -58,10 +83,11 @@ export default class GameBoard {
     this.currentCards.forEach((card) => card.makeInactive());
   }
 
-  startGameMode(){
+  startGameMode() {
     this.makeInactiveAllCards();
     this.wrapper.classList.add('hidden');
-    this.mixedСards = shuffleArray(this.currentCards);
+    this.mixedСards = this.currentCards;
+    shuffleArray(this.mixedСards);
     this.gameModeCurrentWordIndex = 0;
   }
 
@@ -72,7 +98,8 @@ export default class GameBoard {
 
   getCurrentWordInfo() {
     const currentCard = this.mixedСards[this.gameModeCurrentWordIndex];
-    return {img: currentCard.getImgUrl(),
+    return {
+      img: currentCard.getImgUrl(),
       translate: currentCard.getTranslate(),
       word: currentCard.getWord(),
       transcription: currentCard.getTranscription(),
@@ -94,7 +121,7 @@ export default class GameBoard {
       currentCard.makeActive();
       this.playAudio(currentCard.getAudioSrc());
       if (callback) {
-        callback({img: currentCard.getImgUrl(), translate: currentCard.getTranslate()});
+        callback({ img: currentCard.getImgUrl(), translate: currentCard.getTranslate() });
       }
     }
   }
@@ -106,9 +133,9 @@ export default class GameBoard {
       return true;
     }
     return false;
-}
+  }
 
-  increaseCurrentWordIndex(){
+  increaseCurrentWordIndex() {
     this.gameModeCurrentWordIndex += 1;
   }
 

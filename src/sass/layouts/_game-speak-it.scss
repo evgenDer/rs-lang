@@ -4,6 +4,8 @@
   height: 100vh;
   padding: 5px;
   position: relative;
+  background-size: cover;
+  background-image: url(../img/bg-img-game-speakit.jpg);
 }
 
 .start-screen,
@@ -13,12 +15,22 @@
   left: 0;
   height: 100vh;
   width: 100vw;
-  background-size: cover;
-  background-image: url(../img/bg-img-game-speakit.png);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.speakit_exit {
+  width: 25px;
+  position: absolute;
+  left: 4%;
+  top: 4%;
+  cursor: pointer;
+  filter: invert(84%) sepia(10%) saturate(1800%) hue-rotate(59deg) brightness(91%) contrast(91%);
+  &:hover {
+    filter: invert(52%) sepia(100%) saturate(304%) hue-rotate(156deg) brightness(84%) contrast(98%);
+  }
 }
 
 .intro {
@@ -28,18 +40,23 @@
   flex-direction: column;
   text-align: center;
   margin-top: -70px;
+  padding: 0px 40px 40px;
+  background-color: #2581b2d1;
+  border-radius: 10px;
 }
 
 .intro__title {
-  margin:  77px auto 40px;
-  color: $color-green;
-  opacity: .9;
+  margin: 40px auto;
+  opacity: .95;
   text-transform: uppercase;
+  color: #86d677;
+  font-size: 3rem;
+  // text-shadow: 1px 0px 1px #ffffff60;
 }
 
 .intro__info {
     margin: 0 auto 30px;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 1.9rem;
     color: $color-primary;
     opacity: .9;
@@ -56,7 +73,6 @@
   transition: all 0.2s linear;
   color: $color-primary;
   background: $color-green;
-  opacity: .7;
   font-size: 1.5rem;
 }
 
@@ -64,6 +80,9 @@
   margin: 0 auto;
   min-width: 220px;
   font-size: 1.8rem;
+  color: $color-primary;
+  background: #6aca58;
+  opacity: 0.9;
 }
 
 .btn:hover {
@@ -79,35 +98,52 @@
 
 .game-control {
   display: flex;
+  justify-content: center;
+  min-width: 320px;
 }
 
 .game-control-dropdown {
-  margin: 0 10px;
+  margin: 0 4px;
 }
 
-.game-control__btn {
-  width: 137px;
-  padding: 1px 0;
+.speakit_game-control__btn {
+  width: fit-content;
+  padding: 0px 20px;
   outline: none;
   border: none;
   border-radius: 10px;
   background-color: $color-primary;
-  color: $color-blue;
+  color: $color-light-blue;
   border: 1px solid;
   opacity: .9;
   transition: all 0.4s;
+  font-size: .98rem;
 }
 
-.game-control__btn:disabled {
+.speakit_game-control__btn-mode {
+  color: $color-green;
+  margin-right: 4px;
+}
+
+.speakit_game-control__btn:disabled {
   background-color: $color-primary;
-  color: $color-blue;
+  color: $color-light-blue;
   opacity: .6;
   transition: all 0.6s;
 }
 
-.game-control__btn:not(.active):hover {
+.speakit_game-control__btn:hover {
   color: $color-primary;
-  background: $color-blue;
+  background: $color-light-blue;
+  border: 1px solid $color-primary;
+  opacity: .7;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.speakit_game-control__btn-mode:hover {
+  color: $color-primary;
+  background: $color-green;
   border: 1px solid $color-primary;
   opacity: .7;
   cursor: pointer;
@@ -119,22 +155,47 @@
   opacity: 0.8;
   border-radius: 10px;
   color: $color-secondary;
-  padding: 15px 25px;
+  padding: 15px;
   min-width: fit-content;
   max-height: 150px;
   overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 5px 12px rgb(165, 216, 243);
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $color-primary;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-light-blue;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #ff9a56cb;
+  }
 }
 
-.list_item {
+.game-control_list-container_mode {
+  padding: 10px 16px;
+}
+
+.mode-info {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.speakit_list-item {
   font-size: 1rem;
 }
 
-.list_item:not(.list-item_active):hover {
+.speakit_list-item:not(.speakit_list-item_active):hover {
   cursor: pointer;
   text-decoration: underline;
 }
 
-.list-item_active {
+.speakit_list-item_active {
   color: $color-active;
 }
 
@@ -191,9 +252,9 @@
 
 .btn_microphone {
   padding: 5px 18px;
-  color: $color-blue;
+  color: $color-light-blue;
   background: $color-primary;
-  border: 1px solid $color-blue;
+  border: 1px solid $color-light-blue;
 }
 
 .btn_microphone .active {
@@ -204,7 +265,7 @@
 
 .btn_microphone:not(.active):hover {
   color: $color-primary;
-  background: $color-blue;
+  background: $color-light-blue;
   border: 1px solid $color-primary;
   opacity: .7;
 }
@@ -230,12 +291,9 @@
   height: 260px;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 5px 5px 25px $color-black;
+  border: 2px solid #a5d8f3;;
+  box-shadow: 4px 4px 35px #f8f8f8;
   margin-bottom: 10px;
-}
-
-.display_word-container {
-  margin-top: 5px;
 }
 
 .display_translate {
@@ -254,26 +312,37 @@
   justify-content: center;
 }
 
-.input {
-  border: 0;
-  padding: 5px 20px;
+.microphone-container {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #70c3ef;
   margin: 48px auto;
   width: 380px;
+}
+
+.input {
+  flex-grow: 1;
+  border: 0;
   height: 40px;
   font-size: 1.5rem;
-  color: $color-secondary;
+  color: $color-primary;
   background-color: transparent;
   text-align: center;
   font-weight: 500;
   outline: none;
-  border-bottom: 1px solid $color-blue;
-  background-image: url(../img/icons/microphone.svg);
-  background-size: 9%;
-  background-repeat: no-repeat;
+  padding: 5px 10px;
+
+  &::-webkit-input-placeholder { color: #a8daf5; }
+}
+
+.input_microphone-img {
+  width: 35px;
+  height: 35px;
+  filter: invert(99%) sepia(6%) saturate(340%) hue-rotate(262deg) brightness(119%) contrast(100%);
 }
 
 .wrapper_game-board {
-  margin: 10px;
+  margin: 5px 10px 10px;
   min-height: 208px;
   position: relative;
 }
@@ -292,37 +361,34 @@
   min-width: 200px;
   min-height: 70px;
   margin: 10px;
-  border: 1px solid rgba(150, 214, 224, 0.6);
+  border: 2px solid rgba(150, 214, 224, 0.6);
   border-radius: 10px;
   background-color: $color-primary;
   transition: all .5s;
 }
 
 .card_active {
-  background-color: rgba(150, 214, 224, 0.3);
-  border: 1px solid $color-blue;
-
-  .speaker-icon {
-    filter: opacity(100%);
+  border: 2px solid #3e9eac;
+  & .speaker-icon {
+    filter: invert(42%) sepia(89%) saturate(300%) hue-rotate(140deg) brightness(96%) contrast(92%);
   }
 }
 
 .container-speaker-icon {
-  width: 40px;
-  height: 40px;
+  width: 33px;
+  height: 33px;
 }
 
 .speaker-icon {
-  filter: opacity(50%);
+  filter: invert(83%) sepia(11%) saturate(151%) hue-rotate(136deg) brightness(101%) contrast(82%);
   transition: all 0.5s;
+
 }
 
 .card:not(.card_active):not(.result_card):hover {
-  box-shadow: 0 5px 15px rgba(0,0,0,.08);
-  border: 1px solid $color-blue;
-
-  .speaker-icon {
-    filter: opacity(90%);
+  border: 2px solid #3e9eac;
+  & .speaker-icon {
+    filter: invert(95%) sepia(41%) saturate(890%) hue-rotate(162deg) brightness(82%) contrast(84%);
   }
 }
 
@@ -331,6 +397,14 @@
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
+}
+
+.display_word-container {
+  margin: 5px 50px 0px;
+  background-color: #daf1ff52;
+  min-height: 37px;
+  border-bottom: 1px solid #daf1ff;
+  border-radius: 10px;
 }
 
 .word {
@@ -352,6 +426,11 @@
 .display_word,
 .display_transcription {
   font-size: 0;
+  display: none;
+}
+
+.display_translate {
+  font-size: 1.6rem;
 }
 
 .translate {
@@ -453,8 +532,8 @@
 .game-mode_info-wrapper {
   min-width: 483px;
   min-height: 401px;
-  background-color: rgba(150, 214, 224, 0.1);
-  border: 1px solid $color-blue;
+  background-color: #f3f7f8d1;;
+  border: 2px solid #8fceef;
   border-radius: 10px;
   transition: all .5s;
   display: flex;
@@ -467,27 +546,28 @@
 
   & .display_word {
     font-size: 1.6rem;
+    display: block;
   }
 
   & .display_transcription,
   .display_translate {
     font-size: 1.3rem;
+    display: block;
   }
 }
 
 .game-mode_btn {
   width: 20%;
-  color: $color-green;
-  background: $color-primary;
-  border: 1px solid $color-green;
-  margin-top: 30px;
-  font-size: 1.5rem;
-}
-
-.game-mode_btn:hover {
   color: $color-primary;
   background: $color-green;
   border: 1px solid $color-primary;
+  margin-top: 30px;
+  font-size: 1.5rem;
+  opacity: .7;
+}
+
+.game-mode_btn:hover {
+  opacity: 1;
 }
 
 .hidden {
@@ -528,7 +608,7 @@
 .circle {
   height: 10px;
   width: 10px;
-  background-color: $color-blue;
+  background-color: $color-light-blue;
   border-radius: 50%;
   position: absolute;
   -webkit-animation: 0.8s opaque ease-in-out infinite both;
@@ -604,7 +684,7 @@
 .circle-loader-line .circle-line {
   width: 15px;
   height: 15px;
-  background-color: $color-blue;
+  background-color: $color-light-blue;
   display: inline-block;
   margin: 0 5px;
   border-radius: 50%;

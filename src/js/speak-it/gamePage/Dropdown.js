@@ -10,9 +10,9 @@ export default class Dropdoun {
   generate(callback) {
     this.items = [];
     for (let i = 0; i < this.amountElements; i += 1) {
-      const item = createElementObj({ tagName: 'li', classNames: `list_item`, textContent: `${this.nameItem} ${i + 1}` });
+      const item = createElementObj({ tagName: 'li', classNames: `speakit_list-item`, textContent: `${this.nameItem} ${i + 1}` });
       if( i === this.numCurrentItem) {
-        item.classList.add('list-item_active');
+        item.classList.add('speakit_list-item_active');
       }
       this.items.push(item);
     }
@@ -23,10 +23,18 @@ export default class Dropdoun {
       children: [this.list],
       attrs:[['uk-dropdown', 'animation: uk-animation-slide-top-small; duration: 1000']],
     });
-    this.btn = createElementObj({ tagName: 'button', classNames: 'uk-button uk-button-default game-control__btn', textContent: `${this.nameItem} ${this.numCurrentItem + 1}`});
-    const gameControlDropdown= createElementObj({ tagName: 'div', classNames: 'game-control-dropdown', children: [this.btn, this.listContainer] });
+    this.btn = createElementObj({ tagName: 'button', classNames: 'uk-button uk-button-default speakit_game-control__btn', textContent: `${this.nameItem} ${this.numCurrentItem + 1}`});
+    this.gameControlDropdown = createElementObj({ tagName: 'div', classNames: 'game-control-dropdown hidden', children: [this.btn, this.listContainer] });
     this.addListeners(callback);
-    return gameControlDropdown;
+    return this.gameControlDropdown;
+  }
+
+  show() {
+    this.gameControlDropdown.classList.remove('hidden');
+  }
+
+  hide() {
+    this.gameControlDropdown.classList.add('hidden');
   }
 
   getNumCurrentItem() {
@@ -51,8 +59,8 @@ export default class Dropdoun {
 
   setNumCurrentItem(index) {
     const currentItems = this.items[index];
-    this.items.forEach((element)=> element.classList.remove('list-item_active'));
-    currentItems.classList.add('list-item_active');
+    this.items.forEach((element)=> element.classList.remove('speakit_list-item_active'));
+    currentItems.classList.add('speakit_list-item_active');
     this.numCurrentItem = index;
     this.btn.textContent = currentItems.textContent;
   }

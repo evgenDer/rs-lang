@@ -6,8 +6,10 @@ export default class Microphone {
   }
 
   generate() {
+    const microphoneImg = createElementObj({ tagName: 'img', classNames: 'input_microphone-img', attrs: [['src', './assets/img/icons/microphone.svg'], ['alt', 'microphone']] });
     this.input = createElementObj({ tagName: 'input', classNames: 'input', attrs: [['type', 'text'], ['disabled', 'true']] });
-    this.microphone= createElementObj({ tagName: 'div', classNames: 'microphone', children: [ this.input] });
+    const container = createElementObj({ tagName: 'div', classNames: 'microphone-container', children: [ microphoneImg, this.input] });
+    this.microphone= createElementObj({ tagName: 'div', classNames: 'microphone', children: [ container] });
     return this.microphone;
   }
 

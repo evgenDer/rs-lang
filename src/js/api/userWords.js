@@ -41,6 +41,18 @@ async function getUserWordById(wordId) {
   return result;
 }
 
+async function getAggregatedUserWords(filterParam, wordsPerPage = 10) {
+  try {
+    const userId = getUserId();
+    const filter = encodeURIComponent(JSON.stringify(filterParam));
+    const urlRequest = `${BACKEND_URL}/users/${userId}/aggregatedWords?filter=${filter}&wordsPerPage=${wordsPerPage}`;
+    const content = await sendRequest('GET', urlRequest, true);
+    return content;
+  } catch (error) {
+    return error;
+  }
+}
+
 async function updateUserWord(wordId, word) {
   if(Object.prototype.hasOwnProperty.call(word, 'id')){
     delete word.id;
@@ -56,4 +68,4 @@ async function deleteUserWord(wordId) {
   return result;
 }
 
-export { getAllUserWords, getUserWordById, updateUserWord, deleteUserWord, createUserWord };
+export { getAllUserWords, getUserWordById, updateUserWord, deleteUserWord, createUserWord, getAggregatedUserWords };
