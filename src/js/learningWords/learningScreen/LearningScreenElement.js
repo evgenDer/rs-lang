@@ -82,7 +82,9 @@ export default class LearningScreenElement extends HTMLElement {
     const loadingIcon = this.shadowRoot.querySelector('div#loading');
 
     await this.setSettings();
+    console.log(this.settings);
     await getDayLocalState(this);
+    console.log(this.settings);
     loadingIcon.remove();
     const willCreateCard = whatsNext(this);
     if (willCreateCard) {

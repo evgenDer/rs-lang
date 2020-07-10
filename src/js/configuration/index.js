@@ -52,6 +52,8 @@ async function updateConfiguration(configuration) {
     optional: configuration,
   };
 
+  console.log(configurationModel);
+
   await configurationService.upserSettings(configurationModel);
 }
 
@@ -59,6 +61,13 @@ export async function updatDifficultyLevel(userDifficultyLevel) {
   const configuration = await getConfiguration();
 
   configuration.difficultyLevel = userDifficultyLevel;
+  configuration.learning.groupNumber = userDifficultyLevel;
+
+  dayStat.updateStat();
+  dayStat.saveStat();
+  window.localStorage.setItem('dayLearningDate', '-1');
+
+  console.log(configuration);
   await updateConfiguration(configuration);
 }
 

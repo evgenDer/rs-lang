@@ -2,11 +2,14 @@ import { addHeaderToPage, defineActivePage } from './navigation/index';
 import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
-import  initStatistics from './statistics/index';
+import initStatistics from './statistics/index';
 import initVocabularyPage from './vocabulary/index';
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage.js';
+import './learningWords/learningWordsPage';
 import { getTokenTime } from './helpers/tokenHeleper';
+import addBtnStartEventListener from './determinationLevel/index';
+
 
 
 window.onload = () => {
@@ -20,7 +23,7 @@ window.onload = () => {
       // learning-page
       break;
     case 2:
-      // training-page
+      addBtnStartEventListener();
       break;
     case 3:
       // games-page
