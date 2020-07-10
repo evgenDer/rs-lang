@@ -36,7 +36,6 @@ export async function saveCustomConfiguration(gameName, gameConfiguration) {
 
 export async function getCustomConfiguration(gameName) {
   const configuration = await configurationService.getSettings();
-
   if (!configuration.optional || !configuration.optional[gameName]) {
     return null;
   }
@@ -48,6 +47,7 @@ export async function getCustomConfiguration(gameName) {
 
 async function updateConfiguration(configuration) {
   const configurationModel = {
+    wordsPerDay: 10,
     optional: configuration,
   };
 
@@ -58,7 +58,6 @@ export async function updatDifficultyLevel(userDifficultyLevel) {
   const configuration = await getConfiguration();
 
   configuration.difficultyLevel = userDifficultyLevel;
-
   await updateConfiguration(configuration);
 }
 
