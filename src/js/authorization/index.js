@@ -1,5 +1,5 @@
 import { ERROR_MSG, PASSWORD } from './constants';
-import { setDateToken, setUserId, setToken } from '../utils/storage';
+import { setDateToken, setUserPassword, setUserEmail } from '../utils/storage';
 import { loginUser, createUser } from '../api/authorization';
 
 function show() {
@@ -24,9 +24,13 @@ function changeVisibilityPassword() {
 async function logIn(event) {
   try {
     event.preventDefault();
-    const infoAboutUser = await loginUser();
-    setUserId(infoAboutUser);
-    setToken(infoAboutUser);
+    const emailInput = document.querySelector('input[type="email"]');
+    const passwordInput = document.querySelector('input[name="password"]');
+    const userEmail = emailInput.value;
+    const userPassword = passwordInput.value;
+    await loginUser( userEmail, userPassword );
+    setUserPassword(userPassword);
+    setUserEmail(userEmail);
     setDateToken();
     window.history.pushState(null, null, 'main.html');
     window.location.replace('main.html');

@@ -6,17 +6,29 @@ function setToken(infoAboutUser) {
   localStorage.setItem('token', infoAboutUser.token);
 }
 
+function setRefreshToken(infoAboutUser){
+  localStorage.setItem('token', infoAboutUser.refreshToken);
+}
+
 function setDateToken() {
   const dateGetToken = new Date();
   localStorage.setItem('tokenDate', dateGetToken.toString());
 }
 
-function setUserPassword(user) {
-  localStorage.setItem('email', user.email);
+function setUserEmail(email) {
+  localStorage.setItem('email', email);
 }
 
-function setUserEmail(user) {
-  localStorage.setItem('password', user.email);
+function setUserPassword(password) {
+  localStorage.setItem('password', password);
+}
+
+function getUserPassword() {
+  return localStorage.getItem('password');
+}
+
+function getUserEmail() {
+  return localStorage.getItem('email');
 }
 
 function getToken() {
@@ -25,6 +37,10 @@ function getToken() {
 
 function getUserId() {
   return localStorage.getItem('userId');
+}
+
+function getRefreshToken(){
+  return localStorage.refreshToken;
 }
 
 function getDateToken() {
@@ -36,6 +52,6 @@ function removeUserId() {
 }
 
 export {
-  setUserId, setToken, setDateToken, setUserPassword,
-  setUserEmail, getToken, getUserId, getDateToken, removeUserId,
+  setUserId, setToken, setDateToken, setUserPassword, getUserEmail, getUserPassword,
+  setUserEmail, getToken, getUserId, getDateToken, removeUserId, getRefreshToken, setRefreshToken,
 };

@@ -1,17 +1,11 @@
 import { ERROR_MSG } from '../authorization/constants';
-import { getUser, getMistakeResponse } from '../utils/helpers';
-import {
-  setUserPassword, setUserEmail, setToken, getToken,
-} from '../utils/storage';
-import { isValidToken } from '../utils/checks';
+import { getMistakeResponse, getUser } from '../utils/helpers';
+import { setUserId, setToken, setRefreshToken } from '../utils/storage';
 import { BACKEND_URL } from '../utils/constants';
-
 
 async function createUser(event) {
   event.preventDefault();
   const user = getUser();
-  setUserPassword(user);
-  setUserEmail(user);
   const rawResponse = await fetch(`${BACKEND_URL}/users`, {
     method: 'POST',
     headers: {
@@ -23,11 +17,14 @@ async function createUser(event) {
 
   if (!rawResponse.ok) {
     ERROR_MSG.innerText = getMistakeResponse(rawResponse.status);
+  } else {
+    ERROR_MSG.innerText = 'Регистрация прошла успешно';
   }
 }
 
-async function loginUser() {
-  const user = getUser();
+async function loginUser(emailUser, passwordUser) {
+  try{
+  const user = {email: emailUser, password: passwordUser};
   const rawResponse = await fetch(`${BACKEND_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -37,16 +34,13 @@ async function loginUser() {
     body: JSON.stringify(user),
   });
   const content = await rawResponse.json();
-  return content;
-}
-
-async function getTokenForRequest() {
-  if (!isValidToken()) {
-    const infoAboutUser = await loginUser();
-    setToken(infoAboutUser);
+  setUserId(content);
+  setToken(content);
+  setRefreshToken(content);
   }
-  return getToken();
+  catch(error){
+    window.location.href = 'index.html';
+  }
 }
 
-
-export { createUser, loginUser, getTokenForRequest };
+export { createUser, loginUser  };

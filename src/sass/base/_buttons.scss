@@ -22,6 +22,10 @@
   margin: 7% 0;
   background: $color-additional;
   width: 310px;
+  @media (max-width: $mobile-big-width){
+    margin-left: 25px;
+    width: 240px;
+  }
 }
 /*       Forgot Password button FAF3DD  */
 .frgt-pass {background: transparent;}
@@ -32,6 +36,6 @@ button:hover {
 }
 @keyframes ani9 {
   100% {
-      transform: translateY(5px);
+      transform: translateY(3px);
   }
 }

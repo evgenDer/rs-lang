@@ -33,7 +33,7 @@ const cssLoaders = (extra) => {
       reloadAll: true,
     },
   },
-  'css-loader',
+    'css-loader',
   ];
 
   if (extra) {
@@ -66,10 +66,6 @@ const jsLoaders = () => {
     options: babelOptions(),
   }];
 
-  if (isDev) {
-    loaders.push('eslint-loader');
-  }
-
   return loaders;
 };
 
@@ -95,9 +91,15 @@ const plugins = () => {
       filename: 'index.html',
     }),
     htmlWebpackPluginCreator('main.html', 'index', 'main_page'),
+    htmlWebpackPluginCreator('learningWords.html', 'index'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('game_savannah.html', 'game_savannah'),
+    htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
+    htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
+    htmlWebpackPluginCreator('games.html', 'index'),
+    htmlWebpackPluginCreator('game-audiochallenge.html', 'game_audiochallenge'),
+
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -130,6 +132,7 @@ module.exports = {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
     game_savannah: ['@babel/polyfill', './js/savannah/index.js', './sass/style.scss'],
+    game_audiochallenge: ['@babel/polyfill', './js/audiochallenge/index.js', './sass/style.scss'],
   },
   output: {
     filename: filename('js'),

@@ -1,0 +1,52 @@
+#statistics-page {
+  min-height: 100vh;
+}
+
+.stat__title {
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 2rem;
+  color: $color-secondary;
+  margin: 5px;
+  text-align: center;
+}
+
+.statistics__common {
+  width: 100%;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.stat__info {
+  padding: 20px;
+  text-align: center;
+}
+
+.canvasjs-chart-credit {
+  display: none;
+}
+
+.results-count {
+  color: $color-secondary;
+  font-weight: 700;
+}
+
+#chartContainer, #gameChartContainer {
+  height: 370px;
+  width: 100%;
+}
+
+#wordLevelChart {
+  height: 370px;
+  width: 100%;
+}
+
+#chartPercentContainer {
+  height: 370px;
+  width: 100%;
+}
+
+#global-statistics-modal .uk-modal-dialog {
+  max-height: unset;
+}

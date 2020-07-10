@@ -1,5 +1,5 @@
-import createMain from '../game-page./main';
-import createHeader from '../game-page./header';
+import createMain from '../game-page/main';
+import createHeader from '../game-page/header';
 import store from '../store/store';
 import { errorsAction } from '../store/action-creators/errors';
 import goToCrystal from './transform';

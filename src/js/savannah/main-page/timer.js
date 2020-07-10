@@ -1,6 +1,6 @@
 import { createElement } from '../../utils/updated-create';
 import createSpinner from '../../utils/spinner';
-import createProcessTemplate from '../game-page./gamepage';
+import createProcessTemplate from '../game-page/gamepage';
 import checkAnswer from '../on-game/process';
 
 const createGameTimer = () => {

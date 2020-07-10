@@ -1,18 +1,14 @@
-export const DEFAULT_USER_CONFIGURATION = {
+// eslint-disable-next-line import/prefer-default-export
+export const DEFAULT_CONFIGURATION = {
   maxNewWordsPerDay: 10,
   maxCardsWithWordsPerDay: 40,
+  dayLearningDate: Date.now(),
   difficultyLevel: 0,
-};
-
-export const DEFAULT_CARDS_VIEW = {
   showWordTranslation: true,
   showSentenceExplanation: true,
   showExplanationExample: true,
   showWordTranscription: true,
   showImageAssociation: true,
-};
-
-export const DEFAULT_APP_CONFIGURATION = {
   enableAutomaticAudio: true,
   showNewWordTranslation: true,
   showSentenceTranslation: true,
@@ -20,4 +16,16 @@ export const DEFAULT_APP_CONFIGURATION = {
   deleteWords: true,
   markAsDifficultWord: true,
   possibilityToMarkWord: true,
+  englishPuzzle: '{}',
+  savannah: '{}',
+  sprint: '{}',
+  speakit: '{}',
+  audioCall: '{}',
+  mygame: '{}',
+  learning: '{}'
 };
+
+export const DEFAULT_CONFIGURATION_GAMES = {
+  level: 0,
+  round: 0,
+}
