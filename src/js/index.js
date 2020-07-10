@@ -7,6 +7,7 @@ import initStatistics from './statistics/index';
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage.js';
 import './promo/promoPageCreating.js';
+import { getTokenTime } from './helpers/tokenHeleper';
 
 window.onload = () => {
   addHeaderToPage();
@@ -44,6 +45,7 @@ window.onload = () => {
     case 9:
       // authorization-page
       window.stop();
+      console.log(isNewUser());
       if (isNewUser()) {
         document.body.classList.remove('hidden');
         addAuthorizationClickHandler();

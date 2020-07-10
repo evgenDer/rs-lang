@@ -7,7 +7,7 @@ function setToken(infoAboutUser) {
 }
 
 function setRefreshToken(infoAboutUser){
-  localStorage.setItem('refreshToken', infoAboutUser.refreshToken);
+  localStorage.setItem('token', infoAboutUser.refreshToken);
 }
 
 function setDateToken() {
@@ -40,7 +40,7 @@ function getUserId() {
 }
 
 function getRefreshToken(){
-  return localStorage.getItem('refreshToken');
+  return localStorage.refreshToken;
 }
 
 function getDateToken() {
