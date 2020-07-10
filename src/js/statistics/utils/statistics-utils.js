@@ -121,6 +121,10 @@ export const getDateTimeStatisticsForChart = (statistics, gameName) => {
 export const getGameDateTimeStatisticsForChart = (statistics, gameName) => {
   const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
 
+  if(!gamedata || !gamedata.d){
+    return;
+  }
+
   const dataResult = gamedata.d.map(function map(f) {
     return {
       x: f.dt,
