@@ -7,6 +7,8 @@ import { SORTING_OPTIONS, CATEGORIES_WORDS, CATEGORIES } from '../constants/voco
 import Card from './Card';
 import ControlBar from './ControlBar';
 import Loader from './Loader';
+import { getConfiguration } from '../configuration';
+import * as configurationService from '../api/settings';
 
 const main = document.querySelector('.vocabulary__form');
 const cardsWrapper = document.querySelector('.vocabulary_cards-wrapper');
@@ -28,7 +30,7 @@ function generateDataForCards(UserWordsData, wordCategory) {
       audio: wordData.audio,
       word: wordData.word,
       wordTranslate: wordData.wordTranslate,
-    }
+    };
     if (wordCategory !== CATEGORIES.deleted) {
       data.repeatTiming = calculateRepeatTiming(wordData.userWord);
     }
@@ -79,15 +81,17 @@ const callbackFunctionForCard = {
     audioObj.src = audioSrc;
     audioObj.play();
   },
-}
+};
 
 function sortArr(nameFunction, isSortAscending) {
   cards.sort((a, b) => {
     if (a[nameFunction]() > b[nameFunction]()) {
-      return (isSortAscending) ? 1 : -1;
+      return isSortAscending ? 1 : -1;
     }
-    if (a[nameFunction]() === b[nameFunction]()) { return 0; }
-    return (isSortAscending) ? -1 : 1;
+    if (a[nameFunction]() === b[nameFunction]()) {
+      return 0;
+    }
+    return isSortAscending ? -1 : 1;
   });
 }
 
@@ -126,10 +130,21 @@ async function updateCards(categoryWord, sortName, isSortAscending) {
 }
 
 const callbackForControlBar = {
-  onClickCategoryWord: (categoryWord, sortName, isSortAscending) => updateCards(categoryWord, sortName, isSortAscending),
+  onClickCategoryWord: (categoryWord, sortName, isSortAscending) =>
+    updateCards(categoryWord, sortName, isSortAscending),
   onClickSorting: (sortName, isSortAscending) => sortСards(sortName, isSortAscending),
-  onClickRepetitionWords: () => { },
-}
+  onClickRepetitionWords: async () => {
+    const prevConfiguration = await getConfiguration();
+    prevConfiguration.learning = {
+      isHardMode: true,
+      groupNumber: prevConfiguration.learning.groupNumber,
+      learningWordsPage: prevConfiguration.learning.learningWordsPage,
+    };
+    await configurationService.upserSettings({ optional: prevConfiguration });
+    window.localStorage.setItem('dayLearningDate', '-1');
+    window.location.href = 'learningWords.html';
+  },
+};
 
 export default async function initVocabularyPage() {
   configuration = await getSettings();

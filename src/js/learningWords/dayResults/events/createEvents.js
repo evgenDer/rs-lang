@@ -1,6 +1,3 @@
-import { updateLearningStatisticsValues } from '../../../statistics/utils/statistics-utils';
-import { Statistics } from '../../../statistics/components/statistics';
-import { initStatistics } from '../../../statistics/utils/statistics-helper';
 import saveSettingsFromLearningWords from '../../learningScreen/functions/saveSettings';
 
 /* eslint-disable no-restricted-globals */

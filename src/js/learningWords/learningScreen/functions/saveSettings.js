@@ -5,7 +5,6 @@ export default async function saveSettingsFromLearningWords(
   learningScreenElemen,
   hardMode = learningScreenElemen.settings.learning.isHardMode,
 ) {
-  console.log(hardMode);
   const prevConfiguration = await getConfiguration();
   prevConfiguration.showWordTranslation = learningScreenElemen.settings.showWordTranslation;
   prevConfiguration.enableAutomaticAudio = learningScreenElemen.settings.enableAutomaticAudio;

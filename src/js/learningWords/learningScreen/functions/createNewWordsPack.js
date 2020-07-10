@@ -26,7 +26,7 @@ export async function createNewWordsPack(
   allUpdatedUserWords = sortLearnedWords(allUpdatedUserWords);
   allUpdatedUserWords = sortLearnedWordsByNeededToRepeat(allUpdatedUserWords);
 
-  if (allUpdatedUserWords.length > dayWordsCount) {
+  if (allUpdatedUserWords.length > dayWordsCount && !isHardMode) {
     allUpdatedUserWords = allUpdatedUserWords.slice(0, dayWordsCount);
   }
 
