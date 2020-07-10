@@ -3,8 +3,8 @@ import createGameTimer from '../main-page/timer';
 
 const onStartButtonClick = () => {
   const start = document.querySelector('.game-container__start');
-  const select = document.querySelector('.select-container');
-  select.classList.add('display-none');
+  const select = document.querySelector('.header__game-controls');
+  select.classList.add('hidden');
   start.classList.add('animated-hide');
   createGameTimer();
   setTimeout(() => start.remove(), 1000);

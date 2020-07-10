@@ -34,6 +34,7 @@ async function loginUser(emailUser, passwordUser) {
     body: JSON.stringify(user),
   });
   const content = await rawResponse.json();
+  debugger;
   setUserId(content);
   setToken(content);
   setRefreshToken(content);

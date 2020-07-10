@@ -1,9 +1,7 @@
 const APP_NAME = 'RS LANG';
 const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
 const SAVANNAH_TITLE = 'С А В А Н Н А';
-const SAVANNAH_TEXT = `Тренировка Саванна развивает
-словарный запас. Чем больше слов ты знаешь, тем больше очков
-опыта получишь.`;
+const SAVANNAH_TEXT = `Тренировка Саванна развивает словарный запас. Чем больше слов ты знаешь, тем больше очков опыта получишь.`;
 const SAVANNAH_BUTTON = 'Начать';
 const FETCH_WORDS = 'FETCH_WORDS';
 const CHANGE_LEVEL = 'CHANGE_LEVEL';

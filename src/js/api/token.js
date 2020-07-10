@@ -1,4 +1,4 @@
-import { getUserId, getRefreshToken, setToken, setRefreshToken, getToken } from '../utils/storage';
+import { getUserId, getRefreshToken, setToken, setRefreshToken, getToken } from '../../../storage';
 import { BACKEND_URL } from '../utils/constants';
 import { isValidToken } from '../utils/checks';
 
@@ -9,7 +9,7 @@ export async function getRefreshTokenFromApi(){
     // eslint-disable-next-line no-irregular-whitespace
     const urlRequest = `${BACKEND_URL}/users/${userId}​/tokens`;
     const rawResponse = await fetch(urlRequest, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${refreshToken}`,
         Accept: 'application/json',
@@ -27,6 +27,7 @@ export async function getTokenForRequest() {
   console.log(isValidToken());
   if (!isValidToken()) {
     const infoAboutUser = await getRefreshTokenFromApi();
+    console.log(infoAboutUser);
     setToken(infoAboutUser);
     setRefreshToken(infoAboutUser);
   }

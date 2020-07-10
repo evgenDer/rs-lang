@@ -20,14 +20,13 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     }
 
     const rawResponse = await fetch(urlRequest, params);
-
-    if (rawResponse.status === 404) {
+     if (rawResponse.status === 404 || rawResponse.status === 401) {
       return null;
     }
 
     return rawResponse.json();
   } catch (error) {
-    console.error(error.toString());
+    console.log(error);
     return error;
   }
 }
