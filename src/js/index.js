@@ -6,11 +6,8 @@ import initStatistics from './statistics/index';
 
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage.js';
-<<<<<<< HEAD
 import { getTokenTime } from './helpers/tokenHeleper';
-=======
 import './promo/promoPageCreating.js';
->>>>>>> 831bee8... init: create promoPage v.1.0
 
 window.onload = () => {
   addHeaderToPage();
