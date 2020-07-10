@@ -1,19 +1,19 @@
 import { getTokenTime } from '../helpers/tokenHeleper';
-import { getToken } from './storage';
+import { getToken } from '../../../storage';
 
 function isValidToken() {
   const currentTime = Date.parse(new Date()) / 1000;
-  console.log(currentTime);
   let tokenTime = 0;
-  if(getToken()){
+  const token = getToken();
+  if(token && token !== "undefined"){
     tokenTime = getTokenTime();
   }
-  return currentTime < tokenTime;
+  const tokenUpdateTime = tokenTime - 12600000;
+  return currentTime < tokenUpdateTime;
 }
 
 function isNewUser() {
-  console.log(isValidToken());
-  return !(isValidToken() && localStorage.getItem('userId') !== null);
+return !(isValidToken() && localStorage.getItem('userId') !== null);
 }
 
 export { isValidToken, isNewUser };
