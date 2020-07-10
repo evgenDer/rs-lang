@@ -10,6 +10,7 @@
 }
 
 .loader {
+
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -78,6 +79,7 @@
   width: 25px;
   height: 27px;
   background-color: #654321;
+  color: $color-primary;
   -webkit-border-radius: 63px 63px 63px 63px / 108px 108px 72px 72px;
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   display: block;
@@ -208,4 +210,14 @@
   100% {
     opacity: 0;
   }
+}
+
+#game-savannah .answer_correct{
+  width: 150px;
+  background-color: lighten($color: $color-green, $amount: 7);
+}
+
+#game-savannah .answer_wrong{
+  padding: 25px;
+  background-color: lighten($color: $color-red, $amount: 7);
 }
