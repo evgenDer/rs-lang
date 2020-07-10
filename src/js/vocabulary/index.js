@@ -9,6 +9,7 @@ import ControlBar from './ControlBar';
 import Loader from './Loader';
 import { getConfiguration } from '../configuration';
 import * as configurationService from '../api/settings';
+import dayStat from '../main-page/dayStat';
 
 const main = document.querySelector('.vocabulary__form');
 const cardsWrapper = document.querySelector('.vocabulary_cards-wrapper');
@@ -141,6 +142,8 @@ const callbackForControlBar = {
       learningWordsPage: prevConfiguration.learning.learningWordsPage,
     };
     await configurationService.upserSettings({ optional: prevConfiguration });
+    dayStat.updateStat();
+    dayStat.saveStat();
     window.localStorage.setItem('dayLearningDate', '-1');
     window.location.href = 'learningWords.html';
   },

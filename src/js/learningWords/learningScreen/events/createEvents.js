@@ -41,7 +41,7 @@ export default function createEvents(learningScreenElement) {
       try {
         learningScreenElement.querySelector('.translateOptionsButton').classList.remove('active');
         learningScreenElement.querySelector('[slot=translateOptions]').classList.remove('opened');
-      } catch {}
+      } catch { }
     }
 
     if (item != null) {
@@ -79,7 +79,7 @@ export default function createEvents(learningScreenElement) {
       learningScreenElement.querySelector('.translateOptionsButton').classList.remove('active');
       learningScreenElement.querySelector('[slot=translateOptions]').classList.remove('opened');
     }
-    if (event.key === 'Enter' && learningScreenElement.querySelector('learning-results') === null) {
+    if (event.key === 'Enter' && document.querySelector('learning-results') === null) {
       rightClick(learningScreenElement);
     }
   });

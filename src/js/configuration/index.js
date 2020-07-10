@@ -3,6 +3,7 @@ import { DEFAULT_CONFIGURATION } from '../constants/default-settings';
 
 import * as page from './page';
 import * as configurationService from '../api/settings';
+import dayStat from '../main-page/dayStat';
 
 export async function getConfiguration() {
   const configuration = await configurationService.getSettings();
@@ -96,6 +97,8 @@ async function saveConfiguration() {
     prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
     prevConfiguration.maxCardsWithWordsPerDay !== userConfiguration.maxCardsWithWordsPerDay
   ) {
+    dayStat.updateStat();
+    dayStat.saveStat();
     window.localStorage.setItem('dayLearningDate', '-1');
   }
 

@@ -12,6 +12,7 @@ import createEvents from './events/createEvents';
 import whatsNext from './events/eventFunctions/whatsNext';
 import getDayLocalState from './functions/getDayLocalState';
 import { getConfiguration } from '../../configuration';
+import dayStat from '../../main-page/dayStat';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
