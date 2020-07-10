@@ -26,6 +26,7 @@ export default class PromoPage extends HTMLElement {
       <li slot='property'>Прогресс изучения определяет интервал повторения</li>
       <li slot='property'>Подробнее об алгоритме начисления баллов</li>
       <div slot='chart'><canvas></canvas></div>
+      <img slot='gitHubWay' src='assets/img/icons/promo/gitHub.svg'>
     `,
     );
   }

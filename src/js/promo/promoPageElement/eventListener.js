@@ -16,6 +16,8 @@ export default function initEventListener(promoPage) {
           element.classList.add('active');
         }
       });
+    } else if (event.target.closest('img[slot=gitHubWay]') != null) {
+      window.location.href = 'https://github.com/evgenDer/rs-lang';
     }
   });
 
