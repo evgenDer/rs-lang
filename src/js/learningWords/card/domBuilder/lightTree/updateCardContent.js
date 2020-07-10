@@ -14,6 +14,8 @@ export default function updateCardContent(cardElement) {
   const ruMeaning = cardElement.querySelector('[slot=RUMeaning]');
   const openButton = cardElement.querySelector('[slot=openWord]');
   const repeatButton = cardElement.querySelector('[slot=repeatWord]');
+  const transcription = cardElement.querySelector('[slot=transcription]');
+  const wordAudioButton = cardElement.querySelector('[slot=pronunciation]');
 
   //Обновляем строку ввода
   learningline.setState('isDone', cardElement.state.isDone);
@@ -75,7 +77,7 @@ export default function updateCardContent(cardElement) {
   updateEnableAudioHelper(cardElement);
   updateStopAudioHelper(cardElement);
 
-  //Обновляем кнопки доп.опций
+  //Обновляем кнопки доп.опций и транскрипцию
 
   if (cardElement.state.isDone) {
     if (openButton !== null) {
@@ -102,6 +104,10 @@ export default function updateCardContent(cardElement) {
         repeatButton.innerHTML = 'Придется повторить';
       }
     }
+    if (transcription !== null) {
+      transcription.classList.add('opened');
+    }
+    wordAudioButton.classList.add('opened');
   }
 
   //Обновляем статусБар

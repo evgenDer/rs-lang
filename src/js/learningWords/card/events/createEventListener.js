@@ -7,9 +7,10 @@ import saveSettingsFromLearningWords from '../../learningScreen/functions/saveSe
 export default function createEventListener(card) {
   card.addEventListener('click', () => {
     if (
-      event.target.closest('[slot=pronunciation]') != null ||
-      event.target.closest('[slot=transcription]') != null
+      event.target.closest('[slot=pronunciation].opened') != null ||
+      event.target.closest('[slot=transcription].opened') != null
     ) {
+      stopAudio(card);
       card.audio.word.play();
     } else if (event.target.closest('.stopAudioButton') != null) {
       stopAudio(card);

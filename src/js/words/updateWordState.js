@@ -70,7 +70,9 @@ function calculateSuccessPoint(word, isgamemode = false, isSuccess = false) {
   };
 
   if (currentMark <= 4) {
-    if (currentMark < 1) {
+    if (currentMark < 1 && isSuccess) {
+      mark = 3;
+    } else {
       mark = 1;
     }
 

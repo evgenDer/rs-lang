@@ -3,7 +3,13 @@ import { getAllUserWords } from '../../../api/userWords';
 import { calculateRepeatTiming } from '../../../words/updateWordState';
 import saveSettingsFromLearningWords from './saveSettings';
 
-export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group = 0, page = 0) {
+export async function createNewWordsPack(
+  dayNewWordsCount,
+  dayWordsCount,
+  group = 0,
+  page = 0,
+  isHardMode = false,
+) {
   let allUserWords = await getAllUserWords();
   let allUpdatedUserWords = [];
   let dayNewWordsPack = [];
@@ -14,6 +20,9 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
   }
 
   allUpdatedUserWords = allUserWords.filter((element) => element.optional.mode !== 'deleted');
+  if (isHardMode) {
+    allUpdatedUserWords = allUserWords.filter((element) => element.difficulty === 'hard');
+  }
   allUpdatedUserWords = sortLearnedWords(allUpdatedUserWords);
   allUpdatedUserWords = sortLearnedWordsByNeededToRepeat(allUpdatedUserWords);
 
@@ -30,34 +39,36 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
     allUpdatedUserWords[i] = updatedWord;
   }
 
-  if (allUpdatedUserWords.length < dayWordsCount) {
-    newWordsNeededCount += dayWordsCount - allUpdatedUserWords.length;
+  if (!isHardMode) {
+    if (allUpdatedUserWords.length < dayWordsCount) {
+      newWordsNeededCount += dayWordsCount - allUpdatedUserWords.length;
+    }
+
+    dayNewWordsPack = await updateNewWordsPack(
+      dayNewWordsPack,
+      allUserWords,
+      newWordsNeededCount,
+      group,
+      page,
+    );
+
+    dayNewWordsPack.map((element) =>
+      Object.assign(element, {
+        isDone: false,
+        isFirstAnswer: true,
+        difficulty: 'normal', // easy, normal, hard
+        optional: {
+          mode: 'newWord', //deleted,null
+          lastUpdateDate: Date.now(),
+          referenceCount: 0,
+          errorCount: 0,
+          repeatCount: 0,
+          rightSequence: 0,
+          successPoint: 0, // [0,5]
+        },
+      }),
+    );
   }
-
-  dayNewWordsPack = await updateNewWordsPack(
-    dayNewWordsPack,
-    allUserWords,
-    newWordsNeededCount,
-    group,
-    page,
-  );
-
-  dayNewWordsPack.map((element) =>
-    Object.assign(element, {
-      isDone: false,
-      isFirstAnswer: true,
-      difficulty: 'normal', // easy, normal, hard
-      optional: {
-        mode: 'newWord', //deleted,null
-        lastUpdateDate: Date.now(),
-        referenceCount: 0,
-        errorCount: 0,
-        repeatCount: 0,
-        rightSequence: 0,
-        successPoint: 0, // [0,5]
-      },
-    }),
-  );
 
   const wordArrs = {
     newWords: dayNewWordsPack,

@@ -47,6 +47,7 @@ export default class LearningScreenElement extends HTMLElement {
       wordCount: 6,
       difficultyLevel: 0,
       learning: {
+        isHardMode: false,
         groupNumber: 0,
         learningWordsPage: 0,
       },

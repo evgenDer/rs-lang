@@ -58,10 +58,12 @@ const cardShadowTreeHTML = `
   #difficultyButtonsBlock ::slotted(div.hovered:hover) {cursor: pointer; text-decoration: underline; filter: opacity(100%);}
   #optionButtonsBlock {min-width: 30%;}
   
-  #readItBlock ::slotted(span) {padding-right: 5px; filter: opacity(70%) ; transition: filter 0.5s;}
-  #readItBlock ::slotted(img) {filter: brightness(0) opacity(40%) ; transition: filter 0.5s; color:red}
-  #readItBlock:hover ::slotted(span),
-  #readItBlock:hover ::slotted(img){ filter: opacity(90%) ; cursor: pointer;}
+  #readItBlock ::slotted(span) {padding-right: 5px; filter: opacity(0) ; transition: filter 0.5s;}
+  #readItBlock ::slotted(img) {filter: opacity(0) ; transition: filter 0.5s; color:red}
+  #readItBlock ::slotted(span.opened) {filter: opacity(0.7);}
+  #readItBlock ::slotted(img.opened) {filter: brightness(0) opacity(0.4);}
+  #readItBlock:hover ::slotted(span.opened),
+  #readItBlock:hover ::slotted(img.opened){ filter: opacity(90%) ; cursor: pointer;}
   
   #translateOptions {width: 100%; position: absolute; top:-55px; left:0px; justify-content: center; overflow: hidden;}
   ::slotted([slot=translateOptions]) {width: 100% ; max-height: 150px; position: relative; top: -150px; z-index: 15; background: white;
