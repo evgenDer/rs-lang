@@ -1,7 +1,7 @@
 import saveSettingsFromLearningWords from '../../learningScreen/functions/saveSettings';
 import dayStat from '../../../main-page/dayStat';
 import initStatistics from '../../../statistics/index';
-import { updateLearningStatisticsValues } from '../../../statistics/utils/statistics-utils';
+import statistics from '../../../statistics/components/statistics'
 
 /* eslint-disable no-restricted-globals */
 export default function createEventListener(card) {
@@ -14,8 +14,9 @@ export default function createEventListener(card) {
       window.localStorage.setItem('dayLearningDate', '-1');
       window.location.href = 'learningWords.html';
     } else if (event.target.closest('div[slot=buttonRight') != null) {
-      await initStatistics();
-      await updateLearningStatisticsValues(5, 3, 1);
+      const learningScreen = document.querySelector('learning-screen');
+      learningScreen.stat.updateLearningStatistics(5, 3, 1);
+      window.location.href = 'statistics.html';
     }
   });
 }

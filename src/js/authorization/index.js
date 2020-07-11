@@ -1,5 +1,5 @@
 import { ERROR_MSG, PASSWORD } from './constants';
-import { setDateToken, setUserPassword, setUserEmail } from '../utils/storage';
+import { setUserId, setToken, setRefreshToken } from '../utils/storage';
 import { loginUser, createUser } from '../api/authorization';
 
 function show() {
@@ -28,10 +28,10 @@ async function logIn(event) {
     const passwordInput = document.querySelector('input[name="password"]');
     const userEmail = emailInput.value;
     const userPassword = passwordInput.value;
-    await loginUser( userEmail, userPassword );
-    setUserPassword(userPassword);
-    setUserEmail(userEmail);
-    setDateToken();
+    const content = await loginUser( userEmail, userPassword );
+    setUserId(content);
+    setToken(content);
+    setRefreshToken(content);
     window.history.pushState(null, null, 'main.html');
     window.location.replace('main.html');
   } catch (error) {

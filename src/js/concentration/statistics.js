@@ -1,17 +1,14 @@
-import {
-  removeChild
-} from '../helpers/html-helper';
-import {
-  GAME_DATA_URL
-} from '../games/constants';
-import {
-  AUDIO_B64
-} from '../utils/constants';
+import { removeChild } from '../helpers/html-helper';
+import { GAME_DATA_URL } from '../games/constants';
+import { AUDIO_B64 } from '../utils/constants';
 import playAudio from '../helpers/audio';
+import { Statistics } from '../statistics/components/statistics';
 import * as downloadHelper from '../download/download';
 
 
-function createStatisticSentence(audioSrc, textExample, translate, b64 = false) {
+const stat = new Statistics('Концентрация');
+
+function createStatisticSentence(audioSrc, textExample, translate, b64 = false){
   const helper = b64 ? AUDIO_B64 : GAME_DATA_URL;
   const newElement = `<div class="line">
     <button class = "btn_pronoucing"><audio src = ${helper}${audioSrc}></button>
@@ -21,13 +18,8 @@ function createStatisticSentence(audioSrc, textExample, translate, b64 = false) 
   return newElement;
 }
 
-const errorFields = [
-  "Неправильно отвеченные слова"
-];
-
-const successFields = [
-  "Правильно отвеченные слова"
-];
+const errorFields = ["Неправильно отвеченные слова"];
+const successFields = ["Правильно отвеченные слова"];
 
 export function addStatisticsRound(dataPageRound, b64 = false) {
   let correct = 0;
@@ -35,7 +27,7 @@ export function addStatisticsRound(dataPageRound, b64 = false) {
 
   const errorField = document.querySelector('.modal-round__error');
   removeChild(errorField);
-
+  
   const correctField = document.querySelector('.modal-round__correct');
   removeChild(correctField);
 
@@ -66,12 +58,41 @@ export function addStatisticsRound(dataPageRound, b64 = false) {
   });
 }
 
-export function createStaticticsRound() {
+async function getCompareHTMLElement(points){
+  const maxScore = await stat.getUserMaxScore();
+  let innerTextResult = '';
+  let innerTextComare = '';
+  let resPer = 0;
+  if (maxScore < points) {
+    innerTextResult = 'Это ваш лучший результат!';
+    resPer = 1 - (maxScore / points);
+    innerTextComare = `Он на<span>${Math.round(resPer * 100)}%</span>лучше максимального`;
+  } else if (maxScore > points) {
+    innerTextResult = 'Неплохой результат';
+    resPer = (points === 0) ? 1 : 1 - points / maxScore;
+    innerTextComare = `Он на<span>${Math.round(resPer * 100)}%</span>отстаёт от максимального`;
+  } else {
+    innerTextResult = 'Игра прошла успешно!';
+    innerTextComare = `Вы достигли своего максимального результата`;
+  }
+  const compareElement = `
+    <div class = "modal__results">
+      <h3>${innerTextResult}</h3>
+      <h4>${innerTextComare}</h4>
+    </div>
+  `;
+  return compareElement;
+}
+
+export async function createStaticticsRound(points) {
+  const compareHTMLElement = await getCompareHTMLElement(points);
   const statisticElement = `
   <div id="modal-close-default" uk-modal class='modal audiochallenge__modal-game-stat'>
     <div class="uk-modal-dialog modal-round" bg-close="false" esc-close="false">
       <div class="uk-modal-header">
         <h2>Результаты</h2>
+        <h3>Вы набрали<span class="points">${points}</span>баллов</h3>
+        ${compareHTMLElement}
       </div>
       <div uk-overflow-auto class="uk-modal-body">
         <div class="modal-round__correct">
@@ -87,7 +108,7 @@ export function createStaticticsRound() {
       </div>
     </div>
   </div>`;
-
+  
   document.body.insertAdjacentHTML('beforeend', statisticElement);
 
   document.getElementById('modal-btn-close').addEventListener('click', () => {
@@ -98,7 +119,7 @@ export function createStaticticsRound() {
   document.getElementById('modal-btn-report').addEventListener('click', () => {
     errorFields.push('\r\n\r\n');
 
-    const text = `Отчет по игре "Аудиовызов"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
-    downloadHelper.download(`audiochallenge-report_${new Date().toISOString()}.txt`, text);
+    const text = `Отчет по игре "Концентрация"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
+    downloadHelper.download(`concentration-report_${new Date().toISOString()}.txt`, text);
   });
 }

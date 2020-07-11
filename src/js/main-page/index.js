@@ -19,7 +19,7 @@ const bestStreak = document.getElementById('best-streak');
 
 export async function updPageContent() {
   await dayStat.init()
-  updateLanguageStatBar(dayStat.state.learnedWords, dayStat.state.wordCount);
+  updateLanguageStatBar(dayStat.state.wordCount, 3600);
   const dayLearnedWords = dayStat.state.dayLearnedWords > dayStat.state.dayWordPlanCount
     ? dayStat.state.dayWordPlanCount : dayStat.state.dayLearnedWords;
   updateTodayPlanBar(dayLearnedWords, dayStat.state.dayWordPlanCount);

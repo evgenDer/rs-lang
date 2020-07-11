@@ -13,6 +13,7 @@ import whatsNext from './events/eventFunctions/whatsNext';
 import getDayLocalState from './functions/getDayLocalState';
 import { getConfiguration } from '../../configuration';
 import dayStat from '../../main-page/dayStat';
+import statistics, { Statistics } from '../../statistics/components/statistics';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
@@ -65,6 +66,8 @@ export default class LearningScreenElement extends HTMLElement {
       longestRightAnswerSeries: 0,
       rightAnswers: 0,
     };
+
+    this.stat = null;
   }
 
   connectedCallback() {
@@ -105,8 +108,11 @@ export default class LearningScreenElement extends HTMLElement {
       updateDifficultyButtons(this);
 
       createEvents(this);
+      this.stat = new Statistics('Learning');
+
     } else {
       createResults(this);
+      this.stat = new Statistics('Learning');
     }
   }
 

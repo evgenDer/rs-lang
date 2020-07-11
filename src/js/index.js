@@ -3,15 +3,11 @@ import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
 import initStatistics from './statistics/index';
-import initVocabularyPage from './vocabulary/index';
+import updPageContent from './main-page/dayStat'
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
-import './learningWords/learningWordsPage.js';
 import './learningWords/learningWordsPage';
 import { getTokenTime } from './helpers/tokenHeleper';
-import addBtnStartEventListener from './determinationLevel/index';
-import { updPageContent } from './main-page';
-
-
+import './promo/promoPageCreating.js';
 
 window.onload = () => {
   addHeaderToPage();
