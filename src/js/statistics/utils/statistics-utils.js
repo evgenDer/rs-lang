@@ -66,12 +66,17 @@ export const getCurrentStatistics = (globalStatistics, gameName, dateTime) => {
   return currentStatistics;
 }
 
-export const updateLearningStatisticsValues = (statisticsToUpdate, learningWordsCount, totalCorrect, totalError) => {
+export const updateLearningStatisticsValues = (statisticsToUpdate, isCorrect) => {
   const updatedStatistics = statisticsToUpdate;
 
-  updatedStatistics.tc = totalCorrect;
-  updatedStatistics.te = totalError;
-  updatedStatistics.lwc = learningWordsCount;
+  if(isCorrect){
+    updatedStatistics.tc += 1;
+  }
+  else{
+    updatedStatistics.te += 1;
+  }
+
+  updatedStatistics.lwc += 1;
 
   return updatedStatistics;
 }
