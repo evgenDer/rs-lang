@@ -14,8 +14,7 @@ export default function createEventListener(card) {
       window.localStorage.setItem('dayLearningDate', '-1');
       window.location.href = 'learningWords.html';
     } else if (event.target.closest('div[slot=buttonRight') != null) {
-      const learningScreen = document.querySelector('learning-screen');
-      learningScreen.stat.updateLearningStatistics(5, 3, 1);
+
       window.location.href = 'statistics.html';
     }
   });
