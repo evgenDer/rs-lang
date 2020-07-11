@@ -20,6 +20,8 @@ export default class dayLearningResults extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = dayResultsShadowTreeHTML;
     createEventListener(this);
+    const learningScreen = document.querySelector('learning-screen');
+    learningScreen.stat.updateLearningStatistics(5, 3, 1);
   }
 
   setState(propName, newPropState) {
