@@ -13,7 +13,7 @@ function isValidToken() {
 }
 
 function isNewUser() {
-return !(isValidToken() && localStorage.getItem('userId') !== null);
+  return !(isValidToken() && localStorage.getItem('userId') !== null);
 }
 
 export { isValidToken, isNewUser };
