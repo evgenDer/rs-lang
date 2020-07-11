@@ -6,7 +6,7 @@ import { createElementObj } from '../../utils/create';
 import { shuffleArray } from '../../helpers/math-hepler';
 import { ERR_MSG } from '../../games/constants';
 
-export default class GameBoard {
+export default class CardsBoard {
   constructor() {
     this.currentCards = [];
     this.mixedСards = [];

@@ -1,18 +1,6 @@
 import { createElementObj } from '../../utils/create';
 import Dropdoun from './Dropdown';
-
-const LEVELS_NUMBER = 6;
-const ROUNDS_NUMBER = 60;
-const MODE_INFO = {
-  studied: {
-  textMessage: 'В игре будут задей- <br> ствованы только <br> изученные слова',
-  textBtn:'Слова: Изученные',
-},
-  all: {
-    textMessage:'В игре будут задей- <br> ствованы слова из <br> всей коллекции',
-    textBtn:'Слова: все',
-  },
-}
+import { LEVELS_NUMBER, ROUNDS_NUMBER, MODE_INFO } from '../constants';
 
 export default class StatusBar {
   constructor() {
@@ -52,8 +40,8 @@ export default class StatusBar {
       ],
     });
 
-    const iconMicrophone = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: microphone']] });
-    this.btnMicrophone = createElementObj({ tagName: 'button', classNames: 'btn btn_microphone disabled', children: [iconMicrophone] });
+    this.microphoneImg = createElementObj({ tagName: 'img', classNames: 'btn_microphone-img', attrs: [['src', './assets/img/icons/microphoneOff.svg'], ['alt', 'microphone']] });
+    this.btnMicrophone = createElementObj({ tagName: 'button', classNames: 'btn btn_microphone disabled', children: [this.microphoneImg] });
     const iconRestart = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: refresh']] });
     this.btnRestart = createElementObj({ tagName: 'button', classNames: 'btn btn_restart', children: [iconRestart] });
     const iconStatistic = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: file-text']] });
@@ -80,8 +68,14 @@ export default class StatusBar {
     }
   }
 
-  addStar() {
-    const star = createElementObj({ tagName: 'img', classNames: 'star uk-animation-scale-down', attrs: [['src', './assets/img/icons/star.svg']] });
+  addStar(correctAnswer) {
+    let imgSrc = '';
+    if (!correctAnswer) {
+      imgSrc = './assets/img/icons/star-error.svg';
+    } else {
+      imgSrc = './assets/img/icons/star.svg';
+    }
+    const star = createElementObj({ tagName: 'img', classNames: 'star uk-animation-scale-down', attrs: [['src', imgSrc]] });
     this.starsContainer.append(star);
   }
 
@@ -90,8 +84,8 @@ export default class StatusBar {
   }
 
   disableСhangeModeBtn() {
-    this.modeMessageContainer.setAttribute('uk-dropdown','mode: click');
-    this.modeBtn.setAttribute('disabled','true');
+    this.modeMessageContainer.setAttribute('uk-dropdown', 'mode: click');
+    this.modeBtn.setAttribute('disabled', 'true');
     this.modeBtn.classList.add('disabled');
   }
 
@@ -133,7 +127,7 @@ export default class StatusBar {
         this.modeMessage.innerHTML = MODE_INFO.studied.textMessage;
         this.levelsDropdoun.hide();
         this.roundsDropdoun.hide();
-        callbackFunctions.onChangeLevel({studied: true});
+        callbackFunctions.onChangeLevel({ studied: true });
       }
       this.isRepeatLearnedWords = !this.isRepeatLearnedWords;
     });
@@ -144,7 +138,7 @@ export default class StatusBar {
       } else {
         this.btnMicrophone.classList.remove('pushed');
       }
-      this.isMicrophoneOn  = !this.isMicrophoneOn;
+      this.isMicrophoneOn = !this.isMicrophoneOn;
       callbackFunctions.onClickMicrophoneToggle(this.isMicrophoneOn);
     });
 

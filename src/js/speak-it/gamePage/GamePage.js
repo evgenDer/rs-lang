@@ -1,12 +1,13 @@
 import StatusBar from './StatusBar';
 import Display from './Display';
-import GameBoard from './GameBoard';
+import CardsBoard from './CardsBoard';
 import Microphone from './Microphone';
 import Results from './Results';
+import { MAX_ATTEMTS_COUNT, TYPE_MICROPHONE_MESSAGE } from '../constants';
 import { createElementObj } from '../../utils/create';
 import { getGameStatistics} from '../../utils/storage';
 
-const MAX_ATTEMTS_COUNT = 4;
+
 
 export default class GamePage {
   constructor() {
@@ -16,7 +17,7 @@ export default class GamePage {
   generateGamePage() {
   const localData = getGameStatistics('speakitStatistic');
   this.statusBar = new StatusBar();
-  this.gameBoard = new GameBoard();
+  this.gameBoard = new CardsBoard();
   this.display = new Display();
   this.microphone = new Microphone();
   this.results = new Results();
@@ -54,7 +55,7 @@ export default class GamePage {
       }
       this.gameBoard.updateCards();
     },
-    onClickHome: () => GamePage.goToHomePage(),
+    onClickReport: () => {},
   }
 
   this.gameContainer = createElementObj({ tagName: 'div', classNames: 'game-container hidden', children: [
@@ -104,13 +105,18 @@ export default class GamePage {
     this.isGameMode = false;
   }
 
-  checkAvailableWords() {
+  checkAvailableWords(timeOut) {
     this.gameBoard.increaseCurrentWordIndex();
-    if (this.gameBoard.isAllWordsPass()) {
-      this.updateDisplay();
-    } else {
-      this.showResults();
-    }
+    setTimeout(() => {
+      if (this.gameBoard.isAllWordsPass()) {
+        this.updateDisplay();
+        this.microphone.clearInput();
+        this.microphone.removeMessage();
+      } else {
+        this.showResults();
+      }
+    }, timeOut)
+
   }
 
   updateDisplay() {
@@ -121,13 +127,16 @@ export default class GamePage {
   turnOnMicrophone() {
     this.microphone.turnOn((word) => {
       if (this.gameBoard.checkAnswers(word)) {
-        this.statusBar.addStar();
-        this.checkAvailableWords();
-        this.microphone.clearInput();
+        this.microphone.addMessage(TYPE_MICROPHONE_MESSAGE.right);
+        this.statusBar.addStar(true);
+        this.checkAvailableWords('2000');
       } else {
+        this.microphone.addMessage(TYPE_MICROPHONE_MESSAGE.error);
         this.attemptsСount += 1;
         if (this.attemptsСount >= MAX_ATTEMTS_COUNT) {
-          this.checkAvailableWords();
+          this.microphone.addMessage(TYPE_MICROPHONE_MESSAGE.nextWord);
+          this.statusBar.addStar();
+          this.checkAvailableWords('2500');
         }
       }
     });
@@ -155,7 +164,8 @@ export default class GamePage {
         this.updateDisplay();
         this.turnOnMicrophone();
       } else {
-        this.checkAvailableWords();
+        this.statusBar.addStar();
+        this.checkAvailableWords('800');
       }
 
     });

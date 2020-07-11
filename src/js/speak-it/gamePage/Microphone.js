@@ -1,4 +1,5 @@
 import { createElementObj } from '../../utils/create';
+import { MICROPHONE_MESSAGE } from '../constants';
 
 export default class Microphone {
   constructor() {
@@ -8,8 +9,9 @@ export default class Microphone {
   generate() {
     this.microphoneImg = createElementObj({ tagName: 'img', classNames: 'input_microphone-img', attrs: [['src', './assets/img/icons/microphone.svg'], ['alt', 'microphone']] });
     this.input = createElementObj({ tagName: 'input', classNames: 'input', attrs: [['type', 'text'], ['disabled', 'true']] });
-    const container = createElementObj({ tagName: 'div', classNames: 'microphone-container', children: [ this.microphoneImg, this.input] });
-    this.microphone= createElementObj({ tagName: 'div', classNames: 'microphone', children: [ container] });
+    const container = createElementObj({ tagName: 'div', classNames: 'microphone-container', children: [this.microphoneImg, this.input] });
+    this.microphoneMessageContainer = createElementObj({ tagName: 'div' });
+    this.microphone = createElementObj({ tagName: 'div', classNames: 'microphone', children: [container, this.microphoneMessageContainer] });
     return this.microphone;
   }
 
@@ -17,12 +19,23 @@ export default class Microphone {
     this.input.value = '';
   }
 
+  addMessage(type) {
+    const microphoneMessage = createElementObj({ tagName: 'p', classNames: 'microphone-message uk-animation-slide-top-small', textContent: MICROPHONE_MESSAGE[type].text });
+    microphoneMessage.style.backgroundColor = MICROPHONE_MESSAGE[type].color;
+    this.microphoneMessageContainer.innerHTML = '';
+    this.microphoneMessageContainer.append(microphoneMessage);
+  }
+
+  removeMessage() {
+    this.microphoneMessageContainer.innerHTML = '';
+  }
+
   turnOnPause() {
     this.speechRecognition.stop();
     this.speechRecognition.onend = null;
     this.input.placeholder = 'Микрофон отключен';
     this.input.value = '';
-    this.microphoneImg.src ='./assets/img/icons/microphoneOff.svg'
+    this.microphoneImg.src = './assets/img/icons/microphoneOff.svg'
     this.microphoneImg.classList.add('input_microphone-img_off');
   }
 
@@ -34,7 +47,7 @@ export default class Microphone {
   }
 
   turnOn(callback) {
-    this.microphoneImg.src ='./assets/img/icons/microphone.svg'
+    this.microphoneImg.src = './assets/img/icons/microphone.svg'
     this.microphoneImg.classList.remove('input_microphone-img_off');
     this.input.value = '';
     this.input.placeholder = 'Говорите';

@@ -1,4 +1,3 @@
-
 .speak-it_main {
   width: 100vw;
   height: 100vh;
@@ -47,7 +46,7 @@
 
 .intro__title {
   margin: 40px auto;
-  opacity: .95;
+  opacity: 0.95;
   text-transform: uppercase;
   color: #86d677;
   font-size: 3rem;
@@ -55,11 +54,11 @@
 }
 
 .intro__info {
-    margin: 0 auto 30px;
-    font-size: 1.5rem;
-    line-height: 1.9rem;
-    color: $color-primary;
-    opacity: .9;
+  margin: 0 auto 30px;
+  font-size: 1.5rem;
+  line-height: 1.9rem;
+  color: $color-primary;
+  opacity: 0.9;
 }
 
 .btn {
@@ -89,7 +88,7 @@
   opacity: 1;
 }
 
-.game-container{
+.game-container {
   max-width: 1200px;
   margin: 0 auto;
   height: 100%;
@@ -115,14 +114,14 @@
   background-color: $color-primary;
   color: $color-light-blue;
   border: 1px solid;
-  opacity: .9;
+  opacity: 0.9;
   transition: all 0.4s;
-  font-size: .98rem;
+  font-size: 0.98rem;
 
   &:disabled {
     background-color: $color-primary;
     color: $color-light-blue;
-    opacity: .8;
+    opacity: 0.8;
     transition: all 0.6s;
   }
 }
@@ -131,11 +130,10 @@
   color: $color-primary;
   background: $color-light-blue;
   border: 1px solid $color-primary;
-  opacity: .8;
+  opacity: 0.8;
   cursor: pointer;
   transition: all 0.4s;
 }
-
 
 .speakit_game-control__btn-mode {
   color: $color-green;
@@ -144,7 +142,7 @@
   &:disabled {
     background-color: $color-primary;
     color: $color-green;
-    opacity: .8;
+    opacity: 0.8;
     transition: all 0.6s;
   }
 }
@@ -153,7 +151,7 @@
   color: $color-primary;
   background: $color-green;
   border: 1px solid $color-primary;
-  opacity: .8;
+  opacity: 0.8;
   cursor: pointer;
   transition: all 0.4s;
 }
@@ -226,21 +224,21 @@
   color: $color-primary;
   background: $color-red;
   border: 1px solid $color-primary;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .btn_statistic {
   padding: 5px 18px;
-  color: $color-violet;;
+  color: $color-violet;
   background: $color-primary;
-  border: 1px solid $color-violet;;
+  border: 1px solid $color-violet;
 }
 
 .btn_statistic:hover {
-  color: $color-primary;;
+  color: $color-primary;
   background: $color-violet;
   border: 1px solid $color-primary;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .btn_exit {
@@ -254,29 +252,44 @@
   color: $color-primary;
   background: $color-green;
   border: 1px solid $color-primary;
-  opacity: .7;
+  opacity: 0.7;
   animation: ani9 0.4s ease-in-out infinite alternate;
 }
 
 .btn_microphone {
   padding: 5px 18px;
-  color: $color-primary;
-  background: $color-light-blue;
-  border: 1px solid $color-primary;
-  opacity: .8;
-}
-
-.btn_microphone.disabled {
-  background-color: transparent;
-  color: rgb(171, 172, 173);
-  border: 1px solid rgb(171, 172, 173);
-  cursor: auto;
-}
-
-.btn_microphone.pushed {
   color: $color-light-blue;
   background: $color-primary;
   border: 1px solid $color-light-blue;
+}
+
+.btn_microphone-img {
+  width: 21px;
+  height: 21px;
+  filter: invert(85%) sepia(75%) saturate(5782%) hue-rotate(147deg) brightness(88%) contrast(87%);
+  transition: all 0.5s;
+}
+
+.btn_microphone.disabled {
+  color: rgb(171, 172, 173);
+  border: 1px solid #abacad;
+  opacity: .8;
+  cursor: auto;
+  .btn_microphone-img {
+    filter: invert(78%) sepia(6%) saturate(31%) hue-rotate(169deg) brightness(88%) contrast(90%);
+    transition: all 0.5s;
+  }
+}
+
+.btn_microphone.pushed {
+  color: $color-primary;
+  background: $color-light-blue;
+  border: 1px solid $color-primary;
+  opacity: 0.8;
+  .btn_microphone-img {
+    filter: invert(99%) sepia(6%) saturate(340%) hue-rotate(262deg) brightness(119%) contrast(100%);
+    transition: all 0.5s;
+  }
 }
 
 .stars_container {
@@ -286,6 +299,7 @@
 .star {
   width: 32px;
   margin: 2px;
+  filter: invert(85%) sepia(40%) saturate(3449%) hue-rotate(352deg) brightness(101%) contrast(102%);
 }
 
 .display {
@@ -300,7 +314,7 @@
   height: 260px;
   object-fit: cover;
   border-radius: 10px;
-  border: 2px solid #a5d8f3;;
+  border: 2px solid #a5d8f3;
   box-shadow: 4px 4px 35px #f8f8f8;
   margin-bottom: 10px;
 }
@@ -325,7 +339,6 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #70c3ef;
-  margin: 48px auto;
   width: 380px;
 }
 
@@ -341,20 +354,34 @@
   outline: none;
   padding: 5px 10px;
 
-  &::-webkit-input-placeholder { color: #a8daf5; }
+  &::-webkit-input-placeholder {
+    color: #bde1f5;
+  }
 }
 
 .input_microphone-img {
   width: 35px;
   height: 35px;
   filter: invert(99%) sepia(6%) saturate(340%) hue-rotate(262deg) brightness(119%) contrast(100%);
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .input_microphone-img_off {
   filter: invert(51%) sepia(86%) saturate(2629%) hue-rotate(328deg) brightness(104%) contrast(102%);
-  transition: all .5s;
+  transition: all 0.5s;
 }
+
+.microphone-message {
+  color: $color-background;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 5px 0px;
+  padding: 5px;
+  text-align: center;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
 
 .wrapper_game-board {
   margin: 5px 10px 10px;
@@ -379,7 +406,7 @@
   border: 2px solid rgba(150, 214, 224, 0.6);
   border-radius: 10px;
   background-color: $color-primary;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .card_active {
@@ -397,7 +424,6 @@
 .speaker-icon {
   filter: invert(83%) sepia(11%) saturate(151%) hue-rotate(136deg) brightness(101%) contrast(82%);
   transition: all 0.5s;
-
 }
 
 .card:not(.card_active):not(.result_card):hover {
@@ -468,35 +494,61 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-  background-color: $color-background-additinal;
+  background-color: $color-primary;
   border-radius: 10px;
-  width: 600px;
-  padding: 20px;
   color: $color-secondary;
+  position: absolute;
+  padding: 10px;
+  width: 500px;
+  height: fit-content;
+  max-height: 660px;
+}
+
+.speakit_result_header h2{
+  color: $color-secondary;
+  opacity: .9;
 }
 
 .game-results-answers_wrapper {
-  margin: 10px 20px;
-    max-height: 500px;
-    overflow: auto;
+  margin: 10px;
+  max-height: 425px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $color-primary;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #183d79ef;
+    border-radius: 10px;
+  }
 }
 
 .game-results_title {
   display: flex;
-  margin: 15px 0 10px;
+  align-items: center;
+  justify-content: start;
+  margin: 0px;
 }
 
-.game-results_text {
-  font-size: 1.2rem;
-  margin: 0;
+.game-results_title-answer {
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.9rem;
+  margin: 5px;
+  color: $color-secondary;
 }
 
 .results_answers_count {
   color: $color-primary;
-  padding: 3px 14px;
-  border-radius: 1.5rem;
-  margin-left: 12px;
-  height: 23px;
+  padding: 3px 10px;
+  margin-left: 10px;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 1.3rem;
 }
 
 .correct-answers_count {
@@ -507,10 +559,11 @@
   background-color: $color-red;
 }
 
-.result_control-btn{
+.result_control-btn {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  background-color: $color-primary;
 }
 
 .btn-results {
@@ -520,22 +573,69 @@
 .result_card {
   border: none;
   background: transparent;
-  margin: 0;
-  padding: 0;
-  min-height: 50px;
+  padding: 0px;
+  margin: 9px 0;
+  min-height: 0px;
   & .container-speaker-icon {
-    width: 32px;
-    height: 32px;
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
   }
   & .word-container {
     flex-direction: row;
   }
   & .word {
     color: $color-secondary;
-    font-size: 1.4rem;
+    margin: 0;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.4rem;
   }
   & .translate {
-    font-size: 1.3rem;
+    margin: 0;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.4rem;
+  }
+  & .transcription{
+    margin: 0;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.4rem;
+  }
+}
+
+.results_container-answers-incorrect .speaker-icon {
+  filter: invert(60%) sepia(81%) saturate(4579%) hue-rotate(330deg) brightness(115%) contrast(121%);
+}
+
+.results_container-answers-correct .speaker-icon {
+  filter: invert(64%) sepia(76%) saturate(349%) hue-rotate(64deg) brightness(88%) contrast(89%);
+}
+
+.results_container-answers .speaker-icon:hover {
+  filter: invert(16%) sepia(21%) saturate(3417%) hue-rotate(190deg) brightness(95%) contrast(101%);
+}
+
+#games-speak-it .uk-modal-footer button {
+  height: 47px;
+  width: 183px;
+  padding: 1px 6px;
+  margin: 5px 10px;
+}
+
+.results_exit {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 18px;
+  right: 20px;
+  filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(149deg) brightness(89%) contrast(88%);
+  &:hover{
+    filter: invert(15%) sepia(14%) saturate(7102%) hue-rotate(198deg) brightness(88%) contrast(97%);
   }
 }
 
@@ -547,10 +647,10 @@
 .game-mode_info-wrapper {
   min-width: 483px;
   min-height: 401px;
-  background-color: #f3f7f8d1;;
+  background-color: #f3f7f8d1;
   border: 2px solid #8fceef;
   border-radius: 10px;
-  transition: all .5s;
+  transition: all 0.5s;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -576,9 +676,8 @@
   color: $color-primary;
   background: $color-green;
   border: 1px solid $color-primary;
-  margin-top: 30px;
   font-size: 1.5rem;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .game-mode_btn:hover {
@@ -588,17 +687,21 @@
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s .8s, opacity .8s linear;
+  transition: visibility 0s 0.8s, opacity 0.8s linear;
 }
 
 .invisible {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s .5s, opacity .5s linear;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 .microphone_active {
   display: flex;
+  flex-direction: column;
+  margin: 48px auto 10px;
+  height: 112px;
+  justify-content: flex-start;
 }
 
 .loader-wrapper {
@@ -707,22 +810,22 @@
   transform: scale(0.5);
   animation-name: loaderAnim;
   animation-duration: 1s;
-  animation-timing-function: cubic-bezier(.26,.63,.94,.66);
+  animation-timing-function: cubic-bezier(0.26, 0.63, 0.94, 0.66);
   animation-iteration-count: infinite;
   animation-play-state: running;
 }
 
-.circle-loader-line  .circle-line-2 {
+.circle-loader-line .circle-line-2 {
   animation-delay: 0.25s;
   background-color: $color-green;
 }
 
-.circle-loader-line  .circle-line-3 {
+.circle-loader-line .circle-line-3 {
   animation-delay: 0.5s;
   background-color: $color-red;
 }
 
-.circle-loader-line  .circle-line-4 {
+.circle-loader-line .circle-line-4 {
   animation-delay: 0.75s;
   background-color: $color-violet;
 }
