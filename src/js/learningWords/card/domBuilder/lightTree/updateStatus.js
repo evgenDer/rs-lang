@@ -1,13 +1,4 @@
-import markToText from '../../../../constants/progressBarTooltipTypes';
-
-const markToStyle = {
-  '0': 'white',
-  '1': '#338c99',
-  '2': '#61bd4f',
-  '3': '#0f2c5c',
-  '4': '#c377e0',
-  '5': '#ff934d',
-}
+import {markToText, markToStyle} from '../../../../constants/progressBarTooltipTypes';
 
 export default function initLearning(cardElement) {
   const dots = cardElement.querySelectorAll('div.dot');

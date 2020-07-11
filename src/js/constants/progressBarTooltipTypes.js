@@ -7,4 +7,13 @@ const markToText = {
   '5': 'Полностью владею',
 }
 
-export default markToText;
+const markToStyle = {
+  '0': 'white',
+  '1': '#338c99',
+  '2': '#61bd4f',
+  '3': '#0f2c5c',
+  '4': '#c377e0',
+  '5': '#ff934d',
+}
+
+export {markToText, markToStyle};
