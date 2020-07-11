@@ -71,11 +71,11 @@ export class Statistics {
   async getUserMaxScore() {
     const statistics = await statisticsHelper.getGameStatistics(this.gameName);
 
-    if(!statistics){
+    if (!statistics) {
       return 0;
     }
 
-    const maxScore =  statisticsUtils.getUserMaxScore(statistics);
+    const maxScore = statisticsUtils.getUserMaxScore(statistics);
 
     return maxScore;
   }
@@ -110,7 +110,7 @@ export class Statistics {
 
     const modalElement = statisticsHelper.getModalForGlobalStatistics();
 
-    mainElement.innerHTML += modalElement;
+    mainElement.insertAdjacentHTML("beforeEnd", modalElement);
     UIkit.modal("#global-statistics-modal").show();
 
     const dateTimeData = await statisticsHelper.getDateTimeStatisticsForGame(this.gameName);
