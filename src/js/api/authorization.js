@@ -1,16 +1,11 @@
 import { ERROR_MSG } from '../authorization/constants';
 import { getMistakeResponse, getUser } from '../utils/helpers';
-import {
-  setUserPassword, setUserEmail, setToken, getToken, getUserEmail, getUserPassword, setUserId,
-} from '../utils/storage';
-import { isValidToken } from '../utils/checks';
+import { setUserId, setToken, setRefreshToken } from '../utils/storage';
 import { BACKEND_URL } from '../utils/constants';
 
 async function createUser(event) {
   event.preventDefault();
   const user = getUser();
-  setUserPassword(user);
-  setUserEmail(user);
   const rawResponse = await fetch(`${BACKEND_URL}/users`, {
     method: 'POST',
     headers: {
@@ -41,20 +36,11 @@ async function loginUser(emailUser, passwordUser) {
   const content = await rawResponse.json();
   setUserId(content);
   setToken(content);
+  setRefreshToken(content);
   }
   catch(error){
     window.location.href = 'index.html';
   }
 }
 
-async function getTokenForRequest() {
-  if (!isValidToken()) {
-    const email = getUserEmail();
-    const password = getUserPassword();
-    // eslint-disable-next-line no-unused-vars
-    const infoAboutUser = await loginUser(email, password);
-  }
-  return getToken();
-}
-
-export { createUser, loginUser, getTokenForRequest };
+export { createUser, loginUser  };

@@ -1,10 +1,19 @@
-import { removeChild } from '../helpers/html-helper';
-import { GAME_DATA_URL } from '../games/constants';
-import { AUDIO_B64 } from '../utils/constants';
-import { playAudio } from '../helpers/audio';
+import {
+  removeChild
+} from '../helpers/html-helper';
+import {
+  GAME_DATA_URL, errorFields, successFields,
+} from '../games/constants';
+import {
+  AUDIO_B64
+} from '../utils/constants';
+import playAudio from '../helpers/audio';
+import * as downloadHelper from '../download/download';
 
 
-function createStatisticSentence(audioSrc, textExample, translate, b64 = false){
+
+
+function createStatisticSentence(audioSrc, textExample, translate, b64 = false) {
   const helper = b64 ? AUDIO_B64 : GAME_DATA_URL;
   const newElement = `<div class="line">
     <button class = "btn_pronoucing"><audio src = ${helper}${audioSrc}></button>
@@ -33,11 +42,13 @@ export function addStatisticsRound(dataPageRound, b64 = false) {
       correct += 1;
       correctField.insertAdjacentHTML('beforeend', element);
       correctField.querySelector('span').innerText = `${correct}`;
+      successFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
     }
     if (sentence.isError) {
       error += 1;
       errorField.insertAdjacentHTML('beforeend', element);
       errorField.querySelector('span').innerText = `${error}`;
+      errorFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
     }
   });
 
@@ -77,4 +88,11 @@ export function createStaticticsRound() {
     // eslint-disable-next-line no-undef
     UIkit.modal('.modal-round').hide();
   });
+
+  document.getElementById('modal-btn-report').addEventListener('click', () => {
+    errorFields.push('\r\n\r\n');
+
+    const text = `Отчет по игре "Аудиовызов"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
+    downloadHelper.download(`audiochallenge-report_${new Date().toISOString()}.txt`, text);
+  })
 }

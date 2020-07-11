@@ -1,9 +1,11 @@
 import { removeChild } from '../helpers/html-helper';
 import { DATA_URL, AUDIO_B64 } from '../utils/constants';
 import { playAudio } from '../helpers/audio';
-import { GAME_MODES } from '../games/constants';
+import { GAME_MODES, errorFields, successFields } from '../games/constants';
 import { getGameMode } from '../games/gameModeSwitch';
 import { Statistics } from '../statistics/components/statistics';
+import * as downloadHelper from '../download/download';
+
 
 const stat = new Statistics('Sprint');
 
@@ -33,11 +35,13 @@ export function addStatisticRoundSprint(dataPageRound, points){
       correct += 1;
       correctField.insertAdjacentHTML('beforeend', element);
       correctField.querySelector('span').innerText = `${correct}`;
+      successFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
     }
     if(sentence.isError){
       error+=1;
       errorField.insertAdjacentHTML('beforeend', element);
       errorField.querySelector('span').innerText = `${error}`;
+      errorFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
     }
   });
   stat.updateGameStatistics(correct, error, points);
@@ -102,6 +106,12 @@ export async function createStaticticRound(points){
   </div>
   `;
   document.body.insertAdjacentHTML('beforeend', statisticElement);
+
+document.getElementById('modal-btn-report').addEventListener('click', () => {
+  errorFields.push('\r\n\r\n');
+
+  const text = `Итог по игре "Аудиовызов"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
+  downloadHelper.download(`savannah-report_${new Date().toISOString()}.txt`, text);
+});
+
 }
-
-
