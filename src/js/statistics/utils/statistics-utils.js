@@ -90,6 +90,10 @@ export const updateGameStatisticsValues = (statisticsToUpdate, totalCorrect, tot
 export const getDateTimeStatisticsForChart = (statistics, gameName) => {
   const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
 
+  if(!gamedata || !gamedata.d){
+    return;
+  }
+
   const dataTotal = gamedata.d.map(function map(f) {
     return {
       x: f.dt,
@@ -120,6 +124,10 @@ export const getDateTimeStatisticsForChart = (statistics, gameName) => {
 
 export const getGameDateTimeStatisticsForChart = (statistics, gameName) => {
   const gamedata = statistics.optional.sd.find(f => f.n.toLowerCase() === gameName.toLowerCase());
+
+  if(!gamedata || !gamedata.d){
+    return;
+  }
 
   const dataResult = gamedata.d.map(function map(f) {
     return {
@@ -155,6 +163,10 @@ export const getPercentToTotalStatisticsForChart = (statistics, gameName) => {
   const totalWordsCount = 3600;
 
   let totalLearningWordsCount = 0;
+
+  if(!gamedata || !gamedata.d){
+    return null;
+  }
 
   const data = gamedata.d.map(function map(f) {
     const dateTime = new Date(f.dt);
