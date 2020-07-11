@@ -283,7 +283,7 @@ const promoPageShadowTree = `
       <div class='feedbackCard'>
         <div class='cardContent'>
           <div class='cardText'>
-            <span>Awersome!</span>
+            <span>Awesome!</span>
           </div> 
           <div class='author'>
             <span>Alex</span>
@@ -305,7 +305,7 @@ const promoPageShadowTree = `
     <div class='feedbackCard'>
       <div class='cardContent'>
         <div class='cardText'>
-          <span>Очень глубокопродуманное приложение</span>
+          <span>Очень глубоко продуманное приложение</span>
         </div> 
         <div class='author'>
           <span>AnnieBunny</span>
@@ -344,7 +344,7 @@ const promoPageShadowTree = `
 <footer>
   <div class='content'>
 
-    <span>RSShool 2020</span> 
+    <span>RSSсhool 2020</span> 
     <div id='footerInfo'>
       <span>theBestTeamEver</span>
       <slot name='gitHubWay'></slot>
