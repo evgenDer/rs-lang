@@ -6,6 +6,7 @@ export function renderDateTimeChart(data) {
 
   const chart = new CanvasJS.Chart('chartContainer', {
     animationEnabled: true,
+    zoomEnabled: true,
     title: {
       text: 'Колличество изученных слов'
     },
@@ -92,15 +93,16 @@ export function renderDateTimeChartForGame(data, withGameScore) {
 
   const chart = new CanvasJS.Chart('gameChartContainer', {
     animationEnabled: true,
+    zoomEnabled: true,
     title: {
       text: 'Результаты'
     },
     axisX: {
-      title: 'Время'
+      title: 'Время',
     },
     axisY: {
       title: 'Результат игры',
-      includeZero: false
+      includeZero: true
     },
     toolTip: {
       shared: true
@@ -118,6 +120,7 @@ export function renderPercentToAllChart(data){
 
   const chart = new CanvasJS.Chart('chartPercentContainer', {
     animationEnabled: true,
+    zoomEnabled: true,
     title:{
       text: "Прогресс изученных слов"
     },
