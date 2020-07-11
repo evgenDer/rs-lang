@@ -17,10 +17,8 @@ const correctRepeats = document.getElementById('correct-repeats');
 const newWords = document.getElementById('new-words');
 const bestStreak = document.getElementById('best-streak');
 
-
 export async function updPageContent() {
   await dayStat.init()
-  console.log(dayStat)
   updateLanguageStatBar(dayStat.state.learnedWords, dayStat.state.wordCount);
   const dayLearnedWords = dayStat.state.dayLearnedWords > dayStat.state.dayWordPlanCount
     ? dayStat.state.dayWordPlanCount : dayStat.state.dayLearnedWords;
@@ -33,6 +31,12 @@ export async function updPageContent() {
   updateCorrectRepeats(correctRepeats);
   updateNewWords(dayStat.state.daylearnedNewWords);
   updateBestStreak(dayStat.state.bestSeries);
+  document.addEventListener('click', () => {
+
+    if (event.target.closest('#start-learning-btn') !== null) {
+      window.location.href = 'learningWords.html';
+    }
+  })
 }
 
 
