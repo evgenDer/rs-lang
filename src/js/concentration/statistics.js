@@ -3,6 +3,8 @@ import { GAME_DATA_URL } from '../games/constants';
 import { AUDIO_B64 } from '../utils/constants';
 import playAudio from '../helpers/audio';
 import { Statistics } from '../statistics/components/statistics';
+import * as downloadHelper from '../download/download';
+
 
 const stat = new Statistics('Концентрация');
 
@@ -15,6 +17,9 @@ function createStatisticSentence(audioSrc, textExample, translate, b64 = false){
 
   return newElement;
 }
+
+const errorFields = ["Неправильно отвеченные слова"];
+const successFields = ["Правильно отвеченные слова"];
 
 export function addStatisticsRound(dataPageRound, b64 = false) {
   let correct = 0;
@@ -35,11 +40,13 @@ export function addStatisticsRound(dataPageRound, b64 = false) {
       correct += 1;
       correctField.insertAdjacentHTML('beforeend', element);
       correctField.querySelector('span').innerText = `${correct}`;
+      successFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
     }
     if (sentence.isError) {
       error += 1;
       errorField.insertAdjacentHTML('beforeend', element);
       errorField.querySelector('span').innerText = `${error}`;
+      errorFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
     }
   });
 
@@ -107,5 +114,12 @@ export async function createStaticticsRound(points) {
   document.getElementById('modal-btn-close').addEventListener('click', () => {
     // eslint-disable-next-line no-undef
     UIkit.modal('.modal-round').hide();
+  });
+
+  document.getElementById('modal-btn-report').addEventListener('click', () => {
+    errorFields.push('\r\n\r\n');
+
+    const text = `Отчет по игре "Концентрация"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
+    downloadHelper.download(`concentration-report_${new Date().toISOString()}.txt`, text);
   });
 }

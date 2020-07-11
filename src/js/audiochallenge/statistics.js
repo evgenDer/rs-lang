@@ -27,7 +27,7 @@ const errorFields = [
 
 const successFields = [
   "Правильно отвеченные слова"
-]
+];
 
 export function addStatisticsRound(dataPageRound, b64 = false) {
   let correct = 0;
@@ -100,5 +100,5 @@ export function createStaticticsRound() {
 
     const text = `Отчет по игре "Аудиовызов"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
     downloadHelper.download(`audiochallenge-report_${new Date().toISOString()}.txt`, text);
-  })
+  });
 }
