@@ -1,10 +1,13 @@
-import { LIFETIME_TOKEN } from '../authorization/constants';
-import { getDateToken } from './storage';
+import { getTokenTime } from '../helpers/tokenHeleper';
+import { getToken } from '../../../storage';
 
 function isValidToken() {
-  const currentDateString = new Date().toString();
-  const tokenDateString = getDateToken();
-  return Date.parse(currentDateString) - Date.parse(tokenDateString) <= LIFETIME_TOKEN;
+  const currentTime = Date.parse(new Date()) / 1000;
+  let tokenTime = 0;
+  if(getToken()){
+    tokenTime = getTokenTime();
+  }
+  return currentTime < tokenTime;
 }
 
 function isNewUser() {

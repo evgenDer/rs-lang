@@ -7,7 +7,7 @@ function setToken(infoAboutUser) {
 }
 
 function setRefreshToken(infoAboutUser){
-  localStorage.setItem('refreshToken', infoAboutUser.refreshToken);
+  localStorage.setItem('token', infoAboutUser.refreshToken);
 }
 
 function setDateToken() {
@@ -40,7 +40,7 @@ function getUserId() {
 }
 
 function getRefreshToken(){
-  return localStorage.getItem('refreshToken');
+  return localStorage.refreshToken;
 }
 
 function getDateToken() {
@@ -51,20 +51,7 @@ function removeUserId() {
   localStorage.removeItem('userId');
 }
 
-function getGameStatistics(gameName) {
-  if (localStorage.getItem(gameName) === null) {
-    const data  = { level: 0, page: 0 }
-    localStorage.setItem(gameName, JSON.stringify(data));
-  }
-  return JSON.parse(localStorage.getItem(gameName));
-};
-
-function setGameStatistics(data) {
-  localStorage.setItem('speakitStatistic', JSON.stringify(data));
-};
-
 export {
   setUserId, setToken, setDateToken, setUserPassword, getUserEmail, getUserPassword,
-  setUserEmail, getToken, getUserId, getDateToken, removeUserId,
-  getGameStatistics, setGameStatistics, getRefreshToken, setRefreshToken,
+  setUserEmail, getToken, getUserId, getDateToken, removeUserId, getRefreshToken, setRefreshToken,
 };
