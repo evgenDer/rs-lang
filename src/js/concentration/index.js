@@ -3,6 +3,7 @@ import * as Dropdown from '../games/dropdown';
 import { addGameModeSwitchClickHandler, getGameMode, disableGameModeSwitch, enableGameModeSwitch } from '../games/gameModeSwitch';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { Statistics } from '../statistics/components/statistics';
+import { clearTimer } from '../games/timer';
 
 
 const startBtn = document.querySelector('.description__start');
@@ -40,6 +41,8 @@ function addExitGameBtnClickHandler() {
     exitGame();
   });
   backGameBtn.addEventListener('click', () => {
+    clearTimer();
+
     game.stopGame();
     Dropdown.enableDropdowns();
 

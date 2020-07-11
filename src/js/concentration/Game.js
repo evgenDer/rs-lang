@@ -260,6 +260,9 @@ export class Game {
 
   showStatistics() {
     createStaticticsRound(this.score).then(() => {
+      stopLoading();
+      backGameBtn.click();
+
       addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
       // eslint-disable-next-line no-undef
       UIkit.modal('.modal-round').show();
@@ -281,6 +284,7 @@ export class Game {
   gameOver() {
     clearTimer();
     this.stopGame();
+    startLoading();
 
     this.data.forEach((data) => {
       if (data.isCorrect === undefined || data.isError === undefined) {
@@ -301,7 +305,6 @@ export class Game {
     saveCustomConfiguration('mygame', { level: getCurrentLevel(), round: getCurrentRound() });
     
     this.statistics.updateGameStatistics(this.guessed, this.wordsAmntInRound - this.guessed, this.score);
-    backGameBtn.click();
     this.showStatistics();
   }
 
