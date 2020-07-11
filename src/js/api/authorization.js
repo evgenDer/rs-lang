@@ -1,6 +1,5 @@
 import { ERROR_MSG } from '../authorization/constants';
 import { getMistakeResponse, getUser } from '../utils/helpers';
-import { setUserId, setToken, setRefreshToken } from '../utils/storage';
 import { BACKEND_URL } from '../utils/constants';
 
 async function createUser(event) {
@@ -33,13 +32,13 @@ async function loginUser(emailUser, passwordUser) {
     },
     body: JSON.stringify(user),
   });
-  const content = await rawResponse.json();
-  setUserId(content);
-  setToken(content);
-  setRefreshToken(content);
+    const content = await rawResponse.json();
+    return content;
   }
   catch(error){
+    localStorage.removeItem('userId');
     window.location.href = 'index.html';
+    return error;
   }
 }
 
