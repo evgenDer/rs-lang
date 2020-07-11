@@ -21,7 +21,9 @@ export default class dayLearningResults extends HTMLElement {
     this.shadowRoot.innerHTML = dayResultsShadowTreeHTML;
     createEventListener(this);
     const learningScreen = document.querySelector('learning-screen');
-    learningScreen.stat.updateLearningStatistics(5, 3, 1);
+    if (learningScreen.stat !== null) {
+      learningScreen.stat.updateLearningStatistics(this.state.wordCount, this.state.rightAnswers, this.state.wordCount - this.state.rightAnswers);
+    }
   }
 
   setState(propName, newPropState) {

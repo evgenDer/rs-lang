@@ -112,7 +112,6 @@ export default class LearningScreenElement extends HTMLElement {
 
     } else {
       createResults(this);
-      this.stat = new Statistics('Learning');
     }
 
   }
