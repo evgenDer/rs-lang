@@ -27,7 +27,7 @@ export function fillText(puzzle) {
 
 export function strokePuzzle(puzzle){
   const context = puzzle.getContext('2d');
-  context.lineWidth = 2;
+  context.lineWidth = 1;
   context.strokeStyle = 'white';
   context.stroke();
 }
@@ -117,14 +117,14 @@ export default class Sentence {
 
   renderNewSentence() {
     const arraySentence = this.sentence.split(' ');
-    const minWidth = 3;
+    const minWidth = 4;
     let puzzle;
     arraySentence.forEach((element, index) => {
-      const widthLastElement = this.imageWidth + 1.5 - this.width;
+      const widthLastElement = this.imageWidth + 2.5 - this.width;
       const widthElement = (index !== arraySentence.length - 1)
         ? (this.imageWidth / this.sentence.length) * element.length : widthLastElement;
       const widthForDrawElement = (element.length < minWidth && index !== arraySentence.length - 1)
-        ? widthElement * 2.5 : widthElement;
+        ? (widthElement * 1.5 + 2) : widthElement;
       if (index === 0) puzzle = this.drawPuzzle(Math.ceil(widthForDrawElement), element, false, true);
       else if (index === arraySentence.length - 1) {
         puzzle = this.drawPuzzle(Math.ceil(widthForDrawElement), element, true, false);

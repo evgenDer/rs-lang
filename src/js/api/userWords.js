@@ -56,4 +56,16 @@ async function deleteUserWord(wordId) {
   return result;
 }
 
-export { getAllUserWords, getUserWordById, updateUserWord, deleteUserWord, createUserWord };
+async function getAggregatedWords(){
+  try {
+    const userId = getUserId();
+    const urlRequest = `${BACKEND_URL}/users/${userId}/aggregatedWords?wordsPerPage=10&filter=%7B%22%24or%22%3A%5B%7B%22userWord.optional.mode%22%3A%22needToRepeat%22%7D%2C%7B%22userWord.optional.mode%22%3A%22learning%22%7D%5D%7D`;
+    const content = await sendRequest('GET', urlRequest, true);
+    console.log(content)
+    return content[0];
+  } catch (error) {
+    return error;
+  }
+}
+
+export { getAllUserWords, getUserWordById, updateUserWord, deleteUserWord, createUserWord, getAggregatedWords };

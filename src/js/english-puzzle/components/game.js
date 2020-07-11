@@ -89,8 +89,10 @@ export default class Game {
     this.round.generateNewRoundOnPage(imageSrc);
     } catch(error){
       // eslint-disable-next-line no-undef
+      hideElement(loadPage);
+      showElement(startPage);
       UIkit.notification({
-        message: `<span uk-icon='icon: warning'></span> ${error}`,
+        message: `<span uk-icon='icon: warning'></span> ${ERR_MSG}`,
         status: 'warning',
         pos: 'top-center',
       });
@@ -109,16 +111,16 @@ export default class Game {
         if(statElement !== null){
           statElement.remove();
         }
+        if (this.mode === GAME_MODES.all) {
+          selectNextRound();
+          this.saveConfiguration();
+        }
         removeAllButtons();
         removeChild(document.querySelector('.block-results'));
         hideElement(playPage);
         showElement(startPage);
       }
       if (button.classList.contains('btn_result')) {
-        if (this.mode === GAME_MODES.all) {
-          selectNextRound();
-          this.saveConfiguration();
-        }
         addStatisticRoundEnglishPuzzle(this.round.dataPage);
       }
     });
