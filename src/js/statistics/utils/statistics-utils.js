@@ -171,7 +171,7 @@ export const getPercentToTotalStatisticsForChart = (statistics, gameName) => {
   const data = gamedata.d.map(function map(f) {
     const dateTime = new Date(f.dt);
     totalLearningWordsCount += f.lwc;
-    const percent = ((totalLearningWordsCount / totalWordsCount).toFixed(2)) * 100;
+    const percent = totalLearningWordsCount;
 
     return {
       x: dateTime,
