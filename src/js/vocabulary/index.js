@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import { getSettings } from '../api/settings';
+import { getConfiguration } from '../configuration/index';
 import { getAggregatedUserWords } from '../api/userWords';
+import { upserSettings } from '../api/settings';
 import { createElementObj } from '../utils/create';
 import { calculateRepeatTiming } from '../words/updateWordState';
 import { SORTING_OPTIONS, CATEGORIES_WORDS, CATEGORIES } from '../constants/vocobularConstants';
@@ -33,18 +34,18 @@ function generateDataForCards(UserWordsData, wordCategory) {
       data.repeatTiming = calculateRepeatTiming(wordData.userWord);
     }
 
-    if (configuration.optional.showImageAssociation) {
+    if (configuration.showImageAssociation) {
       data.image = wordData.image;
     }
-    if (configuration.optional.showWordTranscription) {
+    if (configuration.showWordTranscription) {
       data.transcription = wordData.transcription;
     }
-    if (configuration.optional.showSentenceExplanation) {
+    if (configuration.showSentenceExplanation) {
       data.textMeaning = wordData.textMeaning;
       data.textMeaningTranslate = wordData.textMeaningTranslate;
       data.audioMeaning = wordData.audioMeaning;
     }
-    if (configuration.optional.showExplanationExample) {
+    if (configuration.showExplanationExample) {
       data.textExample = wordData.textExample;
       data.textExampleTranslate = wordData.textExampleTranslate;
       data.audioExample = wordData.audioExample;
@@ -125,14 +126,25 @@ async function updateCards(categoryWord, sortName, isSortAscending) {
   }
 }
 
+async function startRepetitionWords() {
+  configuration.learning = {
+    isHardMode: true,
+    groupNumber: configuration.learning.groupNumber,
+    learningWordsPage: configuration.learning.learningWordsPage,
+  };
+  await upserSettings({ optional: configuration });
+  window.localStorage.setItem('dayLearningDate', '-1');
+  window.location.href = 'learningWords.html';
+}
+
 const callbackForControlBar = {
   onClickCategoryWord: (categoryWord, sortName, isSortAscending) => updateCards(categoryWord, sortName, isSortAscending),
   onClickSorting: (sortName, isSortAscending) => sortСards(sortName, isSortAscending),
-  onClickRepetitionWords: () => { },
+  onClickRepetitionWords: async () => startRepetitionWords(),
 }
 
 export default async function initVocabularyPage() {
-  configuration = await getSettings();
+  configuration = await getConfiguration();
   controlBtns = new ControlBar(isSortAscendingDefault, sortNameDefault, categoryDefault);
   main.insertBefore(controlBtns.generate(callbackForControlBar), cardsWrapper);
   updateCards(categoryDefault, sortNameDefault, isSortAscendingDefault);
