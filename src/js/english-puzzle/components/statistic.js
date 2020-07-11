@@ -1,6 +1,8 @@
 import { removeChild } from '../../utils/helpers';
 import { DATA_URL } from '../../utils/constants';
 import { Statistics } from '../../statistics/components/statistics';
+import { errorFields, successFields } from '../../games/constants';
+import * as downloadHelper from '../../download/download';
 
 function createStatisticSentence(audioSrc, textExample){
   const newElement = `<div class="line">
@@ -27,11 +29,13 @@ export function addStatisticRoundEnglishPuzzle(dataPageRound){
       correct+=1;
       correctField.insertAdjacentHTML('beforeend', element);
       correctField.querySelector('span').innerText = `${correct}`;
+      successFields.push(`${sentence.textExample} - ${sentence.word} - ${sentence.wordTranslate}`);
     }
     else{
       error+=1;
       errorField.insertAdjacentHTML('beforeend', element);
       errorField.querySelector('span').innerText = `${error}`;
+      errorFields.push(`${sentence.textExample} - ${sentence.word} - ${sentence.wordTranslate}`);
     }
   });
   statistic.updateGameStatistics(correct, error);
@@ -68,8 +72,13 @@ export function createStaticticRound(imageSrc, infoAboutImage){
       </div>
   </div>
 `;
-
   resultBlock.insertAdjacentHTML('beforeend', statisticElement);
+  document.getElementById('modal-btn-report').addEventListener('click', () => {
+    errorFields.push('\r\n\r\n');
+
+    const text = `Отчет по игре "English-puzzle"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
+    downloadHelper.download(`english-puzzle-report_${new Date().toISOString()}.txt`, text);
+  })
 }
 
 
