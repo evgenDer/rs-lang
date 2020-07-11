@@ -26,13 +26,20 @@ export async function getRefreshTokenFromApi(){
 }
 
 export async function getTokenForRequest() {
-  if (!isValidToken()) {
+  const refreshToken = getRefreshToken();
+
+  if (!refreshToken || !isValidToken(refreshToken)) {
+    console.log('try to get new token');
     // eslint-disable-next-line no-unused-vars
     const infoAboutUser = await getRefreshTokenFromApi();
     const token = getToken();
     if(token === "undefined"){
       window.location.href = 'index.html';
     }
+
+    return token;
   }
+
+  console.log('use old token');
   return getToken();
 }
