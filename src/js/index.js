@@ -9,6 +9,7 @@ import './learningWords/learningWordsPage.js';
 import './learningWords/learningWordsPage';
 import { getTokenTime } from './helpers/tokenHeleper';
 import addBtnStartEventListener from './determinationLevel/index';
+import { updPageContent } from './main-page';
 
 
 
@@ -17,6 +18,7 @@ window.onload = () => {
   const activePage = defineActivePage();
   switch (activePage) {
     case 0:
+      updPageContent();
       // main-page
       break;
     case 1:

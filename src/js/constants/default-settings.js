@@ -15,7 +15,7 @@ export const DEFAULT_CONFIGURATION = {
   deleteWords: true,
   markAsDifficultWord: true,
   possibilityToMarkWord: true,
-  learning: { groupNumber: 0, learningWordsPage: 0 },
+  learning: { isHardMode: false, groupNumber: 0, learningWordsPage: 0 },
   englishPuzzle: '{}',
   savannah: '{}',
   sprint: '{}',

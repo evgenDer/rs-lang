@@ -8,8 +8,6 @@ import { SORTING_OPTIONS, CATEGORIES_WORDS, CATEGORIES } from '../constants/voco
 import Card from './Card';
 import ControlBar from './ControlBar';
 import Loader from './Loader';
-import { getConfiguration } from '../configuration';
-import * as configurationService from '../api/settings';
 import dayStat from '../main-page/dayStat';
 
 const main = document.querySelector('.vocabulary__form');

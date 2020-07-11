@@ -1,4 +1,5 @@
 import { getConfiguration } from "../configuration";
+import { getAllUserWords } from "../api/userWords";
 
 class DayStat {
   constructor() {
@@ -21,8 +22,11 @@ class DayStat {
 
   async getInitValues() {
     const config = await getConfiguration();
-    this.state.dayWordPlanCount = config.maxCardsWithWordsPerDay;
-    this.state.dayNewWordPlanCount = config.maxNewWordsPerDay;
+    const userWords = await getAllUserWords();
+    this.state.wordCount = userWords.length;
+    this.state.learnedWords = userWords.filter((element) => { return element.optional.successPoint >= 3.5 || element.optional.mode === 'deleted' }).length;
+    this.state.dayWordPlanCount = +config.maxCardsWithWordsPerDay;
+    this.state.dayNewWordPlanCount = +config.maxNewWordsPerDay;
   }
 
   async init() {
@@ -57,17 +61,16 @@ class DayStat {
     const dayLearningStat = JSON.parse(window.localStorage.getItem('dayLearningStat'));
     const dayLearningProgressArrs = JSON.parse(window.localStorage.getItem('dayLearningLocalState'));
     const learningDate = window.localStorage.getItem('dayLearningDate');
-    console.log(dayLearningProgressArrs);
     if (+this.currentDate === +learningDate) {
-      const learnedWords = dayLearningProgressArrs.newWordProgressArr.filter((element) => element).length;
-      const learnedNewWords = dayLearningProgressArrs.learningProgressArr.filter((element) => element).length;
+      const learnedNewWords = dayLearningProgressArrs.newWordProgressArr.filter((element) => element).length;
+      const learnedWords = dayLearningProgressArrs.learningProgressArr.filter((element) => element).length;
 
       this.state.dayLearnedWords += learnedWords + learnedNewWords;
       this.state.daylearnedNewWords += learnedNewWords;
       this.state.rightCount += dayLearningStat.rightAnswers;
       this.state.errorCount += learnedWords + learnedNewWords - dayLearningStat.rightAnswers;
-      if (dayLearningStat.bestSeries > this.state.bestSeries) {
-        this.state.bestSeries = dayLearningStat.bestSeries
+      if (dayLearningStat.longestRightAnswerSeries > this.state.bestSeries) {
+        this.state.bestSeries = dayLearningStat.longestRightAnswerSeries;
       }
     }
   }

@@ -8,7 +8,7 @@ const markToText = {
 }
 
 const markToStyle = {
-  '0': 'white',
+  '0': '#e5e5e5',
   '1': '#338c99',
   '2': '#61bd4f',
   '3': '#0f2c5c',
@@ -16,4 +16,4 @@ const markToStyle = {
   '5': '#ff934d',
 }
 
-export {markToText, markToStyle};
+export { markToText, markToStyle };
