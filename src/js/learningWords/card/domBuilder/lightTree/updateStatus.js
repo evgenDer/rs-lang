@@ -5,7 +5,7 @@ const markToStyle = {
   '3': '#0f2c5c',
   '4': '#c377e0',
   '5': '#ff934d',
-}
+};
 const markToText = {
   '0': 'Новое слово',
   '1': 'Начинаем изучать',
@@ -13,7 +13,7 @@ const markToText = {
   '3': 'Изучаемое слово',
   '4': 'Изученное слово',
   '5': 'Полностью владею',
-}
+};
 
 export default function initLearning(cardElement) {
   const dots = cardElement.querySelectorAll('div.dot');
@@ -21,12 +21,13 @@ export default function initLearning(cardElement) {
   const mark = Math.floor(cardElement.state.optional.successPoint);
   const currentColor = markToStyle[`${mark}`];
   dots.forEach((element, index) => {
-
-    if (index <= (mark - 1)) {
+    if (index <= mark - 1) {
       element.style.background = currentColor;
     } else {
       element.style.background = 'white';
     }
-  })
+  });
   statusText.innerHTML = markToText[`${mark}`];
 }
+
+export { markToStyle, markToText };
