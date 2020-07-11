@@ -17,19 +17,21 @@ export async function getRefreshTokenFromApi(){
       },
     });
     const result = await rawResponse.json();
+    setToken(result);
+    setRefreshToken(result);
     return result;
   } catch (error) {
-    window.location = 'index.html';
-    return null;
+    return error;
   }
 }
 
 export async function getTokenForRequest() {
   if (!isValidToken()) {
+    // eslint-disable-next-line no-unused-vars
     const infoAboutUser = await getRefreshTokenFromApi();
-    if(infoAboutUser){
-      setToken(infoAboutUser);
-      setRefreshToken(infoAboutUser);
+    const token = getToken();
+    if(token === "undefined"){
+      window.location.href = 'index.html';
     }
   }
   return getToken();
