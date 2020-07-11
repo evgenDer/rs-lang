@@ -1,19 +1,22 @@
-import { getTokenTime } from '../helpers/tokenHeleper';
-import { getToken } from '../../../storage';
+function isValidToken(refreshToken) {
+  const magickApiNumberForDate = 1000;
+  const data = refreshToken.split('.')[1];
+  const decodedString = JSON.parse(atob(data));
 
-function isValidToken() {
-  const currentTime = Date.parse(new Date()) / 1000;
-  let tokenTime = 0;
-  const token = getToken();
-  if(token && token !== "undefined"){
-    tokenTime = getTokenTime();
+  const expDate = decodedString.exp * magickApiNumberForDate;
+
+  if ((new Date).getTime() + 5 * 60000 > expDate) {
+    return false;
   }
-  const tokenUpdateTime = tokenTime - 12600000;
-  return currentTime < tokenUpdateTime;
+
+  return true;
 }
 
 function isNewUser() {
   return !(isValidToken() && localStorage.getItem('userId') !== null);
 }
 
-export { isValidToken, isNewUser };
+export {
+  isValidToken,
+  isNewUser
+};
