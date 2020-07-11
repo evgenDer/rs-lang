@@ -66,6 +66,7 @@ export default function rightClick(learningScreenElement) {
           if (screenMode === 'learning' || screenMode === 'newWord') {
             learningScreenElement.statistics.rightAnswers += 1;
             learningScreenElement.statistics.currentRightAnswerSeries += 1;
+            learningScreenElement.stat.updateLearningStatistics(true);
             if (
               learningScreenElement.statistics.currentRightAnswerSeries >
               learningScreenElement.statistics.longestRightAnswerSeries
@@ -74,7 +75,6 @@ export default function rightClick(learningScreenElement) {
               learningScreenElement.statistics.longestRightAnswerSeries = rightAnswerSeries;
             }
           }
-
           increaseWordRightSequenceCount(word);
           increaseRepeatCount(word);
           if (cardMode === 'newWord') {
@@ -101,6 +101,7 @@ export default function rightClick(learningScreenElement) {
       } else {
         if (card.state.isFirstAnswer) {
           if (screenMode === 'learning' || screenMode === 'newWord') {
+            learningScreenElement.stat.updateLearningStatistics(false);
             learningScreenElement.statistics.currentRightAnswerSeries = 0;
           }
 
