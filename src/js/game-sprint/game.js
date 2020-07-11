@@ -140,7 +140,7 @@ export default class Game {
     removeChild(loadPage);
     if(!this.isError){
       showElement(playPage);
-      const startTimer = timer(1, 'play__time', '', this, this.generateResults);
+      const startTimer = timer(60, 'play__time', '', this, this.generateResults);
       startTimer();
       playAudio('assets/audio/start.mp3');
       this.addButtonClickHandler();

@@ -4,8 +4,8 @@ import { getToken } from '../../../storage';
 function isValidToken() {
   const currentTime = Date.parse(new Date()) / 1000;
   let tokenTime = 0;
-  const token = getToken()
-  if(token && typeof(token) === "undefined"){
+  const token = getToken();
+  if(token && token !== "undefined"){
     tokenTime = getTokenTime();
   }
   const tokenUpdateTime = tokenTime - 12600000;
