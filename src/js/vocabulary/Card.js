@@ -1,5 +1,5 @@
 import moment from 'moment';
-import markToText from '../constants/progressBarTooltipTypes';
+import {markToText, markToStyle} from '../constants/progressBarTooltipTypes';
 import { createElementObj } from '../utils/create';
 import { WORD_STATE, WORD_DIFFICULTLY } from '../utils/constants';
 import { updateUserWord } from '../api/userWords';
@@ -19,7 +19,8 @@ export default class Card {
     for (let i = 1; i < progressBarTooltipTypes.length; i += 1) {
       const progressBarItem = createElementObj({ tagName: 'div', classNames: `vocabulary__progress-bar_item` });
       if (i <= progressBarLevel) {
-        progressBarItem.classList.add(`progress-bar_item-${i}`);
+        progressBarItem.style.backgroundColor = markToStyle[progressBarLevel];
+        progressBarItem.style.opacity = 0.7;
       }
       progressBarItems.push(progressBarItem);
     }
