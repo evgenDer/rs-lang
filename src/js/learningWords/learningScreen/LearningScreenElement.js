@@ -114,6 +114,7 @@ export default class LearningScreenElement extends HTMLElement {
       createResults(this);
       this.stat = new Statistics('Learning');
     }
+
   }
 
   async setSettings() {

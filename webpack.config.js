@@ -96,11 +96,8 @@ const plugins = () => {
     htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('game-audiochallenge.html', 'game_audiochallenge'),
-<<<<<<< HEAD
     htmlWebpackPluginCreator('determinationLevel.html', 'index', 'determinationLevel'),
-=======
     htmlWebpackPluginCreator('game-concentration.html', 'game_concentration'),
->>>>>>> 7298f29852a62798caee81bcfb6f76667e6166ce
 
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
@@ -134,11 +131,8 @@ module.exports = {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
     game_audiochallenge: ['@babel/polyfill', './js/audiochallenge/index.js', './sass/style.scss'],
-<<<<<<< HEAD
     determinationLevel: ['@babel/polyfill', './js/determinationLevel/index.js', './sass/style.scss'],
-=======
     game_concentration: ['@babel/polyfill', './js/concentration/index.js', './sass/style.scss'],
->>>>>>> 7298f29852a62798caee81bcfb6f76667e6166ce
   },
   output: {
     filename: filename('js'),

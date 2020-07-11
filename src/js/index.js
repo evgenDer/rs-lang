@@ -3,7 +3,7 @@ import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
 import initStatistics from './statistics/index';
-import updPageContent from './main-page/dayStat'
+import { updPageContent } from './main-page/index';
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage';
 import { getTokenTime } from './helpers/tokenHeleper';
