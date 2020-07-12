@@ -51,7 +51,7 @@ async function getHTMLElement(totalCorrect) {
   if (totalCorrect === 0) {
     lvl = 0;
   }
-  innerTextResult = `Ваш уровень для слов равен ${lvl}`;
+  innerTextResult = `Ваш уровень для слов равен ${lvl + 1}`;
   const compareElement = `
     <div class = "modal__results">
       <h3>${innerTextResult}</h3>
