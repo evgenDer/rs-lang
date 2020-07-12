@@ -1,10 +1,7 @@
-
 import * as Dropdown from '../games/dropdown';
 import { addGameModeSwitchClickHandler } from '../games/gameModeSwitch';
 import { Statistics } from '../statistics/components/statistics';
-import createHeaderOnStartingPage  from './main-page/start-page';
-
-createHeaderOnStartingPage();
+import { createHeaderOnStartingPage }  from './gamepage';
 
 const stat = new Statistics('Саванна');
 const statBtn = document.querySelector('.game-control__btn_stat');
@@ -17,10 +14,14 @@ function addStatisticsButtonClickHandler() {
   });
 }
 
-addGameModeSwitchClickHandler();
+window.onload = () => {
+  createHeaderOnStartingPage();
+  addGameModeSwitchClickHandler();
 
-Dropdown.addDropdownsEventHandlers();
-Dropdown.addActiveGameControls('audioCall');
-Dropdown.enableDropdowns();
+  Dropdown.addDropdownsEventHandlers();
+  Dropdown.addActiveGameControls('savannah');
+  Dropdown.enableDropdowns();
 
-addStatisticsButtonClickHandler();
+  addStatisticsButtonClickHandler();
+};
+
