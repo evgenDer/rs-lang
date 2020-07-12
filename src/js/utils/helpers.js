@@ -45,3 +45,4 @@ export {
   getUser, getMistakeResponse, shuffle, removeChild, removeAllButtons,
   insertNewButtons, exitGame,
 };
+

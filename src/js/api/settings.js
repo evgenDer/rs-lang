@@ -18,6 +18,7 @@ async function getSettings() {
     const userId = getUserId();
     const urlRequest = `${BACKEND_URL}/users/${userId}/settings`;
     const content = await sendRequest('GET', urlRequest, true);
+
     return content;
   } catch (error) {
     return error;

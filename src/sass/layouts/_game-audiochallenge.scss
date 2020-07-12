@@ -50,11 +50,11 @@
 }
 
 .audiochallenge__exit {
-  min-width: 25px;
   img {
     width: 25px;
     filter: invert(100%);
   }
+  min-width: 25px;
   &:hover {
     cursor: pointer;
     img {

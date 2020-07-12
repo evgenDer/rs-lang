@@ -62,7 +62,6 @@ function addHints() {
 }
 
 function addEventsListenerOnHintButtons() {
-  console.log('lkjhgvcghjkl');
   document.querySelector(`.${BUTTONS_CLASSES.autoPlaySound}`).addEventListener('click', () => {
     const englishPuzzleSettings = getDataEnglishPuzzle();
     englishPuzzleSettings.autoPlaySound = !englishPuzzleSettings.autoPlaySound;

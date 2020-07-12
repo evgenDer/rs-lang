@@ -14,7 +14,6 @@ function createStatisticSentence(audioSrc, textExample){
 }
 
 export function addStatisticRoundEnglishPuzzle(dataPageRound){
-  const statistic = new Statistics('EnglishPuzzle');
   let correct = 0;
   let error = 0;
   const errorField = document.querySelector('.modal-round__error');
@@ -48,7 +47,6 @@ export function addStatisticRoundEnglishPuzzle(dataPageRound){
       errorFields.push("\r\n");
     }
   });
-  statistic.updateGameStatistics(correct, error);
   document.querySelectorAll('.modal-round .btn_pronoucing').forEach((button) => {
     button.addEventListener('click', () => {
       const audio = button.querySelector('audio');
@@ -61,7 +59,7 @@ export function addStatisticRoundEnglishPuzzle(dataPageRound){
 export function createStaticticRound(imageSrc, infoAboutImage){
   const resultBlock = document.querySelector('.block-results');
   const statisticElement =
-  `<div id="modal-close-default" uk-modal class ="modal"  bg-close="false" esc-close="false">
+  `<div id="modal-close-default" uk-modal class ="modal">
       <div class="uk-modal-dialog modal-round"">
           <button class="uk-modal-close-default" type="button" uk-close></button>
           <div class="uk-modal-header">
@@ -82,13 +80,13 @@ export function createStaticticRound(imageSrc, infoAboutImage){
       </div>
   </div>
 `;
-  resultBlock.insertAdjacentHTML('beforeend', statisticElement);
-  document.getElementById('modal-btn-report').addEventListener('click', () => {
+    resultBlock.insertAdjacentHTML('beforeend', statisticElement);
+    document.getElementById('modal-btn-report').addEventListener('click', () => {
     errorFields.push('\r\n\r\n');
 
     const text = `Отчет по игре "English-puzzle"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
     downloadHelper.download(`english-puzzle-report_${new Date().toISOString()}.txt`, text);
-  })
+  });
 }
 
 

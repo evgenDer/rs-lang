@@ -15,15 +15,22 @@
 @import "./components/progres-bar";
 @import "./components/configuration";
 @import "./components/countdown";
+@import "./components/card";
+@import "./components/modals";
 @import "./components/statistics";
 @import "./components/modals";
 
 // layouts
 @import "./layouts/wrapper";
+@import "./layouts/games";
+@import "./layouts/game-sprint";
 @import "./layouts/main-page";
 @import "./layouts/authorization";
+<<<<<<< HEAD
 @import './layouts/game-puzzle';
 @import "./layouts/games";
+=======
+>>>>>>> 0dd7cc206d2e4c1200f878ed46e4ae9fcf2e5431
 
 @import "./layouts/game-audiochallenge";
 @import "./layouts/game-concentration";

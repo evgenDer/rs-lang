@@ -10,6 +10,7 @@ import paintings3 from '../levels/level3';
 import paintings4 from '../levels/level4';
 import paintings5 from '../levels/level5';
 import paintings6 from '../levels/level6';
+import { Statistics } from '../../statistics/components/statistics';
 import { addStatisticRoundEnglishPuzzle } from './statistic';
 import { GAME_MODES, ERR_MSG } from '../../games/constants';
 import { getAggregatedWords } from '../../api/userWords';
@@ -88,15 +89,30 @@ export default class Game {
     this.round = await this.getCurrentRound();
     this.round.generateNewRoundOnPage(imageSrc);
     } catch(error){
-      // eslint-disable-next-line no-undef
       hideElement(loadPage);
       showElement(startPage);
+      // eslint-disable-next-line no-undef
       UIkit.notification({
         message: `<span uk-icon='icon: warning'></span> ${ERR_MSG}`,
         status: 'warning',
         pos: 'top-center',
       });
     }
+  }
+
+  updateStatistic(){
+    let correct = 0;
+    let error = 0;
+    const statistic = new Statistics('EnglishPuzzle');
+    this.round.dataPage.forEach((sentence) =>{
+      if(sentence.result){
+          correct+=1;
+        }
+        else{
+          error+=1;
+        }
+      });
+      statistic.updateGameStatistics(correct, error);
   }
 
   addEventsListenersOnButtons() {
@@ -119,9 +135,10 @@ export default class Game {
         removeChild(document.querySelector('.block-results'));
         hideElement(playPage);
         showElement(startPage);
+        this.updateStatistic();
       }
       if (button.classList.contains('btn_result')) {
-        addStatisticRoundEnglishPuzzle(this.round.dataPage);
+        addStatisticRoundEnglishPuzzle(this.round.dataPage, true);
       }
     });
   }

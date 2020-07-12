@@ -134,15 +134,28 @@ button.btn_unknown::before{
     font-size: 1.5rem;
     margin: 10px;
     width: 200px;
+.btn_audioexample{
+  position: absolute;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  width: 30px;
+  height: 30px;
+  margin-left: 300px;
+  @include media-mobile{
+    margin-left: 230px;
   }
 }
 
 .btn_close{
+  min-width: 25px;
+  transition: all .4s;
   background-color: transparent!important;
   &:hover{
     color: $color-additional!important;
   }
   svg{
+    width: 25px;
     width: 30px;
     height: 30px;
   }
@@ -237,5 +250,59 @@ button.btn_unknown::before{
 .btn_pronoucing::before{
   content: "\f028";
   font-family: 'FontAwesome';
+.card__btns {
+  display: flex;
+  justify-content: center;
+  button{
+    margin-top: 10px;
+    outline: none;
+    width: 100px;
+    border: none;
+    height: 50px;
+    margin: 10px;
+    color: $color-primary;
+    border-radius: 10px;
+  }
+  .btn_correct{
+    background-color: $color-green;
+  }
+  .btn_wrong{
+    background-color: $color-red;
+  }
 }
 
+#game-sprint .btn_pronoucing{
+  background: transparent;
+  color: $color-secondary;
+  border: none;
+  outline: none;
+}
+
+#game-sprint {
+  .btn_statistic{
+  background-color: $color-additional;
+  border: none;
+  width: 40px;
+  height: 35px;
+  border-radius: 10px;
+  img{
+    width: 30px;
+    height: 30px;
+  }
+}
+.btn_exit{
+  img {
+    width: 25px;
+    filter: invert(100%);
+  }
+  border: none;
+  outline: none;
+  position: absolute;
+  left: 10vw;
+  top: 5vh;
+  transform: rotate(180deg);
+  &:hover{
+    animation: none;
+  }
+}
+}

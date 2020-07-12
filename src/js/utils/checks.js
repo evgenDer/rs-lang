@@ -1,5 +1,7 @@
+import { getRefreshToken } from "./storage";
+
 function isValidToken(refreshToken) {
-  if (refreshToken === undefined) {
+  if (refreshToken === "undefined") {
     return false;
   }
 
@@ -17,7 +19,7 @@ function isValidToken(refreshToken) {
 }
 
 function isNewUser() {
-  return !(isValidToken() && localStorage.getItem('userId') !== null);
+  return !(localStorage.getItem('userId') !== null && isValidToken(getRefreshToken()));
 }
 
 

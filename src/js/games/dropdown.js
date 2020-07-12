@@ -110,7 +110,7 @@ export function selectNextRound() {
 export async function addActiveGameControls(gameName){
   disableDropdowns();
   let gameConfiguration = await getCustomConfiguration(gameName);
-  if (!gameConfiguration || Object.keys(gameConfiguration).length === 0) {
+  if (gameConfiguration && Object.keys(gameConfiguration).length !== 0) {
     gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
     listRound[gameConfiguration.round].click();
     listLvl[gameConfiguration.level].click();
@@ -120,7 +120,6 @@ export async function addActiveGameControls(gameName){
   }
   listLvl[gameConfiguration.level].click();
   listRound[gameConfiguration.round].click();
-  selectNextRound();
 }
 
 export const listLvlBtnContainer = document.querySelector('.game-control__btn_level').parentElement;

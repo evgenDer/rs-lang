@@ -62,6 +62,7 @@ const jsLoaders = () => {
   return loaders;
 };
 
+
 const htmlWebpackPluginCreator = (template, ...args) =>
   new HtmlWebpackPlugin({
     chunks: [...args],
@@ -89,6 +90,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('dictionary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
     htmlWebpackPluginCreator('game_english-puzzle.html', 'index', 'english_puzzle'),
+    htmlWebpackPluginCreator('game_sprint.html', 'index', 'game_sprint'),
     htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('game-audiochallenge.html', 'game_audiochallenge'),
@@ -103,6 +105,10 @@ const plugins = () => {
         {
           from: './img',
           to: 'assets/img',
+        },
+        {
+          from: './audio',
+          to: 'assets/audio',
         },
         {
           from: '../favicon',
@@ -126,6 +132,7 @@ module.exports = {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
     english_puzzle: ['@babel/polyfill', './js/english-puzzle/index.js', './sass/style.scss'],
+    game_sprint: ['@babel/polyfill', './js/game-sprint/index.js', './sass/style.scss'],
     game_audiochallenge: ['@babel/polyfill', './js/audiochallenge/index.js', './sass/style.scss'],
     game_concentration: ['@babel/polyfill', './js/concentration/index.js', './sass/style.scss'],
   },

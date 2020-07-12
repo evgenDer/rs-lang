@@ -3,6 +3,7 @@ import { getTokenForRequest } from './token';
 async function sendRequest(methodRequest, urlRequest, withCredentials = false, objectBody = null) {
   try {
     const token = await getTokenForRequest();
+    console.log(token);
     const params = {
       method: methodRequest,
       headers: {
