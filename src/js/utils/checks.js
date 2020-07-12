@@ -1,4 +1,8 @@
 function isValidToken(refreshToken) {
+  if (refreshToken === undefined) {
+    return false;
+  }
+
   const magickApiNumberForDate = 1000;
   const data = refreshToken.split('.')[1];
   const decodedString = JSON.parse(atob(data));
