@@ -127,7 +127,6 @@ export default class Game {
     this.fillAnswers();
     this.generateWord();
     this.moveElement();
-    // this.playTask();
   }
 
   getRightAnswer() {
@@ -306,6 +305,9 @@ export default class Game {
           break;
         case '4':
           answer = 3;
+          break;
+        case '5':
+          answer = 4;
           break;
         default:
           break;
