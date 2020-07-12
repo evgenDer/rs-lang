@@ -1,12 +1,14 @@
 import { createElementObj } from '../../utils/create';
 import * as downloadHelper from '../../download/download';
 import { errorFields, successFields } from '../../games/constants';
+import { Statistics } from '../../statistics/components/statistics';
 
 export default class Results {
   constructor() {
     this.gameResults = '';
     this.successFields = successFields;
     this.errorFields = errorFields;
+    this.statistic = new Statistics('SpeakIt');
   }
 
   generate(callbacks) {
@@ -49,6 +51,7 @@ export default class Results {
     });
 
     this.newGameBtn.addEventListener('click', () => {
+      this.statistic.updateGameStatistics(this.countCorrectAnswers.textContent, this.countIncorrectAnswers.textContent);
       callbacks.onClickNewRaund();
       this.gameResults.classList.add('hidden');
       this.gameResultsWrapper.classList.remove('uk-animation-scale-up');

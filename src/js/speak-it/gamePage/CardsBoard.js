@@ -1,10 +1,9 @@
-import { getFullDataWords } from '../../api/words';
-import { getAggregatedUserWords } from '../../api/userWords';
 import Card from './Card';
 import Loader from './Loader';
 import { createElementObj } from '../../utils/create';
 import { shuffleArray } from '../../helpers/math-hepler';
-import { ERR_MSG } from '../../games/constants';
+import { getUserWords, getWordsByLevelAndRound } from '../utils';
+
 
 export default class CardsBoard {
   constructor() {
@@ -30,9 +29,9 @@ export default class CardsBoard {
     this.mixedСards.length = 0;
     let userData = '';
     if (data.studied) {
-      userData = await this.getUserWords();
+      userData = await getUserWords(this.filter, this.wordsAmntInRound);
     } else {
-      userData = await this.getWordsByLevelAndRound(data);
+      userData = await getWordsByLevelAndRound(data, this.wordsAmntInRound);
     }
     shuffleArray(userData);
     userData.forEach((cardData) => {
@@ -41,25 +40,6 @@ export default class CardsBoard {
     this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
     this.loader.hide();
     this.cardsContainer.classList.remove('hidden');
-  }
-
-  async getUserWords() {
-    const result = await getAggregatedUserWords(this.filter, 3600);
-    const UserWordsData = result[0].paginatedResults;
-    if (UserWordsData.length < this.wordsAmntInRound) {
-      throw ERR_MSG;
-    }
-    return UserWordsData
-      .sort((a, b) => a.userWord.optional.successPoint - b.userWord.optional.successPoint)
-      .slice(0, this.wordsAmntInRound);
-  }
-
-  async getWordsByLevelAndRound(data) {
-    const result = await getFullDataWords(data.level, data.page, this.wordsAmntInRound);
-      if (result.length < this.wordsAmntInRound) {
-        throw ERR_MSG;
-      }
-      return result;
   }
 
   getCardsContainer() {

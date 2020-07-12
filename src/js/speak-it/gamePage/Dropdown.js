@@ -1,19 +1,15 @@
 import { createElementObj } from '../../utils/create';
 
 export default class Dropdoun {
-  constructor(nameItem , amountElements, numCurrentItem) {
+  constructor(nameItem , amountElements) {
     this.nameItem = nameItem ;
     this.amountElements = amountElements;
-    this.numCurrentItem =  numCurrentItem;
   }
 
   generate(callback) {
     this.items = [];
     for (let i = 0; i < this.amountElements; i += 1) {
       const item = createElementObj({ tagName: 'li', classNames: `speakit_list-item`, textContent: `${this.nameItem} ${i + 1}` });
-      if( i === this.numCurrentItem) {
-        item.classList.add('speakit_list-item_active');
-      }
       this.items.push(item);
     }
     this.list = createElementObj({ tagName: 'ul', classNames: 'uk-nav uk-dropdown-nav', children: this.items });

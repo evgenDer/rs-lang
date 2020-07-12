@@ -5,7 +5,6 @@ import Microphone from './Microphone';
 import Results from './Results';
 import { MAX_ATTEMTS_COUNT, TYPE_MICROPHONE_MESSAGE } from '../constants';
 import { createElementObj } from '../../utils/create';
-import { getGameStatistics} from '../../utils/storage';
 
 
 
@@ -15,9 +14,8 @@ export default class GamePage {
   }
 
   generateGamePage() {
-  const localData = getGameStatistics('speakitStatistic');
   this.statusBar = new StatusBar();
-  this.gameBoard = new CardsBoard();
+  this.cardsBoard = new CardsBoard();
   this.display = new Display();
   this.microphone = new Microphone();
   this.results = new Results();
@@ -26,7 +24,7 @@ export default class GamePage {
 
   const callbacksForStatusBar = {
     onChangeLevel: (result)=> {
-      this.gameBoard.cahgeCards(result);
+      this.cardsBoard.cahgeCards(result);
       this.display.update({translate: ''});
     },
     onClickRestart: () => this.restart(),
@@ -53,21 +51,21 @@ export default class GamePage {
       } else {
         this.turnOnMicrophone();
       }
-      this.gameBoard.updateCards();
+      this.cardsBoard.updateCards();
     },
     onClickReport: () => {},
   }
 
   this.gameContainer = createElementObj({ tagName: 'div', classNames: 'game-container hidden', children: [
-    this.statusBar.generate(localData, callbacksForStatusBar),
+    this.statusBar.generate(callbacksForStatusBar),
     this.display.generate(),
     this.microphone.generate(),
-    this.gameBoard.generate(),
+    this.cardsBoard.generate(),
     buttons,
     this.results.generate( callbacksForResults ),
   ] });
 
-  this.gameBoard.cahgeCards(localData);
+  this.cardsBoard.cahgeCards({ studied: true });
   this.addListeners();
   return this.gameContainer
   }
@@ -82,10 +80,10 @@ export default class GamePage {
 
   showResults() {
     if (this.isGameMode) this.microphone.turnOff();
-    this.gameBoard.makeInactiveAllCards();
+    this.cardsBoard.makeInactiveAllCards();
     const data = {
-      correctAnswers: this.gameBoard.getWordsWithCorrectAnswer(),
-      incorrectAnswers: this.gameBoard.getWordsWithNotCorrectAnswer(),
+      correctAnswers: this.cardsBoard.getWordsWithCorrectAnswer(),
+      incorrectAnswers: this.cardsBoard.getWordsWithNotCorrectAnswer(),
     }
     this.results.addData(data);
     this.results.show();
@@ -96,19 +94,19 @@ export default class GamePage {
       this.statusBar.stopGameMode();
       this.display.stopGameMode();
       this.microphone.turnOff();
-      this.gameBoard.stopGameMode();
+      this.cardsBoard.stopGameMode();
       this.startGameModeBtn.innerHTML = 'Тренировака произношение';
       this.startGameModeBtn.classList.remove('game-mode_btn');
     }
-    this.gameBoard.makeInactiveAllCards();
+    this.cardsBoard.makeInactiveAllCards();
     this.display.update({translate: ''});
     this.isGameMode = false;
   }
 
   checkAvailableWords(timeOut) {
-    this.gameBoard.increaseCurrentWordIndex();
+    this.cardsBoard.increaseCurrentWordIndex();
     setTimeout(() => {
-      if (this.gameBoard.isAllWordsPass()) {
+      if (this.cardsBoard.isAllWordsPass()) {
         this.updateDisplay();
         this.microphone.clearInput();
         this.microphone.removeMessage();
@@ -121,12 +119,12 @@ export default class GamePage {
 
   updateDisplay() {
     this.attemptsСount = 0;
-    this.display.update(this.gameBoard.getCurrentWordInfo());
+    this.display.update(this.cardsBoard.getCurrentWordInfo());
   }
 
   turnOnMicrophone() {
     this.microphone.turnOn((word) => {
-      if (this.gameBoard.checkAnswers(word)) {
+      if (this.cardsBoard.checkAnswers(word)) {
         this.microphone.addMessage(TYPE_MICROPHONE_MESSAGE.right);
         this.statusBar.addStar(true);
         this.checkAvailableWords('2000');
@@ -143,14 +141,14 @@ export default class GamePage {
   }
 
   addListeners() {
-    this.gameBoard.getCardsContainer().addEventListener('click', (event) => {
+    this.cardsBoard.getCardsContainer().addEventListener('click', (event) => {
       if (!this.isGameMode) {
-        this.gameBoard.cardOnClickHandler(event, (data) =>  this.display.update(data));
+        this.cardsBoard.cardOnClickHandler(event, (data) =>  this.display.update(data));
       }
     });
 
     this.results.getContainer().addEventListener('click', (event) => {
-        this.gameBoard.cardOnClickHandler(event);
+        this.cardsBoard.cardOnClickHandler(event);
     });
 
     this.startGameModeBtn.addEventListener('click', () => {
@@ -158,7 +156,7 @@ export default class GamePage {
         this.isGameMode = !this.isGameMode;
         this.startGameModeBtn.innerHTML = 'Пропустить';
         this.startGameModeBtn.classList.add('game-mode_btn');
-        this.gameBoard.startGameMode();
+        this.cardsBoard.startGameMode();
         this.statusBar.startGameMode();
         this.display.startGameMode();
         this.updateDisplay();
