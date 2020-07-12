@@ -1,8 +1,12 @@
 import { createElementObj } from '../../utils/create';
+import * as downloadHelper from '../../download/download';
+import { errorFields, successFields } from '../../games/constants';
 
 export default class Results {
   constructor() {
     this.gameResults = '';
+    this.successFields = successFields;
+    this.errorFields = errorFields;
   }
 
   generate(callbacks) {
@@ -50,7 +54,12 @@ export default class Results {
       this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
     });
 
-    this.report.addEventListener('click', () => callbacks.onClickReport());
+    this.report.addEventListener('click', () => {
+        this.errorFields.push('\r\n\r\n');
+
+        const text = `Отчет по игре "Speak it"\r\n\r\n${this.errorFields.join('\r\n')}${this.successFields.join('\r\n')}`;
+        downloadHelper.download(`speakIt-report_${new Date().toISOString()}.txt`, text);
+    });
   }
 
   show() {
@@ -69,6 +78,8 @@ export default class Results {
       data.correctAnswers.forEach((card) => {
         card.changeElementForResults();
         this.correctAnswers.append(card.getElement());
+        this.successFields = successFields;
+        this.successFields.push(`${card.getWord()} - ${card.getTranscription()} - ${card.getTranslate()}`);
       });
     }
     if (data.incorrectAnswers) {
@@ -77,6 +88,8 @@ export default class Results {
       data.incorrectAnswers.forEach((card) => {
         card.changeElementForResults();
         this.incorrectAnswers.append(card.getElement());
+        this.errorFields = errorFields;
+        this.errorFields.push(`${card.getWord()} - ${card.getTranscription()} - ${card.getTranslate()}`);
       });
     }
   }
