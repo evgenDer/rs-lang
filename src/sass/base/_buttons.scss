@@ -34,10 +34,8 @@ button{
     width: 240px;
   }
 }
-/*       Forgot Password button FAF3DD  */
 .frgt-pass {background: transparent;}
 
-/* buttons hover Animation */
 button:hover {
   animation: ani9 0.4s ease-in-out infinite alternate;
 }
@@ -134,6 +132,7 @@ button.btn_unknown::before{
     font-size: 1.5rem;
     margin: 10px;
     width: 200px;
+  }
 .btn_audioexample{
   position: absolute;
   outline: none;
@@ -145,6 +144,7 @@ button.btn_unknown::before{
   @include media-mobile{
     margin-left: 230px;
   }
+}
 }
 
 .btn_close{
@@ -270,12 +270,17 @@ button.btn_unknown::before{
     background-color: $color-red;
   }
 }
+}
 
 #game-sprint .btn_pronoucing{
   background: transparent;
   color: $color-secondary;
   border: none;
   outline: none;
+}
+
+.play-page .btn_pronoucing::before{
+  color: $color-primary;
 }
 
 #game-sprint {
@@ -290,19 +295,19 @@ button.btn_unknown::before{
     height: 30px;
   }
 }
-.btn_exit{
+  .btn_exit{
   img {
     width: 25px;
     filter: invert(100%);
   }
-  border: none;
-  outline: none;
-  position: absolute;
-  left: 10vw;
-  top: 5vh;
-  transform: rotate(180deg);
-  &:hover{
-    animation: none;
+    border: none;
+    outline: none;
+    position: absolute;
+    left: 10vw;
+    top: 5vh;
+    transform: rotate(180deg);
+    &:hover{
+      animation: none;
+    }
   }
-}
 }
