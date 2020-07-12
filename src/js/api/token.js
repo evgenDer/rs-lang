@@ -1,8 +1,18 @@
-import { getUserId, getRefreshToken, setToken, setRefreshToken, getToken } from '../utils/storage';
-import { BACKEND_URL } from '../utils/constants';
-import { isValidToken } from '../utils/checks';
+import {
+  getUserId,
+  getRefreshToken,
+  setToken,
+  setRefreshToken,
+  getToken
+} from '../utils/storage';
+import {
+  BACKEND_URL
+} from '../utils/constants';
+import {
+  isValidToken
+} from '../utils/checks';
 
-export async function getRefreshTokenFromApi(){
+export async function getRefreshTokenFromApi() {
   try {
     const userId = getUserId();
     const refreshToken = getRefreshToken();
@@ -26,13 +36,20 @@ export async function getRefreshTokenFromApi(){
 }
 
 export async function getTokenForRequest() {
-  if (!isValidToken()) {
+  const refreshToken = getRefreshToken();
+
+  if (refreshToken === undefined || !refreshToken || !isValidToken(refreshToken)) {
+    console.log('try to get new token');
     // eslint-disable-next-line no-unused-vars
     const infoAboutUser = await getRefreshTokenFromApi();
     const token = getToken();
-    if(token === "undefined"){
+    if (token === "undefined") {
       window.location.href = 'index.html';
     }
+
+    return token;
   }
+
+  console.log('use old token');
   return getToken();
 }
