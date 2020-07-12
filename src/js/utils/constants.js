@@ -13,6 +13,7 @@ const ADD_QUEUE_NUMBER = 'ADD_QUEUE_NUMBER';
 const RESET_QUEUE = 'RESET_QUEUE';
 const ANSWER_ERROR = 'ANSWER_ERROR';
 const RESET_ERRORS = 'RESET_ERRORS';
+const DATA_URL = 'https://raw.githubusercontent.com/evgenDer/rslang-data/master/';
 const AUX_API_URL = 'https://dictionary.skyeng.ru/api/public/v1';
 
 const PAGES = [
@@ -60,7 +61,7 @@ const PAGES = [
   },
   {
     id: 'promo-page',
-    href: '#',
+    href: 'promo.html',
     img: './assets/img/icons/promo.svg',
     text: 'Промо',
   },
@@ -84,7 +85,6 @@ const WORD_STATE = {
   learning: 'learning',
 };
 
-
 const AUDIO_B64 = 'data:audio/mp3;base64,';
 const IMG_B64 = 'data:image/jpg;base64,';
 
@@ -93,5 +93,5 @@ export {
   PAGES, APP_NAME, BACKEND_URL, SAVANNAH_TITLE,
   SAVANNAH_TEXT, SAVANNAH_BUTTON, FETCH_WORDS, CHANGE_LEVEL, CHANGE_ROUND,
   SOUND_OFF, SOUND_ON, LEAVE_MAIN, ADD_QUEUE_NUMBER, RESET_QUEUE, ANSWER_ERROR,
-  RESET_ERRORS, AUX_API_URL, WORD_STATE, AUDIO_B64, IMG_B64,
+  RESET_ERRORS, AUX_API_URL, WORD_STATE, AUDIO_B64, IMG_B64, DATA_URL,
 };

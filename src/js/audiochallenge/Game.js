@@ -13,7 +13,7 @@ import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/upd
 import { getAllUserWords, updateUserWord } from '../api/userWords';
 import { AUDIO_B64, IMG_B64, WORD_STATE } from '../utils/constants';
 import { saveCustomConfiguration } from '../configuration/index';
-import playAudio from '../helpers/audio';
+import { playAudio } from '../helpers/audio';
 
 
 const loader = document.querySelector('.audiochallenge__load-page');

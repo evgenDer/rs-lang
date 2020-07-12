@@ -24,8 +24,8 @@ export class Statistics {
 
   /**
    * Updates game statistics with provided values.
-   * @param {totalCorrect} totalCorrect - Number of correct answers
-   * @param {totalError} totalError - Number of error answers
+   * @param {number} totalCorrect - Number of correct answers
+   * @param {number} totalError - Number of error answers
    * @param {number} gameScore - Score for the game
    */
   async updateGameStatistics(totalCorrect, totalError, gameScore) {
@@ -41,17 +41,15 @@ export class Statistics {
 
   /**
    * Updates game statistics with provided values.
-   * @param {learningWordsCount} learningWordsCount - Number of learning words
-   * @param {totalCorrect} totalCorrect - Number of correct answers
-   * @param {totalError} totalError - Number of error answers
+   * @param {Boolean} isCorrect - Is correct answer
    */
-  async updateLearningStatistics(learningWordsCount, totalCorrect, totalError) {
+  async updateLearningStatistics(isCorrect) {
     if (!this.globalStatistics) {
       this.globalStatistics = await statisticsHelper.initStatistics(this.gameName, this.dateTime);
     }
 
     this.currentStatistics = statisticsUtils.getCurrentStatistics(this.globalStatistics, this.gameName, this.dateTime);
-    this.currentStatistics = statisticsUtils.updateLearningStatisticsValues(this.currentStatistics, learningWordsCount, totalCorrect, totalError);
+    this.currentStatistics = statisticsUtils.updateLearningStatisticsValues(this.currentStatistics, isCorrect);
 
     await statisticsHelper.updateStatisticsData(this.globalStatistics);
   }
@@ -71,11 +69,11 @@ export class Statistics {
   async getUserMaxScore() {
     const statistics = await statisticsHelper.getGameStatistics(this.gameName);
 
-    if(!statistics){
+    if (!statistics) {
       return 0;
     }
 
-    const maxScore =  statisticsUtils.getUserMaxScore(statistics);
+    const maxScore = statisticsUtils.getUserMaxScore(statistics);
 
     return maxScore;
   }
@@ -110,7 +108,7 @@ export class Statistics {
 
     const modalElement = statisticsHelper.getModalForGlobalStatistics();
 
-    mainElement.innerHTML += modalElement;
+    mainElement.insertAdjacentHTML("beforeEnd", modalElement);
     UIkit.modal("#global-statistics-modal").show();
 
     const dateTimeData = await statisticsHelper.getDateTimeStatisticsForGame(this.gameName);
