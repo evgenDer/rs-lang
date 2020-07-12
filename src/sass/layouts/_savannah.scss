@@ -144,7 +144,6 @@
         @include media-tablet{
           bottom: 0px;
         }
-       // margin-left: 45vw;
         display: flex;
         width: 100%;
         text-align: center;
@@ -217,7 +216,6 @@
   background-color: transparent;
 }
 
-// <------- abstract -------->
 .animated-hide {
     transform: rotateZ(720deg) scale3d(0, 0, 1);
 }
@@ -239,38 +237,34 @@
 .shake {
     animation: ani9 0.4s ease-in-out infinite alternate;
 }
-// <<<<<<< word down >>>>>>>
+
 .animation-down {
     animation: wordDown infinite 3s cubic-bezier(0, 0, 1, 1);
 }
 
-// <<<<<< crystal shake >>>>>>>>>
 .crystal-shake {
     animation-name: shake;
     animation-duration: 1s;
 }
 
-// hide header menu
 .hide-header {
     transition: 1s;
     transform: translateY(-100px);
     opacity: 0;
 }
 
-// heart error
 
 .error-heart {
     filter: grayscale(0);
 }
 
-//  error animation
 .bounce {
     animation-name: bounce;
     animation-duration: 1s;
     animation-delay: 0.25s;
 }
 
-// <--------------- animations --------------->
+
 @keyframes wordDownCorrect {
 
     100% {

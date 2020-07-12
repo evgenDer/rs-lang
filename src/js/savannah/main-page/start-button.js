@@ -23,7 +23,6 @@ export const createGameTimer = () => {
       clearInterval(timerId);
       timer.classList.add('hidden');
       hearts.classList.remove('hidden');
-      // createProcessTemplate();
       setTimeout(() => {
         timer.remove();
       }, 1000);

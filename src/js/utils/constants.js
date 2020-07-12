@@ -1,7 +1,7 @@
 const APP_NAME = 'RS LANG';
 const BACKEND_URL = 'https://afternoon-falls-25894.herokuapp.com';
 const SAVANNAH_TITLE = 'С А В А Н Н А';
-const SAVANNAH_TEXT = `Выбирайте на подходящий перевод слова из предложенных. Управление можно осуществлять мышкой иили клавиатурой.`;
+const SAVANNAH_TEXT = `Выбирайте подходящий перевод слова из предложенных. Управление можно осуществлять мышкой иили клавиатурой.`;
 const SAVANNAH_BUTTON = 'Начать';
 const FETCH_WORDS = 'FETCH_WORDS';
 const CHANGE_LEVEL = 'CHANGE_LEVEL';
