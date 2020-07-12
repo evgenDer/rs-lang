@@ -39,7 +39,6 @@
   margin: 10px auto;
 }
 .current{
- // border: 1px solid green;
  background: lightblue;
   height: 45px;
 }
@@ -50,7 +49,6 @@
   text-align: center;
   margin-top: 40px;
   background-color: $color-background;
-  // padding-left: 0px;
   height: 450px;
   @include media-tablet{
     font-size: 14px;
@@ -178,10 +176,7 @@ option::selection {
 }
 
 .block-hints{
-  // position: absolute;
   p{
-    // word-break: break-all;
-    // margin: 10px auto 30px;
     height: auto;
     margin: auto;
     font-size: 25px;
@@ -195,12 +190,9 @@ option::selection {
   .btn_pronoucing{
     opacity: 1;
     display: inline;
-    height: 50px;
-    margin-top: 20px;
     color: $color-primary;
   }
 
-  // height: 100px;
   margin-top: -10px;
   font-size: 2em;
   color: $color-primary;
