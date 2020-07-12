@@ -12,6 +12,7 @@ export function addAnswerField(data, words, level){
   for(let i = 0; i < COUNT; i += 1){
     let resultField = '';
     const regexpExample = /<b>\w+<\/b>/;
+    console.log(data);
     const example = data[i].textExample;
     let exampleUpdated = example.replace(regexpExample, '____');
     if(exampleUpdated.indexOf(`${data[i].word}`)){
