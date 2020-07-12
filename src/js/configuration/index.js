@@ -122,12 +122,9 @@ async function saveConfiguration() {
   prevConfiguration.showExplanationExample = cardsConfiguration.showExplanationExample;
   prevConfiguration.showWordTranscription = cardsConfiguration.showWordTranscription;
   prevConfiguration.showImageAssociation = cardsConfiguration.showImageAssociation;
-  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;
-  prevConfiguration.showNewWordTranslation = appConfiguration.showNewWordTranslation;
-  prevConfiguration.showSentenceTranslation = appConfiguration.showSentenceTranslation;
+  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;;
   prevConfiguration.showAnswer = appConfiguration.showAnswer;
   prevConfiguration.deleteWords = appConfiguration.deleteWords;
-  prevConfiguration.markAsDifficultWord = appConfiguration.markAsDifficultWord;
   prevConfiguration.possibilityToMarkWord = appConfiguration.possibilityToMarkWord;
 
   await updateConfiguration(prevConfiguration);
