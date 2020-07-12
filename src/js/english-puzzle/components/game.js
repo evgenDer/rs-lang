@@ -71,7 +71,7 @@ export default class Game {
 
   saveConfiguration(){
     const {numberLevel, numberRound} = this;
-    const savedConfiguration = JSON.stringify({ level: numberLevel, round: numberRound });
+    const savedConfiguration = { level: numberLevel, round: numberRound };
     saveCustomConfiguration('englishPuzzle', savedConfiguration);
   }
 
