@@ -20,7 +20,7 @@ export default class Card {
       const progressBarItem = createElementObj({ tagName: 'div', classNames: `vocabulary__progress-bar_item` });
       if (i <= progressBarLevel) {
         progressBarItem.style.backgroundColor = markToStyle[progressBarLevel];
-        progressBarItem.style.opacity = 0.7;
+        progressBarItem.style.opacity = 0.9;
       }
       progressBarItems.push(progressBarItem);
     }
@@ -111,6 +111,10 @@ export default class Card {
 
   getWord() {
     return this.data.word;
+  }
+
+  getProgress() {
+    return this.data.optional.successPoint;
   }
 
   getRepeatCount() {
