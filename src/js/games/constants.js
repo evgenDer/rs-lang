@@ -21,4 +21,4 @@ export const errorFields = [
 
 export const successFields = [
   "Правильно отвеченные слова"
-]
+];

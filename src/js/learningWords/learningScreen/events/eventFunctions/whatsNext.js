@@ -17,6 +17,7 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
           switchToRepeatingMode(learningScreenElement);
           const wordIndex = findNexWordIndex(learningScreenElement, 'repeating');
           if (wordIndex === -1) {
+            
           } else {
             learningScreenElement.state.currentRepeatingCardIndex = wordIndex;
             willCreateCard = true;

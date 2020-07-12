@@ -21,7 +21,9 @@
     "rs",
     "school"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.27.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",

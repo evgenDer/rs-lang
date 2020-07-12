@@ -2,8 +2,8 @@ import { addHeaderToPage, defineActivePage } from './navigation/index';
 import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
-import initStatistics from './statistics/index';
-
+import  initStatistics from './statistics/index';
+import initVocabularyPage from './vocabulary/index';
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage.js';
 import { getTokenTime } from './helpers/tokenHeleper';
@@ -13,6 +13,9 @@ import './promo/promoPageCreating.js';
 window.onload = () => {
   addHeaderToPage();
   const activePage = defineActivePage();
+  // if(isNewUser()){
+    // window.location.replace('index.html');
+ // }
   switch (activePage) {
     case 0:
       // main-page
@@ -27,7 +30,8 @@ window.onload = () => {
       // games-page
       break;
     case 4:
-      // dictionary-page
+      initVocabularyPage();
+      // vocabulary-page
       break;
     case 5:
       initStatistics();

@@ -21,37 +21,6 @@ export async function getConfiguration() {
   return configuration.optional;
 }
 
-export async function saveCustomConfiguration(gameName, gameConfiguration) {
-  const oldConfiguration = await getConfiguration();
-
-  const configuration = {};
-  configuration.optional = oldConfiguration.optional;
-
-  if (!configuration.optional) {
-    return;
-  }
-
-  configuration.optional[gameName] = JSON.stringify(gameConfiguration);
-
-  await configurationService.upserSettings(configuration);
-}
-
-export async function getCustomConfiguration(gameName) {
-  try{
-    const configuration = await getConfiguration();
-    сonsole.log(configuration);
-    if (!configuration.optional || !configuration.optional[gameName]) {
-      return null;
-    }
-
-    const value = JSON.parse(configuration.optional[gameName]);
-
-    return value;
-  } catch(error){
-    return null;
-  }
-}
-
 async function updateConfiguration(configuration) {
   const configurationModel = {
     wordsPerDay: 10,
@@ -59,6 +28,36 @@ async function updateConfiguration(configuration) {
   };
 
   await configurationService.upserSettings(configurationModel);
+}
+
+export async function saveCustomConfiguration(gameName, gameConfiguration) {
+  const oldConfiguration = await getConfiguration();
+
+  const configuration = oldConfiguration;
+
+  if (!configuration) {
+    return;
+  }
+
+  configuration[gameName] = JSON.stringify(gameConfiguration);
+
+  await updateConfiguration(configuration);
+}
+
+export async function getCustomConfiguration(gameName) {
+  try{
+    const configuration = await getConfiguration();
+
+    if (!configuration) {
+      return null;
+    }
+
+    const value = JSON.parse(configuration[gameName]);
+
+    return value;
+  } catch(error){
+    return null;
+  }
 }
 
 export async function updatDifficultyLevel(userDifficultyLevel) {

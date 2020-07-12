@@ -1,7 +1,7 @@
 import { removeChild } from '../helpers/html-helper';
 import { GAME_DATA_URL } from '../games/constants';
 import { AUDIO_B64 } from '../utils/constants';
-import playAudio from '../helpers/audio';
+import { playAudio } from '../helpers/audio';
 import { Statistics } from '../statistics/components/statistics';
 import * as downloadHelper from '../download/download';
 
