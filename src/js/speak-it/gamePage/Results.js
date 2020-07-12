@@ -59,7 +59,7 @@ export default class Results {
 
     });
 
-    this.newGameBtn.addEventListener('click', this.onClickNewRaund);
+    this.newGameBtn.addEventListener('click', () => this.onClickNewRaund());
 
     this.report.addEventListener('click', () => {
         this.errorFields.push('\r\n\r\n');
@@ -70,7 +70,7 @@ export default class Results {
   }
 
   onClickNewRaund() {
-    this.statistic.updateGameStatistics(this.correct, this.incorrect);
+    this.statistic.updateGameStatistics(this.correct, this.incorrect, 0);
     const customEvent = new CustomEvent('speakitNewRaund');
     document.dispatchEvent(customEvent);
     this.gameResults.classList.add('hidden');

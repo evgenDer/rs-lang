@@ -13,12 +13,11 @@ export default class StartScreen {
     this.isRepeatLearnedWords = true;
   }
 
-  generateStartScreen(callbackFunctions) {
+  generateStartScreen() {
     this.exit = createElementObj({ tagName: 'img', classNames: 'speakit_exit', attrs: [['src', './assets/img/icons/close-game.svg'], ['alt', 'закрыть игру']] });
-    this.callbackFunctions = callbackFunctions;
     this.modeBtn = createElementObj({
       tagName: 'button',
-      classNames: 'uk-button uk-button-default speakit_game-control__btn speakit_game-control__btn-mode',
+      classNames: 'uk-button uk-button-default speakit_game-control__btn speakit_game-control__btn-mode game-control__btn_mode_disabled',
       textContent: MODE_INFO.studied.textBtn,
     });
     this.modeMessage = createElementObj({ tagName: 'p', classNames: 'mode-info', textContent: MODE_INFO.studied.textMessage });
@@ -43,9 +42,7 @@ export default class StartScreen {
         this.statisticsBtn,
         this.levelsDropdoun.generate(() => this.roundsDropdoun.makeItemActive(0)),
         this.roundsDropdoun.generate(() => {
-          const data = { studied: false, level: this.levelsDropdoun.getNumCurrentItem(), page: this.roundsDropdoun.getNumCurrentItem() };
           saveCustomConfiguration('speakIt', { level: this.levelsDropdoun.getNumCurrentItem(), round: this.roundsDropdoun.getNumCurrentItem() });
-          this.callbackFunctions.onChangeLevel(data);
         }),
         this.modeBtn,
         this.modeMessageContainer,
@@ -71,9 +68,7 @@ export default class StartScreen {
   }
 
   chageRound() {
-    if (this.isRepeatLearnedWords) {
-      this.callbackFunctions.onChangeLevel({ studied: true });
-    } else {
+    if (!this.isRepeatLearnedWords) {
       const currentRaund = this.roundsDropdoun.getNumCurrentItem();
       const currentLevel = this.levelsDropdoun.getNumCurrentItem();
       if (currentRaund < ROUNDS_NUMBER) {
@@ -106,10 +101,14 @@ export default class StartScreen {
       if (this.isRepeatLearnedWords) {
         this.modeBtn.innerHTML = MODE_INFO.all.textBtn;
         this.modeMessage.innerHTML = MODE_INFO.all.textMessage;
+        this.modeBtn.classList.remove('game-control__btn_mode_disabled');
+        this.modeBtn.classList.add('game-speak-it-control__btn_mode_active');
         this.levelsDropdoun.show();
         this.roundsDropdoun.show();
 
       } else {
+        this.modeBtn.classList.remove('game-speak-it-control__btn_mode_active');
+        this.modeBtn.classList.add('game-control__btn_mode_disabled');
         this.modeBtn.innerHTML = MODE_INFO.studied.textBtn;
         this.modeMessage.innerHTML = MODE_INFO.studied.textMessage;
         this.levelsDropdoun.hide();
@@ -120,7 +119,7 @@ export default class StartScreen {
 
     this.statisticsBtn.addEventListener('click', (event) => {
       event.preventDefault();
-      this.statistics.showGlobalStatistics(true);
+      this.statistics.showGlobalStatistics(false);
     });
 
   }
