@@ -37,14 +37,19 @@ export async function saveCustomConfiguration(gameName, gameConfiguration) {
 }
 
 export async function getCustomConfiguration(gameName) {
-  const configuration = await configurationService.getSettings();
-  if (!configuration.optional || !configuration.optional[gameName]) {
+  try{
+    const configuration = await configurationService.getSettings();
+    сonsole.log(configuration);
+    if (!configuration.optional || !configuration.optional[gameName]) {
+      return null;
+    }
+
+    const value = JSON.parse(configuration.optional[gameName]);
+
+    return value;
+  } catch(error){
     return null;
   }
-
-  const value = JSON.parse(configuration.optional[gameName]);
-
-  return value;
 }
 
 async function updateConfiguration(configuration) {

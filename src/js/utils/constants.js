@@ -56,7 +56,7 @@ const PAGES = [
   },
   {
     id: 'promo-page',
-    href: '#',
+    href: 'promo.html',
     img: './assets/img/icons/promo.svg',
     text: 'Промо',
   },
@@ -79,7 +79,6 @@ const WORD_STATE = {
   deleted: 'deleted',
   learning: 'learning',
 };
-
 
 const AUDIO_B64 = 'data:audio/mp3;base64,';
 const IMG_B64 = 'data:image/jpg;base64,';

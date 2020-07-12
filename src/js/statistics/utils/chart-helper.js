@@ -125,14 +125,13 @@ export function renderPercentToAllChart(data){
       text: "Прогресс изученных слов"
     },
     axisY: {
-      suffix: "%",
-      // maximum: 100
+      maximum: 3600
     },
     data: [{
       type: "stepArea",
       markerSize: 5,
       xValueFormatString: "DD MMM",
-      yValueFormatString: "#,##0.##\"%\"",
+      yValueFormatString: "#,##0.##\" из 3600\"",
       dataPoints: data
     }]
   });

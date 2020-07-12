@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-new */
-import Sentence from './sentence';
+import Sentence, { drawPuzzleImage } from './sentence';
 import { createElement } from '../../utils/create';
 import { removeChild, removeAllButtons, insertNewButtons } from '../../utils/helpers';
 import { BUTTONS_CLASSES, DATA_URL } from '../../utils/constants';
@@ -196,6 +196,7 @@ export default class Round {
       insertNewButtons([resultButton, nextButton]);
     } else {
       this.generateCorrectSentence();
+      addHintShowImage(true, this.srcImagesParts[this.currentSentenceNumber]);
       document.querySelector('.current').classList.remove('current');
       this.currentSentenceNumber += 1;
       this.generateSentenceInRound();

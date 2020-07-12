@@ -120,11 +120,15 @@ export default class Sentence {
     const minWidth = 4;
     let puzzle;
     arraySentence.forEach((element, index) => {
-      const widthLastElement = this.imageWidth + 2.5 - this.width;
+      const widthLastElement = this.imageWidth - this.width + 2;
       const widthElement = (index !== arraySentence.length - 1)
         ? (this.imageWidth / this.sentence.length) * element.length : widthLastElement;
-      const widthForDrawElement = (element.length < minWidth && index !== arraySentence.length - 1)
-        ? (widthElement * 1.5 + 2) : widthElement;
+      let  widthForDrawElement = 0;
+      if (element.length < minWidth && index !== arraySentence.length - 1){
+        widthForDrawElement = (element.length < 3 ) ? (widthElement * 2 + 2) : (widthElement * 1.5 + 2);
+      } else {
+        widthForDrawElement = widthElement;
+      }
       if (index === 0) puzzle = this.drawPuzzle(Math.ceil(widthForDrawElement), element, false, true);
       else if (index === arraySentence.length - 1) {
         puzzle = this.drawPuzzle(Math.ceil(widthForDrawElement), element, true, false);
