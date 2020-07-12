@@ -91,7 +91,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('learningWords.html', 'index'),
     htmlWebpackPluginCreator('promo.html', 'index'),
     htmlWebpackPluginCreator('games.html', 'index'),
-    htmlWebpackPluginCreator('dictionary.html', 'index'),
+    htmlWebpackPluginCreator('vocabulary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
     htmlWebpackPluginCreator('game_sprint.html', 'index', 'game_sprint'),
     htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),

@@ -37,7 +37,7 @@ export default class LearningLineElement extends HTMLElement {
     #errorAnimationContainer {position: absolute; left:0; top:0;}
     ::slotted(span[slot=word3]) {padding: 2px 5px 2px 10px; opacity: 1; transition: opacity; transition-duration: 1s;}
     ::slotted(span.animatted) {opacity: 0;}
-    ::slotted(input) {padding: 1px 5px 2px 11px; width: 100%; position:absolute; left:0; top:0;
+    ::slotted(input) {padding: 1px 0px 2px 11px; width: 100%; position:absolute; left:0; top:0;
        background: transparent; border: none; outline: none; color: inherit}
     ::slotted(span[slot=input]) {padding: 2px 5px 2px 10px; color: ${style.correctLetterColor};}
     ::slotted(span[slot=input].deleted) {color: ${style.deletedWordColor};}

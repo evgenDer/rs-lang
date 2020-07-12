@@ -22,32 +22,20 @@ export default function createCard(learningScreenElement) {
 
   card.setState('mode', mode);
   if (mode === 'newWord') {
+    card.state = learningScreenElement.wordArrs.newWords[currentNewWordCardIndex];
     card.setState(
       'isDone',
       learningScreenElement.localState.newWordProgressArr[currentNewWordCardIndex],
     );
-    for (const prop in learningScreenElement.wordArrs.newWords[currentNewWordCardIndex]) {
-      card.setState(prop, learningScreenElement.wordArrs.newWords[currentNewWordCardIndex][prop]);
-    }
   } else if (mode === 'learning') {
+    card.state = learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex];
     card.setState(
       'isDone',
       learningScreenElement.localState.learningProgressArr[currentLearningCardIndex],
     );
-    for (const prop in learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex]) {
-      card.setState(
-        prop,
-        learningScreenElement.wordArrs.learnedWords[currentLearningCardIndex][prop],
-      );
-    }
   } else if (mode === 'repeating') {
     const { currentRepeatingCardIndex } = learningScreenElement.state;
-    for (const prop in learningScreenElement.wordArrs.needToRepeat[currentRepeatingCardIndex]) {
-      card.setState(
-        prop,
-        learningScreenElement.wordArrs.needToRepeat[currentRepeatingCardIndex][prop],
-      );
-    }
+    card.state = learningScreenElement.wordArrs.needToRepeat[currentRepeatingCardIndex];
     card.setState(
       'isDone',
       learningScreenElement.localState.needToRepeatProgressArr[currentRepeatingCardIndex],
