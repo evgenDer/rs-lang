@@ -6,7 +6,7 @@ export function fillText(puzzle) {
   const context = puzzle.getContext('2d');
   context.fillStyle = 'white';
   const tabletWidth = 768;
-  let fontSize = puzzle.height/3;
+  let fontSize = puzzle.height/3.5;
   context.textAlign = 'center';
   const width = puzzle.width - puzzle.height / 2;
   const text = puzzle.dataset.word;
@@ -120,12 +120,12 @@ export default class Sentence {
     const minWidth = 4;
     let puzzle;
     arraySentence.forEach((element, index) => {
-      const widthLastElement = this.imageWidth - this.width + 2;
+      const widthLastElement = this.imageWidth - this.width + 3;
       const widthElement = (index !== arraySentence.length - 1)
         ? (this.imageWidth / this.sentence.length) * element.length : widthLastElement;
       let  widthForDrawElement = 0;
       if (element.length < minWidth && index !== arraySentence.length - 1){
-        widthForDrawElement = (element.length < 3 ) ? (widthElement * 2 + 2) : (widthElement * 1.5 + 2);
+        widthForDrawElement = (element.length < 3 ) ? (widthElement * 1.8) : (widthElement * 1.3 + 2);
       } else {
         widthForDrawElement = widthElement;
       }
