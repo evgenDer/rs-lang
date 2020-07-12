@@ -32,8 +32,10 @@ export const showElement = (element) => {
 }
 
 export function removeChild(parentNode) {
-  while (parentNode.firstChild) {
-    parentNode.removeChild(parentNode.lastChild);
+  if (parentNode) {
+    while (parentNode.firstChild) {
+      parentNode.removeChild(parentNode.lastChild);
+    }
   }
 }
 

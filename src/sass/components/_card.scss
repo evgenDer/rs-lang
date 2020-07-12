@@ -17,10 +17,8 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  // text-align: center;
   .uk-card{
     margin: 0 auto 10px;
-    // padding: 0px;
     color: $color-secondary;
     border-radius: 10px;
     background-color: $color-background;
@@ -66,7 +64,6 @@
 .card__header .correct{
   border-radius: 10px 0 10px 0;
   height: 150px;
-  // border: none;
 }
 
 @keyframes BORDER_GREEN {

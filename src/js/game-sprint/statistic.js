@@ -61,11 +61,11 @@ async function getCompareHTMLElement(points){
   if(maxScore < points){
     innerTextResult = 'Это ваш лучший результат!';
     resPer = 1- (maxScore / points);
-    innerTextComare = `Он на<span>${Math.round(resPer * 100)}%</span>лучше максимального`;
+    innerTextComare = `Он на<span> ${Math.round(resPer * 100)}% </span>лучше максимального`;
   } else if(maxScore > points){
     innerTextResult = 'Неплохой результат';
     resPer = (points === 0) ? 1 : 1 - points / maxScore;
-    innerTextComare = `Он на<span>${Math.round(resPer * 100)}%</span>отстаёт от максимального`;
+    innerTextComare = `Он на<span> ${Math.round(resPer * 100)}% </span>отстаёт от максимального`;
   } else {
     innerTextResult = 'Игра прошла успешно!';
     innerTextComare = `Вы достигли своего максимального результата`;
@@ -83,11 +83,11 @@ export async function createStaticticRound(points){
   const compareHTMLElement = await getCompareHTMLElement(points);
   const statisticElement =
   `<div id="modal-close-default" uk-modal class = 'modal'>
-      <div class="uk-modal-dialog modal-round" bg-close = "false" esc-close = "false">
+      <div class="uk-modal-dialog modal-round">
           <div class="uk-modal-header">
             <h2>Результаты</h2>
             <h3>Вы набрали</h3>
-            <h3><span class = "points">${points}</span>баллов</h3>
+            <h3><span class = "points">${points} </span>баллов</h3>
             ${compareHTMLElement}
           </div>
           <div uk-overflow-auto class="uk-modal-body">

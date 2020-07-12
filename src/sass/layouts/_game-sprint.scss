@@ -314,6 +314,7 @@ img[alt="bird"]{
   }
 
   span {
+    padding: 0px;
     color: $color-additional;
   }
 }
@@ -360,6 +361,9 @@ img[alt="bird"]{
 
 #game-sprint {
   .modal-round {
+    &__correct, &__error{
+      padding: 0 15px!important;
+    }
     position: absolute;
     padding: 10px;
     width: 500px;
@@ -372,6 +376,10 @@ img[alt="bird"]{
     }
     @include media-mobile {
       top: 0vh;
+    }
+    span {
+      margin: 0px;
+      padding: 0px;
     }
     margin-bottom: 10px;
 
@@ -420,5 +428,11 @@ img[alt="bird"]{
         }
       }
     }
+  }
+}
+
+#game-sprint .modal-round {
+  &__correct span, &__error span{
+    padding: 0 15px!important;
   }
 }

@@ -28,7 +28,8 @@ function loadGame(){
   playPage.insertAdjacentHTML('beforeend', playHtml);
   const game = new Game(getGameMode(), Dropdown.getCurrentLevel(), Dropdown.getCurrentRound());
   game.generateFieldOfGame();
-  const startTimer = timer(7, 'game-sprint__load', 'Приготовьтесь', game, game.startGame);
+  const timeCountdown = 7;
+  const startTimer = timer(timeCountdown, 'game-sprint__load', 'Приготовьтесь', game, game.startGame);
   startTimer();
 }
 

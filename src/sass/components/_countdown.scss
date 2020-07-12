@@ -82,3 +82,26 @@
     font-size: 25px;
   }
 }
+
+
+#game-concentration {
+  .base-timer {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  .base-timer__label {
+    color: $color-primary;
+    @include font(2rem, 2rem, bold);
+    vertical-align: middle;
+    text-align: center;
+    width: 80px;
+    height: 80px;
+  }
+}
