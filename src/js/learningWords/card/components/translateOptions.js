@@ -16,10 +16,13 @@ export default class TranslateOptions extends HTMLElement {
     super();
 
     this.state = {
-      showWordTranslation: false,
       showNewWordTranslation: false,
       showSentenceTranslation: false,
+      showWordTranslation: false,
+      showSentenceExplanation: false,
+      showExplanationExample: false,
     };
+
 
     this.localState = {
       isReadyToRenderArr: [],
@@ -36,6 +39,7 @@ export default class TranslateOptions extends HTMLElement {
       form {padding-top: 5px;}
       .optionLine {padding: 2px; display: flex;}
       span {width: calc(100% - 15px); display: block;}
+      .inactive {filter:brightness(0.5) opacity(0.5);}
 
       @media screen and (max-width: ${style.tabletWidth}) {
         :host{font-size: 13px}
@@ -49,22 +53,18 @@ export default class TranslateOptions extends HTMLElement {
     <span id='header'>Настройки перевода</span>
       <form>
         <div class='optionLine'>
-          <span>Отображать перевод слова</span>
-          <slot name='wordTranslationCheckbox'></slot>
-        </div>
-        <div class='optionLine'>
-          <span>Отображать перевод новых слов</span>
+          <span class='showNewWordTranslation '>Отображать перевод слов</span>
           <slot name='newWordTranslationCheckbox'></slot>
         </div>
         <div class='optionLine'>
-          <span>Отображать перевод предложений</span>
+          <span class='showSentenceTranslation'>Отображать перевод предложений</span>
           <slot name='sentenseTranslationCheckbox'></slot>
         </div>
       </form>
     </div>
 
     `;
-    this.innerHTML = `<input type='checkbox' slot='wordTranslationCheckbox' class='showWordTranslation'></input>
+    this.innerHTML = `
     <input type='checkbox' slot='newWordTranslationCheckbox' class='showNewWordTranslation '></input>
     <input type='checkbox' slot='sentenseTranslationCheckbox' class=' showSentenceTranslation'></input>`;
 
@@ -82,9 +82,28 @@ export default class TranslateOptions extends HTMLElement {
   }
 
   render() {
-    this.querySelectorAll('input[type=checkbox]').forEach(
-      (element) => (element.checked = this.state[element.classList[0]]),
-    );
+    const wordTranslText = this.shadowRoot.querySelector('span.showNewWordTranslation');
+    const sentTranslText = this.shadowRoot.querySelector('span.showSentenceTranslation');
+    const wordTranslChbx = this.querySelector('.showNewWordTranslation');
+    const sentTranslChbx = this.querySelector('.showSentenceTranslation');
+
+    if (this.state.showWordTranslation) {
+      wordTranslText.classList.add('inactive');
+      wordTranslChbx.classList.add('inactive');
+      wordTranslChbx.checked = true;
+      wordTranslChbx.disabled = true;
+    } else {
+      wordTranslChbx.checked = this.state.showNewWordTranslation;
+    }
+    if (!this.state.showSentenceExplanation && !this.state.showExplanationExample) {
+      sentTranslText.classList.add('inactive');
+      sentTranslChbx.classList.add('inactive');
+      sentTranslChbx.checked = false;
+      sentTranslChbx.disabled = true;
+    } else {
+      sentTranslChbx.checked = this.state.showSentenceTranslation;
+    }
+
   }
 
   setState(propName, newPropState) {

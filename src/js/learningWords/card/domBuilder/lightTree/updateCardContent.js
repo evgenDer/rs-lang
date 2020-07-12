@@ -63,11 +63,7 @@ export default function updateCardContent(cardElement) {
     }
   }
   //Перевод слова
-  if (
-    (cardElement.settings.showNewWordTranslation && cardElement.state.optional.successPoint <= 1) ||
-    (cardElement.settings.showWordTranslation && cardElement.state.isDone) ||
-    (!cardElement.settings.showSentenceExplanation && !cardElement.settings.showExplanationExample)
-  ) {
+  if ((cardElement.settings.showWordTranslation) || (cardElement.settings.showNewWordTranslation && cardElement.state.isDone)) {
     ruWord.classList.add('opened');
   } else {
     ruWord.classList.remove('opened');
