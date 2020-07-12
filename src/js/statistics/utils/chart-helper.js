@@ -125,7 +125,6 @@ export function renderPercentToAllChart(data){
       text: "Прогресс изученных слов"
     },
     axisY: {
-      maximum: 3600
     },
     data: [{
       type: "stepArea",
