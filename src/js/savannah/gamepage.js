@@ -80,6 +80,7 @@ const createMainOnStartingPage = () => {
 
 export function generateGame(){
   const game = new Game(getGameMode(), getCurrentLevel(), getCurrentRound() );
+  console.log(getCurrentLevel(), getCurrentRound());
   game.startGame();
 }
 
