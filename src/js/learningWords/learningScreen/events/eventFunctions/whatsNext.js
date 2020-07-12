@@ -12,12 +12,11 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
       const wordIndex = findNexWordIndex(learningScreenElement, 'newWord', mode);
 
       if (wordIndex === -1) {
-        // Все слова сделаны
         if (learningScreenElement.wordArrs.needToRepeat.length !== 0) {
           switchToRepeatingMode(learningScreenElement);
           const wordIndex = findNexWordIndex(learningScreenElement, 'repeating');
           if (wordIndex === -1) {
-            
+
           } else {
             learningScreenElement.state.currentRepeatingCardIndex = wordIndex;
             willCreateCard = true;
@@ -40,7 +39,6 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
       const wordIndex = findNexWordIndex(learningScreenElement, 'learning', mode);
 
       if (wordIndex === -1) {
-        // Все слова сделаны
         if (learningScreenElement.wordArrs.needToRepeat.length !== 0) {
           switchToRepeatingMode(learningScreenElement);
           const wordIndex = findNexWordIndex(learningScreenElement, 'repeating');
@@ -50,8 +48,6 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
             willCreateCard = true;
           }
         } else {
-          //Все изучено и улажено
-          console.log('Дело сделано');
         }
       } else {
         learningScreenElement.state.currentLearningCardIndex = wordIndex;
@@ -65,8 +61,6 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
   } else if (learningScreenElement.state.mode === 'repeating') {
     const wordIndex = findNexWordIndex(learningScreenElement, 'repeating');
     if (wordIndex === -1) {
-      console.log('Дело сделано');
-      //Все изучено и улажено
     } else {
       learningScreenElement.state.currentRepeatingCardIndex = wordIndex;
       willCreateCard = true;
