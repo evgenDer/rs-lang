@@ -17,7 +17,7 @@ function isValidToken(refreshToken) {
 }
 
 function isNewUser() {
-  return !(isValidToken() && localStorage.getItem('userId') !== null);
+  return !(localStorage.getItem('userId') !== null);
 }
 
 export {

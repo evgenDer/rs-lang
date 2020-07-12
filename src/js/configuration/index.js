@@ -8,7 +8,7 @@ import dayStat from '../main-page/dayStat';
 export async function getConfiguration() {
   const configuration = await configurationService.getSettings();
 
-  if (!configuration || !configuration.optional) {
+  if (!configuration || configuration == null || !configuration.optional) {
     const configurationModel = {
       optional: DEFAULT_CONFIGURATION,
     };
@@ -21,7 +21,7 @@ export async function getConfiguration() {
 }
 
 export async function saveCustomConfiguration(gameName, gameConfiguration) {
-  const oldConfiguration = await configurationService.getSettings();
+  const oldConfiguration = await getConfiguration();
 
   const configuration = {};
   configuration.optional = oldConfiguration.optional;
@@ -36,8 +36,17 @@ export async function saveCustomConfiguration(gameName, gameConfiguration) {
 }
 
 export async function getCustomConfiguration(gameName) {
-  const configuration = await configurationService.getSettings();
-  if (!configuration.optional || !configuration.optional[gameName]) {
+  try{
+    const configuration = await getConfiguration();
+    сonsole.log(configuration);
+    if (!configuration.optional || !configuration.optional[gameName]) {
+      return null;
+    }
+
+    const value = JSON.parse(configuration.optional[gameName]);
+
+    return value;
+  } catch(error){
     return null;
   }
 
@@ -121,12 +130,9 @@ async function saveConfiguration() {
   prevConfiguration.showExplanationExample = cardsConfiguration.showExplanationExample;
   prevConfiguration.showWordTranscription = cardsConfiguration.showWordTranscription;
   prevConfiguration.showImageAssociation = cardsConfiguration.showImageAssociation;
-  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;
-  prevConfiguration.showNewWordTranslation = appConfiguration.showNewWordTranslation;
-  prevConfiguration.showSentenceTranslation = appConfiguration.showSentenceTranslation;
+  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;;
   prevConfiguration.showAnswer = appConfiguration.showAnswer;
   prevConfiguration.deleteWords = appConfiguration.deleteWords;
-  prevConfiguration.markAsDifficultWord = appConfiguration.markAsDifficultWord;
   prevConfiguration.possibilityToMarkWord = appConfiguration.possibilityToMarkWord;
 
   await updateConfiguration(prevConfiguration);

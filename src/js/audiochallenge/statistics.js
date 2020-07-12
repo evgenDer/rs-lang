@@ -2,13 +2,15 @@ import {
   removeChild
 } from '../helpers/html-helper';
 import {
-  GAME_DATA_URL
+  GAME_DATA_URL, errorFields, successFields,
 } from '../games/constants';
 import {
   AUDIO_B64
 } from '../utils/constants';
 import playAudio from '../helpers/audio';
 import * as downloadHelper from '../download/download';
+
+
 
 
 function createStatisticSentence(audioSrc, textExample, translate, b64 = false) {
@@ -20,14 +22,6 @@ function createStatisticSentence(audioSrc, textExample, translate, b64 = false) 
 
   return newElement;
 }
-
-const errorFields = [
-  "Неправильно отвеченные слова"
-];
-
-const successFields = [
-  "Правильно отвеченные слова"
-];
 
 export function addStatisticsRound(dataPageRound, b64 = false) {
   let correct = 0;
