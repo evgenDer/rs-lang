@@ -32,5 +32,9 @@ export const SORTING_OPTIONS = {
     text: 'алфавиту',
     nameFunction: 'getWord',
   },
+  progress: {
+    text: 'прогрессу',
+    nameFunction: 'getProgress',
+  },
 }
 
