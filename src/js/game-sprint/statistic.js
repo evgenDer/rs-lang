@@ -110,8 +110,8 @@ export async function createStaticticRound(points){
 document.getElementById('modal-btn-report').addEventListener('click', () => {
   errorFields.push('\r\n\r\n');
 
-  const text = `Итог по игре "Аудиовызов"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
-  downloadHelper.download(`savannah-report_${new Date().toISOString()}.txt`, text);
+  const text = `Итог по игре "Спринт"\r\n\r\n${errorFields.join('\r\n')}${successFields.join('\r\n')}`;
+  downloadHelper.download(`sprint-report_${new Date().toISOString()}.txt`, text);
 });
 
 }
