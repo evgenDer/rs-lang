@@ -12,6 +12,9 @@ import './promo/promoPageCreating.js';
 window.onload = () => {
   addHeaderToPage();
   const activePage = defineActivePage();
+  // if(isNewUser()){
+    // window.location.replace('index.html');
+ // }
   switch (activePage) {
     case 0:
       // main-page
