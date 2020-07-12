@@ -69,7 +69,6 @@
         background-color: $color-light-green;
         border: none;
         border-radius: 5px;
-        animation: ani9 0.4s ease-in-out infinite alternate;
         font-size: 25px;
         cursor: pointer;
         &:focus {
@@ -513,4 +512,9 @@ span:nth-child(even){
       }
     }
   }
+}
+
+#game-savannah .game-control__list{
+  background-color: $color-darken!important;
+  color: $color-secondary;
 }
