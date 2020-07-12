@@ -32,7 +32,6 @@ export default class Game {
 
     this.gameField = document.querySelector('.process');
     this.answersContainer = document.querySelector('.process__answers');
-    this.crystal = document.querySelector('.crystal');
     this.btnAudio = document.querySelector('.game-container_audio');
 
     this.wordsAmntInRound = 20;
@@ -69,7 +68,9 @@ export default class Game {
         this.currentElement.innerHTMl = '|';
         this.pos += 6;
         elem.style.top = `${this.pos}px`;
-        if(this.pos + 10 > this.endPosition * 1.3) {
+        this.crystal = document.querySelector('.process__footer');
+        this.posCrystal = this.crystal.getBoundingClientRect();
+        if(this.pos + 10 > this.posCrystal.y + 5) {
           this.addResultsFromCurrentAnswer();
         }
       }
