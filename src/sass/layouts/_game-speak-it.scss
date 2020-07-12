@@ -17,17 +17,34 @@
   width: 100vw;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
+}
+
+
+.game-results {
+  justify-content: center;
 }
 
 .speakit_exit {
   width: 26px;
-  margin: 0px 40px;
+  margin: 0px 10px;
   cursor: pointer;
   filter: invert(84%) sepia(10%) saturate(1800%) hue-rotate(59deg) brightness(91%) contrast(91%);
   &:hover {
     filter: invert(52%) sepia(100%) saturate(304%) hue-rotate(156deg) brightness(84%) contrast(98%);
+  }
+
+  @media (max-width: 1200px ) {
+    margin: 0;
+  }
+
+  @media (max-width: $tablet-width ) {
+    margin: 0 11%;
+  }
+
+  @media (max-width: $mobile-big-width ) {
+    margin: 0 5%;
   }
 }
 
@@ -35,11 +52,14 @@
   width: 20px;
   margin: 0px 20px;
   transform: rotate(180deg);
-  opacity: .8;
+  opacity: 0.8;
   cursor: pointer;
   filter: invert(52%) sepia(100%) saturate(304%) hue-rotate(156deg) brightness(84%) contrast(98%);
   &:hover {
     filter: invert(84%) sepia(10%) saturate(1800%) hue-rotate(59deg) brightness(91%) contrast(91%);
+  }
+  @media (max-width: $mobile-big-width ) {
+    margin: 0px 12px;
   }
 }
 
@@ -53,16 +73,47 @@
   border-radius: 10px;
   border-radius: 10px;
   max-width: 800px;
-  margin: 20px 0 10px;
-  padding: 40px 34px;
+  margin: 70px 0 10px;
+  padding: 35px;
+
+  @media (max-width: 1200px ) {
+    margin: 20px;
+  }
+
+  @media (max-width: $tablet-width ) {
+    padding: 22px
+  }
+
+  @media (max-width: $mobile-big-width ) {
+    margin: 0 5%;
+  }
 }
 
 .intro__title {
-  margin: 40px auto;
+  margin: 43px auto;
   opacity: 0.95;
   text-transform: uppercase;
   color: #86d677;
   font-size: 3rem;
+
+  @media (max-width: $tablet-width ) {
+    margin: 23px auto;
+  }
+  @media (max-width: $mobile-big-width ) {
+    margin: 19px auto;
+    font-size: 2.5rem
+  }
+}
+
+.intro__info_line {
+  @media (max-width: $tablet-width ) {
+    font-size: 1.4rem;
+  }
+
+  @media (max-width: $mobile-big-width ) {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
 }
 
 .intro__info {
@@ -73,7 +124,7 @@
   opacity: 0.9;
 }
 
-.btn {
+.speak-it_btn {
   padding: 11px 30px;
   margin: 8px;
   border-radius: 10px;
@@ -94,9 +145,20 @@
   color: $color-primary;
   background: #6aca58;
   opacity: 0.9;
+
+  @media (max-width: $tablet-width ) {
+    min-width: 206px;
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: $mobile-big-width ) {
+    min-width: 180px;
+    font-size: 1.3rem;
+    padding: 8px;
+  }
 }
 
-.btn:hover {
+.speak-it_btn:hover {
   opacity: 1;
 }
 
@@ -110,6 +172,12 @@
 .game-control {
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  @media (max-width: $tablet-width ) {
+    flex-direction: column;
+    margin: 0 7%;
+  }
 }
 
 .game-control-dropdown {
@@ -121,22 +189,32 @@
   border: none;
   border-radius: 10px;
   background-color: $color-primary;
-  color: $color-light-blue;
+  color: #2581b2;
   border: 1px solid;
   opacity: 0.9;
   transition: all 0.4s;
-  font-size: .875rem;
+  font-size: 0.875rem;
   line-height: 38px;
   width: 150px;
   padding: 0 30px;
-  margin: 3px;
+
+  @media (max-width: $tablet-width ) {
+    line-height: 34px;
+    margin: 4px;
+    width: 190px;
+    padding: 0 17px;
+  }
 
   &:disabled {
     background-color: $color-primary;
-    color: $color-light-blue;
+    color: #2581b2;
     opacity: 0.8;
     transition: all 0.6s;
   }
+}
+
+.speakit_game-control__btn-statistics {
+  margin: 0 4px;
 }
 
 .speakit_game-control__btn:not(.disabled):hover {
@@ -167,9 +245,9 @@
 }
 
 #games-speak-it .game-speak-it-control__btn_mode_active {
-  color: $color-primary!important;
-  background: $color-green!important;
-  border: 1px solid $color-green!important;
+  color: $color-primary !important;
+  background: $color-green !important;
+  border: 1px solid $color-green !important;
 }
 
 #games-speak-it .game-control__btn_mode_disabled {
@@ -230,9 +308,12 @@
 .status-bar_container {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0px 43px;
+  margin: 10px 10px 43px;
   align-items: center;
   height: 40px;
+  @media (max-width: $mobile-big-width ) {
+    margin: 10px 10px 8px;
+  }
 }
 
 .btn_restart {
@@ -240,6 +321,10 @@
   color: $color-red;
   background: $color-primary;
   border: 1px solid $color-red;
+  @media (max-width: $mobile-big-width ) {
+    font-size: 1.4rem;
+    padding: 3px 9px;
+  }
 }
 
 .btn_restart:hover {
@@ -254,6 +339,10 @@
   color: $color-violet;
   background: $color-primary;
   border: 1px solid $color-violet;
+  @media (max-width: $mobile-big-width ) {
+    font-size: 1.4rem;
+    padding: 3px 9px;
+  }
 }
 
 .btn_statistic:hover {
@@ -268,6 +357,10 @@
   color: $color-green;
   background: $color-primary;
   border: 1px solid $color-green;
+  @media (max-width: $mobile-big-width ) {
+    font-size: 1.4rem;
+    padding: 3px 9px;
+  }
 }
 
 .btn_exit:hover {
@@ -283,6 +376,10 @@
   color: $color-light-blue;
   background: $color-primary;
   border: 1px solid $color-light-blue;
+  @media (max-width: $mobile-big-width ) {
+    font-size: 1.4rem;
+    padding: 3px 9px;
+  }
 }
 
 .btn_microphone-img {
@@ -295,7 +392,7 @@
 .btn_microphone.disabled {
   color: rgb(171, 172, 173);
   border: 1px solid #abacad;
-  opacity: .8;
+  opacity: 0.8;
   cursor: auto;
   .btn_microphone-img {
     filter: invert(78%) sepia(6%) saturate(31%) hue-rotate(169deg) brightness(88%) contrast(90%);
@@ -405,7 +502,6 @@
   background-color: transparent;
   border-radius: 10px;
 }
-
 
 .wrapper_game-board {
   margin: 5px 10px 10px;
@@ -529,9 +625,9 @@
   max-height: 660px;
 }
 
-.speakit_result_header h2{
+.speakit_result_header h2 {
   color: $color-secondary;
-  opacity: .9;
+  opacity: 0.9;
 }
 
 .game-results-answers_wrapper {
@@ -624,7 +720,7 @@
     font-weight: normal;
     line-height: 1.4rem;
   }
-  & .transcription{
+  & .transcription {
     margin: 0;
     font-size: 1.2rem;
     font-style: normal;
@@ -662,7 +758,7 @@
   top: 18px;
   right: 20px;
   filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(149deg) brightness(89%) contrast(88%);
-  &:hover{
+  &:hover {
     filter: invert(15%) sepia(14%) saturate(7102%) hue-rotate(198deg) brightness(88%) contrast(97%);
   }
 }
@@ -706,6 +802,7 @@
   border: 1px solid $color-primary;
   font-size: 1.5rem;
   opacity: 0.7;
+  min-width: fit-content;
 }
 
 .game-mode_btn:hover {
@@ -727,7 +824,7 @@
 .microphone_active {
   display: flex;
   flex-direction: column;
-  margin: 48px auto 10px;
+  margin: 28px auto 10px;
   height: 112px;
   justify-content: flex-start;
 }
@@ -883,10 +980,9 @@
 }
 
 .start-screen-header {
-  position: fixed;
-  top: 10px;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 20px 0px;
   width: 100%;
+  align-items: center;
 }

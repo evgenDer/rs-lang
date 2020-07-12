@@ -11,13 +11,13 @@ export default class StatusBar {
   generate(callbackFunctions) {
     this.exit = createElementObj({ tagName: 'img', classNames: 'status-bar_exit', attrs: [['src', './assets/img/icons/arrow-right.svg'], ['alt', 'назад']] });
     this.microphoneImg = createElementObj({ tagName: 'img', classNames: 'btn_microphone-img', attrs: [['src', './assets/img/icons/microphoneOff.svg'], ['alt', 'microphone']] });
-    this.btnMicrophone = createElementObj({ tagName: 'button', classNames: 'btn btn_microphone disabled', children: [this.microphoneImg] });
+    this.btnMicrophone = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_microphone disabled', children: [this.microphoneImg] });
     const iconRestart = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: refresh']] });
-    this.btnRestart = createElementObj({ tagName: 'button', classNames: 'btn btn_restart', children: [iconRestart] });
+    this.btnRestart = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_restart', children: [iconRestart] });
     const iconStatistic = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: file-text']] });
-    this.btnResult = createElementObj({ tagName: 'button', classNames: 'btn btn_statistic', children: [iconStatistic] });
+    this.btnResult = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_statistic', children: [iconStatistic] });
     const linkHome = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: home']] });
-    this.btnHome = createElementObj({ tagName: 'button', classNames: 'btn btn_home', children: [linkHome] });
+    this.btnHome = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_home', children: [linkHome] });
     const btnContainer = createElementObj({ tagName: 'div', children: [this.btnRestart, this.btnResult, this.btnHome, this.btnMicrophone] });
 
     this.starsContainer = createElementObj({ tagName: 'div', classNames: 'stars_container' });

@@ -19,7 +19,7 @@ export default class GamePage {
   this.display = new Display();
   this.microphone = new Microphone();
   this.results = new Results();
-  this.startGameModeBtn = createElementObj({ tagName: 'button', classNames: 'btn btn_speak', textContent: 'Тренировака произношение' });
+  this.startGameModeBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_speak', textContent: 'Тренировака произношение' });
   const buttons = createElementObj({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
 
   const callbacksForStatusBar = {
@@ -47,7 +47,7 @@ export default class GamePage {
     },
   }
 
-  this.gameContainer = createElementObj({ tagName: 'div', classNames: 'game-container hidden', children: [
+  this.gameContainer = createElementObj({ tagName: 'div', classNames: 'game-container wrapper hidden', children: [
     this.statusBar.generate(callbacksForStatusBar),
     this.display.generate(),
     this.microphone.generate(),

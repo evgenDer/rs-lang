@@ -37,8 +37,8 @@ export default class Results {
     });
 
     this.returnBtn = createElementObj({ tagName: 'img', classNames: 'results_exit', attrs: [['src', './assets/img/icons/close-game.svg'], ['alt', 'закрыть']] });
-    this.newGameBtn = createElementObj({ tagName: 'button', classNames: 'btn btn-results btn-new-game', textContent: 'Следующий раунд' });
-    this.report = createElementObj({ tagName: 'button', classNames: 'btn btn-results btn-report', textContent: 'Создать отчет' });
+    this.newGameBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn-results btn-new-game', textContent: 'Следующий раунд' });
+    this.report = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn-results btn-report', textContent: 'Создать отчет' });
     const controlBtn = createElementObj({ tagName: 'div', classNames: 'result_control-btn uk-modal-footer', children: [this.report, this.newGameBtn] });
     this.gameResultsWrapper = createElementObj({ tagName: 'div', classNames: 'game-results_wrapper', children: [this.returnBtn, titleContainer, this.answers, controlBtn] });
     this.gameResults = createElementObj({ tagName: 'div', classNames: 'game-results hidden', children: [this.gameResultsWrapper] });
