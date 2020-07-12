@@ -2,16 +2,17 @@
 /* eslint-disable no-param-reassign */
 import { createElement } from '../utils/create';
 import { GAME_MODES,  ERR_MSG, DATA_ERR_MSG } from '../games/constants';
-import { getFullDataWords } from '../api/words';
+import { getFullDataWords , getWordById } from '../api/words';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 import { selectNextRound, getCurrentRound, getCurrentLevel } from '../games/dropdown';
 import { Statistics } from '../statistics/components/statistics';
 import { addStatisticsRound, createStaticticsRound } from './statistic';
 import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/updateWordState';
-import { updateUserWord, getAggregatedWords } from '../api/userWords';
+import { updateUserWord, getAllUserWords} from '../api/userWords';
 import { saveCustomConfiguration } from '../configuration/index';
-import { playAudio } from '../helpers/audio';
+import { playAudio, stopAudio } from '../helpers/audio';
 import { removeChild } from '../helpers/html-helper';
+import { WORD_STATE } from '../utils/constants';
 
 
 export default class Game {
@@ -75,7 +76,7 @@ export default class Game {
       else if (this.pos > this.endPosition ) {
         clearInterval(this.timer);
         this.increaseWrongWord();
-        // this.startTask();
+
       } else {
         this.pos += 1;
         elem.style.top = `${this.pos}px`;
@@ -88,6 +89,7 @@ export default class Game {
     const life = document.querySelector('.process__heart');
     life.classList.remove('process__heart');
     life.src = 'assets/img/icons/heart-minus.svg';
+    this.playAudio('assets/audio/error.mp3');
     setTimeout(() =>{
       this.data[this.currentAnswer].isError = false;
       this.errors += 1;
@@ -105,11 +107,13 @@ export default class Game {
     }).catch((err) => {
       // eslint-disable-next-line no-undef
       UIkit.notification({
-        message: `<span uk-icon='icon: warning'></span> ${err}`,
+        message: `<span uk-icon='icon: warning'></span> ${err} Будет выполнен автоматический переход на стартовую страницу через несколько секунд`,
         status: 'warning',
         pos: 'top-center',
       });
-
+      setTimeout(()=>{
+        document.querySelector('.btn_return').click();
+      }, 3000);
     });
   }
 
@@ -134,18 +138,23 @@ export default class Game {
       this.data = await getFullDataWords(this.level, this.round, this.wordsAmntInRound);
       shuffleArray(this.data);
     } else {
-      const countPages = 24;
-      const userData = await getAggregatedWords();
-      if (userData.totalCount < this.wordsAmntInRound) {
+      const userData = await getAllUserWords();
+      if (userData.length < this.wordsAmntInRound) {
         throw ERR_MSG;
       }
-      this.numberRound = Number(localStorage.getItem('numberPage'));
-      if(this.numberRound >= countPages){
-        this.numberRound = 0;
-      }
-      this.numberRound += 1;
-      localStorage.setItem('numberPage', this.numberRound);
-      this.dataPage = shuffleArray(userData.paginatedResults);
+
+      this.userData = userData
+        .filter((data) => data !== undefined)
+        .filter((word) => word.optional.mode !== WORD_STATE.deleted)
+        .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
+        .slice(0, this.wordsAmntInRound);
+      shuffleArray(this.userData);
+
+      const promises = [];
+      this.userData.forEach(({ wordId }) => promises.push(getWordById(wordId)));
+
+      this.data = await Promise.all(promises);
+      console.log(this.data);
     }
 
     this.data = this.data.filter((data) => data !== undefined);
@@ -232,6 +241,7 @@ export default class Game {
           this.correct = true;
           removeChild(this.currentElement);
           this.currentElement.innerText = '|';
+          this.playAudio('assets/audio/correctAnswer.mp3');
         } else {
           this.increaseWrongWord();
           const answerCorrect = document.querySelector(`li[data-number='${this.rightAnswer}']`);
@@ -246,6 +256,13 @@ export default class Game {
     this.answers.forEach((element)=>{
       element.className = 'process__answer';
     });
+  }
+
+  playAudio(audioSrc){
+    if(this.isAudioPlay){
+      stopAudio();
+      playAudio(audioSrc);
+    }
   }
 
   addResultsFromCurrentAnswer() {
@@ -307,8 +324,8 @@ export default class Game {
       } else {
         this.isAudioPlay = false;
         this.btnAudio.classList.add('off');
-        this.btnAudio.src = 'assets/img/icons/sound-off.svg';
-      }
+        this.btnAudio.src = 'assets/img/icons/sound-off.svg';      }
+        stopAudio();
     });
   }
 

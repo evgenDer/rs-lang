@@ -11,6 +11,7 @@ import returnIcon from '../../img/icons/arrow-right.svg';
 import closeGame from './exit';
 import { SAVANNAH_BUTTON, SAVANNAH_TEXT, SAVANNAH_TITLE } from '../utils/constants';
 import createSpinner from '../utils/spinner';
+import { playAudio, stopAudio } from '../helpers/audio';
 
 export const createProcessTemplate = () => {
   const { answers } = createMain();
@@ -18,6 +19,7 @@ export const createProcessTemplate = () => {
   const process = createElement({ tagName: 'section', classNames: 'process', children: [answers, footer] });
   const game = new Game ( getGameMode(), getCurrentLevel(), getCurrentRound());
   game.startGame();
+  stopAudio();
   document.body.append(process);
   setTimeout(() => {
     process.classList.add('show-after-click');
@@ -35,6 +37,7 @@ export const createGameTimer = () => {
   setTimeout(() => {
     image.classList.add('opacity-one', 'show-after-click');
     timer.classList.add('show-after-click');
+    playAudio('assets/audio/time.mp3');
     const timerId = setInterval(() => {
       timerText.textContent = time;
       time -= 1;
