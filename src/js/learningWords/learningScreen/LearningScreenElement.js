@@ -110,7 +110,7 @@ export default class LearningScreenElement extends HTMLElement {
       createEvents(this);
       this.stat = new Statistics('Learning');
       const today = new Date();
-      //this.stat.dateTime = new Date(today.getYear(), today.getMonth(), today.getDate());
+      this.stat.dateTime = new Date(today.getYear(), today.getMonth(), today.getDate());
     } else {
       createResults(this);
     }
