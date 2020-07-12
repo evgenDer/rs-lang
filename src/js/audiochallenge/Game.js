@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createElement } from '../utils/create';
-import { GAME_MODES, GAME_DATA_URL, ERR_MSG } from '../games/constants';
+import { GAME_MODES, GAME_DATA_URL, ERR_MSG, DATA_ERR_MSG } from '../games/constants';
 import { getFullDataWords, getWordById } from '../api/words';
 import { showElement, hideElement } from '../helpers/html-helper';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
@@ -13,7 +13,7 @@ import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/upd
 import { getAllUserWords, updateUserWord } from '../api/userWords';
 import { AUDIO_B64, IMG_B64, WORD_STATE } from '../utils/constants';
 import { saveCustomConfiguration } from '../configuration/index';
-import playAudio from '../helpers/audio';
+import { playAudio } from '../helpers/audio';
 
 
 const loader = document.querySelector('.audiochallenge__load-page');
@@ -146,6 +146,7 @@ export class Game {
       }
 
       this.userData = userData
+        .filter((data) => data !== undefined)
         .filter((word) => word.optional.mode !== WORD_STATE.deleted)
         .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
         .slice(0, this.wordsAmntInRound);
@@ -157,6 +158,11 @@ export class Game {
       this.data = await Promise.all(promises);
     }
 
+    this.data = this.data.filter((data) => data !== undefined);
+    if (this.data.length !== this.wordsAmntInRound) {
+      throw DATA_ERR_MSG;
+    }
+
     this.allRoundTranslations = await this.getAllGroupWordTranslatons();
   }
 
@@ -166,6 +172,7 @@ export class Game {
     const allData = await getFullDataWords(this.level, 0, 1000);
 
     const allWords = allData
+      .filter((data) => data !== undefined)
       .map(({ wordTranslate }) => wordTranslate)
       .filter((word) => word !== '' && !dataWords.includes(word));
 
@@ -194,7 +201,7 @@ export class Game {
 
   getWords() {
     const currentWord = this.data[this.currentAnswer].wordTranslate;
-        
+
     this.words = this.getSimilarWords(currentWord, this.allRoundTranslations);
     this.words[this.rightAnswer] = currentWord;
   }
@@ -273,7 +280,7 @@ export class Game {
       .join('');
     return this.words.indexOf(word);
   }
-  
+
   addAnswersClickHandler() {
     this.answers.forEach((answer) => {
       answer.onclick = ({ target }) => {
@@ -281,7 +288,7 @@ export class Game {
         if (answerIndex === -1) {
           answerIndex = this.getAnswerIndex(target.nextSibling.textContent);
         }
-        
+
         if (answer.classList.contains('answer_disabled')) {
           // do nothing
         } else if (answerIndex === this.rightAnswer) {
@@ -295,7 +302,6 @@ export class Game {
           answer.classList.add('answer_wrong');
           answer.classList.add('uk-animation-shake');
 
-          this.errors += 1;
           ProgressBar.setWrongProgressPoint(this.task.progress.points[this.currentAnswer]);
         }
       };
@@ -336,14 +342,15 @@ export class Game {
           break;
         }
       }
-      
+
       if (target.classList.contains('game-field__control_next')) {
         const currentAnswer = this.data[this.currentAnswer];
         const isRight = ProgressBar.isRightProgressPoint(this.task.progress.points[this.currentAnswer]);
 
-        this.statistics.updateStatistics(currentAnswer.word, isRight, this.level);
         currentAnswer.isCorrect = isRight;
         currentAnswer.isError = !isRight;
+
+        this.errors += isRight ? 0 : 1;
 
         if (this.mode === GAME_MODES.learned) {
           const currentUserData = this.userData[this.currentAnswer];
@@ -361,12 +368,12 @@ export class Game {
         } else {
           selectNextRound();
           saveCustomConfiguration('audioCall', { level: getCurrentLevel(), round: getCurrentRound() });
-          
+
           backGameBtn.click();
+          this.statistics.updateGameStatistics(this.wordsAmntInRound - this.errors, this.errors, 0);
           this.showStatistics();
         }
       } else if (target.classList.contains('game-field__control_idnk')) {
-        this.errors += 1;
         ProgressBar.setWrongProgressPoint(this.task.progress.points[this.currentAnswer]);
 
         this.showRightAnswer();
@@ -378,7 +385,7 @@ export class Game {
   addKeyboardEventsHandler() {
     document.onkeydown = (event) => {
       event.preventDefault();
-      
+
       let answer = -1;
       switch (event.code) {
         case 'Digit1':
@@ -404,7 +411,7 @@ export class Game {
         case 'Enter':
           this.controlBtn.click();
           break;
-      
+
         default:
           break;
       }

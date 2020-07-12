@@ -2,17 +2,16 @@
 import { getCustomConfiguration } from '../configuration/index';
 import { DEFAULT_CONFIGURATION_GAMES } from '../constants/default-settings';
 
-
 const curLvl = document.getElementById('game-control__current_level');
 const listLvl = document.querySelectorAll('.game-control__list_level li');
 const listLvlContainer = document.querySelector('.game-control__list_level');
-export const listLvlBtnContainer = document.querySelector('.game-control__btn_level').parentElement;
+
+const btnRound = document.querySelector('.game-control__btn_round');
+const btnLevel = document.querySelector('.game-control__btn_level');
 
 const curRound = document.getElementById('game-control__current_round');
 const listRound = document.querySelectorAll('.game-control__list_round li');
 const listRoundContainer = document.querySelector('.game-control__list_round');
-export const listRoundBtnContainer = document.querySelector('.game-control__btn_round').parentElement;
-
 
 export function getCurrentLevel() {
   return (+curLvl.textContent) - 1;
@@ -67,11 +66,15 @@ export function addDropdownsEventHandlers() {
 
 
 function disableList(listContainer) {
-  listContainer.classList.add('game-control__list_disabled')
+  listContainer.classList.add('game-control__list_disabled');
+  btnRound.classList.add('disable');
+  btnLevel.classList.add('disable');
 }
 
 function enableList(listContainer) {
-  listContainer.classList.remove('game-control__list_disabled')
+  listContainer.classList.remove('game-control__list_disabled');
+  btnRound.classList.remove('disable');
+  btnLevel.classList.remove('disable');
 }
 
 export function disableDropdowns() {
@@ -104,12 +107,16 @@ export function selectNextRound() {
   }
 }
 
-export async function addActiveGameControls(gameName) {
+export async function addActiveGameControls(gameName){
   disableDropdowns();
   let gameConfiguration = await getCustomConfiguration(gameName);
-  if (Object.keys(gameConfiguration).length === 0) {
+  if (gameConfiguration && Object.keys(gameConfiguration).length !== 0) {
     gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
+    listRound[gameConfiguration.round].click();
+    listLvl[gameConfiguration.level].click();
+    selectNextRound();
   }
-  listRound[gameConfiguration.round].click();
-  listLvl[gameConfiguration.level].click();
 }
+
+export const listLvlBtnContainer = document.querySelector('.game-control__btn_level').parentElement;
+export const listRoundBtnContainer = document.querySelector('.game-control__btn_round').parentElement;

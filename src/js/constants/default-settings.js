@@ -22,6 +22,7 @@ export const DEFAULT_CONFIGURATION = {
   speakit: '{}',
   audioCall: '{}',
   mygame: '{}',
+  learning: '{}'
 };
 
 export const DEFAULT_CONFIGURATION_GAMES = {

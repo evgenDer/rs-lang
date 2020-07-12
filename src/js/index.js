@@ -6,6 +6,8 @@ import  initStatistics from './statistics/index';
 import initVocabularyPage from './vocabulary/index';
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage.js';
+import { getTokenTime } from './helpers/tokenHeleper';
+import './promo/promoPageCreating.js';
 
 
 window.onload = () => {

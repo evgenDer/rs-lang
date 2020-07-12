@@ -9,7 +9,7 @@ import * as configurationService from '../api/settings';
 export async function getConfiguration() {
   const configuration = await configurationService.getSettings();
 
-  if (!configuration || !configuration.optional) {
+  if (!configuration || configuration == null || !configuration.optional) {
     const configurationModel = {
       optional: DEFAULT_CONFIGURATION,
     };
@@ -22,7 +22,7 @@ export async function getConfiguration() {
 }
 
 export async function saveCustomConfiguration(gameName, gameConfiguration) {
-  const oldConfiguration = await configurationService.getSettings();
+  const oldConfiguration = await getConfiguration();
 
   const configuration = {};
   configuration.optional = oldConfiguration.optional;
@@ -37,9 +37,17 @@ export async function saveCustomConfiguration(gameName, gameConfiguration) {
 }
 
 export async function getCustomConfiguration(gameName) {
-  const configuration = await configurationService.getSettings();
+  try{
+    const configuration = await getConfiguration();
+    сonsole.log(configuration);
+    if (!configuration.optional || !configuration.optional[gameName]) {
+      return null;
+    }
 
-  if (!configuration.optional || !configuration.optional[gameName]) {
+    const value = JSON.parse(configuration.optional[gameName]);
+
+    return value;
+  } catch(error){
     return null;
   }
 
@@ -50,6 +58,7 @@ export async function getCustomConfiguration(gameName) {
 
 async function updateConfiguration(configuration) {
   const configurationModel = {
+    wordsPerDay: 10,
     optional: configuration,
   };
 
@@ -60,7 +69,6 @@ export async function updatDifficultyLevel(userDifficultyLevel) {
   const configuration = await getConfiguration();
 
   configuration.difficultyLevel = userDifficultyLevel;
-
   await updateConfiguration(configuration);
 }
 
@@ -104,26 +112,23 @@ async function saveConfiguration() {
     dayLearningDate = Date.now();
   }
 
-  const configuration = {
-    maxNewWordsPerDay: userConfiguration.maxNewWordsPerDay,
-    maxCardsWithWordsPerDay: userConfiguration.maxCardsWithWordsPerDay,
-    dayLearningDate,
-    difficultyLevel: userConfiguration.difficultyLevel,
-    showWordTranslation: cardsConfiguration.showWordTranslation,
-    showSentenceExplanation: cardsConfiguration.showSentenceExplanation,
-    showExplanationExample: cardsConfiguration.showExplanationExample,
-    showWordTranscription: cardsConfiguration.showWordTranscription,
-    showImageAssociation: cardsConfiguration.showImageAssociation,
-    enableAutomaticAudio: appConfiguration.enableAutomaticAudio,
-    showNewWordTranslation: appConfiguration.showNewWordTranslation,
-    showSentenceTranslation: appConfiguration.showSentenceTranslation,
-    showAnswer: appConfiguration.showAnswer,
-    deleteWords: appConfiguration.deleteWords,
-    markAsDifficultWord: appConfiguration.markAsDifficultWord,
-    possibilityToMarkWord: appConfiguration.possibilityToMarkWord,
-  };
+  prevConfiguration.maxNewWordsPerDay = userConfiguration.maxNewWordsPerDay;
+  prevConfiguration.maxNewWordsPerDay = userConfiguration.maxNewWordsPerDay;
+  prevConfiguration.maxCardsWithWordsPerDay = userConfiguration.maxCardsWithWordsPerDay;
+  prevConfiguration.dayLearningDate = dayLearningDate;
+  prevConfiguration.difficultyLevel = userConfiguration.difficultyLevel;
+  prevConfiguration.showWordTranslation = cardsConfiguration.showWordTranslation;
+  prevConfiguration.showSentenceExplanation = cardsConfiguration.showSentenceExplanation;
+  prevConfiguration.showExplanationExample = cardsConfiguration.showExplanationExample;
+  prevConfiguration.showWordTranscription = cardsConfiguration.showWordTranscription;
+  prevConfiguration.showImageAssociation = cardsConfiguration.showImageAssociation;
+  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;;
+  prevConfiguration.showAnswer = appConfiguration.showAnswer;
+  prevConfiguration.deleteWords = appConfiguration.deleteWords;
+  prevConfiguration.possibilityToMarkWord = appConfiguration.possibilityToMarkWord;
 
-  await updateConfiguration(configuration);
+  await updateConfiguration(prevConfiguration);
+
   window.localStorage.setItem('dayLearningDate', '-1');
   return true;
 }

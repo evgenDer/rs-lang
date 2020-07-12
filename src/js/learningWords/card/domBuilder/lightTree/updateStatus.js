@@ -6,12 +6,13 @@ export default function initLearning(cardElement) {
   const mark = Math.floor(cardElement.state.optional.successPoint);
   const currentColor = markToStyle[`${mark}`];
   dots.forEach((element, index) => {
-
-    if (index <= (mark - 1)) {
+    if (index <= mark - 1) {
       element.style.background = currentColor;
     } else {
       element.style.background = 'white';
     }
-  })
+  });
   statusText.innerHTML = markToText[`${mark}`];
 }
+
+export { markToStyle, markToText };
