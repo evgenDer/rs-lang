@@ -15,7 +15,6 @@ function addStatisticsButtonClickHandler() {
 }
 
 window.onload = () => {
-  createHeaderOnStartingPage();
   addGameModeSwitchClickHandler();
 
   Dropdown.addDropdownsEventHandlers();
@@ -23,5 +22,6 @@ window.onload = () => {
   Dropdown.enableDropdowns();
 
   addStatisticsButtonClickHandler();
+  createHeaderOnStartingPage();
 };
 
