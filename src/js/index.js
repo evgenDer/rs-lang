@@ -7,6 +7,7 @@ import initStatistics from './statistics/index';
 // импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage';
 import './promo/promoPageCreating';
+import initVocabularyPage from './vocabulary/index';
 
 window.onload = () => {
   addHeaderToPage();
@@ -25,7 +26,8 @@ window.onload = () => {
       // games-page
       break;
     case 4:
-      // dictionary-page
+      initVocabularyPage();
+      // vocabulary-page
       break;
     case 5:
       initStatistics();

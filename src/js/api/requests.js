@@ -3,7 +3,6 @@ import { getTokenForRequest } from './token';
 async function sendRequest(methodRequest, urlRequest, withCredentials = false, objectBody = null) {
   try {
     const token = await getTokenForRequest();
-    console.log(token);
     const params = {
       method: methodRequest,
       headers: {
@@ -27,7 +26,6 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
 
     return rawResponse.json();
   } catch (error) {
-    console.error(error.toString());
     return error;
   }
 }

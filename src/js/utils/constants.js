@@ -37,9 +37,9 @@ const PAGES = [
     text: 'Мини-игры',
   },
   {
-    id: 'dictionary-page',
-    href: 'dictionary.html',
-    img: './assets/img/icons/dictionary.svg',
+    id: 'vocabulary-page',
+    href: 'vocabulary.html',
+    img: './assets/img/icons/vocabulary.svg',
     text: 'Словарь',
   },
   {
@@ -80,8 +80,14 @@ const WORD_STATE = {
   learning: 'learning',
 };
 
+const WORD_DIFFICULTLY = {
+  easy: 'easy',
+  normal: 'normal',
+  hard: 'hard',
+};
+
 const AUDIO_B64 = 'data:audio/mp3;base64,';
 const IMG_B64 = 'data:image/jpg;base64,';
 
 export { PAGES, APP_NAME, BACKEND_URL, AUX_API_URL, BUTTONS_CLASSES,
-   MASTERPIECE_URL, DATA_URL, WORD_STATE, AUDIO_B64, IMG_B64 };
+   MASTERPIECE_URL, DATA_URL, WORD_STATE, AUDIO_B64, IMG_B64, WORD_DIFFICULTLY };

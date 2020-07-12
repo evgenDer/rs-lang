@@ -5,11 +5,11 @@ const styles = {
 
 const dayResultsShadowTreeHTML = `
 <style>
-  :host {width:100%; height:100%;}
+  :host {width:100%; height:100%; min-height: 100vh; position: absolute; top:0; left:0; z-index:20;}
   div {display:flex; flex-direction: column; justify-content: center; align-items:center;}
   #background {width:100%; height:100%; justify-content: flex-start; z-index:10; background-color: #050505c7;}
 
-  #contentBlock {margin-top: 100px; width:60%; max-width: 550px; min-width: 500px; min-height: 350px;
+  #contentBlock {margin-top: 150px; width:60%; max-width: 550px; min-width: 500px; min-height: 350px;
      z-index:11; font-size:20px; background-color: white; border-radius: 15px;}
   #header {margin: 0px 10px; width:90%; min-height:20%; text-align:center;  border-bottom: 1px solid #efe6e1;}
   #resultsBar {margin: 0px 40px; width:90%; min-height:50%; align-items: center; border-bottom:1px solid #efe6e1}
@@ -21,7 +21,7 @@ const dayResultsShadowTreeHTML = `
   ::slotted(.button:hover) {cursor: pointer; text-decoration: underline; filter: opacity(100%);}
 
   @media screen and (max-width: ${styles.tabletWidth}) {
-  #contentBlock {max-width:80%; width:80%; min-width: 300px; font-size: 18px;}
+  #contentBlock {margin-top: 100px; max-width:80%; width:80%; min-width: 300px; font-size: 18px;}
   }
 
 </style>

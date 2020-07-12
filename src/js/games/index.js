@@ -8,7 +8,6 @@ const descAct = document.querySelector('.desc_active');
 const descDis = document.querySelector('.desc_disabled');
 
 export function switchGameMode() {
-  debugger;
   const currentMode = ( GAME_MODES.all === toSwitch.textContent );
 
   if (currentMode) {
