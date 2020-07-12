@@ -21,30 +21,38 @@ export async function getConfiguration() {
   return configuration.optional;
 }
 
+async function updateConfiguration(configuration) {
+  const configurationModel = {
+    wordsPerDay: 10,
+    optional: configuration,
+  };
+
+  await configurationService.upserSettings(configurationModel);
+}
+
 export async function saveCustomConfiguration(gameName, gameConfiguration) {
   const oldConfiguration = await getConfiguration();
 
-  const configuration = {};
-  configuration.optional = oldConfiguration.optional;
+  const configuration = oldConfiguration;
 
-  if (!configuration.optional) {
+  if (!configuration) {
     return;
   }
 
-  configuration.optional[gameName] = JSON.stringify(gameConfiguration);
+  configuration[gameName] = JSON.stringify(gameConfiguration);
 
-  await configurationService.upserSettings(configuration);
+  await updateConfiguration(configuration);
 }
 
 export async function getCustomConfiguration(gameName) {
   try{
     const configuration = await getConfiguration();
-    сonsole.log(configuration);
-    if (!configuration.optional || !configuration.optional[gameName]) {
+
+    if (!configuration) {
       return null;
     }
 
-    const value = JSON.parse(configuration.optional[gameName]);
+    const value = JSON.parse(configuration[gameName]);
 
     return value;
   } catch(error){
@@ -54,15 +62,6 @@ export async function getCustomConfiguration(gameName) {
   const value = JSON.parse(configuration.optional[gameName]);
 
   return value;
-}
-
-async function updateConfiguration(configuration) {
-  const configurationModel = {
-    wordsPerDay: 10,
-    optional: configuration,
-  };
-
-  await configurationService.upserSettings(configurationModel);
 }
 
 export async function updatDifficultyLevel(userDifficultyLevel) {
