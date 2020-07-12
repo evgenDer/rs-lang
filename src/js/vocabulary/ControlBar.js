@@ -12,8 +12,8 @@ export default class ControlBar {
     const categoriesWordsItems = [];
     const categoriesWords = Object.keys(CATEGORIES_WORDS);
     categoriesWords.forEach((category) => {
-      const linck = createElementObj({ tagName: 'a', textContent: CATEGORIES_WORDS[category].text, attrs: [['id', category], ['href', '#']] });
-      const item = createElementObj({ tagName: 'li', classNames: 'vocabulary__tab-link', children: [linck] });
+      const link = createElementObj({ tagName: 'a', textContent: CATEGORIES_WORDS[category].text, attrs: [['id', category], ['href', '#']] });
+      const item = createElementObj({ tagName: 'li', classNames: 'vocabulary__tab-link', children: [link] });
       if (category === this.currentCategory) {
         item.classList.add('uk-active');
       }
