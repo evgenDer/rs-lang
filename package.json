@@ -22,7 +22,6 @@
     "school"
   ],
   "dependencies": {
-    "dragula": "^3.7.2",
     "sortablejs": "^1.10.2"
   },
   "devDependencies": {
