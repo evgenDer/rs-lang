@@ -154,7 +154,6 @@ export default class Game {
       this.userData.forEach(({ wordId }) => promises.push(getWordById(wordId)));
 
       this.data = await Promise.all(promises);
-      console.log(this.data);
     }
 
     this.data = this.data.filter((data) => data !== undefined);
