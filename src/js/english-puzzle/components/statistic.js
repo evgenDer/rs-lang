@@ -25,17 +25,27 @@ export function addStatisticRoundEnglishPuzzle(dataPageRound){
   errorField.insertAdjacentHTML('beforeend', `<h3>Я не знаю <span>0</span</h3></h3>`);
   dataPageRound.forEach((sentence) =>{
     const element = createStatisticSentence(sentence.audioExample, sentence.textExample);
+    const textExample = sentence.textExample.replace("<b>", "").replace("</b>", "");
+
     if(sentence.result){
       correct+=1;
       correctField.insertAdjacentHTML('beforeend', element);
       correctField.querySelector('span').innerText = `${correct}`;
-      successFields.push(`${sentence.textExample} - ${sentence.word} - ${sentence.wordTranslate}`);
+
+      successFields.push(`${textExample}`);
+      successFields.push(`${sentence.textExampleTranslate}`);
+      successFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
+      successFields.push("\r\n");
     }
     else{
       error+=1;
       errorField.insertAdjacentHTML('beforeend', element);
       errorField.querySelector('span').innerText = `${error}`;
-      errorFields.push(`${sentence.textExample} - ${sentence.word} - ${sentence.wordTranslate}`);
+
+      errorFields.push(`${textExample}`);
+      errorFields.push(`${sentence.textExampleTranslate}`);
+      errorFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
+      errorFields.push("\r\n");
     }
   });
   statistic.updateGameStatistics(correct, error);
