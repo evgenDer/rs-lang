@@ -1,4 +1,4 @@
-import Determinate   from './Determinate';
+import Determinate from './Determinate';
 
 
 const lvlDetreminate = new Determinate();

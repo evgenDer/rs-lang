@@ -53,8 +53,6 @@ async function updateConfiguration(configuration) {
     optional: configuration,
   };
 
-  console.log(configurationModel);
-
   await configurationService.upserSettings(configurationModel);
 }
 
