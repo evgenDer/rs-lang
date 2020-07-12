@@ -9,6 +9,9 @@ export default class Results {
     this.successFields = successFields;
     this.errorFields = errorFields;
     this.statistic = new Statistics('SpeakIt');
+    this.isRoundEnd = false;
+    this.correct = 0;
+    this.incorrect = 0;
   }
 
   generate(callbacks) {
@@ -45,17 +48,18 @@ export default class Results {
 
   addListeners(callbacks) {
     this.returnBtn.addEventListener('click', () => {
-      callbacks.onClickReturn();
-      this.gameResults.classList.add('hidden');
-      this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
+      if (this.isRoundEnd) {
+        this.isRoundEnd = false;
+        this.onClickNewRaund();
+      } else {
+        callbacks.onClickReturn();
+        this.gameResults.classList.add('hidden');
+        this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
+      }
+
     });
 
-    this.newGameBtn.addEventListener('click', () => {
-      this.statistic.updateGameStatistics(this.countCorrectAnswers.textContent, this.countIncorrectAnswers.textContent);
-      callbacks.onClickNewRaund();
-      this.gameResults.classList.add('hidden');
-      this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
-    });
+    this.newGameBtn.addEventListener('click', this.onClickNewRaund);
 
     this.report.addEventListener('click', () => {
         this.errorFields.push('\r\n\r\n');
@@ -63,6 +67,14 @@ export default class Results {
         const text = `Отчет по игре "Speak it"\r\n\r\n${this.errorFields.join('\r\n')}${this.successFields.join('\r\n')}`;
         downloadHelper.download(`speakIt-report_${new Date().toISOString()}.txt`, text);
     });
+  }
+
+  onClickNewRaund() {
+    this.statistic.updateGameStatistics(this.correct, this.incorrect);
+    const customEvent = new CustomEvent('speakitNewRaund');
+    document.dispatchEvent(customEvent);
+    this.gameResults.classList.add('hidden');
+    this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
   }
 
   show() {
@@ -74,9 +86,11 @@ export default class Results {
     return this.answers;
   }
 
-  addData(data) {
+  addData(data, isRoundEnd) {
+    this.isRoundEnd = isRoundEnd;
     if (data.correctAnswers) {
-      this.countCorrectAnswers.textContent = data.correctAnswers.length;
+      this.correct = data.correctAnswers.length;
+      this.countCorrectAnswers.textContent = this.correct;
       this.correctAnswers.innerHTML = '';
       data.correctAnswers.forEach((card) => {
         card.changeElementForResults();
@@ -86,7 +100,8 @@ export default class Results {
       });
     }
     if (data.incorrectAnswers) {
-      this.countIncorrectAnswers.textContent = data.incorrectAnswers.length;
+      this.incorrect = data.incorrectAnswers.length;
+      this.countIncorrectAnswers.textContent = this.incorrect;
       this.incorrectAnswers.innerHTML = '';
       data.incorrectAnswers.forEach((card) => {
         card.changeElementForResults();

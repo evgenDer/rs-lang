@@ -8,6 +8,18 @@ const startScreen = new StartScreen();
 const gamePage = new GamePage();
 mainWrapper.append( gamePage.generateGamePage(), startScreen.generateStartScreen());
 
-document.addEventListener('speakitNewGame', () => {
-  gamePage.start();
-})
+document.addEventListener('speakitNewGame', (event) => {
+  gamePage.start(event.detail);
+});
+
+document.addEventListener('speakitBackToHomepage', () => {
+  startScreen.show();
+  gamePage.stop();
+});
+
+document.addEventListener('speakitNewRaund', () => {
+  gamePage.stop();
+  startScreen.show();
+  startScreen.chageRound();
+});
+

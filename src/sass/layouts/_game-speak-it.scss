@@ -21,14 +21,24 @@
 }
 
 .speakit_exit {
-  width: 25px;
-  position: absolute;
-  left: 4%;
-  top: 4%;
+  width: 26px;
+  margin: 0px 40px;
   cursor: pointer;
   filter: invert(84%) sepia(10%) saturate(1800%) hue-rotate(59deg) brightness(91%) contrast(91%);
   &:hover {
     filter: invert(52%) sepia(100%) saturate(304%) hue-rotate(156deg) brightness(84%) contrast(98%);
+  }
+}
+
+.status-bar_exit {
+  width: 20px;
+  margin: 0px 20px;
+  transform: rotate(180deg);
+  opacity: .8;
+  cursor: pointer;
+  filter: invert(52%) sepia(100%) saturate(304%) hue-rotate(156deg) brightness(84%) contrast(98%);
+  &:hover {
+    filter: invert(84%) sepia(10%) saturate(1800%) hue-rotate(59deg) brightness(91%) contrast(91%);
   }
 }
 
@@ -38,7 +48,7 @@
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  margin-top: -70px;
+  margin-top: -45px;
   padding: 0px 40px 40px;
   background-color: #2581b2d1;
   border-radius: 10px;
@@ -98,7 +108,6 @@
 .game-control {
   display: flex;
   justify-content: center;
-  min-width: 320px;
 }
 
 .game-control-dropdown {
@@ -106,8 +115,6 @@
 }
 
 .speakit_game-control__btn {
-  width: fit-content;
-  padding: 0px 20px;
   outline: none;
   border: none;
   border-radius: 10px;
@@ -116,7 +123,10 @@
   border: 1px solid;
   opacity: 0.9;
   transition: all 0.4s;
-  font-size: 0.98rem;
+  font-size: 0.87rem;
+  width: 160px;
+  padding: 0;
+  margin: 2px;
 
   &:disabled {
     background-color: $color-primary;
@@ -137,7 +147,7 @@
 
 .speakit_game-control__btn-mode {
   color: $color-green;
-  margin-right: 4px;
+  width: 190px;
 
   &:disabled {
     background-color: $color-primary;
@@ -241,7 +251,7 @@
   opacity: 0.7;
 }
 
-.btn_exit {
+.btn_home {
   padding: 5px 18px;
   color: $color-green;
   background: $color-primary;
@@ -293,7 +303,9 @@
 }
 
 .stars_container {
-  margin-top: 60px;
+  position: absolute;
+  top: 60px;
+  left: calc(50% - 173px);
 }
 
 .star {
@@ -852,4 +864,13 @@
 .uk-animation-scale-up,
 .uk-animation-scale-down {
   animation-duration: 1s;
+}
+
+.start-screen-header {
+  position: fixed;
+  top: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
 }

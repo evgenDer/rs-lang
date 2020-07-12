@@ -23,10 +23,6 @@ export default class GamePage {
   const buttons = createElementObj({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
 
   const callbacksForStatusBar = {
-    onChangeLevel: (result)=> {
-      this.cardsBoard.cahgeCards(result);
-      this.display.update({translate: ''});
-    },
     onClickRestart: () => this.restart(),
     onClickMicrophoneToggle: (microphoneOn) => {
       if (this.isGameMode) {
@@ -36,15 +32,11 @@ export default class GamePage {
         this.turnOnMicrophone();
       }}
     },
-    onClickStatistics: () => this.showResults(),
+    onClickResult: () => this.showResults(),
     onClickHome: () => GamePage.goToHomePage(),
-
+    onClickExit: () => this.stop(),
   }
   const callbacksForResults = {
-    onClickNewRaund: ()=> {
-      this.restart();
-      this.statusBar.chageRound();
-    },
     onClickReturn: () => {
       if (!this.isGameMode) {
         this.display.update({translate: ''});
@@ -53,7 +45,6 @@ export default class GamePage {
       }
       this.cardsBoard.updateCards();
     },
-    onClickReport: () => {},
   }
 
   this.gameContainer = createElementObj({ tagName: 'div', classNames: 'game-container hidden', children: [
@@ -64,28 +55,33 @@ export default class GamePage {
     buttons,
     this.results.generate( callbacksForResults ),
   ] });
-
-  this.cardsBoard.cahgeCards({ studied: true });
   this.addListeners();
   return this.gameContainer
   }
 
-  start() {
+  start(data) {
+    this.restart();
     this.gameContainer.classList.remove('hidden');
+    this.cardsBoard.cahgeCards(data);
+  }
+
+  stop() {
+    this.gameContainer.classList.add('hidden');
+    this.restart();
   }
 
   static goToHomePage() {
     window.location.href = 'games.html';
   }
 
-  showResults() {
+  showResults(isRoundEnd) {
     if (this.isGameMode) this.microphone.turnOff();
     this.cardsBoard.makeInactiveAllCards();
     const data = {
       correctAnswers: this.cardsBoard.getWordsWithCorrectAnswer(),
       incorrectAnswers: this.cardsBoard.getWordsWithNotCorrectAnswer(),
     }
-    this.results.addData(data);
+    this.results.addData(data, isRoundEnd);
     this.results.show();
   }
 
@@ -111,7 +107,7 @@ export default class GamePage {
         this.microphone.clearInput();
         this.microphone.removeMessage();
       } else {
-        this.showResults();
+        this.showResults(true);
       }
     }, timeOut)
 

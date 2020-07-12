@@ -1,4 +1,4 @@
-import { createElementObj } from '../../utils/create';
+import { createElementObj } from '../utils/create';
 
 export default class Dropdoun {
   constructor(nameItem , amountElements) {
