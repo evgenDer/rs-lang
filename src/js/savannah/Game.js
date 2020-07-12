@@ -1,22 +1,17 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-param-reassign */
-
 import { createElement } from '../utils/create';
-import { GAME_MODES, GAME_DATA_URL, ERR_MSG, DATA_ERR_MSG } from '../games/constants';
-import { getFullDataWords, getWordById } from '../api/words';
-import { showElement, hideElement } from '../helpers/html-helper';
+import { GAME_MODES,  ERR_MSG, DATA_ERR_MSG } from '../games/constants';
+import { getFullDataWords } from '../api/words';
 import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 import { selectNextRound, getCurrentRound, getCurrentLevel } from '../games/dropdown';
 import { Statistics } from '../statistics/components/statistics';
-// import { addStatisticsRound, createStaticticsRound } from './statistics';
+import { addStatisticsRound, createStaticticsRound } from './statistic';
 import { increaseWordErrorCount, increaseWordReferenceCount } from '../words/updateWordState';
-import { getAllUserWords, updateUserWord } from '../api/userWords';
-import { AUDIO_B64, IMG_B64, WORD_STATE } from '../utils/constants';
+import { updateUserWord, getAggregatedWords } from '../api/userWords';
 import { saveCustomConfiguration } from '../configuration/index';
-import playAudio from '../helpers/audio';
-import createHeader from "./game-page/header";
-import createMain from "./game-page/main";
-import createFooter from "./game-page/footer";
+import { playAudio } from '../helpers/audio';
+import { removeChild } from '../helpers/html-helper';
 
 
 export default class Game {
@@ -28,10 +23,10 @@ export default class Game {
     this.round = round;
     this.answersAmnt = 5;
 
-    this.currentElement = '';
+    this.currentElement = null;
 
     this.isAudioPlay = true;
-    this.errors = 0;
+    this.correct = false;
     this.answers = [];
 
     this.gameField = document.querySelector('.process');
@@ -47,41 +42,68 @@ export default class Game {
     this.allRoundTranslations = [];
     this.rightAnswer = 0;
     this.currentAnswer = 0;
+    this.pos = 0;
+    this.errors = 0;
+    this.endPosition = document.documentElement.clientHeight * 0.65;
 
+    this.posIncrease = 1;
     this.statistics = new Statistics(this.name);
+  }
+
+  generateWord(){
+    this.currentElement = createElement('div', 'process__fall');
+    const {word} = this.data[this.currentAnswer];
+    const wordArray = word.split('');
+    wordArray.forEach((letter) =>  {
+      const element = createElement('span', '', [], [], `${letter}`);
+      this.currentElement.append(element);
+    });
+    document.body.prepend(this.currentElement);
   }
 
   moveElement() {
     const elem = this.currentElement;
-    const {clientHeight} = document.documentElement;
-    let pos = 0;
-    // eslint-disable-next-line no-use-before-define
-    const id = setInterval(frame, 4);
-    function frame() {
-      if (pos === clientHeight * 0.8) {
-        clearInterval(id);
-      } else {
-        pos+=1;
-        elem.style.top = `${pos}px`;
-        // elem.style.left = pos + 'px';
+      this.timer = setInterval(() => {
+      if(this.correct){
+        this.currentElement.innerHTMl = '|';
+        this.pos += 6;
+        elem.style.top = `${this.pos}px`;
+        if(this.pos + 10 > this.endPosition * 1.3) {
+          this.addResultsFromCurrentAnswer();
+        }
       }
-    }
+      else if (this.pos > this.endPosition ) {
+        clearInterval(this.timer);
+        this.increaseWrongWord();
+        // this.startTask();
+      } else {
+        this.pos += 1;
+        elem.style.top = `${this.pos}px`;
+        }
+      }, 20);
+  }
+
+  increaseWrongWord(){
+    this.currentElement.classList.add('process__fall_wrong');
+    const life = document.querySelector('.process__heart');
+    life.classList.remove('process__heart');
+    life.src = 'assets/img/icons/heart-minus.svg';
+    setTimeout(() =>{
+      this.data[this.currentAnswer].isError = false;
+      this.errors += 1;
+      this.addResultsFromCurrentAnswer();
+    }, 1000);
   }
 
   startGame() {
     this.getRoundData().then(() => {
       this.generateAnswers();
-
       this.addAnswersClickHandler();
       this.addKeyboardEventsHandler();
       this.addAudioButtonClickHandler();
-      // this.prepareGameField();
-
       this.startTask();
     }).catch((err) => {
       // eslint-disable-next-line no-undef
-
-      console.log(err);
       UIkit.notification({
         message: `<span uk-icon='icon: warning'></span> ${err}`,
         status: 'warning',
@@ -92,36 +114,15 @@ export default class Game {
   }
 
   startTask() {
-    //this.prepareGameField();
-
     this.getRightAnswer();
     this.getWords();
-
+    this.pos = 0;
+    this.correct = false;
+    this.clearClassesFromElements();
     this.fillAnswers();
-
+    this.generateWord();
+    this.moveElement();
     // this.playTask();
-  }
-
-  startGameField(){
-    const { main, generalWord } = createMain();
-    const header = createHeader(generalWord);
-    const footer = createFooter();
-    const process = createElement({ tagName: 'section', classNames: 'process', children: [header, main, footer] });
-
-    document.body.append(process);
-      setTimeout(() => {
-        process.classList.add('show-after-click');
-      }, 1000);
-  }
-
-
-  prepareGameField() {
-    this.clearAnswers();
-
-    this.hideRightAnswer();
-    this.enableAnswers();
-    this.setContolButtonIdnkMode();
-    this.removeAudioButtonsClickHandler();
   }
 
   getRightAnswer() {
@@ -129,32 +130,25 @@ export default class Game {
   }
 
   async getRoundData() {
-    console.log(this.mode);
     if (this.mode === GAME_MODES.all) {
       this.data = await getFullDataWords(this.level, this.round, this.wordsAmntInRound);
       shuffleArray(this.data);
     } else {
-      const userData = await getAllUserWords();
-      if (userData.length < 5) {
+      const countPages = 24;
+      const userData = await getAggregatedWords();
+      if (userData.totalCount < this.wordsAmntInRound) {
         throw ERR_MSG;
       }
-
-      this.userData = userData
-        .filter((data) => data !== undefined)
-        .filter((word) => word.optional.mode !== WORD_STATE.deleted)
-        .sort((a, b) => a.optional.successPoint - b.optional.successPoint)
-        .slice(0, this.wordsAmntInRound);
-      shuffleArray(this.userData);
-
-      const promises = [];
-      this.userData.forEach(({ wordId }) => promises.push(getWordById(wordId)));
-
-      this.data = await Promise.all(promises);
-
+      this.numberRound = Number(localStorage.getItem('numberPage'));
+      if(this.numberRound >= countPages){
+        this.numberRound = 0;
+      }
+      this.numberRound += 1;
+      localStorage.setItem('numberPage', this.numberRound);
+      this.dataPage = shuffleArray(userData.paginatedResults);
     }
 
     this.data = this.data.filter((data) => data !== undefined);
-    console.log(this.data);
     if (this.data.length !== this.wordsAmntInRound) {
       throw DATA_ERR_MSG;
     }
@@ -211,7 +205,7 @@ export default class Game {
   generateAnswers() {
     const answersContainer = document.querySelector('.process__answers');
     for (let i = 0; i < this.answersAmnt; i += 1) {
-      const answer= createElement('li', 'process__answer', [], [['data-number', i]]);
+      const answer = createElement('li', 'process__answer', [], [['data-number', i]]);
       this.answers.push(answer);
       answersContainer.appendChild(answer);
     }
@@ -235,14 +229,12 @@ export default class Game {
         }
         if (answerIndex === this.rightAnswer) {
           this.data[this.currentAnswer].isCorrect = true;
-          alert('Correct');
-
+          this.correct = true;
+          removeChild(this.currentElement);
+          this.currentElement.innerText = '|';
         } else {
-          this.data[this.currentAnswer].isError = false;
-          const life = document.querySelector('.process__heart');
-          life.src = 'assets/img/icons/heart-minus.svg';
+          this.increaseWrongWord();
           const answerCorrect = document.querySelector(`li[data-number='${this.rightAnswer}']`);
-          console.log(this.rightAnswer);
           answerCorrect.classList.add('answer_correct');
           answer.classList.add('answer_wrong');
         }
@@ -250,7 +242,16 @@ export default class Game {
     });
   };
 
+  clearClassesFromElements(){
+    this.answers.forEach((element)=>{
+      element.className = 'process__answer';
+    });
+  }
+
   addResultsFromCurrentAnswer() {
+    const countLifes = 5;
+    this.currentElement.remove();
+    clearInterval(this.timer);
     const currentAnswer = this.data[this.currentAnswer];
       if (this.mode === GAME_MODES.learned) {
           const currentUserData = this.userData[this.currentAnswer];
@@ -262,7 +263,7 @@ export default class Game {
           updateUserWord(currentUserData.wordId, currentUserData);
         }
         this.currentAnswer += 1;
-        if (this.currentAnswer < this.wordsAmntInRound) {
+        if (this.currentAnswer < this.wordsAmntInRound  && this.errors < countLifes) {
           this.startTask();
         } else {
           selectNextRound();
@@ -270,32 +271,27 @@ export default class Game {
           this.statistics.updateGameStatistics(this.wordsAmntInRound - this.errors, this.errors, 0);
           this.showStatistics();
       }
-  }
+    }
 
   addKeyboardEventsHandler() {
     document.onkeydown = (event) => {
       let answer = -1;
-      switch (event.code) {
-        case 'Digit1':
+      switch (event.key) {
+        case '1':
           answer = 0;
           break;
-
-        case 'Digit2':
+        case '2':
           answer = 1;
           break;
-
-        case 'Digit3':
+        case '3':
           answer = 2;
           break;
-
-        case 'Digit4':
+        case '4':
           answer = 3;
           break;
-
         default:
           break;
       }
-
       if (answer !== -1) {
         this.answers[answer].click();
       }
@@ -317,8 +313,8 @@ export default class Game {
   }
 
   showStatistics() {
-   // createStaticticsRound();
-   // addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
+   createStaticticsRound();
+   addStatisticsRound(this.data, this.mode === GAME_MODES.learned);
     // eslint-disable-next-line no-undef
     UIkit.modal('.modal-round').show();
   }
