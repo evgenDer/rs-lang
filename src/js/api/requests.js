@@ -1,4 +1,4 @@
-import { getTokenForRequest } from './authorization';
+import { getTokenForRequest } from './token';
 
 async function sendRequest(methodRequest, urlRequest, withCredentials = false, objectBody = null) {
   try {

@@ -90,15 +90,15 @@ input[type="radio"]{
   width: 500px;
  // position: absolute;
   padding: 10px;
-  // height: fit-content;
-  // max-height: 600px;
-  margin-top: 5vh;
+  margin-top: 0vh;
   /*overflow: hidden;*/
   @include media-tablet {
     top: 0vh;
+    width: 400px;
   }
   @include media-mobile {
     top: 0vh;
+    width: 300px;
   }
   margin-bottom: 10px;
 

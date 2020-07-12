@@ -12,9 +12,12 @@ export function addAnswerField(data, words, level){
   for(let i = 0; i < COUNT; i += 1){
     let resultField = '';
     const regexpExample = /<b>\w+<\/b>/;
-    console.log(data);
     const example = data[i].textExample;
-    const exampleUpdated = example.replace(regexpExample, '____');
+    let exampleUpdated = example.replace(regexpExample, '____');
+    if(exampleUpdated.indexOf(`${data[i].word}`)){
+      const replaceExampleUpdated =  exampleUpdated.replace(`${data[i].word}`, '');
+      exampleUpdated = replaceExampleUpdated;
+    }
     resultField  +=  `<div class="answers-field__row " data-number = ${i}>`;
     resultField += `<p>${i + 1 + level*COUNT}. ${exampleUpdated}</p>`;
     shuffleArray(words);

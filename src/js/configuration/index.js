@@ -62,7 +62,6 @@ export async function updatDifficultyLevel(userDifficultyLevel) {
   const configuration = await getConfiguration();
 
   configuration.difficultyLevel = userDifficultyLevel;
-  console.log(configuration);
   await updateConfiguration(configuration);
 }
 
