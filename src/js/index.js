@@ -45,7 +45,6 @@ window.onload = () => {
     case 9:
       // authorization-page
       window.stop();
-      console.log(isNewUser());
       if (isNewUser()) {
         document.body.classList.remove('hidden');
         addAuthorizationClickHandler();

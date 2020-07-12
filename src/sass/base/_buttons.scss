@@ -39,3 +39,159 @@ button:hover {
       transform: translateY(3px);
   }
 }
+
+.btn_audioexample{
+  position: absolute;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  width: 30px;
+  height: 30px;
+  margin-left: 300px;
+  @include media-mobile{
+    margin-left: 230px;
+  }
+}
+
+.btn_close{
+  min-width: 25px;
+  transition: all .4s;
+  background-color: transparent!important;
+  &:hover{
+    color: $color-additional!important;
+  }
+  svg{
+    width: 25px;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.game-control__btn {
+  width: 150px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  background-color: $color-additional !important;
+	color: $color-primary !important;
+	&:hover {
+		background-color: $color-additional;
+		color: $color-primary;
+		cursor: pointer;
+		transition: all 0.4s;
+	}
+  transition: all 0.4s;
+  @include media-tablet{
+    width: 100px;
+    padding: 0px;
+  }
+}
+
+.game-control__list {
+  background: $color-secondary;
+  opacity: 0.8;
+  border-radius: 10px;
+  color: $color-primary;
+  padding: 15px 25px;
+  min-width: fit-content;
+  max-width: 250px;
+  ul li {
+    @include font(1.1rem, 1.4rem, 400);
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  .list__active {
+    color: $color-active;
+  }
+}
+
+.game-control__btn_mode {
+  width: 190px;
+  padding: 0;
+  @include media-tablet{
+    width: 250px;
+    padding: 0px;
+  }
+}
+
+.game-control__btn_mode_active {
+  background: $color-yellow !important;
+  color: $color-secondary !important;
+}
+
+.game-control__btn_mode_disabled {
+  background: $color-additional !important;
+  color: $color-primary !important;
+}
+
+.game-control__list_desc {
+  div p {
+    @include font(1.1rem, 1.4rem, 400);
+    margin: 0;
+    width: 200px;
+    word-break: break-all;
+    overflow: hidden;
+    text-align: center;
+  }
+}
+
+.card__btns {
+  display: flex;
+  justify-content: center;
+  button{
+    margin-top: 10px;
+    outline: none;
+    width: 100px;
+    border: none;
+    height: 50px;
+    margin: 10px;
+    color: $color-primary;
+    border-radius: 10px;
+  }
+  .btn_correct{
+    background-color: $color-green;
+  }
+  .btn_wrong{
+    background-color: $color-red;
+  }
+}
+
+#game-sprint .btn_pronoucing{
+  background: transparent;
+  color: $color-secondary;
+  border: none;
+  outline: none;
+}
+
+#game-sprint {
+  .btn_statistic{
+  background-color: $color-additional;
+  border: none;
+  width: 40px;
+  height: 35px;
+  border-radius: 10px;
+  img{
+    width: 30px;
+    height: 30px;
+  }
+}
+.btn_exit{
+  img {
+    width: 25px;
+    filter: invert(100%);
+  }
+  border: none;
+  outline: none;
+  position: absolute;
+  left: 10vw;
+  top: 5vh;
+  transform: rotate(180deg);
+  &:hover{
+    animation: none;
+  }
+}
+
+}
+
