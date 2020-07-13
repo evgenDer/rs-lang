@@ -116,14 +116,8 @@ export async function addActiveGameControls(gameName){
     const configuration = await getSettings();
     gameConfiguration.level = configuration.difficultyLevel;
   }
-  let { level } = gameConfiguration;
-  const localStorageLvl = localStorage.getItem('lvl');
-  if(localStorageLvl && level < Number(localStorageLvl)){
-    level = Number(localStorageLvl);
-    localStorage.setItem('lvl', level);
-  }
   listRound[gameConfiguration.round].click();
-  listLvl[level].click();
+  listLvl[gameConfiguration.level].click();
 }
 
 export const listLvlBtnContainer = document.querySelector('.game-control__btn_level').parentElement;
