@@ -78,8 +78,6 @@ export default class LearningScreenElement extends HTMLElement {
     await this.setSettingsFromLocalStorage();
     await getDayLocalState(this);
     loadingIcon.remove();
-
-    console.log(this.settings);
     const willCreateCard = whatsNext(this);
     if (willCreateCard) {
       createModeButtons(this);
@@ -106,7 +104,6 @@ export default class LearningScreenElement extends HTMLElement {
 
   async setSettingsFromLocalStorage() {
     let config = await getConfiguration();
-    console.log(config);
     for (let prop in config) {
       if (this.settings.hasOwnProperty(prop)) {
         this.settings[prop] = config[prop];
@@ -116,7 +113,6 @@ export default class LearningScreenElement extends HTMLElement {
         this.settings.wordCount = config[prop];
       }
     }
-    console.log(this.settings);
     return;
   }
 

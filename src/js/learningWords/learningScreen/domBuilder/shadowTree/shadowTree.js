@@ -39,18 +39,18 @@ const styles = {
 
 const learningScreenShadowTreeHTML = `
 <style>
-  :host {margin: 0px auto 0px; width: 100%; max-width: 1400px; height:calc(100vh - ${styles.topBarHeight}); max-height:1000px;
+  :host {margin: 0px auto 0px; width: 100%; max-width:1400px; height:calc(100vh - ${styles.topBarHeight}); min-height: 600px; max-height:1000px; 
      position: relative; display: flex; flex-direction: column; align-items:center; color:${styles.fontColor}}
   div{display: flex; justify-content: center;}
   
-  ::slotted(learning-results) {position: absolute; z-index:20;}
+  ::slotted(learning-results) {}
 
   #loading {align-items: center;}
   ::slotted([slot=loadingIcon]) {margin: 10px;}
 
-  #cardContentBlock {margin-top: 120px; width: 100%; height:90%; position:relative;
+  #cardContentBlock {margin: 120px 0px 20px; width: 100%; height:90%; position:relative;
      flex-direction: column; justify-content: flex-start; align-items: center;}
-  #mainBlock {width: 100%; max-width: 600px; z-index:10;}
+  #mainBlock {width: 100%; max-width: 800px; z-index:10;}
   #cardBlock {width: 100%; height: 100%;}
   .arrow {width: 10%; min-width: 30px; min-height: 100%; align-items: center;}
   ::slotted(img:hover)  {cursor: pointer;}
@@ -94,12 +94,6 @@ const learningScreenShadowTreeHTML = `
   ::slotted(div.newWord[slot=modeButton].active) { background-color:${styles.modeButtons.newWordButtonActiveColor};}
   ::slotted(div.learning[slot=modeButton].active) {background-color:${styles.modeButtons.learningButtonActiveColor};}
   ::slotted(div.repeating[slot=modeButton].active) {background-color:${styles.modeButtons.repeatingButtonActiveColor};}
-
-  #optionBlock {height: 40px; position: absolute; top:-5px; right: 40px; flex-direction: row; }
-  ::slotted([slot=optionButton]){width:40px;
-  filter: opacity(0.4);
-  border:3px solid ${styles.modeButtons.newWordButtonHoverColor}; border-radius:10px;}
-  ::slotted([slot=optionButton] img) {object-fit: cover;}
   
   #statusBlock {margin-bottom: 30px;width: 100%; min-width: 300px; max-width: 720px; height: 40px;}
   #statusBarDeadZone {width: 60px; height: 40px;}
@@ -157,10 +151,6 @@ const learningScreenShadowTreeHTML = `
   <slot name='modeButton'></slot>
   <slot name='modeButtonLeft'></slot>
   <slot name='modeButtonRight'></slot>
-</div>
-
-<div id='optionBlock'>
-  <slot name='optionButton'></slot>
 </div>
 
 <div id='statusBlock'>

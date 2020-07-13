@@ -5,7 +5,6 @@
 @import "./abstract/constants";
 @import "./abstract/mixins";
 @import "./abstract/placeholders";
-
 // base
 @import "./base/base";
 @import "./base/buttons";
@@ -15,15 +14,23 @@
 @import "./components/progres-bar";
 @import "./components/configuration";
 @import "./components/countdown";
+@import "./components/card";
+@import "./components/modals";
 @import "./components/statistics";
+@import "./components/vocabulary";
 @import "./components/modals";
 
 // layouts
 @import "./layouts/wrapper";
+@import "./layouts/games";
+@import "./layouts/game-sprint";
 @import "./layouts/main-page";
 @import "./layouts/authorization";
 @import "./layouts/games";
 @import "./layouts/game-speak-it";
 
+@import "./layouts/savannah";
+@import "./layouts/aboutTeam";
+@import "./layouts/lvl-determination";
 @import "./layouts/game-audiochallenge";
 @import "./layouts/game-concentration";

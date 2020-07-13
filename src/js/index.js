@@ -2,12 +2,13 @@ import { addHeaderToPage, defineActivePage } from './navigation/index';
 import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
-import initStatistics from './statistics/index';
-
+import  initStatistics from './statistics/index';
+import addBtnStartEventListener from './determinationLevel/index';
+import initVocabularyPage from './vocabulary/index';
 //импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
-import './learningWords/learningWordsPage.js';
-import { getTokenTime } from './helpers/tokenHeleper';
-import './promo/promoPageCreating.js';
+import './learningWords/learningWordsPage';
+import './promo/promoPageCreating';
+
 
 window.onload = () => {
   addHeaderToPage();
@@ -20,13 +21,14 @@ window.onload = () => {
       // learning-page
       break;
     case 2:
-      // training-page
+      addBtnStartEventListener();
       break;
     case 3:
       // games-page
       break;
     case 4:
-      // dictionary-page
+      initVocabularyPage();
+      // vocabulary-page
       break;
     case 5:
       initStatistics();
@@ -45,7 +47,6 @@ window.onload = () => {
     case 9:
       // authorization-page
       window.stop();
-      console.log(isNewUser());
       if (isNewUser()) {
         document.body.classList.remove('hidden');
         addAuthorizationClickHandler();

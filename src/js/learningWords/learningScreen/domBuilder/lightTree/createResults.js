@@ -1,11 +1,8 @@
 import { WORD_STATE } from '../../../../utils/constants';
 
 export default function createResults(learningScreenElement) {
-  learningScreenElement.insertAdjacentHTML(
-    'beforeend',
-    "<learning-results slot='results'></learning-results>",
-  );
-  const results = learningScreenElement.querySelector('learning-results');
+  document.body.insertAdjacentHTML('beforeend', '<learning-results></learning-results>');
+  const results = document.querySelector('learning-results');
 
   const newWordCount =
     learningScreenElement.wordArrs.newWords.filter(

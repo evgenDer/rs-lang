@@ -17,6 +17,8 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
 
   dayNewWordsPack.map((element) =>
     Object.assign(element, {
+      isDone: false,
+      isFirstAnswer: true,
       difficulty: 'normal', // easy, normal, hard
       optional: {
         mode: 'newWord', //deleted,null
@@ -45,7 +47,10 @@ export async function createNewWordsPack(dayNewWordsCount, dayWordsCount, group 
   for (let i = 0; i < allUserWords.length; i += 1) {
     const word = await getWordById(allUserWords[i].wordId);
     console.log(word);
-    const updatedWord = Object.assign(allUserWords[i], word);
+    const updatedWord = Object.assign(allUserWords[i], word, {
+      isDone: false,
+      isFirstAnswer: true,
+    });
     allUpdatedUserWords.push(updatedWord);
   }
 
