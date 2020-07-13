@@ -24,11 +24,13 @@ export const MAX_ATTEMTS_COUNT = 4;
 
 export const MODE_INFO = {
   studied: {
-  textMessage: 'В игре будут задей- <br> ствованы только <br> изученные слова',
-  textBtn:'Слова: Изученные',
-},
+    textMessage: 'В игре будут задей- <br> ствованы только <br> изученные слова',
+    textBtn: 'Слова: Изученные',
+  },
   all: {
-    textMessage:'В игре будут задей- <br> ствованы слова из <br> всей коллекции',
-    textBtn:'Слова: все',
+    textMessage: 'В игре будут задей- <br> ствованы слова из <br> всей коллекции',
+    textBtn: 'Слова: все',
   },
 }
+
+export const DEFAULT_DISPLAY_IMG = './assets/img/speakit-default-img.jpg';

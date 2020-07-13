@@ -6,63 +6,64 @@ import Results from './Results';
 import { MAX_ATTEMTS_COUNT, TYPE_MICROPHONE_MESSAGE } from '../constants';
 import { createElementObj } from '../../utils/create';
 
-
-
 export default class GamePage {
   constructor() {
     this.isGameMode = false;
   }
 
   generateGamePage() {
-  this.statusBar = new StatusBar();
-  this.cardsBoard = new CardsBoard();
-  this.display = new Display();
-  this.microphone = new Microphone();
-  this.results = new Results();
-  this.startGameModeBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_speak', textContent: 'Тренировака произношение' });
-  const buttons = createElementObj({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
+    this.statusBar = new StatusBar();
+    this.cardsBoard = new CardsBoard();
+    this.display = new Display();
+    this.microphone = new Microphone();
+    this.results = new Results();
+    this.startGameModeBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_speak', textContent: 'Тренировака произношение' });
+    const buttons = createElementObj({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
 
-  const callbacksForStatusBar = {
-    onClickRestart: () => this.restart(),
-    onClickMicrophoneToggle: (microphoneOn) => {
-      if (this.isGameMode) {
-        if(!microphoneOn) {
-        this.microphone.turnOnPause();
-      } else {
-        this.turnOnMicrophone();
-      }}
-    },
-    onClickResult: () => this.showResults(),
-    onClickHome: () => GamePage.goToHomePage(),
-    onClickExit: () => this.stop(),
-  }
-  const callbacksForResults = {
-    onClickReturn: () => {
-      if (!this.isGameMode) {
-        this.display.update({translate: ''});
-      } else {
-        this.turnOnMicrophone();
-      }
-      this.cardsBoard.updateCards();
-    },
-  }
+    const callbacksForStatusBar = {
+      onClickRestart: () => this.restart(),
+      onClickMicrophoneToggle: (microphoneOn) => {
+        if (this.isGameMode) {
+          if (!microphoneOn) {
+            this.microphone.turnOnPause();
+          } else {
+            this.turnOnMicrophone();
+          }
+        }
+      },
+      onClickResult: () => this.showResults(),
+      onClickHome: () => GamePage.goToHomePage(),
+      onClickExit: () => this.stop(),
+    }
+    const callbacksForResults = {
+      onClickReturn: () => {
+        if (!this.isGameMode) {
+          this.display.update({ translate: '' });
+        } else {
+          this.turnOnMicrophone();
+        }
+        this.cardsBoard.updateCards();
+      },
+    }
 
-  this.gameContainer = createElementObj({ tagName: 'div', classNames: 'game-container wrapper hidden', children: [
-    this.statusBar.generate(callbacksForStatusBar),
-    this.display.generate(),
-    this.microphone.generate(),
-    this.cardsBoard.generate(),
-    buttons,
-    this.results.generate( callbacksForResults ),
-  ] });
-  this.addListeners();
-  return this.gameContainer
+    this.gameContainer = createElementObj({
+      tagName: 'div', classNames: 'game-container wrapper hidden', children: [
+        this.statusBar.generate(callbacksForStatusBar),
+        this.display.generate(),
+        this.microphone.generate(),
+        this.cardsBoard.generate(),
+        buttons,
+        this.results.generate(callbacksForResults),
+      ]
+    });
+    this.addListeners();
+    return this.gameContainer
   }
 
   start(data) {
     this.restart();
     this.gameContainer.classList.remove('hidden');
-    this.cardsBoard.cahgeCards(data);
+    this.cardsBoard.changeCards(data);
   }
 
   stop() {
@@ -95,7 +96,7 @@ export default class GamePage {
       this.startGameModeBtn.classList.remove('game-mode_btn');
     }
     this.cardsBoard.makeInactiveAllCards();
-    this.display.update({translate: ''});
+    this.display.update({ translate: '' });
     this.isGameMode = false;
   }
 
@@ -139,12 +140,12 @@ export default class GamePage {
   addListeners() {
     this.cardsBoard.getCardsContainer().addEventListener('click', (event) => {
       if (!this.isGameMode) {
-        this.cardsBoard.cardOnClickHandler(event, (data) =>  this.display.update(data));
+        this.cardsBoard.cardOnClickHandler(event, (data) => this.display.update(data));
       }
     });
 
     this.results.getContainer().addEventListener('click', (event) => {
-        this.cardsBoard.cardOnClickHandler(event);
+      this.cardsBoard.cardOnClickHandler(event);
     });
 
     this.startGameModeBtn.addEventListener('click', () => {
@@ -161,7 +162,6 @@ export default class GamePage {
         this.statusBar.addStar();
         this.checkAvailableWords('800');
       }
-
     });
   }
 }

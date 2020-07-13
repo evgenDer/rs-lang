@@ -70,7 +70,7 @@ export default class StatusBar {
 
     this.btnHome.addEventListener('click', callbackFunctions.onClickHome);
 
-    this.exit.addEventListener('click', ()=> {
+    this.exit.addEventListener('click', () => {
       const customEvent = new CustomEvent('speakitBackToHomepage');
       document.dispatchEvent(customEvent);
     });

@@ -1,10 +1,9 @@
 import { createElementObj } from '../utils/create';
-import Dropdoun from './Dropdown';
+import Dropdown from './Dropdown';
 import { addConfiguration } from './utils';
 import { saveCustomConfiguration } from '../configuration/index';
 import { LEVELS_NUMBER, ROUNDS_NUMBER, MODE_INFO } from './constants';
 import { Statistics } from '../statistics/components/statistics';
-
 
 export default class StartScreen {
   constructor() {
@@ -28,8 +27,8 @@ export default class StartScreen {
       attrs: [['uk-dropdown', 'animation: uk-animation-slide-top-small; duration: 1000; pos: bottom-right']],
     });
 
-    this.levelsDropdoun = new Dropdoun('Уровень', LEVELS_NUMBER);
-    this.roundsDropdoun = new Dropdoun('Раунд', ROUNDS_NUMBER);
+    this.levelsDropdoun = new Dropdown('Уровень', LEVELS_NUMBER);
+    this.roundsDropdoun = new Dropdown('Раунд', ROUNDS_NUMBER);
     this.statisticsBtn = createElementObj({
       tagName: 'button',
       classNames: 'uk-button uk-button-default speakit_game-control__btn speakit_game-control__btn-statistics',
@@ -59,10 +58,10 @@ export default class StartScreen {
     const title = createElementObj({ tagName: 'h2', classNames: 'intro__title', textContent: 'SPEAK IT' });
     const line1 = createElementObj({ tagName: 'p', classNames: 'intro__info_line', textContent: 'Нажмите на карточку со словом, чтобы увидеть его <br>перевод и услышать звучание. ' });
     const line2 = createElementObj({ tagName: 'p', classNames: 'intro__info_line', textContent: 'Нажмите на кнопку "Тренировка произношения" и <br> произнесите слова в микрофон.' });
-    const info = createElementObj({ tagName: 'div', classNames: 'intro__info', children: [ line1, line2] });
+    const info = createElementObj({ tagName: 'div', classNames: 'intro__info', children: [line1, line2] });
     this.startBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn-start-game', textContent: 'Начать' });
-    const intro = createElementObj({ tagName: 'div', classNames: 'intro', children: [ title, info, this.startBtn] });
-    this.startScreen = createElementObj({ tagName: 'div', classNames: 'start-screen wrapper', children: [header , intro] });
+    const intro = createElementObj({ tagName: 'div', classNames: 'intro', children: [title, info, this.startBtn] });
+    this.startScreen = createElementObj({ tagName: 'div', classNames: 'start-screen wrapper', children: [header, intro] });
 
     this.addListeners();
     return this.startScreen;

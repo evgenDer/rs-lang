@@ -21,7 +21,7 @@ export default class CardsBoard {
     return this.wrapper;
   }
 
-  async cahgeCards(data) {
+  async changeCards(data) {
     this.cardsContainer.classList.add('hidden');
     this.loader.show();
     this.cardsContainer.innerHTML = '';

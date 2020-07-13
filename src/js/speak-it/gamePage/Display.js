@@ -1,36 +1,36 @@
 import { createElementObj } from '../../utils/create';
+import { DEFAULT_DISPLAY_IMG } from '../constants';
 import Loader from './Loader';
 
 export default class Display {
   constructor() {
-    this.defaultImageSrc = './assets/img/speakit-default-img.jpg';
     this.loader = new Loader();
   }
 
   generate() {
-    this.image = createElementObj({ tagName: 'img', classNames: 'image', attrs: [['src', this.defaultImageSrc]] });
-    this.word = createElementObj({ tagName: 'p', classNames: 'word display_word'});
-    this.transcription = createElementObj({ tagName: 'p', classNames: 'transcription display_transcription'});
-    this.translate = createElementObj({ tagName: 'p', classNames: 'display_translate'});
+    this.image = createElementObj({ tagName: 'img', classNames: 'image', attrs: [['src', DEFAULT_DISPLAY_IMG]] });
+    this.word = createElementObj({ tagName: 'p', classNames: 'word display_word' });
+    this.transcription = createElementObj({ tagName: 'p', classNames: 'transcription display_transcription' });
+    this.translate = createElementObj({ tagName: 'p', classNames: 'display_translate' });
     this.wordContainer = createElementObj({
       tagName: 'div',
       classNames: 'display_word-container word-container',
-      children: [ this.word, this.transcription, this.translate],
+      children: [this.word, this.transcription, this.translate],
     });
     this.wrapper = createElementObj({ tagName: 'div', classNames: 'info-wrapper', children: [this.image, this.wordContainer] });
-    const display = createElementObj({ tagName: 'div', classNames: 'display', children: [this.wrapper,  this.loader.getElement()] });
+    const display = createElementObj({ tagName: 'div', classNames: 'display', children: [this.wrapper, this.loader.getElement()] });
     return display;
   }
 
-  update({img, translate, word, transcription}) {
+  update({ img, translate, word, transcription }) {
     this.loader.show();
     this.wrapper.classList.add('invisible');
-     this.wrapper.classList.remove('uk-animation-fade');
+    this.wrapper.classList.remove('uk-animation-fade');
 
-    if(img) {
+    if (img) {
       this.image.src = img;
     } else {
-      this.image.src = this.defaultImageSrc;
+      this.image.src = DEFAULT_DISPLAY_IMG;
     }
     this.image.onload = () => {
       if (word) this.word.textContent = word;

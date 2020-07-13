@@ -21,7 +21,6 @@
   flex-direction: column;
 }
 
-
 .game-results {
   justify-content: center;
 }
@@ -35,15 +34,15 @@
     filter: invert(52%) sepia(100%) saturate(304%) hue-rotate(156deg) brightness(84%) contrast(98%);
   }
 
-  @media (max-width: 1200px ) {
+  @media (max-width: 1200px) {
     margin: 0;
   }
 
-  @media (max-width: $tablet-width ) {
+  @media (max-width: $tablet-width) {
     margin: 0 11%;
   }
 
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     margin: 0 5%;
   }
 }
@@ -58,7 +57,7 @@
   &:hover {
     filter: invert(84%) sepia(10%) saturate(1800%) hue-rotate(59deg) brightness(91%) contrast(91%);
   }
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     margin: 0px 12px;
   }
 }
@@ -76,15 +75,15 @@
   margin: 70px 0 10px;
   padding: 35px;
 
-  @media (max-width: 1200px ) {
+  @media (max-width: 1200px) {
     margin: 20px;
   }
 
-  @media (max-width: $tablet-width ) {
-    padding: 22px
+  @media (max-width: $tablet-width) {
+    padding: 22px;
   }
 
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     margin: 0 5%;
   }
 }
@@ -96,21 +95,21 @@
   color: #86d677;
   font-size: 3rem;
 
-  @media (max-width: $tablet-width ) {
+  @media (max-width: $tablet-width) {
     margin: 23px auto;
   }
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     margin: 19px auto;
-    font-size: 2.5rem
+    font-size: 2.5rem;
   }
 }
 
 .intro__info_line {
-  @media (max-width: $tablet-width ) {
+  @media (max-width: $tablet-width) {
     font-size: 1.4rem;
   }
 
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     font-size: 1.2rem;
     margin: 10px 0;
   }
@@ -146,12 +145,12 @@
   background: #6aca58;
   opacity: 0.9;
 
-  @media (max-width: $tablet-width ) {
+  @media (max-width: $tablet-width) {
     min-width: 206px;
     font-size: 1.5rem;
   }
 
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     min-width: 180px;
     font-size: 1.3rem;
     padding: 8px;
@@ -174,7 +173,7 @@
   justify-content: center;
   align-items: center;
 
-  @media (max-width: $tablet-width ) {
+  @media (max-width: $tablet-width) {
     flex-direction: column;
     margin: 0 7%;
   }
@@ -198,7 +197,7 @@
   width: 150px;
   padding: 0 30px;
 
-  @media (max-width: $tablet-width ) {
+  @media (max-width: $tablet-width) {
     line-height: 34px;
     margin: 4px;
     width: 190px;
@@ -311,7 +310,7 @@
   margin: 10px 10px 43px;
   align-items: center;
   height: 40px;
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     margin: 10px 10px 8px;
   }
 }
@@ -321,7 +320,7 @@
   color: $color-red;
   background: $color-primary;
   border: 1px solid $color-red;
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     font-size: 1.4rem;
     padding: 3px 9px;
   }
@@ -339,7 +338,7 @@
   color: $color-violet;
   background: $color-primary;
   border: 1px solid $color-violet;
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     font-size: 1.4rem;
     padding: 3px 9px;
   }
@@ -357,7 +356,7 @@
   color: $color-green;
   background: $color-primary;
   border: 1px solid $color-green;
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     font-size: 1.4rem;
     padding: 3px 9px;
   }
@@ -376,7 +375,7 @@
   color: $color-light-blue;
   background: $color-primary;
   border: 1px solid $color-light-blue;
-  @media (max-width: $mobile-big-width ) {
+  @media (max-width: $mobile-big-width) {
     font-size: 1.4rem;
     padding: 3px 9px;
   }

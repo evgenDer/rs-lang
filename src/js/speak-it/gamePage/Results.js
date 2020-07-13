@@ -20,7 +20,7 @@ export default class Results {
     const titleContainer = createElementObj({ tagName: 'div', classNames: 'uk-modal-header speakit_result_header', children: [titleText] });
 
     this.countIncorrectAnswers = createElementObj({ tagName: 'span', classNames: 'results_answers_count incorrect-answers_count' });
-    const textIncorrectAnswers = createElementObj({ tagName: 'h3', classNames: 'game-results_title-answer', textContent: 'Я не знаю '});
+    const textIncorrectAnswers = createElementObj({ tagName: 'h3', classNames: 'game-results_title-answer', textContent: 'Я не знаю ' });
 
     const titleIncorrectAnswers = createElementObj({ tagName: 'div', classNames: 'game-results_title', children: [textIncorrectAnswers, this.countIncorrectAnswers] });
     this.incorrectAnswers = createElementObj({ tagName: 'div', classNames: 'results_container-answers results_container-answers-incorrect' });
@@ -33,7 +33,7 @@ export default class Results {
     this.answers = createElementObj({
       tagName: 'div',
       classNames: 'game-results-answers_wrapper',
-      children: [ titleCorrectAnswers, this.correctAnswers, titleIncorrectAnswers, this.incorrectAnswers ],
+      children: [titleCorrectAnswers, this.correctAnswers, titleIncorrectAnswers, this.incorrectAnswers],
     });
 
     this.returnBtn = createElementObj({ tagName: 'img', classNames: 'results_exit', attrs: [['src', './assets/img/icons/close-game.svg'], ['alt', 'закрыть']] });
@@ -62,10 +62,10 @@ export default class Results {
     this.newGameBtn.addEventListener('click', () => this.onClickNewRaund());
 
     this.report.addEventListener('click', () => {
-        this.errorFields.push('\r\n\r\n');
+      this.errorFields.push('\r\n\r\n');
 
-        const text = `Отчет по игре "Speak it"\r\n\r\n${this.errorFields.join('\r\n')}${this.successFields.join('\r\n')}`;
-        downloadHelper.download(`speakIt-report_${new Date().toISOString()}.txt`, text);
+      const text = `Отчет по игре "Speak it"\r\n\r\n${this.errorFields.join('\r\n')}${this.successFields.join('\r\n')}`;
+      downloadHelper.download(`speakIt-report_${new Date().toISOString()}.txt`, text);
     });
   }
 
