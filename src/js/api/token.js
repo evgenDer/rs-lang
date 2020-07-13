@@ -3,7 +3,8 @@ import {
   getRefreshToken,
   setToken,
   setRefreshToken,
-  getToken
+  getToken,
+  setDateToken
 } from '../utils/storage';
 import {
   BACKEND_URL
@@ -29,6 +30,7 @@ export async function getRefreshTokenFromApi() {
     const result = await rawResponse.json();
     setToken(result);
     setRefreshToken(result);
+    setDateToken();
     return result;
   } catch (error) {
     return error;
@@ -38,10 +40,8 @@ export async function getRefreshTokenFromApi() {
 export async function getTokenForRequest() {
   const refreshToken = getRefreshToken();
 
-  if (refreshToken === undefined || !refreshToken || !isValidToken(refreshToken)) {
-    console.log('try to get new token');
-    // eslint-disable-next-line no-unused-vars
-    const infoAboutUser = await getRefreshTokenFromApi();
+  if (refreshToken === "undefined" || !refreshToken || !isValidToken(refreshToken)) {
+    await getRefreshTokenFromApi();
     const token = getToken();
     if (token === "undefined") {
       window.location.href = 'index.html';
@@ -49,7 +49,5 @@ export async function getTokenForRequest() {
 
     return token;
   }
-
-  console.log('use old token');
   return getToken();
 }

@@ -37,17 +37,8 @@ export const updateAppConfigurationPageElement = (appConfiguration) => {
     appConfiguration.enableAutomaticAudio,
     '#form-enableAutomaticAudio',
   );
-  htmlHelper.updateCheckboxValue(
-    appConfiguration.showNewWordTranslation,
-    '#form-showNewWordTranslation',
-  );
-  htmlHelper.updateCheckboxValue(
-    appConfiguration.showSentenceTranslation,
-    '#form-showSentenceTranslation',
-  );
   htmlHelper.updateCheckboxValue(appConfiguration.showAnswer, '#form-showAnswer');
   htmlHelper.updateCheckboxValue(appConfiguration.deleteWords, '#form-deleteWords');
-  htmlHelper.updateCheckboxValue(appConfiguration.markAsDifficultWord, '#form-markAsDifficultWord');
   htmlHelper.updateCheckboxValue(
     appConfiguration.possibilityToMarkWord,
     '#form-possibilityToMarkWord',
@@ -90,15 +81,8 @@ export const getAppConfiguration = () => {
   const appConfiguration = {};
 
   appConfiguration.enableAutomaticAudio = htmlHelper.getCheckboxValue('#form-enableAutomaticAudio');
-  appConfiguration.showNewWordTranslation = htmlHelper.getCheckboxValue(
-    '#form-showNewWordTranslation',
-  );
-  appConfiguration.showSentenceTranslation = htmlHelper.getCheckboxValue(
-    '#form-showSentenceTranslation',
-  );
   appConfiguration.showAnswer = htmlHelper.getCheckboxValue('#form-showAnswer');
   appConfiguration.deleteWords = htmlHelper.getCheckboxValue('#form-deleteWords');
-  appConfiguration.markAsDifficultWord = htmlHelper.getCheckboxValue('#form-markAsDifficultWord');
   appConfiguration.possibilityToMarkWord = htmlHelper.getCheckboxValue(
     '#form-possibilityToMarkWord',
   );

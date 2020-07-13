@@ -65,6 +65,7 @@ export default function rightClick(learningScreenElement) {
         if (card.state.isFirstAnswer) {
           console.log('okkk');
           if (screenMode === 'learning' || screenMode === 'newWord') {
+            console.log(learningScreenElement.statistics);
             learningScreenElement.statistics.rightAnswers += 1;
             learningScreenElement.statistics.currentRightAnswerSeries += 1;
             if (

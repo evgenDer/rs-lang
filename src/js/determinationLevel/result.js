@@ -63,7 +63,7 @@ async function getComparedHTMLElement(totalCorrect){
 }
 
 export async function createStaticticRound(totalCorrect, totalErrors, errorArray){
-  const compareHTMLElement = await getHTMLElement(totalCorrect, totalErrors, errorArray);
+  const compareHTMLElement = await getComparedHTMLElement(totalCorrect, totalErrors, errorArray);
   const statisticElement =
   `<div id="modal" uk-modal class = 'modal'>
       <div class="modal-round uk-align-center">

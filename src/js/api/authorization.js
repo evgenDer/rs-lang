@@ -37,8 +37,7 @@ async function loginUser(emailUser, passwordUser) {
   }
   catch(error){
     localStorage.removeItem('userId');
-    window.location.href = 'index.html';
-    return error;
+    return null;
   }
 }
 

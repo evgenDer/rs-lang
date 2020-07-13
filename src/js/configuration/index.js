@@ -9,7 +9,7 @@ import * as configurationService from '../api/settings';
 export async function getConfiguration() {
   const configuration = await configurationService.getSettings();
 
-  if (!configuration || !configuration.optional) {
+  if (!configuration || configuration == null || !configuration.optional) {
     const configurationModel = {
       optional: DEFAULT_CONFIGURATION,
     };
@@ -21,41 +21,43 @@ export async function getConfiguration() {
   return configuration.optional;
 }
 
-export async function saveCustomConfiguration(gameName, gameConfiguration) {
-  const oldConfiguration = await configurationService.getSettings();
-
-  const configuration = {};
-  configuration.optional = oldConfiguration.optional;
-
-  if (!configuration.optional) {
-    return;
-  }
-
-  configuration.optional[gameName] = JSON.stringify(gameConfiguration);
-
-  await configurationService.upserSettings(configuration);
-}
-
-export async function getCustomConfiguration(gameName) {
-  const configuration = await configurationService.getSettings();
-  if (!configuration.optional || !configuration.optional[gameName]) {
-    return null;
-  }
-
-  const value = JSON.parse(configuration.optional[gameName]);
-
-  return value;
-}
-
 async function updateConfiguration(configuration) {
   const configurationModel = {
     wordsPerDay: 10,
     optional: configuration,
   };
 
-  console.log(configurationModel);
-
   await configurationService.upserSettings(configurationModel);
+}
+
+export async function saveCustomConfiguration(gameName, gameConfiguration) {
+  const oldConfiguration = await getConfiguration();
+
+  const configuration = oldConfiguration;
+
+  if (!configuration) {
+    return;
+  }
+
+  configuration[gameName] = JSON.stringify(gameConfiguration);
+
+  await updateConfiguration(configuration);
+}
+
+export async function getCustomConfiguration(gameName) {
+  try{
+    const configuration = await getConfiguration();
+
+    if (!configuration) {
+      return null;
+    }
+
+    const value = JSON.parse(configuration[gameName]);
+
+    return value;
+  } catch(error){
+    return null;
+  }
 }
 
 export async function updatDifficultyLevel(userDifficultyLevel) {
@@ -115,12 +117,9 @@ async function saveConfiguration() {
   prevConfiguration.showExplanationExample = cardsConfiguration.showExplanationExample;
   prevConfiguration.showWordTranscription = cardsConfiguration.showWordTranscription;
   prevConfiguration.showImageAssociation = cardsConfiguration.showImageAssociation;
-  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;
-  prevConfiguration.showNewWordTranslation = appConfiguration.showNewWordTranslation;
-  prevConfiguration.showSentenceTranslation = appConfiguration.showSentenceTranslation;
+  prevConfiguration.enableAutomaticAudio = appConfiguration.enableAutomaticAudio;;
   prevConfiguration.showAnswer = appConfiguration.showAnswer;
   prevConfiguration.deleteWords = appConfiguration.deleteWords;
-  prevConfiguration.markAsDifficultWord = appConfiguration.markAsDifficultWord;
   prevConfiguration.possibilityToMarkWord = appConfiguration.possibilityToMarkWord;
 
   await updateConfiguration(prevConfiguration);

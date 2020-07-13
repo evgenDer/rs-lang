@@ -9,8 +9,8 @@
   padding-top: 1px;
   margin-top: -1px;
   animation: 2s ease-in-out;
-  background: 
-    linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%) center center / cover fixed, 
+  background:
+    linear-gradient(rgba(8, 15, 26, 0.59) 0%, rgba(17, 17, 46, 0.46) 100%) center center / cover fixed,
     url(../img/bg-audiochallenge.jpg) center center no-repeat;
   background-size: cover;
   z-index: 0;
@@ -50,11 +50,11 @@
 }
 
 .audiochallenge__exit {
-  min-width: 25px;
   img {
     width: 25px;
     filter: invert(100%);
   }
+  min-width: 25px;
   &:hover {
     cursor: pointer;
     img {
@@ -594,7 +594,7 @@
     @include media-mobile {
       top: 25vh;
     }
-  
+
     .uk-modal-header {
       padding: 0;
       padding-bottom: 20px;
@@ -643,7 +643,7 @@
         color: $color-green !important;
       }
     }
-    
+
     .modal-round__error {
       .btn_pronoucing::before {
         color: $color-red !important;

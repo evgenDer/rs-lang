@@ -61,16 +61,9 @@ export default class WordCardElement extends HTMLElement {
   }
 
   setState(propName, newPropState) {
-    if (this.state[propName] !== newPropState) {
-      this.state[propName] = newPropState;
-      if (
-        propName === 'word' ||
-        propName === 'wordTranslation' ||
-        propName === 'isDone' ||
-        propName === 'isDeleted'
-      ) {
-        this.setAttribute(propName, this.state[propName]);
-      }
+    this.state[propName] = newPropState;
+    if (propName === 'word' || propName === 'wordTranslation' || propName === 'isDone') {
+      this.setAttribute(propName, this.state[propName]);
     }
   }
 
@@ -81,7 +74,7 @@ export default class WordCardElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['word', 'wordTranslate', 'isdone', 'isdeleted'];
+    return ['word', 'wordTranslate', 'isdone'];
   }
 
   attributeChangedCallback() {
