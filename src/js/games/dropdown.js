@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { getCustomConfiguration } from '../configuration/index';
 import { DEFAULT_CONFIGURATION_GAMES } from '../constants/default-settings';
+import { getSettings } from '../api/settings';
 
 const curLvl = document.getElementById('game-control__current_level');
 const listLvl = document.querySelectorAll('.game-control__list_level li');
@@ -110,12 +111,13 @@ export function selectNextRound() {
 export async function addActiveGameControls(gameName){
   disableDropdowns();
   let gameConfiguration = await getCustomConfiguration(gameName);
-  if (gameConfiguration && Object.keys(gameConfiguration).length !== 0) {
+  if (!gameConfiguration || Object.keys(gameConfiguration).length === 0) {
     gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
-    listRound[gameConfiguration.round].click();
-    listLvl[gameConfiguration.level].click();
-    selectNextRound();
+    const configuration = await getSettings();
+    gameConfiguration.level = configuration.difficultyLevel;
   }
+  listRound[gameConfiguration.round].click();
+  listLvl[gameConfiguration.level].click();
 }
 
 export const listLvlBtnContainer = document.querySelector('.game-control__btn_level').parentElement;

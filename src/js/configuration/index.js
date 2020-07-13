@@ -58,10 +58,6 @@ export async function getCustomConfiguration(gameName) {
   } catch(error){
     return null;
   }
-
-  const value = JSON.parse(configuration.optional[gameName]);
-
-  return value;
 }
 
 export async function updatDifficultyLevel(userDifficultyLevel) {
