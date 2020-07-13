@@ -39,7 +39,7 @@
   transform: rotate(-90deg);
   transition: all 0.3s ease-in;
   background: $color-additional;
-  &:before {  
+  &:before {
     background: $color-additional;
     transition: all 0.3s ease-in;
   }
@@ -96,7 +96,7 @@
     background-size: 100% 1em;
     transition: 0.4s ease;
   }
-  
+
   a {
     padding-left: 30px;
     text-decoration: none;
@@ -117,5 +117,5 @@
   font-weight: 600;
   img {
     filter: invert(18%) sepia(100%) hue-rotate(330deg) saturate(600%) contrast(76%) brightness(220%);
-  } 
+  }
 }

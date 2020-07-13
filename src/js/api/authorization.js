@@ -1,16 +1,10 @@
 import { ERROR_MSG } from '../authorization/constants';
 import { getMistakeResponse, getUser } from '../utils/helpers';
-import {
-  setUserPassword, setUserEmail, setToken, getToken, getUserEmail, getUserPassword, setUserId,
-} from '../utils/storage';
-import { isValidToken } from '../utils/checks';
 import { BACKEND_URL } from '../utils/constants';
 
 async function createUser(event) {
   event.preventDefault();
   const user = getUser();
-  setUserPassword(user);
-  setUserEmail(user);
   const rawResponse = await fetch(`${BACKEND_URL}/users`, {
     method: 'POST',
     headers: {
@@ -38,23 +32,13 @@ async function loginUser(emailUser, passwordUser) {
     },
     body: JSON.stringify(user),
   });
-  const content = await rawResponse.json();
-  setUserId(content);
-  setToken(content);
+    const content = await rawResponse.json();
+    return content;
   }
   catch(error){
-    window.location.href = 'index.html';
+    localStorage.removeItem('userId');
+    return null;
   }
 }
 
-async function getTokenForRequest() {
-  if (!isValidToken()) {
-    const email = getUserEmail();
-    const password = getUserPassword();
-    const infoAboutUser = await loginUser(email, password);
-    setToken(infoAboutUser.token);
-  }
-  return getToken();
-}
-
-export { createUser, loginUser, getTokenForRequest };
+export { createUser, loginUser  };

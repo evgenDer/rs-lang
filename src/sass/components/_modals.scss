@@ -29,6 +29,7 @@
     display: flex;
     color: $color-secondary;
     margin-top: -20px;
+    text-align: start;
   }
   .uk-close{
     color: $color-secondary
@@ -95,7 +96,7 @@
     border: none;
     outline: none;
     color: $color-primary;
-    height: 50px;
+    height: 40px;
   }
 }
 

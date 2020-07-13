@@ -6,6 +6,10 @@ function setToken(infoAboutUser) {
   localStorage.setItem('token', infoAboutUser.token);
 }
 
+function setRefreshToken(infoAboutUser){
+  localStorage.setItem('refreshToken', infoAboutUser.refreshToken);
+}
+
 function setDateToken() {
   const dateGetToken = new Date();
   localStorage.setItem('tokenDate', dateGetToken.toString());
@@ -35,6 +39,10 @@ function getUserId() {
   return localStorage.getItem('userId');
 }
 
+function getRefreshToken(){
+  return localStorage.getItem('refreshToken');
+}
+
 function getDateToken() {
   return localStorage.getItem('tokenDate');
 }
@@ -45,5 +53,5 @@ function removeUserId() {
 
 export {
   setUserId, setToken, setDateToken, setUserPassword, getUserEmail, getUserPassword,
-  setUserEmail, getToken, getUserId, getDateToken, removeUserId,
+  setUserEmail, getToken, getUserId, getDateToken, removeUserId, getRefreshToken, setRefreshToken,
 };

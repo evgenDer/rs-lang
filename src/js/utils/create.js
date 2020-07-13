@@ -2,7 +2,10 @@
 // children - array of html elements to append new element
 // attrs - array of pairs : [ ['src', './img.jpg'], ['alt', 'img'] ]
 // textContent - string : 'text content of a tag'
-function createElement(tagName, classNames, children, attrs, textContent) {
+
+function createElementObj ({
+  tagName, classNames, children, attrs, textContent,
+}) {
   const element = document.createElement(tagName);
 
   if (classNames) {
@@ -22,11 +25,14 @@ function createElement(tagName, classNames, children, attrs, textContent) {
   }
 
   if (textContent) {
-    element.textContent = textContent;
+    element.innerHTML = textContent;
   }
 
   return element;
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { createElement };
+function createElement(tagName, classNames, children, attrs, textContent) {
+  return createElementObj ({ tagName, classNames, children, attrs, textContent });
+}
+
+export { createElement, createElementObj };

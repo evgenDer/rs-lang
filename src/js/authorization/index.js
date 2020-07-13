@@ -1,5 +1,5 @@
 import { ERROR_MSG, PASSWORD } from './constants';
-import { setDateToken, setUserPassword, setUserEmail } from '../utils/storage';
+import { setUserId, setToken, setRefreshToken } from '../utils/storage';
 import { loginUser, createUser } from '../api/authorization';
 
 function show() {
@@ -21,20 +21,23 @@ function changeVisibilityPassword() {
   passwordShown = !passwordShown;
 }
 
-async function logIn(event) {
+async function logIn() {
   try {
-    event.preventDefault();
     const emailInput = document.querySelector('input[type="email"]');
     const passwordInput = document.querySelector('input[name="password"]');
     const userEmail = emailInput.value;
     const userPassword = passwordInput.value;
-    await loginUser( userEmail, userPassword );
-    setUserPassword(userPassword);
-    setUserEmail(userEmail);
-    setDateToken();
-    window.history.pushState(null, null, 'main.html');
-    window.location.replace('main.html');
-  } catch (error) {
+    const content = await loginUser( userEmail, userPassword );
+    setUserId(content);
+    if(content  && typeof(content) !== "undefined" && localStorage.getItem('userId')){
+      window.history.pushState(null, null, 'main.html');
+      window.location.replace('main.html')
+      setToken(content);
+      setRefreshToken(content);
+    } else {
+      throw new Error();
+    }
+    } catch (error) {
     ERROR_MSG.innerText = 'Пароль или логин введены неверно';
   }
 }
