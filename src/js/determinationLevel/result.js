@@ -4,7 +4,7 @@ import { updatDifficultyLevel } from '../configuration';
 import { DATA_URL } from '../utils/constants';
 
 
-function createStatisticSentence(audioSrc, textExample, translate){
+function createStatisticSentence(audioSrc, textExample, translate) {
   const newElement = `<div class="line">
     <button class = "btn_pronoucing"><audio src = ${DATA_URL}${audioSrc}></button>
     <p>${textExample} - ${translate}</p>
@@ -13,7 +13,7 @@ function createStatisticSentence(audioSrc, textExample, translate){
   return newElement;
 }
 
-export function addStatisticRound(dataPageRound){
+export function addStatisticRound(dataPageRound) {
   let correct = 0;
   let error = 0;
   const errorField = document.querySelector('.modal-round__error');
@@ -22,15 +22,15 @@ export function addStatisticRound(dataPageRound){
   removeChild(correctField);
   correctField.insertAdjacentHTML('beforeend', `<h3>Правильно <span>0</span</h3></h3>`);
   errorField.insertAdjacentHTML('beforeend', `<h3>Неправильно <span>0</span</h3></h3>`);
-  dataPageRound.forEach((sentence) =>{
+  dataPageRound.forEach((sentence) => {
     const element = createStatisticSentence(sentence.audio, sentence.word, sentence.wordTranslate);
-    if(sentence.result){
+    if (sentence.result) {
       correct += 1;
       correctField.insertAdjacentHTML('beforeend', element);
       correctField.querySelector('span').innerText = `${correct}`;
     }
-    if(!sentence.result){
-      error+=1;
+    if (!sentence.result) {
+      error += 1;
       errorField.insertAdjacentHTML('beforeend', element);
       errorField.querySelector('span').innerText = `${error}`;
     }
@@ -39,8 +39,8 @@ export function addStatisticRound(dataPageRound){
     button.addEventListener('click', () => {
       const audio = button.querySelector('audio');
       playAudio(audio.src);
+    });
   });
-});
 }
 
 async function getComparedHTMLElement(totalCorrect){
@@ -51,7 +51,7 @@ async function getComparedHTMLElement(totalCorrect){
   if(totalCorrect === 0){
     lvl = 0;
   }
-  innerTextResult = `Ваш уровень для слов равен ${lvl}`;
+  innerTextResult = `Ваш уровень для слов равен ${lvl + 1}`;
   const compareElement = `
     <div class = "modal__results">
       <h3>${innerTextResult}</h3>

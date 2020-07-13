@@ -3,7 +3,7 @@ import { getRandomInt, shuffleArray } from '../helpers/math-hepler';
 const COUNT_ANSWERS = 5;
 const COUNT_LEVELS = 5;
 
-export function addAnswer(number, word){
+export function addAnswer(number, word) {
   const answer = `<div class="answer"><label><input type="radio" name='${number}'>  ${word}</label></div>`;
   return answer;
 }
@@ -19,6 +19,7 @@ export function addAnswerField(data, words, level){
       const replaceExampleUpdated =  exampleUpdated.replace(`${data[i].word}`, '');
       exampleUpdated = replaceExampleUpdated;
     }
+
     resultField  +=  `<div class="answers-field__row " data-number = ${i}>`;
     resultField += `<p>${i + 1 + level*COUNT_ANSWERS}. ${exampleUpdated}</p>`;
     shuffleArray(words);
@@ -34,9 +35,11 @@ export function addAnswerField(data, words, level){
       const stringWord = addAnswer(i, word);
       resultField += `${stringWord}`;
     }
+
     resultField += `</div>`;
     answerFieldElement.insertAdjacentHTML('beforeend', resultField);
   }
+
   let btnNext = `<div><button  class = "main-card__body_btn-next">ПРОДОЛЖИТЬ</button></div>`;
   if(level === COUNT_LEVELS){
     btnNext = `<div><button  class = "main-card__body_btn-next">РЕЗУЛЬТАТЫ</button></div>`;
