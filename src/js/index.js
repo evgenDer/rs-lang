@@ -2,12 +2,13 @@ import { addHeaderToPage, defineActivePage } from './navigation/index';
 import addAuthorizationClickHandler from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
-import initStatistics from './statistics/index';
-
+import  initStatistics from './statistics/index';
+import addBtnStartEventListener from './determinationLevel/index';
+import initVocabularyPage from './vocabulary/index';
 // импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage';
 import './promo/promoPageCreating';
-import initVocabularyPage from './vocabulary/index';
+
 
 window.onload = () => {
   addHeaderToPage();
@@ -20,7 +21,7 @@ window.onload = () => {
       // learning-page
       break;
     case 2:
-      // training-page
+      addBtnStartEventListener();
       break;
     case 3:
       // games-page

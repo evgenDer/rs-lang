@@ -89,6 +89,8 @@ const plugins = () => {
     htmlWebpackPluginCreator('learningWords.html', 'index'),
     htmlWebpackPluginCreator('promo.html', 'index'),
     htmlWebpackPluginCreator('games.html', 'index'),
+    htmlWebpackPluginCreator('aboutTeam.html', 'index'),
+    htmlWebpackPluginCreator('game_savannah.html', 'game_savannah'),
     htmlWebpackPluginCreator('vocabulary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
     htmlWebpackPluginCreator('game_english-puzzle.html', 'index', 'english_puzzle'),
@@ -96,6 +98,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
     htmlWebpackPluginCreator('games.html', 'index'),
     htmlWebpackPluginCreator('game-audiochallenge.html', 'game_audiochallenge'),
+    htmlWebpackPluginCreator('determinationLevel.html', 'index', 'determinationLevel'),
     htmlWebpackPluginCreator('game-concentration.html', 'game_concentration'),
 
     new CleanWebpackPlugin(),
@@ -134,8 +137,10 @@ module.exports = {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
     english_puzzle: ['@babel/polyfill', './js/english-puzzle/index.js', './sass/style.scss'],
+    game_savannah: ['@babel/polyfill', './js/savannah/index.js', './sass/style.scss'],
     game_sprint: ['@babel/polyfill', './js/game-sprint/index.js', './sass/style.scss'],
     game_audiochallenge: ['@babel/polyfill', './js/audiochallenge/index.js', './sass/style.scss'],
+    determinationLevel: ['@babel/polyfill', './js/determinationLevel/index.js', './sass/style.scss'],
     game_concentration: ['@babel/polyfill', './js/concentration/index.js', './sass/style.scss'],
   },
   output: {

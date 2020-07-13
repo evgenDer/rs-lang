@@ -43,7 +43,7 @@ const promoPageShadowTree = `
 
   #aboutVideo .content {background: #ffffff90;  border: 1px solid ${styles.colorOpacityBlack}; border-radius: 20px;}
   #aboutLearning .content {height: auto; flex-direction: row;}
-  #aboutLearningScreen {padding: 10px; width:55%; height: 100%; min-width: 320px; min-height: 340px; position: relative; align-items: flex-start; 
+  #aboutLearningScreen {padding: 10px; width:55%; height: 100%; min-width: 320px; min-height: 340px; position: relative; align-items: flex-start;
     background: #ffffff90;  border: 1px solid ${styles.colorOpacityBlack}; border-radius: 20px; }
   #aboutLearningScreen .screen {z-index:14; filter: opacity(0); text-align: left; transition: filter 0.5s;}
   #aboutLearningScreen .opened {z-index:15; filter: opacity(1);}
@@ -67,7 +67,7 @@ const promoPageShadowTree = `
   #aboutLearningText ::slotted(li){margin-bottom: 10px; transition: color 0.2s;}
   #aboutLearningText ::slotted(li.active){color:${styles.colorLightBlue}}
   #aboutLearningText ::slotted(li:hover) {cursor: pointer; color:${styles.colorLightBlue}}
-  
+
   #feedbacks .content {margin-bottom: 100px; max-width: 1200px; height: auto; max-height: none;
      flex-direction: row; flex-wrap:wrap; align-items: flex-start;}
   #feedbacks .feedbackCard {width:220px; height:150px; flex-direction: row;}
@@ -106,7 +106,7 @@ const promoPageShadowTree = `
 </style>
 
 <div id='background'>
-  <img src='assets/img/promoBackground.jpg' > 
+  <img src='assets/img/promoBackground.jpg' >
 </div>
 
 <div id='contentBlock'>
@@ -132,7 +132,7 @@ const promoPageShadowTree = `
         </div>
         <div class='cardText'>
           <span>Оценивай свой прогресс!</span>
-        </div>  
+        </div>
       </div>
     </div>
 
@@ -145,7 +145,7 @@ const promoPageShadowTree = `
         </div>
         <div class='cardText'>
           <span>Играй и запоминай слова!</span>
-        </div>  
+        </div>
       </div>
     </div>
 
@@ -158,7 +158,7 @@ const promoPageShadowTree = `
   </div>
   <div class='cardText'>
     <span>Пополняй словарный запас каждый день!</span>
-  </div>  
+  </div>
 </div>
 </div>
 
@@ -171,7 +171,7 @@ const promoPageShadowTree = `
   </div>
   <div class='cardText'>
     <span>Кастомизируй карточки для максимального удобства!</span>
-  </div>  
+  </div>
 </div>
 </div>
 
@@ -184,7 +184,7 @@ const promoPageShadowTree = `
 </div>
 <div class='cardText'>
   <span>Отмечай сложные слова и повторяй их чаще!</span>
-</div>  
+</div>
 </div>
 </div>
 
@@ -236,13 +236,13 @@ const promoPageShadowTree = `
 
         <div id='aboutLearningCalculatingAlgorithm' class='screen'>
           <span>
-            Слово Правильное и 
+            Слово Правильное и
             </br><span style='color:${styles.easyButtonColor}'>...легкое: +1</span>
             </br><span style='color:${styles.normalButtonColor}'>...среднее: +0.5</span>
             </br><span style='color:${styles.hardButtonColor}'>...тяжелое: +0.2</span>
           </span>
           </br><span>
-          Слово Неправильное и 
+          Слово Неправильное и
             </br><span style='color:${styles.easyButtonColor}'>...легкое: -0.2</span>
             </br><span style='color:${styles.normalButtonColor}'>...среднее: -0.5</span>
             </br><span style='color:${styles.hardButtonColor}'>...тяжелое: -1</span>
@@ -284,10 +284,10 @@ const promoPageShadowTree = `
         <div class='cardContent'>
           <div class='cardText'>
             <span>Awesome!</span>
-          </div> 
+          </div>
           <div class='author'>
             <span>Alex</span>
-          </div> 
+          </div>
         </div>
       </div>
 
@@ -295,10 +295,10 @@ const promoPageShadowTree = `
       <div class='cardContent'>
         <div class='cardText'>
           <span>Узнал то, чего не сказали на lingvoleo!</span>
-        </div> 
+        </div>
         <div class='author'>
           <span>Василий</span>
-        </div> 
+        </div>
       </div>
     </div>
 
@@ -306,10 +306,10 @@ const promoPageShadowTree = `
       <div class='cardContent'>
         <div class='cardText'>
           <span>Очень глубоко продуманное приложение</span>
-        </div> 
+        </div>
         <div class='author'>
           <span>AnnieBunny</span>
-        </div> 
+        </div>
       </div>
     </div>
 
@@ -317,10 +317,10 @@ const promoPageShadowTree = `
     <div class='cardContent'>
       <div class='cardText'>
         <span>Приятное оформление,спасибо за такую красоту!</span>
-      </div> 
+      </div>
       <div class='author'>
         <span>SomeOne01</span>
-      </div> 
+      </div>
     </div>
   </div>
 
@@ -328,13 +328,13 @@ const promoPageShadowTree = `
     <div class='cardContent'>
       <div class='cardText'>
         <span>Всю ночь играла в игры вместо сна, супер!</span>
-      </div> 
+      </div>
       <div class='author'>
         <span>MMgirl</span>
-      </div> 
+      </div>
     </div>
   </div>
-    
+
     </div>
     <slot name='feedbackElement'></slot>
   </div>
@@ -344,12 +344,12 @@ const promoPageShadowTree = `
 <footer>
   <div class='content'>
 
-    <span>RSSсhool 2020</span> 
+    <span>RSSсhool 2020</span>
     <div id='footerInfo'>
       <span>theBestTeamEver</span>
       <slot name='gitHubWay'></slot>
     </div>
-  
+
     </div>
 </footer>
 
