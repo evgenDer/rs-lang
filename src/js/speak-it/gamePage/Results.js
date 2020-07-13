@@ -18,16 +18,13 @@ export default class Results {
 
     const titleText = createElementObj({ tagName: 'h2', textContent: 'Результаты' });
     const titleContainer = createElementObj({ tagName: 'div', classNames: 'uk-modal-header speakit_result_header', children: [titleText] });
-
-    this.countIncorrectAnswers = createElementObj({ tagName: 'span', classNames: 'results_answers_count incorrect-answers_count' });
+    this.incorrectAnswersCount = createElementObj({ tagName: 'span', classNames: 'results_answers_count incorrect-answers_count' });
     const textIncorrectAnswers = createElementObj({ tagName: 'h3', classNames: 'game-results_title-answer', textContent: 'Я не знаю ' });
-
-    const titleIncorrectAnswers = createElementObj({ tagName: 'div', classNames: 'game-results_title', children: [textIncorrectAnswers, this.countIncorrectAnswers] });
+    const titleIncorrectAnswers = createElementObj({ tagName: 'div', classNames: 'game-results_title', children: [textIncorrectAnswers, this.incorrectAnswersCount] });
     this.incorrectAnswers = createElementObj({ tagName: 'div', classNames: 'results_container-answers results_container-answers-incorrect' });
-
     const textCorrectAnswers = createElementObj({ tagName: 'h3', classNames: 'game-results_title-answer', textContent: 'Я знаю ' });
-    this.countCorrectAnswers = createElementObj({ tagName: 'span', classNames: 'results_answers_count correct-answers_count' });
-    const titleCorrectAnswers = createElementObj({ tagName: 'div', classNames: 'game-results_title', children: [textCorrectAnswers, this.countCorrectAnswers] });
+    this.correctAnswersCount = createElementObj({ tagName: 'span', classNames: 'results_answers_count correct-answers_count' });
+    const titleCorrectAnswers = createElementObj({ tagName: 'div', classNames: 'game-results_title', children: [textCorrectAnswers, this.correctAnswersCount] });
     this.correctAnswers = createElementObj({ tagName: 'div', classNames: 'results_container-answers results_container-answers-correct' });
 
     this.answers = createElementObj({
@@ -36,27 +33,25 @@ export default class Results {
       children: [titleCorrectAnswers, this.correctAnswers, titleIncorrectAnswers, this.incorrectAnswers],
     });
 
-    this.returnBtn = createElementObj({ tagName: 'img', classNames: 'results_exit', attrs: [['src', './assets/img/icons/close-game.svg'], ['alt', 'закрыть']] });
+    this.closeBtn = createElementObj({ tagName: 'img', classNames: 'results_exit', attrs: [['src', './assets/img/icons/close-game.svg'], ['alt', 'закрыть']] });
     this.newGameBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn-results btn-new-game', textContent: 'Следующий раунд' });
     this.report = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn-results btn-report', textContent: 'Создать отчет' });
     const controlBtn = createElementObj({ tagName: 'div', classNames: 'result_control-btn uk-modal-footer', children: [this.report, this.newGameBtn] });
-    this.gameResultsWrapper = createElementObj({ tagName: 'div', classNames: 'game-results_wrapper', children: [this.returnBtn, titleContainer, this.answers, controlBtn] });
+    this.gameResultsWrapper = createElementObj({ tagName: 'div', classNames: 'game-results_wrapper', children: [this.closeBtn, titleContainer, this.answers, controlBtn] });
     this.gameResults = createElementObj({ tagName: 'div', classNames: 'game-results hidden', children: [this.gameResultsWrapper] });
     this.addListeners(callbacks);
     return this.gameResults;
   }
 
   addListeners(callbacks) {
-    this.returnBtn.addEventListener('click', () => {
-      if (this.isRoundEnd) {
-        this.isRoundEnd = false;
-        this.onClickNewRaund();
-      } else {
-        callbacks.onClickReturn();
-        this.gameResults.classList.add('hidden');
-        this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
-      }
+    this.closeBtn.addEventListener('click', () => {
+      this.onClickClose(callbacks);
+    });
 
+    this.gameResults.addEventListener('click', (event) => {
+      if (event.target === this.gameResults) {
+        this.onClickClose(callbacks);
+      }
     });
 
     this.newGameBtn.addEventListener('click', () => this.onClickNewRaund());
@@ -67,6 +62,17 @@ export default class Results {
       const text = `Отчет по игре "Speak it"\r\n\r\n${this.errorFields.join('\r\n')}${this.successFields.join('\r\n')}`;
       downloadHelper.download(`speakIt-report_${new Date().toISOString()}.txt`, text);
     });
+  }
+
+  onClickClose(callbacks) {
+    if (this.isRoundEnd) {
+      this.isRoundEnd = false;
+      this.onClickNewRaund();
+    } else {
+      callbacks();
+      this.gameResults.classList.add('hidden');
+      this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
+    }
   }
 
   onClickNewRaund() {
@@ -86,29 +92,34 @@ export default class Results {
     return this.answers;
   }
 
+  addDataByTypeOfResponse(data, nameTypeAnswer) {
+    this[nameTypeAnswer] = data.length;
+    this[`${nameTypeAnswer}AnswersCount`].textContent = this[nameTypeAnswer];
+    this[`${nameTypeAnswer}Answers`].innerHTML = '';
+    data.forEach((card) => {
+      card.changeElementForResults();
+      this[`${nameTypeAnswer}Answers`].append(card.getElement());
+      this.addInformationToReport(card, nameTypeAnswer);
+    });
+  }
+
+  addInformationToReport(card, nameTypeAnswer) {
+    if (nameTypeAnswer === 'correct') {
+      this.successFields = successFields;
+      this.successFields.push(`${card.getWord()} - ${card.getTranscription()} - ${card.getTranslate()}`);
+    } else {
+      this.errorFields = errorFields;
+      this.errorFields.push(`${card.getWord()} - ${card.getTranscription()} - ${card.getTranslate()}`);
+    }
+  }
+
   addData(data, isRoundEnd) {
     this.isRoundEnd = isRoundEnd;
     if (data.correctAnswers) {
-      this.correct = data.correctAnswers.length;
-      this.countCorrectAnswers.textContent = this.correct;
-      this.correctAnswers.innerHTML = '';
-      data.correctAnswers.forEach((card) => {
-        card.changeElementForResults();
-        this.correctAnswers.append(card.getElement());
-        this.successFields = successFields;
-        this.successFields.push(`${card.getWord()} - ${card.getTranscription()} - ${card.getTranslate()}`);
-      });
+      this.addDataByTypeOfResponse(data.correctAnswers, 'correct');
     }
     if (data.incorrectAnswers) {
-      this.incorrect = data.incorrectAnswers.length;
-      this.countIncorrectAnswers.textContent = this.incorrect;
-      this.incorrectAnswers.innerHTML = '';
-      data.incorrectAnswers.forEach((card) => {
-        card.changeElementForResults();
-        this.incorrectAnswers.append(card.getElement());
-        this.errorFields = errorFields;
-        this.errorFields.push(`${card.getWord()} - ${card.getTranscription()} - ${card.getTranslate()}`);
-      });
+      this.addDataByTypeOfResponse(data.incorrectAnswers, 'incorrect');
     }
   }
 }

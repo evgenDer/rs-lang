@@ -14,9 +14,23 @@ export default class StartScreen {
 
   generateStartScreen() {
     this.exit = createElementObj({ tagName: 'img', classNames: 'speakit_exit', attrs: [['src', './assets/img/icons/close-game.svg'], ['alt', 'закрыть игру']] });
+    const header = createElementObj({ tagName: 'div', classNames: 'start-screen-header', children: [this.exit, this.generateGameControl()] });
+    const title = createElementObj({ tagName: 'h2', classNames: 'intro__title', textContent: 'SPEAK IT' });
+    const line1 = createElementObj({ tagName: 'p', classNames: 'intro__info_line', textContent: 'Нажмите на карточку со словом, чтобы увидеть его <br>перевод и услышать звучание. ' });
+    const line2 = createElementObj({ tagName: 'p', classNames: 'intro__info_line', textContent: 'Нажмите на кнопку "Тренировка произношения" и <br> произнесите слова в микрофон.' });
+    const info = createElementObj({ tagName: 'div', classNames: 'intro__info', children: [line1, line2] });
+    this.startBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn-start-game', textContent: 'Начать' });
+    const intro = createElementObj({ tagName: 'div', classNames: 'intro', children: [title, info, this.startBtn] });
+    this.startScreen = createElementObj({ tagName: 'div', classNames: 'start-screen wrapper', children: [header, intro] });
+
+    this.addListeners();
+    return this.startScreen;
+  }
+
+  generateGameControl() {
     this.modeBtn = createElementObj({
       tagName: 'button',
-      classNames: 'uk-button uk-button-default speakit_game-control__btn speakit_game-control__btn-mode speak-it_game-control__btn_mode_disabled',
+      classNames: 'uk-button uk-button-default speakit_game-control__btn speakit_game-control__btn-mode',
       textContent: MODE_INFO.studied.textBtn,
     });
     this.modeMessage = createElementObj({ tagName: 'p', classNames: 'mode-info', textContent: MODE_INFO.studied.textMessage });
@@ -53,18 +67,7 @@ export default class StartScreen {
       this.levelsDropdoun.setNumCurrentItem(config.level);
       this.roundsDropdoun.setNumCurrentItem(config.round);
     });
-    const header = createElementObj({ tagName: 'div', classNames: 'start-screen-header', children: [this.exit, gameControl] });
-
-    const title = createElementObj({ tagName: 'h2', classNames: 'intro__title', textContent: 'SPEAK IT' });
-    const line1 = createElementObj({ tagName: 'p', classNames: 'intro__info_line', textContent: 'Нажмите на карточку со словом, чтобы увидеть его <br>перевод и услышать звучание. ' });
-    const line2 = createElementObj({ tagName: 'p', classNames: 'intro__info_line', textContent: 'Нажмите на кнопку "Тренировка произношения" и <br> произнесите слова в микрофон.' });
-    const info = createElementObj({ tagName: 'div', classNames: 'intro__info', children: [line1, line2] });
-    this.startBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn-start-game', textContent: 'Начать' });
-    const intro = createElementObj({ tagName: 'div', classNames: 'intro', children: [title, info, this.startBtn] });
-    this.startScreen = createElementObj({ tagName: 'div', classNames: 'start-screen wrapper', children: [header, intro] });
-
-    this.addListeners();
-    return this.startScreen;
+    return gameControl;
   }
 
   chageRound() {
@@ -101,14 +104,10 @@ export default class StartScreen {
       if (this.isRepeatLearnedWords) {
         this.modeBtn.innerHTML = MODE_INFO.all.textBtn;
         this.modeMessage.innerHTML = MODE_INFO.all.textMessage;
-        this.modeBtn.classList.remove('speak-it_game-control__btn_mode_disabled');
-        this.modeBtn.classList.add('game-speak-it-control__btn_mode_active');
         this.levelsDropdoun.show();
         this.roundsDropdoun.show();
 
       } else {
-        this.modeBtn.classList.remove('game-speak-it-control__btn_mode_active');
-        this.modeBtn.classList.add('speak-it_game-control__btn_mode_disabled');
         this.modeBtn.innerHTML = MODE_INFO.studied.textBtn;
         this.modeMessage.innerHTML = MODE_INFO.studied.textMessage;
         this.levelsDropdoun.hide();

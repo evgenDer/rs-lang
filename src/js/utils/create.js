@@ -21,7 +21,7 @@ function createElementObj ({
     });
   }
   if (textContent) {
-    element.textContent = textContent;
+    element.innerHTML = textContent;
   }
   return element;
 }

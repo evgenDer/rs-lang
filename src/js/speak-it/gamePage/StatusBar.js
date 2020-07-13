@@ -11,15 +11,14 @@ export default class StatusBar {
   generate(callbackFunctions) {
     this.exit = createElementObj({ tagName: 'img', classNames: 'status-bar_exit', attrs: [['src', './assets/img/icons/arrow-right.svg'], ['alt', 'назад']] });
     this.microphoneImg = createElementObj({ tagName: 'img', classNames: 'btn_microphone-img', attrs: [['src', './assets/img/icons/microphoneOff.svg'], ['alt', 'microphone']] });
-    this.btnMicrophone = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_microphone disabled', children: [this.microphoneImg] });
+    this.btnMicrophone = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_microphone header_btn disabled', children: [this.microphoneImg] });
     const iconRestart = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: refresh']] });
-    this.btnRestart = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_restart', children: [iconRestart] });
+    this.btnRestart = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_restart header_btn', children: [iconRestart] });
     const iconStatistic = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: file-text']] });
-    this.btnResult = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_statistic', children: [iconStatistic] });
+    this.btnResult = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_statistic header_btn', children: [iconStatistic] });
     const linkHome = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: home']] });
-    this.btnHome = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_home', children: [linkHome] });
+    this.btnHome = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_home header_btn', children: [linkHome] });
     const btnContainer = createElementObj({ tagName: 'div', children: [this.btnRestart, this.btnResult, this.btnHome, this.btnMicrophone] });
-
     this.starsContainer = createElementObj({ tagName: 'div', classNames: 'stars_container' });
     const statusBarContainer = createElementObj({ tagName: 'div', classNames: 'status-bar_container', children: [this.exit, this.starsContainer, btnContainer] });
     this.addListeners(callbackFunctions);

@@ -22,38 +22,20 @@ export default class GamePage {
 
     const callbacksForStatusBar = {
       onClickRestart: () => this.restart(),
-      onClickMicrophoneToggle: (microphoneOn) => {
-        if (this.isGameMode) {
-          if (!microphoneOn) {
-            this.microphone.turnOnPause();
-          } else {
-            this.turnOnMicrophone();
-          }
-        }
-      },
+      onClickMicrophoneToggle: (microphoneOn) => this.toggleMicrophone(microphoneOn),
       onClickResult: () => this.showResults(),
-      onClickHome: () => GamePage.goToHomePage(),
+      onClickHome: () => { window.location.href = 'games.html'; },
       onClickExit: () => this.stop(),
-    }
-    const callbacksForResults = {
-      onClickReturn: () => {
-        if (!this.isGameMode) {
-          this.display.update({ translate: '' });
-        } else {
-          this.turnOnMicrophone();
-        }
-        this.cardsBoard.updateCards();
-      },
     }
 
     this.gameContainer = createElementObj({
-      tagName: 'div', classNames: 'game-container wrapper hidden', children: [
+      tagName: 'div', classNames: 'games-speak-it_game-container wrapper hidden', children: [
         this.statusBar.generate(callbacksForStatusBar),
         this.display.generate(),
         this.microphone.generate(),
         this.cardsBoard.generate(),
         buttons,
-        this.results.generate(callbacksForResults),
+        this.results.generate(() => this.onClickReturn()),
       ]
     });
     this.addListeners();
@@ -71,8 +53,23 @@ export default class GamePage {
     this.restart();
   }
 
-  static goToHomePage() {
-    window.location.href = 'games.html';
+  onClickReturn() {
+    if (!this.isGameMode) {
+      this.display.update({ translate: '' });
+    } else {
+      this.turnOnMicrophone();
+    }
+    this.cardsBoard.updateCards();
+  }
+
+  toggleMicrophone(microphoneOn) {
+    if (this.isGameMode) {
+      if (!microphoneOn) {
+        this.microphone.turnOnPause();
+      } else {
+        this.turnOnMicrophone();
+      }
+    }
   }
 
   showResults(isRoundEnd) {

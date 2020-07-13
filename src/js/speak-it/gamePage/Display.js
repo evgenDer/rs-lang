@@ -26,7 +26,6 @@ export default class Display {
     this.loader.show();
     this.wrapper.classList.add('invisible');
     this.wrapper.classList.remove('uk-animation-fade');
-
     if (img) {
       this.image.src = img;
     } else {
