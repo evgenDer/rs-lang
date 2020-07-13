@@ -67,7 +67,7 @@ const PAGES = [
   },
   {
     id: 'team-page',
-    href: '#',
+    href: 'aboutTeam.html',
     img: './assets/img/icons/team.svg',
     text: 'О команде',
   },
