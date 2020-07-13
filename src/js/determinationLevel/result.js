@@ -43,12 +43,11 @@ export function addStatisticRound(dataPageRound){
 });
 }
 
-async function getHTMLElement(totalCorrect){
+async function getComparedHTMLElement(totalCorrect){
   const countSentence = 30;
   const countLevels = 6;
   let innerTextResult = '';
   let lvl = Math.ceil(totalCorrect/countSentence * (countLevels)) - 1;
-  console.log(lvl, totalCorrect);
   if(totalCorrect === 0){
     lvl = 0;
   }

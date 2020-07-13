@@ -26,7 +26,7 @@ export default class Determinate {
   this.wordsAmntInRound = 5;
 }
 
-async getData (){
+async recievedData (){
     const countRounds = 30;
     const round = getRandomInt(countRounds);
     this.data = [];
@@ -53,7 +53,7 @@ async getData (){
     const spinner = `<div style="height: 80px; width: 80px; margin-top: 5vh" uk-spinner="ratio: 4.5"></span>`;
     this.elements.card.insertAdjacentHTML('beforeend', spinner);
     // startLoading();
-    this.getData().then(() => {
+    this.recievedData().then(() => {
       removeChild(this.elements.card);
       const answerField = createElement('div', 'answers-field');
       this.elements.card.append(answerField);
