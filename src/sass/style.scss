@@ -5,7 +5,6 @@
 @import "./abstract/constants";
 @import "./abstract/mixins";
 @import "./abstract/placeholders";
-
 // base
 @import "./base/base";
 @import "./base/buttons";
@@ -27,7 +26,8 @@
 @import "./layouts/game-sprint";
 @import "./layouts/main-page";
 @import "./layouts/authorization";
+@import "./layouts/savannah";
+@import "./layouts/games";
 @import "./layouts/lvl-determination";
-
 @import "./layouts/game-audiochallenge";
 @import "./layouts/game-concentration";

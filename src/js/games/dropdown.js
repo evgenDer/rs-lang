@@ -114,7 +114,7 @@ export async function addActiveGameControls(gameName){
   if (!gameConfiguration || Object.keys(gameConfiguration).length === 0) {
     gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
     const configuration = await getSettings();
-    gameConfiguration.level = configuration.difficultyLevel;
+    gameConfiguration.level = configuration.optional.difficultyLevel;
   }
   listRound[gameConfiguration.round].click();
   listLvl[gameConfiguration.level].click();
