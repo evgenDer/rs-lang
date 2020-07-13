@@ -30,10 +30,10 @@ const PAGES = [
     text: 'Изучение',
   },
   {
-    id: 'training-page',
-    href: '#',
+    id: 'lvl-determination',
+    href: 'determinationLevel.html',
     img: './assets/img/icons/training.svg',
-    text: 'Тренировка',
+    text: 'Уровень',
   },
   {
     id: 'games-page',
@@ -94,10 +94,10 @@ const WORD_DIFFICULTLY = {
 const AUDIO_B64 = 'data:audio/mp3;base64,';
 const IMG_B64 = 'data:image/jpg;base64,';
 
-
 export {
   PAGES, APP_NAME, BACKEND_URL, SAVANNAH_TITLE,
   SAVANNAH_TEXT, SAVANNAH_BUTTON, FETCH_WORDS, CHANGE_LEVEL, CHANGE_ROUND,
   SOUND_OFF, SOUND_ON, LEAVE_MAIN, ADD_QUEUE_NUMBER, RESET_QUEUE, ANSWER_ERROR,
   RESET_ERRORS, AUX_API_URL, WORD_STATE, AUDIO_B64, IMG_B64, DATA_URL, WORD_DIFFICULTLY,
 };
+
