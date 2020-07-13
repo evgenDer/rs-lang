@@ -9,3 +9,12 @@ export function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
+
+export function getMaxIndexValue(array){
+  let max = array[0];
+  for (let i = 0; i < array.length; i+=1) {
+      if (max < array[i]) max = i;
+  }
+  return max;
+}
+

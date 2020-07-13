@@ -30,10 +30,10 @@ const PAGES = [
     text: 'Изучение',
   },
   {
-    id: 'training-page',
-    href: '#',
+    id: 'lvl-determination',
+    href: 'determinationLevel.html',
     img: './assets/img/icons/training.svg',
-    text: 'Тренировка',
+    text: 'Уровень',
   },
   {
     id: 'games-page',
