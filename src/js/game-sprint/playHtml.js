@@ -1,6 +1,7 @@
 const playHtml = `<div class = "play__source">
 <div class = "game-sprint__play_mark">
   <button class = 'btn_exit btn_close'><img src="./assets/img/icons/arrow-right.svg"></button>
+  <button class = "game-container_audio"><img src="assets/img/icons/sound-on.svg"></button>
   <p>0</p>
   <div class = "play__time"></div>
 </div>
@@ -9,9 +10,9 @@ const playHtml = `<div class = "play__source">
   <div class="uk-card-header card__header">
     <button class = "btn_audioexample" uk-tooltip="title: Послушать пример произношения предложения со словом; pos: bottom;"><img src = "assets/img/icons/headphones.svg"></button>
     <div class="card__answers">
-      <div class = "circle"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
-      <div class = "circle"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
-      <div class = "circle"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
+      <div class = "circle_sprint"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
+      <div class = "circle_sprint"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
+      <div class = "circle_sprint"><img src="assets/img/icons/correct.svg" class = "hidden"></div>
     </div>
     <div class="card__result">
       <p></p>

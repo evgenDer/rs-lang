@@ -4,6 +4,7 @@ import { getFullDataWords, getWordById } from '../api/words';
 import { timer, clearTimer } from './timer';
 import { shuffleArray, getRandomInt } from '../helpers/math-helper';
 import { playAudio, stopAudio } from '../helpers/audio';
+import { playAudioInSprint, addAudioButtonClickHandler } from './helpers';
 import Card from './card';
 import { DATA_URL, AUDIO_B64, WORD_STATE } from '../utils/constants';
 import { addStatisticRoundSprint, createStaticticRound } from './statistic';
@@ -138,6 +139,7 @@ export default class Game {
   startGame(){
     hideElement(loadPage);
     removeChild(loadPage);
+    addAudioButtonClickHandler();
     if(!this.isError){
       showElement(playPage);
       const startTimer = timer(60, 'play__time', '', this, this.generateResults);
@@ -166,11 +168,11 @@ export default class Game {
     }
     const img = document.querySelector('.card__answers .hidden');
     if(this.numberEnhasment === SPRINT_MODES.length - 1 && this.seriesOfCorrect !== SERIES_LENGTH){
-      playAudio('assets/audio/correctAnswer.mp3');
+      playAudioInSprint('assets/audio/correctAnswer.mp3');
     }
     else if((img && this.seriesOfCorrect > 0) || !this.numberEnhasment){
       showElement(img);
-      playAudio('assets/audio/correctAnswer.mp3');
+      playAudioInSprint('assets/audio/correctAnswer.mp3');
     }
     this.generateNextWord();
 
@@ -182,7 +184,7 @@ export default class Game {
     this.seriesOfCorrect = 0;
     this.numberEnhasment = 0;
     this.playElements.enhasment.innerText = '';
-    playAudio('assets/audio/error.mp3');
+    playAudioInSprint('assets/audio/error.mp3');
     this.card.addErrorCard();
     this.generateNextWord();
     if (this.mode === GAME_MODES.learned) {
