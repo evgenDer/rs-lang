@@ -1,14 +1,29 @@
 .authentication{
-  // background-image: linear-gradient(-225deg, $color-violet 20%, $color-yellow 80%)!important;
-  background-image: url(../img/background.jpg)!important;
   background-repeat: no-repeat;
-  position: relative;
+  position: absolute;
   width: 100vw!important;
-  height: 100vh;
-  overflow: hidden;
-  position: fixed;
+  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  top: 0px;
 }
 
+.authentication .header__btn{
+  color: $color-primary;
+  background-color: $color-secondary;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  height: 35px;
+  width: 90px;
+}
+
+.authentication .header__btn:before{
+  content: 'ВХОД';
+}
+.authentication form {
+  margin-top: 3rem;
+}
 .authentication__form {
   width: 420px;
   @include media-mobilesmall{
@@ -17,13 +32,17 @@
   min-height: 500px;
   height: auto;
   border-radius: 10px;
-  margin: 3rem auto;
+  margin: 0rem auto;
   box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
   padding: 2%;
-  background-color: rgba(248, 242, 238, 0.8);
+  background-color: darken($color: $color-background, $amount: 3);
+  @include media-tablet{
+    min-height: 480px;
+  }
   @media (max-width: $mobile-big-width){
     width: 300px;
   }
+
 }
 /* form Container */
 form .authentication-page__container{
