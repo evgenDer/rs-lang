@@ -25,6 +25,13 @@ export const DEFAULT_CONFIGURATION = {
   learning: '{}'
 };
 
+export const DEFAULT_SETTINGS_PUZZLE = {
+  autoPlaySound: 'true',
+  showImage: 'false',
+  showTranslation: 'true',
+  playSound: 'true',
+};
+
 export const DEFAULT_CONFIGURATION_GAMES = {
   level: 0,
   round: 0,

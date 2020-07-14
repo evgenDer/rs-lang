@@ -1,4 +1,4 @@
-import { getUserId } from '../utils/storage';
+import { getUserId } from '../../../storage';
 import sendRequest from './requests';
 import { BACKEND_URL } from '../utils/constants';
 

@@ -10,12 +10,19 @@
   letter-spacing: 0.05em;
   color: $color-primary;
   opacity: 1;
+  font-family: 'Montserrat';
+}
+
+button{
+  border-radius: 10px;
+  outline: none;
+  border: none;
 }
 
 .sign-up {
   background-color: $color-additional;
   margin-left: 20px;
-  background: $color-violet;
+  background: $color-secondary;
 }
 
 .log-in{
@@ -27,10 +34,8 @@
     width: 240px;
   }
 }
-/*       Forgot Password button FAF3DD  */
 .frgt-pass {background: transparent;}
 
-/* buttons hover Animation */
 button:hover {
   animation: ani9 0.4s ease-in-out infinite alternate;
 }
@@ -40,6 +45,94 @@ button:hover {
   }
 }
 
+.btn_autopronoucing::before{
+  content: "\f001";
+}
+.btn_translation::before{
+  content: "\f1ab";
+}
+
+.modal-round .btn_pronoucing{
+  background: transparent;
+  color: $color-secondary;
+}
+
+.btn_background::before{
+  content: "\f03e";
+}
+
+.btn_statistic img{
+  width: 35px;
+  height: 35px;
+
+}
+
+.block-hints button{
+    background-color: transparent;
+}
+
+
+.btn_exit, .btn_pronoucing{
+  font-family: 'FontAwesome';
+}
+
+#game-puzzle .btn_exit{
+  width: 50px;
+  animation: none;
+  transform: rotate(180deg);
+  img {
+    filter: invert(100%);
+  }
+}
+
+.disable{
+  background-color: $button-disable !important;
+}
+
+.btns button{
+  width: 50px;
+  margin-right: 10px;
+  background-color: $color-additional;
+  font-size: 2rem;
+  font-family: 'FontAwesome';
+  color: white;
+  text-align: center;
+  padding: 0px;
+}
+
+button.btn_unknown::before{
+ content: "Не знаю";
+}
+
+.btn_check::before{
+  content: "Проверить";
+}
+
+.btn_result::before{
+  content: "Результаты";
+}
+
+.btn_continue::before{
+  content: "Продолжить";
+}
+
+.btn_next::before{
+  content: "Продолжить";
+}
+
+
+.block-btns button{
+  color: white;
+  width: 300px;
+  height: 60px;
+  margin: 30px 30px 0px;
+  background-color: $color-additional;
+  font-size: 1.8rem;
+  @media (max-width: $tablet-width){
+    font-size: 1.5rem;
+    margin: 10px;
+    width: 200px;
+  }
 .btn_audioexample{
   position: absolute;
   outline: none;
@@ -51,6 +144,7 @@ button:hover {
   @include media-mobile{
     margin-left: 230px;
   }
+}
 }
 
 .btn_close{
@@ -87,6 +181,11 @@ button:hover {
   }
 }
 
+#game-puzzle .game-control__btn{
+  background-color: $color-secondary !important;
+	color: $color-primary !important;
+}
+
 .game-control__list {
   background: $color-secondary;
   opacity: 0.8;
@@ -107,6 +206,11 @@ button:hover {
   }
 }
 
+.game-control__list {
+  background: $color-primary!important;
+  color: $color-additional!important;
+}
+
 .game-control__btn_mode {
   width: 190px;
   padding: 0;
@@ -119,6 +223,11 @@ button:hover {
 .game-control__btn_mode_active {
   background: $color-yellow !important;
   color: $color-secondary !important;
+}
+
+#game-puzzle .game-control__btn_mode_active {
+  background: $color-active !important;
+  color: $color-primary !important;
 }
 
 .game-control__btn_mode_disabled {
@@ -137,6 +246,10 @@ button:hover {
   }
 }
 
+
+.btn_pronoucing::before{
+  content: "\f028";
+  font-family: 'FontAwesome';
 .card__btns {
   display: flex;
   justify-content: center;
@@ -157,12 +270,17 @@ button:hover {
     background-color: $color-red;
   }
 }
+}
 
 #game-sprint .btn_pronoucing{
   background: transparent;
   color: $color-secondary;
   border: none;
   outline: none;
+}
+
+.play-page .btn_pronoucing::before{
+  color: $color-primary;
 }
 
 #game-sprint {
@@ -177,21 +295,19 @@ button:hover {
     height: 30px;
   }
 }
-.btn_exit{
+  .btn_exit{
   img {
     width: 25px;
     filter: invert(100%);
   }
-  border: none;
-  outline: none;
-  position: absolute;
-  left: 10vw;
-  top: 5vh;
-  transform: rotate(180deg);
-  &:hover{
-    animation: none;
+    border: none;
+    outline: none;
+    position: absolute;
+    left: 10vw;
+    top: 5vh;
+    transform: rotate(180deg);
+    &:hover{
+      animation: none;
+    }
   }
 }
-
-}
-

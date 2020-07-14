@@ -5,7 +5,7 @@ import { initConfigurationPage } from './configuration/index';
 import  initStatistics from './statistics/index';
 import addBtnStartEventListener from './determinationLevel/index';
 import initVocabularyPage from './vocabulary/index';
-//импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
+// импорт модуля Изучения слов. Позволяет использовать хтмл элемент карточки <card-word></card-word>
 import './learningWords/learningWordsPage';
 import './promo/promoPageCreating';
 
