@@ -7,7 +7,7 @@ import {
 import {
   AUDIO_B64
 } from '../utils/constants';
-import playAudio from '../helpers/audio';
+import { playAudio } from '../helpers/audio';
 import * as downloadHelper from '../download/download';
 
 
