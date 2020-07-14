@@ -7,6 +7,7 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     const params = {
       method: methodRequest,
       headers: {
+        'Access-Control-Allow-Origin': 'https://afternoon-falls-25894.herokuapp.com',
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -20,14 +21,13 @@ async function sendRequest(methodRequest, urlRequest, withCredentials = false, o
     }
 
     const rawResponse = await fetch(urlRequest, params);
-
-    if (rawResponse.status === 404) {
+     if (rawResponse.status === 404 || rawResponse.status === 401) {
       return null;
     }
 
     return rawResponse.json();
   } catch (error) {
-    console.error(error.toString());
+    console.log(error);
     return error;
   }
 }

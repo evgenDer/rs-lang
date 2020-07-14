@@ -13,47 +13,22 @@ export default class Card {
   }
 
   generate(callbackFunction, displayRestoreButton) {
-    const progressBarTooltipTypes = Object.values(markToText);
-    const progressBarItems = [];
-    const progressBarLevel = Math.floor(this.data.optional.successPoint);
-    for (let i = 1; i < progressBarTooltipTypes.length; i += 1) {
-      const progressBarItem = createElementObj({ tagName: 'div', classNames: `vocabulary__progress-bar_item` });
-      if (i <= progressBarLevel) {
-        progressBarItem.style.backgroundColor = markToStyle[progressBarLevel];
-        progressBarItem.style.opacity = 0.9;
-      }
-      progressBarItems.push(progressBarItem);
-    }
-    const progressBar = createElementObj({
-      tagName: 'div',
-      classNames: 'vocabulary__progress-bar',
-      children: progressBarItems,
-      attrs: [['uk-tooltip', `title:${progressBarTooltipTypes[progressBarLevel]}; pos: top-left; offset: -0.1`]]
-    });
     const wordContains = Card.createBlock('word', this.data.word, this.data.wordTranslate, this.data.transcription || '');
-    this.vocabularyWordContains = createElementObj({ tagName: 'div', classNames: `vocabulary__word-container`, children: [progressBar, wordContains] });
+    this.vocabularyWordContains = createElementObj({ tagName: 'div', classNames: `vocabulary__word-container`, children: [this.generateProgressBar(), wordContains] });
+
     if (this.data.textExample) {
       const contextContains = Card.createBlock('context', this.data.textExample, this.data.textExampleTranslate);
       this.vocabularyWordContains.append(contextContains);
     }
+
     if (this.data.textMeaning) {
       const meaningContains = Card.createBlock('meaning', this.data.textMeaning, this.data.textMeaningTranslate);
       this.vocabularyWordContains.append(meaningContains);
     }
-    const lastRepeat = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Давность: ${moment(this.data.optional.lastUpdateDate).fromNow()}` });
-    const repeatCount = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Повторений: ${this.data.optional.repeatCount}` });
-    const nextRepeat = createElementObj({
-      tagName: 'div',
-      classNames: 'data-point',
-      textContent: `Следующее повторение: ${(this.data.repeatTiming) ? moment(this.data.repeatTiming).fromNow() : '---'}`
-    });
-    const cardInfoContainer = createElementObj({
-      tagName: 'div',
-      classNames: 'vocabulary__card-info',
-      children: [lastRepeat, repeatCount, nextRepeat],
-    });
 
+    const cardInfoContainer = this.generateCardInfo();
     this.vocabularyCardContains = createElementObj({ tagName: 'div', classNames: `vocabulary__card uk-animation-fade`, children: [this.vocabularyWordContains, cardInfoContainer] });
+
     if (this.data.image) {
       const cardImg = createElementObj({
         tagName: 'img',
@@ -65,8 +40,7 @@ export default class Card {
 
     if (displayRestoreButton) {
       const btnIcon = createElementObj({ tagName: 'span', attrs: [['uk-icon', 'icon: refresh']] });
-      this.btnRestore = createElementObj({
-        tagName: 'button',
+      this.btnRestore = createElementObj({ tagName: 'button',
         classNames: 'btn-restore',
         children: [btnIcon],
         attrs: [['uk-tooltip', 'Восстановить']],
@@ -95,6 +69,43 @@ export default class Card {
       container.insertBefore(transcription, translate);
     }
     return container;
+  }
+
+  generateProgressBar() {
+    const progressBarTooltipTypes = Object.values(markToText);
+    const progressBarItems = [];
+    const progressBarLevel = Math.floor(this.data.optional.successPoint);
+    for (let i = 1; i < progressBarTooltipTypes.length; i += 1) {
+      const progressBarItem = createElementObj({ tagName: 'div', classNames: `vocabulary__progress-bar_item` });
+      if (i <= progressBarLevel) {
+        progressBarItem.style.backgroundColor = markToStyle[progressBarLevel];
+        progressBarItem.style.opacity = 0.9;
+      }
+      progressBarItems.push(progressBarItem);
+    }
+    const progressBar = createElementObj({
+      tagName: 'div',
+      classNames: 'vocabulary__progress-bar',
+      children: progressBarItems,
+      attrs: [['uk-tooltip', `title:${progressBarTooltipTypes[progressBarLevel]}; pos: top-left; offset: -0.1`]]
+    });
+    return progressBar;
+  }
+
+  generateCardInfo() {
+    const lastRepeat = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Давность: ${moment(this.data.optional.lastUpdateDate).fromNow()}` });
+    const repeatCount = createElementObj({ tagName: 'div', classNames: 'data-point', textContent: `Повторений: ${this.data.optional.repeatCount}` });
+    const nextRepeat = createElementObj({
+      tagName: 'div',
+      classNames: 'data-point',
+      textContent: `Следующее повторение: ${(this.data.repeatTiming) ? moment(this.data.repeatTiming).fromNow() : '---'}`
+    });
+    const cardInfoContainer = createElementObj({
+      tagName: 'div',
+      classNames: 'vocabulary__card-info',
+      children: [lastRepeat, repeatCount, nextRepeat],
+    });
+    return cardInfoContainer;
   }
 
   getIdWord() {

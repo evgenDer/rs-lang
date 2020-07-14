@@ -3,8 +3,6 @@
   height: 100%;
 }
 
-
-
 .lvl-determination__main{
   width: 100%;
   display: flex;
@@ -17,14 +15,13 @@
     font-weight: bold;
     line-height: 2rem;
     color: $color-secondary;
-    font-family: 'Monteserrat';
+    font-family: 'Montserrat';
   }
   text-align: start;
   margin: 0 0 20px;
 }
 .main-card{
   margin: 40px 0;
-  // width: 700px;
   min-height: 400px;
   height: auto;
   border-radius: 10px;
@@ -67,7 +64,6 @@ input[type="radio"]{
 }
 
 .answers-field__row{
-  // background-color: $color-background-additinal;
   margin: 10px 0;
   padding: 10px;
   border-radius: 10px;
@@ -88,17 +84,15 @@ input[type="radio"]{
 
 #lvl-determination .modal-round {
   width: 500px;
- // position: absolute;
   padding: 10px;
-  // height: fit-content;
-  // max-height: 600px;
-  margin-top: 5vh;
-  /*overflow: hidden;*/
+  margin-top: 0vh;
   @include media-tablet {
     top: 0vh;
+    width: 400px;
   }
   @include media-mobile {
     top: 0vh;
+    width: 300px;
   }
   margin-bottom: 10px;
 

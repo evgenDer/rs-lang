@@ -28,7 +28,6 @@ export async function getRefreshTokenFromApi() {
       },
     });
     const result = await rawResponse.json();
-    console.log(result);
     setToken(result);
     setRefreshToken(result);
     setDateToken();
@@ -41,11 +40,8 @@ export async function getRefreshTokenFromApi() {
 export async function getTokenForRequest() {
   const refreshToken = getRefreshToken();
 
-  if (refreshToken === undefined || !refreshToken || !isValidToken(refreshToken)) {
-    console.log('try to get new token');
-    // eslint-disable-next-line no-unused-vars
-    const infoAboutUser = await getRefreshTokenFromApi();
-    console.log(refreshToken);
+  if (refreshToken === "undefined" || !refreshToken || !isValidToken(refreshToken)) {
+    await getRefreshTokenFromApi();
     const token = getToken();
     if (token === "undefined") {
       window.location.href = 'index.html';
@@ -53,8 +49,5 @@ export async function getTokenForRequest() {
 
     return token;
   }
-  console.log(refreshToken);
-
-  console.log('use old token');
   return getToken();
 }

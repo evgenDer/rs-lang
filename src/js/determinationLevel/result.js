@@ -43,16 +43,15 @@ export function addStatisticRound(dataPageRound) {
   });
 }
 
-async function getHTMLElement(totalCorrect) {
+async function getComparedHTMLElement(totalCorrect) {
   const countSentence = 30;
   const countLevels = 6;
   let innerTextResult = '';
   let lvl = Math.ceil(totalCorrect / countSentence * (countLevels)) - 1;
-  console.log(lvl, totalCorrect);
   if (totalCorrect === 0) {
     lvl = 0;
   }
-  innerTextResult = `Ваш уровень для слов равен ${lvl}`;
+  innerTextResult = `Ваш уровень для слов равен ${lvl + 1}`;
   const compareElement = `
     <div class = "modal__results">
       <h3>${innerTextResult}</h3>
@@ -64,7 +63,7 @@ async function getHTMLElement(totalCorrect) {
 }
 
 export async function createStaticticRound(totalCorrect, totalErrors, errorArray) {
-  const compareHTMLElement = await getHTMLElement(totalCorrect, totalErrors, errorArray);
+  const compareHTMLElement = await getComparedHTMLElement(totalCorrect, totalErrors, errorArray);
   const statisticElement =
     `<div id="modal" uk-modal class = 'modal'>
       <div class="modal-round uk-align-center">
