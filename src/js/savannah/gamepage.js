@@ -21,13 +21,13 @@ export const createProcessTemplate = () => {
   game.startGame();
   stopAudio();
   document.body.append(process);
-  setTimeout(() => {
-    process.classList.add('show-after-click');
-  }, 1000);
+  const spinner = `<div class = "spinner" style="height: 80px; width: 80px; margin-top: 10vh" uk-spinner="ratio: 4.5"></span>`;
+  process.insertAdjacentHTML('beforeend', spinner);
+  process.classList.add('show-after-click');
 };
 
 export const createGameTimer = () => {
-  let time = 3;
+  let time = 5;
   const close = document.querySelector('.game-container__dagger-img');
   const hearts = document.querySelector('.game-container__hearts');
   const timerText = createElement({ tagName: 'h2', classNames: 'timer__text' });
@@ -53,7 +53,7 @@ export const createGameTimer = () => {
       setTimeout(() => {
         timer.remove();
       }, 1000);
-    }, 4000);
+    }, 5000);
   }, 1000);
 };
 

@@ -105,6 +105,7 @@ export default class Game {
       this.addKeyboardEventsHandler();
       this.addAudioButtonClickHandler();
       this.startTask();
+      document.querySelector('.spinner').remove();
     }).catch((err) => {
       // eslint-disable-next-line no-undef
       UIkit.notification({

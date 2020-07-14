@@ -178,7 +178,7 @@
   justify-content: center;
 }
 
-.body__images{
+#game-sprint .body__images{
   background-color: $color-background-additinal;
   border-radius: 50%;
   width: 80px;
@@ -187,25 +187,26 @@
   margin-left: -20px;
 }
 
-.circle{
+#game-sprint .circle_sprint{
   margin: 3px;
   width: 10px;
   height: 10px;
+  animation: none;
   // border: 2px solid rgb(187, 184, 184);
   background-color: rgb(211, 203, 203);
   background-image: url('../img/icons/correct.svg');
   border-radius: 50%;
 }
 
-.uk-card-title h3{
+#game-sprint .uk-card-title h3{
   font-family: 'Montserrat';
 }
 
-.card__result{
+#game-sprint .card__result{
   margin-top: 10px;
 }
 
-.correct{
+#game-sprint .correct{
   text-align: center;
   height: 100px;
   position: inherit;
@@ -213,7 +214,7 @@
   border-radius: 10px 10px 0 0;
 }
 
-.correct::before{
+#game-sprint .correct::before{
   content: "";
   position: absolute;
   left: 0;
@@ -224,7 +225,7 @@
   background-size: 20px 20px;
   background-image: radial-gradient(circle at 10px -5px, transparent 14px, $color-background -1px);
 }
-.correct::after{
+#game-sprint .correct::after{
   content: "";
   position: absolute;
   left: 0;
@@ -265,7 +266,7 @@ hr{
 }
 
 
-.body__images{
+#game-sprint .body__images{
   display: grid;
   text-align: center;
   grid-template-rows: 20px 30px;
@@ -324,13 +325,13 @@ img[alt="bird"]{
   height: 20px;
 }
 
-.circle{
+#game-sprint .circle_sprint{
   img{
     margin-top: -11px;
   }
 }
 
-.icon_result{
+#game-sprint .icon_result{
   width: 35px;
   height: 35px;
   text-align: center;
@@ -350,7 +351,7 @@ img[alt="bird"]{
   100% { opacity: 0; }
 }
 
-.game-control__list_disabled {
+#game-sprint .game-control__list_disabled {
   display: none !important;
 }
 
