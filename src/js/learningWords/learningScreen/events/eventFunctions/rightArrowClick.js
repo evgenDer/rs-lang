@@ -75,7 +75,7 @@ export default function rightClick(learningScreenElement) {
               learningScreenElement.statistics.longestRightAnswerSeries = rightAnswerSeries;
             }
           }
-          increaseWordRightSequenceCount(word);
+          increaseWordRightSequenceCount(word, false);
           increaseRepeatCount(word);
           if (cardMode === 'newWord') {
             createUserWord(wordId, word);
@@ -105,7 +105,7 @@ export default function rightClick(learningScreenElement) {
             learningScreenElement.statistics.currentRightAnswerSeries = 0;
           }
 
-          increaseWordErrorCount(word);
+          increaseWordErrorCount(word, false);
           increaseRepeatCount(word);
           addWordNeedToRepeat(learningScreenElement);
 

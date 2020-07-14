@@ -4,7 +4,7 @@ import { updatDifficultyLevel } from '../configuration';
 import { DATA_URL } from '../utils/constants';
 
 
-function createStatisticSentence(audioSrc, textExample, translate){
+function createStatisticSentence(audioSrc, textExample, translate) {
   const newElement = `<div class="line">
     <button class = "btn_pronoucing"><audio src = ${DATA_URL}${audioSrc}></button>
     <p>${textExample} - ${translate}</p>
@@ -13,7 +13,7 @@ function createStatisticSentence(audioSrc, textExample, translate){
   return newElement;
 }
 
-export function addStatisticRound(dataPageRound){
+export function addStatisticRound(dataPageRound) {
   let correct = 0;
   let error = 0;
   const errorField = document.querySelector('.modal-round__error');
@@ -22,15 +22,15 @@ export function addStatisticRound(dataPageRound){
   removeChild(correctField);
   correctField.insertAdjacentHTML('beforeend', `<h3>Правильно <span>0</span</h3></h3>`);
   errorField.insertAdjacentHTML('beforeend', `<h3>Неправильно <span>0</span</h3></h3>`);
-  dataPageRound.forEach((sentence) =>{
+  dataPageRound.forEach((sentence) => {
     const element = createStatisticSentence(sentence.audio, sentence.word, sentence.wordTranslate);
-    if(sentence.result){
+    if (sentence.result) {
       correct += 1;
       correctField.insertAdjacentHTML('beforeend', element);
       correctField.querySelector('span').innerText = `${correct}`;
     }
-    if(!sentence.result){
-      error+=1;
+    if (!sentence.result) {
+      error += 1;
       errorField.insertAdjacentHTML('beforeend', element);
       errorField.querySelector('span').innerText = `${error}`;
     }
@@ -39,17 +39,17 @@ export function addStatisticRound(dataPageRound){
     button.addEventListener('click', () => {
       const audio = button.querySelector('audio');
       playAudio(audio.src);
+    });
   });
-});
 }
 
-async function getHTMLElement(totalCorrect){
+async function getHTMLElement(totalCorrect) {
   const countSentence = 30;
   const countLevels = 6;
   let innerTextResult = '';
-  let lvl = Math.ceil(totalCorrect/countSentence * (countLevels)) - 1;
+  let lvl = Math.ceil(totalCorrect / countSentence * (countLevels)) - 1;
   console.log(lvl, totalCorrect);
-  if(totalCorrect === 0){
+  if (totalCorrect === 0) {
     lvl = 0;
   }
   innerTextResult = `Ваш уровень для слов равен ${lvl}`;
@@ -63,10 +63,10 @@ async function getHTMLElement(totalCorrect){
   return compareElement;
 }
 
-export async function createStaticticRound(totalCorrect, totalErrors, errorArray){
+export async function createStaticticRound(totalCorrect, totalErrors, errorArray) {
   const compareHTMLElement = await getHTMLElement(totalCorrect, totalErrors, errorArray);
   const statisticElement =
-  `<div id="modal" uk-modal class = 'modal'>
+    `<div id="modal" uk-modal class = 'modal'>
       <div class="modal-round uk-align-center">
           <div class="uk-modal-header">
             <h2>Результаты</h2>
@@ -89,8 +89,9 @@ export async function createStaticticRound(totalCorrect, totalErrors, errorArray
   `;
   document.body.insertAdjacentHTML('beforeend', statisticElement);
   // eslint-disable-next-line no-undef
-  UIkit.modal('#modal', { bgclose: false, center: true}).show();
+  UIkit.modal('#modal', { bgclose: false, center: true }).show();
   document.getElementById('modal-btn-learn').addEventListener('click', () => {
+    window.localStorage.setItem('dayLearningDate', '-1');
     window.location.href = 'learningWords.html';
   });
 }

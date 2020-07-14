@@ -23,7 +23,7 @@ async function getUpdatedUserWord(wordId) {
   return Object.assign(word, wordOptions);
 }
 
-function increaseWordErrorCount(word, isgamemode) {
+function increaseWordErrorCount(word, isgamemode = true) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
   word.optional['errorCount'] += 1;
@@ -32,7 +32,7 @@ function increaseWordErrorCount(word, isgamemode) {
   calculateSuccessPoint(word, isgamemode);
 }
 
-function increaseWordReferenceCount(word, isgamemode) {
+function increaseWordReferenceCount(word, isgamemode = true) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
   calculateSuccessPoint(word, isgamemode, true);
@@ -43,7 +43,7 @@ function switchDeleteModeUserWord(word) {
   word.optional['mode'] = WORD_STATE.deleted;
 }
 
-function increaseWordRightSequenceCount(word, isgamemode) {
+function increaseWordRightSequenceCount(word, isgamemode = true) {
   word.optional['lastUpdateDate'] = Date.now();
   word.optional['referenceCount'] += 1;
   word.optional['rightSequence'] += 1;
