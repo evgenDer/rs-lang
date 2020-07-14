@@ -14,6 +14,7 @@ import { increaseWordReferenceCount, increaseWordErrorCount } from '../../words/
 import { Statistics } from '../../statistics/components/statistics';
 import { getGameMode } from '../../games/gameModeSwitch';
 import { GAME_MODES } from '../../games/constants';
+import { stopAudio, playAudio } from '../../helpers/audio';
 
 
 const COUNT_SENTENCE = 10;
@@ -31,7 +32,7 @@ function addImageInPage(image, infoAboutImage) {
   const resultField = document.querySelector('.block-results');
   removeChild(sourceField);
   const infoPage = createElement('p', '', [], [], infoAboutImage);
-  const imageRound = createElement('img', '',[], [['src', image.src]]);
+  const imageRound = createElement('img', '', [], [['src', image.src]]);
   sourceField.append(infoPage);
   resultField.append(imageRound);
 }
@@ -88,7 +89,7 @@ export default class Round {
       const textExample = this.dataPage[this.currentSentenceNumber].textExample.replace(/<\/?[a-zA-Z]+>/gi, '');
       this.currentSentence = new Sentence(slicedImage, textExample, this.width, height);
       const currentSentenceElement = createElement('div', 'sentence current');
-      currentSentenceElement.style.paddingLeft = `${this.height /(2*COUNT_SENTENCE) }px`;
+      currentSentenceElement.style.paddingLeft = `${this.height / (2 * COUNT_SENTENCE)}px`;
       const newSentenceElemement = this.currentSentence.renderSourceGame();
       SOURCE_FIELD.append(newSentenceElemement);
       RESULT_FIELD.append(currentSentenceElement);
@@ -100,6 +101,19 @@ export default class Round {
       this.unknownButtonEventListeners();
       hideElement(document.querySelector('.load-page'));
     };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  addHintsAfterCompletedRound() {
+    const hintAutoPronoucing = document.querySelector(`.${BUTTONS_CLASSES.autoPlaySound}`);
+    const hintTranslate = document.querySelector(`.${BUTTONS_CLASSES.showTranslate}`);
+    const translate = document.querySelector('.translate');
+    if(hintTranslate.classList.contains('disable')){
+      translate.classList.remove('hidden');
+    }
+    if(hintAutoPronoucing.classList.contains('disable')){
+      this.playAudio();
+    }
   }
 
   addHintsInRound() {
@@ -136,10 +150,8 @@ export default class Round {
   }
 
   playAudio() {
-    this.audioSentence.stop();
-    this.audioSentence.src = `${DATA_URL}${this.dataPage[this.currentSentenceNumber].audioExample}`;
-    this.audioSentence.autoplay = true;
-    this.audioSentence.play();
+    stopAudio();
+    playAudio(`${DATA_URL}${this.dataPage[this.currentSentenceNumber].audioExample}`);
   }
 
   checkCorrectSentence() {
@@ -160,16 +172,17 @@ export default class Round {
       this.dataPage[this.currentSentenceNumber].result = isCorrect;
     });
     if (countCorrectSentence === arraySentence.length) {
-      this.correct+=1;
+      this.correct += 1;
+      this.addHintsAfterCompletedRound();
       return true;
     }
     return false;
   }
 
-  addDropPuzzles(){
+  addDropPuzzles() {
     const currentSentenceElement = RESULT_FIELD.querySelector('.current');
     const newSentenceElemement = SOURCE_FIELD.querySelector('.sentence');
-    currentSentenceElement.addEventListener("mouseleave", () => {
+    currentSentenceElement.addEventListener('mouseleave', () => {
       this.checkPuzzles();
     }, false);
     const sortCurrent = new Sortable(currentSentenceElement, {
@@ -178,7 +191,7 @@ export default class Round {
     });
     const sortSource = new Sortable(newSentenceElemement, {
       group: 'shared',
-      animation: 150
+      animation: 150,
     });
   }
 
@@ -189,14 +202,14 @@ export default class Round {
       removeChild(RESULT_FIELD);
       addImageInPage(this.image, this.infoAboutImage);
       removeAllButtons();
-      const resultButton = createElement('button', 'btn_result', [], [['uk-toggle','target: #modal-close-default']]);
+      const resultButton = createElement('button', 'btn_result', [], [['uk-toggle', 'target: #modal-close-default']]);
       const nextButton = createElement('button', 'btn_next');
       const { correct, errors } = this;
-      statistic.updateGameStatistics(correct, errors );
+      statistic.updateGameStatistics(correct, errors);
       insertNewButtons([resultButton, nextButton]);
     } else {
       this.generateCorrectSentence();
-      addHintShowImage(true, this.srcImagesParts[this.currentSentenceNumber]);
+      addHintShowImage(true, this.srcImagesParts[this.currentSentenceNumber], true);
       document.querySelector('.current').classList.remove('current');
       this.currentSentenceNumber += 1;
       this.generateSentenceInRound();
@@ -221,7 +234,7 @@ export default class Round {
     });
   }
 
-  checkPuzzles(){
+  checkPuzzles() {
     const countElements = SOURCE_FIELD.querySelectorAll('canvas').length;
     if (countElements === 0) {
       removeAllButtons();
@@ -232,18 +245,18 @@ export default class Round {
   }
 
   continueButtonEventListeners() {
-    document.querySelector('.btn_continue').addEventListener('click', async() => {
-      const {userWord, _id} = this.dataPage[this.currentSentenceNumber];
+    document.querySelector('.btn_continue').addEventListener('click', async () => {
+      const { userWord, _id } = this.dataPage[this.currentSentenceNumber];
       const mode = getGameMode();
-      if ( mode !== GAME_MODES.all) {
-        if(this.dataPage[this.currentSentenceNumber].result){
+      if (mode !== GAME_MODES.all) {
+        if (this.dataPage[this.currentSentenceNumber].result) {
           increaseWordReferenceCount(userWord);
           this.correct += 1;
         } else {
           increaseWordErrorCount(userWord);
           this.errors += 1;
         }
-          updateUserWord(_id, userWord);
+        updateUserWord(_id, userWord);
       }
       this.continuationGame();
     });
@@ -256,6 +269,7 @@ export default class Round {
       const continueButton = createElement('button', 'btn_continue');
       insertNewButtons([continueButton]);
       this.dataPage[this.currentSentenceNumber].result = false;
+      this.addHintsAfterCompletedRound();
       this.continueButtonEventListeners();
     });
   }

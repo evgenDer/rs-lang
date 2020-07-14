@@ -176,10 +176,11 @@ option::selection {
 }
 
 .block-hints{
+  margin-top: 10px;
   p{
     height: auto;
     margin: auto;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
     @include media-tablet{
       margin: auto;
@@ -193,13 +194,12 @@ option::selection {
     color: $color-primary;
   }
 
-  margin-top: -10px;
   font-size: 2em;
   color: $color-primary;
   text-align: center;
 }
 
-.btn_hidden{
+.btn_hidden::before{
   color: transparent!important;
 }
 

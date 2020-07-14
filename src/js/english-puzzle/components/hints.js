@@ -18,18 +18,18 @@ function addHintTranslate(isHintOn) {
   }
 }
 
-function addHintShowImage(isHintOn, image) {
+function addHintShowImage(isHintOn, image, isOldSentence = false) {
   const hintElement = document.querySelector(`.${BUTTONS_CLASSES.showImage}`);
   const sentenceElementsSource = SOURCE_FIELD.querySelectorAll('canvas');
   const sentenceElementsResult = RESULT_FIELD.querySelectorAll('.current canvas');
   if (!isHintOn) {
-    hintElement.classList.add('disable');
+    if(!isOldSentence) hintElement.classList.add('disable');
     sentenceElementsSource.forEach((canvas) => { fillPuzzleColor(canvas); });
     sentenceElementsResult.forEach((canvas) => { fillPuzzleColor(canvas); });
   } else {
     sentenceElementsSource.forEach((canvas) => { drawPuzzleImage(canvas, image); });
     sentenceElementsResult.forEach((canvas) => { drawPuzzleImage(canvas, image); });
-    hintElement.classList.remove('disable');
+    if(!isOldSentence) hintElement.classList.remove('disable');
   }
 }
 
@@ -38,9 +38,9 @@ function addHintPlaySound(isHintOn) {
   const hintSoundIcon = document.querySelector('.block-hints .btn_pronoucing');
   if (!isHintOn) {
     hintElement.classList.add('disable');
-    hintSoundIcon.classList.add('btn_hidden');
+    hintSoundIcon.classList.add('hidden');
   } else {
-    hintSoundIcon.classList.remove('btn_hidden');
+    hintSoundIcon.classList.remove('hidden');
     hintElement.classList.remove('disable');
   }
 }
@@ -76,8 +76,8 @@ function addEventsListenerOnHintButtons() {
   });
   document.querySelector(`.${BUTTONS_CLASSES.showTranslate}`).addEventListener('click', () => {
     const englishPuzzleSettings = getDataEnglishPuzzle();
-    englishPuzzleSettings.showTranslate = !englishPuzzleSettings.showTranslate;
-    addHintTranslate(englishPuzzleSettings.showTranslate);
+    englishPuzzleSettings.showTranslation = !englishPuzzleSettings.showTranslation;
+    addHintTranslate(englishPuzzleSettings.showTranslation);
     setDataEnglishPuzzle(englishPuzzleSettings);
   });
 }
