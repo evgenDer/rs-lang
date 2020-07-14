@@ -25,7 +25,6 @@ async function getStatistics() {
     const userId = getUserId();
     const urlRequest = `${BACKEND_URL}/users/${userId}/statistics`;
     const content = await sendRequest('GET', urlRequest, true);
-
     return content;
   } catch (error) {
     console.error(`Error during get statistics. Error: ${error.message}`);
