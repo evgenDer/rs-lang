@@ -47,7 +47,6 @@ export default function whatsNext(learningScreenElement, mode = 'right') {
             learningScreenElement.state.currentRepeatingCardIndex = wordIndex;
             willCreateCard = true;
           }
-        } else {
         }
       } else {
         learningScreenElement.state.currentLearningCardIndex = wordIndex;

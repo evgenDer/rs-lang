@@ -31,7 +31,6 @@ export default function createEvents(learningScreenElement) {
       addWordNeedToRepeat(learningScreenElement);
       event.target.classList.remove('hovered');
       event.target.classList.add('active');
-    } else if (event.target.closest('.enableAudio[slot=audioHelperButton]') != null) {
     }
 
     if (

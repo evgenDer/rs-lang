@@ -342,6 +342,5 @@ const promoPageShadowTree = `
 </div>
 
 
-
 `;
 export default promoPageShadowTree;
