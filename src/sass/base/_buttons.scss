@@ -22,12 +22,12 @@ button{
 .sign-up {
   background-color: $color-additional;
   margin-left: 20px;
-  background: $color-secondary;
+  background: $color-active;
 }
 
 .log-in{
   margin: 7% 0;
-  background: $color-additional;
+  background: $color-secondary;
   width: 310px;
   @media (max-width: $mobile-big-width){
     margin-left: 25px;

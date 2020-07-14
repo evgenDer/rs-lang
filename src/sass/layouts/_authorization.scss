@@ -65,13 +65,13 @@ form .authentication-page__container{
 /* Login title form form */
 .head-form  h2 {
   font-size: 4rem;
-  color: $color-additional;
+  color: $color-secondary;
   margin: 30px;
 }
 
 .input-item {
   background: #fff;
-  color: $color-additional;
+  color: $color-secondary;
   padding: 15px 0px 14.8px 8px;
   border-radius: 5px 0px 0px 5px;
   @media (max-width: $mobile-big-width){
@@ -81,7 +81,7 @@ form .authentication-page__container{
 
 #eye {
   background: #fff;
-  color: $color-additional;
+  color: $color-secondary;
 
   margin: 6px 0 0 0;
   margin-left: -20px;
