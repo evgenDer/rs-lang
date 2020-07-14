@@ -130,6 +130,7 @@ async function saveConfiguration() {
 const addSaveButtonClickHandler = () => {
   document.querySelector('.configuration__save-button').addEventListener('click', async () => {
     if (await saveConfiguration()) {
+      // eslint-disable-next-line no-undef
       UIkit.notification({
         message: "<span uk-icon='icon: check'></span> Сохранено",
         status: 'success',
