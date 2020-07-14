@@ -1,5 +1,5 @@
 import { removeChild } from '../helpers/html-helper';
-import playAudio from '../helpers/audio';
+import { playAudio } from '../helpers/audio';
 import { updatDifficultyLevel } from '../configuration';
 import { DATA_URL } from '../utils/constants';
 

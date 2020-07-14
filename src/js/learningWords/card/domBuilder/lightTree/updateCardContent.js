@@ -1,6 +1,4 @@
 import updateStatusBar from './updateStatus';
-import createImg from './createImg';
-import createAudio from './createAudio';
 
 import { updateEnableAudioHelper, updateStopAudioHelper } from '../lightTree/AudioHelpers';
 

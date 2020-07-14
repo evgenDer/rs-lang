@@ -1,5 +1,5 @@
-import getUserWordById from '../api/userWords';
-import getWordById from '../api/words';
+import { getUserWordById } from '../api/userWords';
+import { getWordById } from '../api/words';
 
 import { WORD_STATE } from '../utils/constants';
 /*
