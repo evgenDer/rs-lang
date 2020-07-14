@@ -40,7 +40,7 @@ button:hover {
   }
 }
 
-.btn_audioexample{
+#game-sprint .btn_audioexample{
   position: absolute;
   outline: none;
   background-color: transparent;
@@ -66,7 +66,19 @@ button:hover {
     height: 30px;
   }
 }
-
+#game-sprint .btn_close{
+  min-width: 25px;
+  transition: all .4s;
+  background-color: transparent!important;
+  &:hover{
+    color: $color-additional!important;
+  }
+  svg{
+    width: 25px;
+    width: 30px;
+    height: 30px;
+  }
+}
 .game-control__btn {
   width: 150px;
   outline: none;
@@ -137,7 +149,7 @@ button:hover {
   }
 }
 
-.card__btns {
+#game-sprint .card__btns {
   display: flex;
   justify-content: center;
   button{
