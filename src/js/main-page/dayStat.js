@@ -61,7 +61,7 @@ class DayStat {
     const dayLearningStat = JSON.parse(window.localStorage.getItem('dayLearningStat'));
     const dayLearningProgressArrs = JSON.parse(window.localStorage.getItem('dayLearningLocalState'));
     const learningDate = window.localStorage.getItem('dayLearningDate');
-    if (+this.currentDate === +learningDate) {
+    if (+this.currentDate === +Math.floor(learningDate)) {
       const learnedNewWords = dayLearningProgressArrs.newWordProgressArr.filter((element) => element).length;
       const learnedWords = dayLearningProgressArrs.learningProgressArr.filter((element) => element).length;
 
@@ -73,6 +73,7 @@ class DayStat {
         this.state.bestSeries = dayLearningStat.longestRightAnswerSeries;
       }
     }
+    console.log(this.state)
   }
 
 }
