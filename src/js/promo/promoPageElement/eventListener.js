@@ -6,6 +6,7 @@ export default function initEventListener(promoPage) {
     '#aboutLearningScreen > div',
   );
   promoPage.addEventListener('click', () => {
+    updateCanvas(promoPage);
     if (event.target.closest('li') != null) {
       const target = event.target.closest('li');
       liArr.forEach((element, index) => {
@@ -21,7 +22,4 @@ export default function initEventListener(promoPage) {
     }
   });
 
-  window.addEventListener('resize', () => {
-    updateCanvas(promoPage);
-  });
 }
