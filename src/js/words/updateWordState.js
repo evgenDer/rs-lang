@@ -72,7 +72,7 @@ function calculateSuccessPoint(word, isgamemode = false, isSuccess = false) {
   if (currentMark <= 4) {
     if (currentMark < 1 && isSuccess) {
       mark = 3;
-    } else {
+    } else if (currentMark < 1) {
       mark = 1;
     }
 
@@ -89,6 +89,7 @@ function calculateSuccessPoint(word, isgamemode = false, isSuccess = false) {
         mark = mark - difficultyToErrorPoint[word.difficulty];
       }
     }
+    console.log(mark);
     if (currentMark >= 2 && mark < 2) {
       mark = 2;
     }
@@ -124,7 +125,7 @@ function openCardUpdate(word) {
   word.optional['mode'] = WORD_STATE.repeating;
   word.optional['rightSequence'] = 0;
   word.optional['repeatCount'] += 1;
-  calculateSuccessPoint(word);
+  calculateSuccessPoint(word, false);
 }
 
 export {

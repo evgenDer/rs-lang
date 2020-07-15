@@ -12,6 +12,7 @@ import {
   increaseWordErrorCount,
   increaseWordRightSequenceCount,
   increaseRepeatCount,
+  openCardUpdate,
 } from '../../../../words/updateWordState';
 
 import saveDayLocalState from '../../functions/saveDayLocalState';
@@ -103,9 +104,11 @@ export default function rightClick(learningScreenElement) {
           if (screenMode === 'learning' || screenMode === 'newWord') {
             learningScreenElement.stat.updateLearningStatistics(false);
             learningScreenElement.statistics.currentRightAnswerSeries = 0;
+            increaseWordErrorCount(word, false);
+          } else {
+            openCardUpdate(word);
           }
 
-          increaseWordErrorCount(word, false);
           increaseRepeatCount(word);
           addWordNeedToRepeat(learningScreenElement);
 
