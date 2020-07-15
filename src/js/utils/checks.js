@@ -22,6 +22,7 @@ function isNewUser() {
   return !(localStorage.getItem('userId') !== null && isValidToken(getRefreshToken()));
 }
 
+
 export {
   isValidToken,
   isNewUser

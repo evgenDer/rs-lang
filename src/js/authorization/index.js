@@ -1,6 +1,8 @@
 import { ERROR_MSG, PASSWORD } from './constants';
 import { setUserId, setToken, setRefreshToken } from '../utils/storage';
 import { loginUser, createUser } from '../api/authorization';
+import { APP_NAME } from '../utils/constants';
+import { createElement } from '../utils/create';
 
 function show() {
   PASSWORD.setAttribute('type', 'text');
@@ -41,11 +43,35 @@ async function logIn() {
     ERROR_MSG.innerText = 'Пароль или логин введены неверно';
   }
 }
-
-function addAuthorizationClickHandler() {
+export function addLendingPage() {
+  document.querySelector('promo-page').classList.add('hidden');
+  document.querySelector('header').remove();
+  document.body.style.background = `linear-gradient(rgba(8, 15, 26, 0.1) 0%, rgba(17, 17, 46, 0.2) 100%),
+  url('assets/img/promoBackground.jpg') no-repeat`;
+  document.querySelector('.authentication-page').classList.remove('hidden');
+}
+export function addAuthorizationClickHandler() {
   document.getElementById('eye').addEventListener('click', changeVisibilityPassword, false);
   document.querySelector('.sign-up').addEventListener('click', createUser);
   document.querySelector('.log-in').addEventListener('click', logIn);
+  document.querySelector('.header__btn').addEventListener('click', addLendingPage);
 }
 
-export default addAuthorizationClickHandler;
+export function generateLendingPage(){
+  const btnLogIn = createElement('button', 'header__btn');
+  const aligner = createElement('div', 'header__aligner');
+
+  const logo = createElement('h1', 'logo', [], [], APP_NAME);
+  const logoContainer = createElement('div', 'header__logo', [logo]);
+
+  const wrapper = createElement('div', 'wrapper header__wrapper', [
+    aligner,
+    logoContainer,
+    btnLogIn
+  ]);
+
+  const header = createElement('header', 'header', [wrapper]);
+  document.body.prepend(header);
+
+}
+

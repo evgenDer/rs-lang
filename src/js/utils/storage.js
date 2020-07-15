@@ -1,3 +1,5 @@
+import { DEFAULT_SETTINGS_PUZZLE } from '../constants/default-settings';
+
 function setUserId(infoAboutUser) {
   localStorage.setItem('userId', infoAboutUser.userId);
 }
@@ -51,20 +53,16 @@ function removeUserId() {
   localStorage.removeItem('userId');
 }
 
-function getGameStatistics(gameName) {
-  if (localStorage.getItem(gameName) === null) {
-    const data  = { level: 0, page: 0 }
-    localStorage.setItem(gameName, JSON.stringify(data));
-  }
-  return JSON.parse(localStorage.getItem(gameName));
-};
+function setDataEnglishPuzzle(englishPuzzleSettings) {
+  localStorage.setItem('englishPuzzle', JSON.stringify(englishPuzzleSettings));
+}
 
-function setGameStatistics(data) {
-  localStorage.setItem('speakitStatistic', JSON.stringify(data));
-};
+function getDataEnglishPuzzle() {
+  return JSON.parse(localStorage.getItem('englishPuzzle')) || DEFAULT_SETTINGS_PUZZLE;
+}
 
 export {
   setUserId, setToken, setDateToken, setUserPassword, getUserEmail, getUserPassword,
-  setUserEmail, getToken, getUserId, getDateToken, removeUserId,
-  getGameStatistics, setGameStatistics, getRefreshToken, setRefreshToken,
+  getDataEnglishPuzzle, setDataEnglishPuzzle, setUserEmail, getToken,
+  getUserId, getDateToken, removeUserId, getRefreshToken, setRefreshToken,
 };

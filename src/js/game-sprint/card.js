@@ -1,5 +1,5 @@
 import { showElement, removeClassesFromElement, removeChild } from '../helpers/html-helper';
-import { playAudio } from '../helpers/audio';
+import { playAudioInSprint } from './helpers';
 import { SPRINT_MODES } from '../games/constants';
 import { createElement } from '../utils/create';
 
@@ -52,7 +52,7 @@ export default class Card {
       showElement(img);
     }
     this.addProgressBar();
-    playAudio('assets/audio/correct.mp3');
+    playAudioInSprint('assets/audio/correct.mp3');
     headerCard.classList.add(SPRINT_MODES[this.numberMode].сlassElement);
     headerCard.classList.add('correct');
   }
@@ -75,13 +75,13 @@ export default class Card {
     if(this.numberMode !== SPRINT_MODES.length - 1){
       for(let i = 0; i < countCircles; i += 1){
         const img = createElement('img', 'hidden', [], [['src', correctIconSrc]])
-        circle = createElement('div', 'circle', [img]);
+        circle = createElement('div', 'circle_sprint', [img]);
         cardAnswers.append(circle);
       }
     }
     else {
       const img = createElement('img', '', [], [['src', correctIconSrc]]);
-      circle = createElement('div', 'circle', [img]);
+      circle = createElement('div', 'circle_sprint', [img]);
       cardAnswers.append(circle);
     }
   }
