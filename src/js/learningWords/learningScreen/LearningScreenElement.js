@@ -12,6 +12,8 @@ import createEvents from './events/createEvents';
 import whatsNext from './events/eventFunctions/whatsNext';
 import getDayLocalState from './functions/getDayLocalState';
 import { getConfiguration } from '../../configuration';
+import dayStat from '../../main-page/dayStat';
+import statistics, { Statistics } from '../../statistics/components/statistics';
 
 export default class LearningScreenElement extends HTMLElement {
   constructor() {
@@ -46,6 +48,11 @@ export default class LearningScreenElement extends HTMLElement {
       newWordCount: 3,
       wordCount: 6,
       difficultyLevel: 0,
+      learning: {
+        isHardMode: false,
+        groupNumber: 0,
+        learningWordsPage: 0,
+      },
     };
 
     this.wordArrs = {
@@ -59,6 +66,8 @@ export default class LearningScreenElement extends HTMLElement {
       longestRightAnswerSeries: 0,
       rightAnswers: 0,
     };
+
+    this.stat = null;
   }
 
   connectedCallback() {
@@ -75,7 +84,7 @@ export default class LearningScreenElement extends HTMLElement {
     );
     const loadingIcon = this.shadowRoot.querySelector('div#loading');
 
-    await this.setSettingsFromLocalStorage();
+    await this.setSettings();
     await getDayLocalState(this);
     loadingIcon.remove();
     const willCreateCard = whatsNext(this);
@@ -97,12 +106,17 @@ export default class LearningScreenElement extends HTMLElement {
       updateDifficultyButtons(this);
 
       createEvents(this);
+      this.stat = new Statistics('Learning');
+      const today = new Date().toDateString();
+      this.stat.dateTime = new Date(today).getTime();
     } else {
+      window.scrollTo(pageYOffset, 0)
       createResults(this);
     }
+
   }
 
-  async setSettingsFromLocalStorage() {
+  async setSettings() {
     let config = await getConfiguration();
     for (let prop in config) {
       if (this.settings.hasOwnProperty(prop)) {
@@ -113,6 +127,7 @@ export default class LearningScreenElement extends HTMLElement {
         this.settings.wordCount = config[prop];
       }
     }
+    this.settings.learning['groupNumber'] = config.difficultyLevel;
     return;
   }
 

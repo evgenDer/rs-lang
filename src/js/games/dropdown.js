@@ -111,7 +111,7 @@ export function selectNextRound() {
 export async function addActiveGameControls(gameName){
   let gameConfiguration = await getCustomConfiguration(gameName);
   if (!gameConfiguration || Object.keys(gameConfiguration).length === 0) {
-    gameConfiguration =  DEFAULT_CONFIGURATION_GAMES;
+    gameConfiguration = DEFAULT_CONFIGURATION_GAMES;
     const configuration = await getSettings();
     gameConfiguration.level = configuration.optional.difficultyLevel;
   }

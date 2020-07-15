@@ -25,6 +25,8 @@ const promoPageShadowTree = `
   div{ display:flex; justify-content:center; align-items: center; flex-direction: column;}
   #background{width: 100%; height:100vh; position:fixed; z-index:10; voerflow:hidden; object-fit:cover; filter: opacity(0.2)}
   #background img{width: 100%; height:100vh; object-fit:cover; }
+  h1 {margin-block-end: 20px;}
+  
   #contentBlock {padding: 0px 40px; width:calc(100% - 80px); position:relative; z-index:11; }
   .header {width: 100%;  max-width: 900px; height: 100px; font-size: 18px;}
 
@@ -68,21 +70,17 @@ const promoPageShadowTree = `
   #aboutLearningText ::slotted(li.active){color:${styles.colorLightBlue}}
   #aboutLearningText ::slotted(li:hover) {cursor: pointer; color:${styles.colorLightBlue}}
 
-  #feedbacks .content {margin-bottom: 100px; max-width: 1200px; height: auto; max-height: none;
+  #feedbacks .content {margin-bottom: 30px; max-width: 1200px; height: auto; max-height: none;
      flex-direction: row; flex-wrap:wrap; align-items: flex-start;}
   #feedbacks .feedbackCard {width:220px; height:150px; flex-direction: row;}
   #feedbacks .cardContent {border-top:1px solid ${styles.colorOpacityBlack};}
   #feedbacks .cardText {height: calc(100% - 30px);}
   #feedbacks .author {filter: opacity(0.5);}
 
-  footer {width: 100%; height:70px; display:flex; z-index: 11; justify-content: center; background: #ffffff90;
-     border-top: 1px solid ${styles.colorOpacityBlack}; border-radius: 10px;}
-  footer .content {width: calc(100%-20px); max-width: 1200px; height: 100%; flex-direction:row; justify-content: flex-start;}
-  footer span {width:30%; font-size: 25px; text-align: left;}
-  #footerInfo {width: 70%;flex-direction:row; justify-content: flex-end;}
-  #footerInfo span {width: 100%; font-size:20px; text-align: right; }
-  #footerInfo ::slotted(img) {width: 64px; height: 64px; z-index: 12; transform: translateY(0px); transition: transform 0.3s; }
-  #footerInfo ::slotted(img:hover) {cursor:pointer; transform: translateY(-3px);}
+  #gitHub {margin-bottom: 50px;}
+  #gitHub span{ font-size: 25px; font-weight: 700;}
+  #gitHub a{ text-decoration: none; color: ${styles.colorLightBlue}}
+  #gitHub a:hover {text-decoration: underline;}
 
   @media screen and (max-width: ${styles.contentWidth}){
     #background img{width:1400px;}
@@ -98,8 +96,6 @@ const promoPageShadowTree = `
     :host {font-size: 14px;}
     #aboutLearningScreen {min-width:250px;}
     .header {padding: 30px 0px 30px; font-size:16px; height: auto;}
-    footer span {font-size:22px;}
-    #footerInfo span {display:none;}
   }
 
 
@@ -193,7 +189,7 @@ const promoPageShadowTree = `
 
   <div id='aboutVideo'>
     <div class='header'>
-      <span>Посмотрите видео и ознакомьтесь с функциональностью приложения!</span>
+      <span>Посмотри видео и ознакомься с функциональностью приложения!</span>
     </div>
     <div class='content';>
       <slot name='videoElement'></slot>
@@ -202,7 +198,7 @@ const promoPageShadowTree = `
 
   <div id='aboutLearning'>
     <div class='header'>
-      <span>Изучайте слова по специальной методике, основывающейся на последних научныx достижениях в области процессов запоминания информации!</span>
+      <span>Изучай слова по специальной методике, основывающейся на последних научныx достижениях в области процессов запоминания информации!</span>
     </div>
     <div class='content'>
       <div id='aboutLearningScreen'>
@@ -339,19 +335,13 @@ const promoPageShadowTree = `
     <slot name='feedbackElement'></slot>
   </div>
 
+  <div id='gitHub'>
+    <div class='header'>
+      <span>Следи за изменениями на нашем <a href='https://github.com/evgenDer/rs-lang'>GitHub</a> аккаунте! </span>
+    </div>
+  </div>
+
 </div>
-
-<footer>
-  <div class='content'>
-
-    <span>RSSсhool 2020</span>
-    <div id='footerInfo'>
-      <span>theBestTeamEver</span>
-      <slot name='gitHubWay'></slot>
-    </div>
-
-    </div>
-</footer>
 
 
 `;

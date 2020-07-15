@@ -1,60 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  <link rel="shortcut icon" href="../../favicon/favicon.ico" type="image/x-icon">
-  <title>RS Lang</title>
-</head>
-<body id="main-page">
-  <main calss="main">
-    <div class="wrapper main__wrapper">
-      <div class="language-stat stat">
-        <div class="language-stat_lang stat-container stat-container__lang">
-          <img src="./assets/img/union-jack.jpg" alt="flag">
-          <p>Английский</p>
-        </div>
-        <div class="language-stat_bar progress progress__red">
-          <p>Изучено слов: <span id="learned-words">0</span> из <span id="all-words">0</span></p>
-          <progress id="language-stat_bar" value="0" max="0"></progress>
-        </div>
-      </div>
-      <div class="today-stat stat">
-        <div class="today-stat_primary-row">
-          <div class="today-stat_title">
-            <p>Сегодня</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="../../favicon/favicon.ico" type="image/x-icon" />
+    <title>RS Lang</title>
+  </head>
+  <body id="main-page">
+    <main calss="main">
+      <div class="wrapper main__wrapper">
+        <div class="language-stat stat">
+          <div class="language-stat_lang stat-container stat-container__lang">
+            <img src="./assets/img/union-jack.jpg" alt="flag" />
+            <p>Английский</p>
+          </div>
+          <div class="language-stat_bar progress progress__red">
+            <p>Изучено слов: <span id="learned-words">0</span> из <span id="all-words">0</span></p>
+            <progress id="language-stat_bar" value="0" max="0"></progress>
           </div>
         </div>
-        <div class="today-stat_secondary-row">
-          <div class="today-stat_bar progress progress__green">
-            <p>Выполнение дневного плана: <span id="day-learned-words">0</span> из <span id="day-all-words">0</span></p>
-            <progress id="today-stat_plan-bar" value="0" max="0"></progress>
+        <div class="today-stat stat">
+          <div class="today-stat_primary-row">
+            <div class="today-stat_title">
+              <p>Сегодня</p>
+            </div>
           </div>
-          <div class="today-stat_bar progress progress__yellow">
-            <p>Слова на сегодня: <span id="day-learned-words">0</span> из <span id="max-all-words">0</span></p>
-            <progress id="today-stat_max-bar" value="0" max="0"></progress>
+          <div class="today-stat_secondary-row">
+            <div class="today-stat_bar progress progress__green">
+              <p>
+                Выполнение дневного плана: <span id="day-learned-words">0</span> из
+                <span id="day-all-words">0</span>
+              </p>
+              <progress id="today-stat_plan-bar" value="0" max="0"></progress>
+            </div>
+            <div class="today-stat_bar progress progress__yellow">
+              <p>
+                Новые слова на сегодня: <span id="max-day-learned-words">0</span> из
+                <span id="max-all-words">0</span>
+              </p>
+              <progress id="today-stat_max-bar" value="0" max="0"></progress>
+            </div>
+          </div>
+          <div class="today-stat_secondary-row">
+            <div class="today-stat_practised stat-container">
+              <p>Пройдено карточек</p>
+              <p class="stat-value" id="words-practiced">0</p>
+            </div>
+            <div class="today-stat_correct stat-container">
+              <p>Правильные ответы</p>
+              <p class="stat-value"><span id="correct-repeats">0</span>%</p>
+            </div>
+            <div class="today-stat_new stat-container">
+              <p>Новые слова</p>
+              <p class="stat-value" id="new-words">0</p>
+            </div>
+            <div class="today-stat_streak stat-container">
+              <p>Лучшая серия</p>
+              <p class="stat-value" id="best-streak">0</p>
+            </div>
           </div>
         </div>
-        <div class="today-stat_secondary-row">
-          <div class="today-stat_practised stat-container">
-            <p>Пройдено карточек</p>
-            <p class="stat-value" id="words-practiced">0</p>
-          </div>
-          <div class="today-stat_correct stat-container">
-            <p>Правильные ответы</p>
-            <p class="stat-value"><span id="correct-repeats">0</span>%</p>
-          </div>
-          <div class="today-stat_new stat-container">
-            <p>Новые слова</p>
-            <p class="stat-value" id="new-words">0</p>
-          </div>
-          <div class="today-stat_streak stat-container">
-            <p>Лучшая серия</p>
-            <p class="stat-value" id="best-streak">0</p>
-          </div>
+        <div class="main-page-contol">
+          <button class="main-page-contol_button" id="start-learning-btn">
+            Приступить к изучению
+          </button>
         </div>
       </div>
       <div class="main-page-contol">

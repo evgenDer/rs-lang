@@ -1,10 +1,9 @@
 /* eslint-disable no-undef */
-import {
-  DEFAULT_CONFIGURATION
-} from '../constants/default-settings';
+import { DEFAULT_CONFIGURATION } from '../constants/default-settings';
 
 import * as page from './page';
 import * as configurationService from '../api/settings';
+import dayStat from '../main-page/dayStat';
 
 export async function getConfiguration() {
   const configuration = await configurationService.getSettings();
@@ -45,7 +44,7 @@ export async function saveCustomConfiguration(gameName, gameConfiguration) {
 }
 
 export async function getCustomConfiguration(gameName) {
-  try{
+  try {
     const configuration = await getConfiguration();
 
     if (!configuration) {
@@ -112,15 +111,15 @@ async function saveConfiguration() {
   }
 
   const appConfiguration = page.getAppConfiguration();
-  let {
-    dayLearningDate
-  } = prevConfiguration;
+  let { dayLearningDate } = prevConfiguration;
 
   if (
     prevConfiguration.maxNewWordsPerDay !== userConfiguration.maxNewWordsPerDay ||
     prevConfiguration.maxCardsWithWordsPerDay !== userConfiguration.maxCardsWithWordsPerDay
   ) {
-    dayLearningDate = Date.now();
+    dayStat.updateStat();
+    dayStat.saveStat();
+    window.localStorage.setItem('dayLearningDate', '-1');
   }
 
   prevConfiguration.maxNewWordsPerDay = userConfiguration.maxNewWordsPerDay;

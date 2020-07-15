@@ -15,7 +15,6 @@ async function updateStatistic(statistics) {
 
     return content;
   } catch (error) {
-    console.error(`Error during update statistics. Error: ${error.message}`);
     return error;
   }
 }
@@ -27,7 +26,6 @@ async function getStatistics() {
     const content = await sendRequest('GET', urlRequest, true);
     return content;
   } catch (error) {
-    console.error(`Error during get statistics. Error: ${error.message}`);
     return null;
   }
 }

@@ -27,6 +27,8 @@ export default function openCard(learningScreenElement) {
 
   if (card.state.isFirstAnswer) {
     if (screenMode === 'learning' || screenMode === 'newWord') {
+
+      learningScreenElement.stat.updateLearningStatistics(false);
       learningScreenElement.statistics.currentRightAnswerSeries = 0;
     }
 

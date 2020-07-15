@@ -5,9 +5,9 @@ const styles = {
 
 const dayResultsShadowTreeHTML = `
 <style>
-  :host {width:100%; height:100%; min-height: 100vh; position: absolute; top:0; left:0; z-index:20;}
+  :host {width:100%; height: 100% ; min-height: 100%; position:fixed; top:0; left:0; bottom:0; z-index:20;}
   div {display:flex; flex-direction: column; justify-content: center; align-items:center;}
-  #background {width:100%; height:100%; justify-content: flex-start; z-index:10; background-color: #050505c7;}
+  #background { width:100%; height:100%; justify-content: flex-start; z-index:10; background-color: #050505c7;}
 
   #contentBlock {margin-top: 150px; width:60%; max-width: 550px; min-width: 500px; min-height: 350px;
      z-index:11; font-size:20px; background-color: white; border-radius: 15px;}

@@ -12,6 +12,7 @@ import {
   increaseWordErrorCount,
   increaseWordRightSequenceCount,
   increaseRepeatCount,
+  openCardUpdate,
 } from '../../../../words/updateWordState';
 
 import saveDayLocalState from '../../functions/saveDayLocalState';
@@ -63,11 +64,10 @@ export default function rightClick(learningScreenElement) {
         difficultyButtons.forEach((element) => element.classList.add('opened'));
 
         if (card.state.isFirstAnswer) {
-          console.log('okkk');
           if (screenMode === 'learning' || screenMode === 'newWord') {
-            console.log(learningScreenElement.statistics);
             learningScreenElement.statistics.rightAnswers += 1;
             learningScreenElement.statistics.currentRightAnswerSeries += 1;
+            learningScreenElement.stat.updateLearningStatistics(true);
             if (
               learningScreenElement.statistics.currentRightAnswerSeries >
               learningScreenElement.statistics.longestRightAnswerSeries
@@ -75,19 +75,12 @@ export default function rightClick(learningScreenElement) {
               const rightAnswerSeries = learningScreenElement.statistics.currentRightAnswerSeries;
               learningScreenElement.statistics.longestRightAnswerSeries = rightAnswerSeries;
             }
-            console.log(
-              learningScreenElement.statistics.rightAnswers +
-                ' ' +
-                learningScreenElement.statistics.longestRightAnswerSeries,
-            );
           }
-
-          increaseWordRightSequenceCount(word);
+          increaseWordRightSequenceCount(word, false);
           increaseRepeatCount(word);
           if (cardMode === 'newWord') {
             createUserWord(wordId, word);
           } else {
-            console.log(word);
             updateUserWord(wordId, word);
           }
         }
@@ -102,9 +95,6 @@ export default function rightClick(learningScreenElement) {
           ] = true;
         }
 
-        console.log(learningScreenElement.wordArrs.needToRepeat);
-        console.log(learningScreenElement.localState.needToRepeatProgressArr);
-
         updateStatusBar(learningScreenElement);
         saveDayLocalState(learningScreenElement);
 
@@ -112,17 +102,19 @@ export default function rightClick(learningScreenElement) {
       } else {
         if (card.state.isFirstAnswer) {
           if (screenMode === 'learning' || screenMode === 'newWord') {
+            learningScreenElement.stat.updateLearningStatistics(false);
             learningScreenElement.statistics.currentRightAnswerSeries = 0;
+            increaseWordErrorCount(word, false);
+          } else {
+            openCardUpdate(word);
           }
 
-          increaseWordErrorCount(word);
           increaseRepeatCount(word);
           addWordNeedToRepeat(learningScreenElement);
 
           if (cardMode === 'newWord') {
             createUserWord(wordId, word);
           } else {
-            console.log(word);
             updateUserWord(wordId, word);
           }
 
@@ -132,13 +124,7 @@ export default function rightClick(learningScreenElement) {
         }
       }
 
-      console.log(learningScreenElement.wordArrs.needToRepeat);
-      console.log(currentRepeatingCardIndex);
-      console.log(learningScreenElement.localState.needToRepeatProgressArr);
-
       card.state.isFirstAnswer = false;
-    } else {
-      console.log('freeeee');
     }
   } else {
     if (screenMode === 'repeating' && card.state.optional.mode === 'needToRepeat') {
@@ -163,6 +149,7 @@ export default function rightClick(learningScreenElement) {
       createCard(learningScreenElement);
       updateDifficultyButtons(learningScreenElement);
     } else {
+      window.scrollTo(pageYOffset, 0)
       createResults(learningScreenElement);
     }
   }

@@ -10,8 +10,7 @@ import createImg from './createImg';
 import createAudio from './createAudio';
 
 export default function initLearning(cardElement) {
-  console.log(cardElement.state);
-  console.log(cardElement.settings);
+
 
   //Строка ввода
   cardElement.innerHTML = "<learning-line slot='ENitem'></learning-line>";
