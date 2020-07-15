@@ -16,7 +16,7 @@ body {
 }
 
 .vocabulary__form {
-  margin-top: 20px;
+  margin: 20px auto !important;
   padding: 15px 20px;
   padding-right: 10px;
   border-radius: 10px;
@@ -65,18 +65,18 @@ body {
 
 .vocabulary_cards-wrapper {
   overflow-y: auto;
-  height: 525px;
+  height: 568px;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
   }
   &::-webkit-scrollbar-track {
-    background: $color-primary;
-    border-radius: 10px;
+    background: #e5e5e5;
+    border-radius: 12px;
   }
   &::-webkit-scrollbar-thumb {
-    background: #0f2d5ce5;
-    border-radius: 10px;
+    background: #0f2d5cc0;
+    border-radius: 12px;
   }
   &::-webkit-scrollbar-thumb:hover {
     background: #ff9a56cb;
