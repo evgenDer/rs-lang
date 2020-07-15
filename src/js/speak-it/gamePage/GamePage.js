@@ -17,7 +17,7 @@ export default class GamePage {
     this.display = new Display();
     this.microphone = new Microphone();
     this.results = new Results();
-    this.startGameModeBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_speak', textContent: 'Тренировака произношение' });
+    this.startGameModeBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_speak', textContent: 'Тренировка произношение' });
     const buttons = createElementObj({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
 
     const callbacksForStatusBar = {
@@ -89,7 +89,7 @@ export default class GamePage {
       this.display.stopGameMode();
       this.microphone.turnOff();
       this.cardsBoard.stopGameMode();
-      this.startGameModeBtn.innerHTML = 'Тренировака произношение';
+      this.startGameModeBtn.innerHTML = 'Тренировка произношение';
       this.startGameModeBtn.classList.remove('game-mode_btn');
     }
     this.cardsBoard.makeInactiveAllCards();

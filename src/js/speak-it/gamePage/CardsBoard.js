@@ -28,18 +28,33 @@ export default class CardsBoard {
     this.currentCards.length = 0;
     this.mixedСards.length = 0;
     let userData = '';
-    if (data.studied) {
-      userData = await getUserWords(this.filter, this.wordsAmntInRound);
-    } else {
-      userData = await getWordsByLevelAndRound(data, this.wordsAmntInRound);
-    }
-    shuffleArray(userData);
-    userData.forEach((cardData) => {
-      this.currentCards.push(new Card(cardData));
-    });
-    this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
-    this.loader.hide();
-    this.cardsContainer.classList.remove('hidden');
+    try {
+      if (data.studied) {
+
+        userData = await getUserWords(this.filter, this.wordsAmntInRound).then()
+      } else {
+        userData = await getWordsByLevelAndRound(data, this.wordsAmntInRound);
+      }
+
+      shuffleArray(userData);
+      userData.forEach((cardData) => {
+        this.currentCards.push(new Card(cardData));
+      });
+      this.currentCards.map((card) => this.cardsContainer.append(card.generateCard()));
+      this.loader.hide();
+      this.cardsContainer.classList.remove('hidden');
+    } catch (err) {
+      // eslint-disable-next-line no-undef
+      UIkit.notification({
+        message: `<span uk-icon='icon: warning'></span> ${err}`,
+        status: 'warning',
+        pos: 'top-center',
+      });
+
+      this.loader.hide();
+      const customEvent = new CustomEvent('speakitBackToHomepage');
+      document.dispatchEvent(customEvent);
+    };
   }
 
   getCardsContainer() {

@@ -13,7 +13,8 @@
 
 #games-speak-it .start-screen,
 #games-speak-it .game-results {
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   width: 100vw;
   display: flex;
   align-items: center;
@@ -86,7 +87,7 @@
   border-radius: 10px;
   max-width: 785px;
   margin: 60px auto 10px;
-  padding: 15px 30px 40px;
+  padding: 5px 30px 25px;
 
   @media (max-width: 1200px) {
     margin: 20px;
@@ -97,12 +98,12 @@
   }
 
   @media (max-width: $mobile-big-width) {
-    margin: 0 5%;
+    margin: 0 auto;
   }
 }
 
 #games-speak-it .intro__title {
-  margin: 43px auto;
+  margin: 38px auto;
   opacity: 0.95;
   text-transform: uppercase;
   color: #86d677;
@@ -129,7 +130,7 @@
 }
 
 #games-speak-it .intro__info {
-  margin: 0 auto 30px;
+  margin: 0 auto 15px;
   font-size: 1.5rem;
   line-height: 1.9rem;
   color: $color-primary;
@@ -440,7 +441,7 @@
   border-bottom: 1px solid #70c3ef;
   width: 380px;
   @media (max-width: $mobile-big-width) {
-    width: 315px;
+    width: 300px;
   }
 }
 
@@ -516,6 +517,9 @@
   border-radius: 10px;
   background-color: $color-primary;
   transition: all 0.5s;
+  @media (max-width: $mobile-big-width) {
+    margin: 5px;
+  }
 }
 
 #games-speak-it .card_active {
@@ -607,7 +611,7 @@
 }
 
 #games-speak-it .game-results_wrapper {
-  margin: 20px auto;
+  margin: 0px auto;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -618,8 +622,8 @@
   padding: 10px;
   width: 500px;
   height: fit-content;
-  max-height: 660px;
-
+  max-height: 485px;
+  margin-top: -5vh;
   @media (max-width: $mobile-big-width) {
     width: 312px;
   }
@@ -685,6 +689,7 @@
   justify-content: center;
   flex-wrap: wrap;
   background-color: $color-primary;
+  padding: 5px;
 }
 
 #games-speak-it .btn-results {
@@ -795,7 +800,7 @@
   }
 
   @media (max-width: $mobile-big-width) {
-    min-width: 310px;
+    min-width: 295px;
   }
 }
 
@@ -989,6 +994,9 @@
   padding: 30px 20px;
   width: 100%;
   align-items: center;
+  @media (max-width: $mobile-big-width) {
+    padding: 20px 0px;
+  }
 }
 
 #games-speak-it .uk-modal-body {
