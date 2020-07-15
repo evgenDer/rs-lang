@@ -3,13 +3,18 @@ import { DATA_URL } from '../../utils/constants';
 
 export default class Card {
   constructor(data) {
-    this.id = data.id;
+    // eslint-disable-next-line no-underscore-dangle
+    this.id = data._id;
     this.word = data.word;
     this.transcription = data.transcription;
     this.wordTranslate = data.wordTranslate;
     this.imageUrl = `${DATA_URL}${data.image}`;
     this.audioSrc = `${DATA_URL}${data.audio}`;
     this.isCorrectAnswer = false;
+    this.userWord = '';
+    if (data.userWord) {
+      this.userWord = data.userWord;
+    }
   }
 
   generateCard() {
@@ -41,6 +46,14 @@ export default class Card {
 
   getTranscription() {
     return this.transcription;
+  }
+
+  getUserWordData() {
+    return this.userWord;
+  }
+
+  getWordId() {
+    return this.id;
   }
 
   getElement() {

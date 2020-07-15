@@ -30,12 +30,10 @@ export default class CardsBoard {
     let userData = '';
     try {
       if (data.studied) {
-
         userData = await getUserWords(this.filter, this.wordsAmntInRound).then()
       } else {
         userData = await getWordsByLevelAndRound(data, this.wordsAmntInRound);
       }
-
       shuffleArray(userData);
       userData.forEach((cardData) => {
         this.currentCards.push(new Card(cardData));

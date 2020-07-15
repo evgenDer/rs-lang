@@ -18,7 +18,7 @@ export default class GamePage {
     this.microphone = new Microphone();
     this.results = new Results();
     this.startGameModeBtn = createElementObj({ tagName: 'button', classNames: 'speak-it_btn btn_speak', textContent: 'Тренировка произношение' });
-    const buttons = createElementObj({ tagName: 'div', classNames: 'btns', children: [this.startGameModeBtn] });
+    const buttons = createElementObj({ tagName: 'div', classNames: 'speak-it_btns', children: [this.startGameModeBtn] });
 
     const callbacksForStatusBar = {
       onClickRestart: () => this.restart(),

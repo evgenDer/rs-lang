@@ -2,6 +2,8 @@ import { createElementObj } from '../../utils/create';
 import * as downloadHelper from '../../download/download';
 import { errorFields, successFields } from '../../games/constants';
 import { Statistics } from '../../statistics/components/statistics';
+import { increaseWordErrorCount, increaseWordReferenceCount } from '../../words/updateWordState';
+import { updateUserWord } from '../../api/userWords';
 
 export default class Results {
   constructor() {
@@ -12,6 +14,8 @@ export default class Results {
     this.isRoundEnd = false;
     this.correct = 0;
     this.incorrect = 0;
+    this.correctAnswersCard = [];
+    this.incorrectAnswersCard = [];
   }
 
   generate(callbacks) {
@@ -57,8 +61,8 @@ export default class Results {
     this.newGameBtn.addEventListener('click', () => this.onClickNewRaund());
 
     this.report.addEventListener('click', () => {
+      this.addInformationToReport();
       this.errorFields.push('\r\n\r\n');
-
       const text = `Отчет по игре "Speak it"\r\n\r\n${this.errorFields.join('\r\n')}${this.successFields.join('\r\n')}`;
       downloadHelper.download(`speakIt-report_${new Date().toISOString()}.txt`, text);
     });
@@ -77,10 +81,28 @@ export default class Results {
 
   onClickNewRaund() {
     this.statistic.updateGameStatistics(this.correct, this.incorrect, 0);
+    this.updateUserWordState();
     const customEvent = new CustomEvent('speakitNewRaund');
     document.dispatchEvent(customEvent);
     this.gameResults.classList.add('hidden');
     this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
+  }
+
+  updateUserWordState() {
+    this.correctAnswersCard.forEach((card) => {
+      const currentUserData = card.getUserWordData();
+      if (currentUserData) {
+        increaseWordReferenceCount(currentUserData);
+        updateUserWord(card.getWordId(), currentUserData);
+      }
+    });
+    this.incorrectAnswersCard.forEach((card) => {
+      const currentUserData = card.getUserWordData();
+      if (currentUserData) {
+        increaseWordErrorCount(currentUserData);
+        updateUserWord(card.getWordId(), currentUserData);
+      }
+    });
   }
 
   show() {
@@ -99,27 +121,25 @@ export default class Results {
     data.forEach((card) => {
       card.changeElementForResults();
       this[`${nameTypeAnswer}Answers`].append(card.getElement());
-      this.addInformationToReport(card, nameTypeAnswer);
     });
   }
 
-  addInformationToReport(card, nameTypeAnswer) {
-    if (nameTypeAnswer === 'correct') {
+  addInformationToReport() {
+    this.correctAnswersCard.forEach((card) => {
       this.successFields = successFields;
       this.successFields.push(`${card.getWord()} - ${card.getTranscription()} - ${card.getTranslate()}`);
-    } else {
+    });
+    this.incorrectAnswersCard.forEach((card) => {
       this.errorFields = errorFields;
       this.errorFields.push(`${card.getWord()} - ${card.getTranscription()} - ${card.getTranslate()}`);
-    }
+    });
   }
 
   addData(data, isRoundEnd) {
     this.isRoundEnd = isRoundEnd;
-    if (data.correctAnswers) {
-      this.addDataByTypeOfResponse(data.correctAnswers, 'correct');
-    }
-    if (data.incorrectAnswers) {
-      this.addDataByTypeOfResponse(data.incorrectAnswers, 'incorrect');
-    }
+    this.correctAnswersCard = data.correctAnswers;
+    this.incorrectAnswersCard = data.incorrectAnswers;
+    this.addDataByTypeOfResponse(this.correctAnswersCard, 'correct');
+    this.addDataByTypeOfResponse(this.incorrectAnswersCard, 'incorrect');
   }
 }
