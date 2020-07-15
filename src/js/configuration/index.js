@@ -78,10 +78,26 @@ async function saveConfiguration() {
   const prevConfiguration = await getConfiguration();
 
   const userConfiguration = page.getUserConfiguration();
+  const difficultyLevelValue = document.getElementById('form-difficultyLevel').value;
   const cardsConfiguration = page.getCardsConfiguration();
 
-  if (userConfiguration.maxNewWordsPerDay > userConfiguration.maxCardsWithWordsPerDay) {
+  if (Number(userConfiguration.maxNewWordsPerDay) > Number(userConfiguration.maxCardsWithWordsPerDay)) {
     page.showValidationErrorMessageForUserConfiguration();
+    return false;
+  }
+
+  if (Number(userConfiguration.maxNewWordsPerDay) < 1) {
+    page.showValidationErrorMessageForNewWords();
+    return false;
+  }
+
+  if (Number(userConfiguration.maxCardsWithWordsPerDay) < 1) {
+    page.showValidationErrorMessageForMaxCards();
+    return false;
+  }
+
+  if (Number(difficultyLevelValue) < 1 || Number(difficultyLevelValue) > 7) {
+    page.showValidationErrorMessageForDifficultyLevel();
     return false;
   }
 
@@ -110,7 +126,7 @@ async function saveConfiguration() {
   prevConfiguration.maxNewWordsPerDay = userConfiguration.maxNewWordsPerDay;
   prevConfiguration.maxCardsWithWordsPerDay = userConfiguration.maxCardsWithWordsPerDay;
   prevConfiguration.dayLearningDate = dayLearningDate;
-  prevConfiguration.difficultyLevel = userConfiguration.difficultyLevel;
+  prevConfiguration.difficultyLevel = userConfiguration.difficultyLevel - 1;
   prevConfiguration.showWordTranslation = cardsConfiguration.showWordTranslation;
   prevConfiguration.showSentenceExplanation = cardsConfiguration.showSentenceExplanation;
   prevConfiguration.showExplanationExample = cardsConfiguration.showExplanationExample;

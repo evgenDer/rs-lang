@@ -46,7 +46,8 @@ async function logIn() {
 export function addLendingPage() {
   document.querySelector('promo-page').classList.add('hidden');
   document.querySelector('header').remove();
-  document.body.style.backgroundImage = `url('assets/img/promoBackground.jpg')`;
+  document.body.style.background = `linear-gradient(rgba(8, 15, 26, 0.1) 0%, rgba(17, 17, 46, 0.2) 100%),
+  url('assets/img/promoBackground.jpg') no-repeat`;
   document.querySelector('.authentication-page').classList.remove('hidden');
 }
 export function addAuthorizationClickHandler() {

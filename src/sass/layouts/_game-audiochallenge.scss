@@ -638,19 +638,7 @@
       }
     }
 
-    .modal-round__correct {
-      .btn_pronoucing::before {
-        color: $color-green !important;
-      }
-    }
-
-    .modal-round__error {
-      .btn_pronoucing::before {
-        color: $color-red !important;
-      }
-    }
-
-    .btn_pronoucing {
+   .btn_pronoucing {
       background: transparent;
       color: $color-secondary;
       border: none;
@@ -678,3 +666,16 @@
     }
   }
 }
+
+.modal-round__correct {
+  .btn_pronoucing::before {
+    color: $color-green !important;
+  }
+}
+
+.modal-round__error {
+  .btn_pronoucing::before {
+    color: $color-red !important;
+  }
+}
+

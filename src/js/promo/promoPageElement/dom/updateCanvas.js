@@ -66,12 +66,12 @@ export default function updateCanvas(promoPage) {
   c.font = '12px Montserrat';
   c.textAlign = 'end';
   c.textBaseline = 'middle';
-  const numberToText = { 1: '20 минут', 2: '1 час', 3: '2 дня', 4: '7 дней', 5: '1 месяц' };
+  const numberToText = { 1: '4 часа', 2: '1 день', 3: '4 дня', 4: '10 дней', 5: '1 месяц' };
   for (let i = 1; i <= 5; i += 1) {
     c.fillText(numberToText[i], marginLeft - 5, marginTop + height - (height * i ** 2) / 25);
   }
 
-  //Вспомогательные линии
+  // Вспомогательные линии
   c.strokeStyle = '#33333360';
   c.lineWidth = '1';
   for (let i = 1; i <= 5; i += 1) {

@@ -6,7 +6,7 @@ export const updateUserConfigurationPageElement = (userConfiguration) => {
     userConfiguration.maxCardsWithWordsPerDay,
     '#form-maxCardsWithWordsPerDay',
   );
-  htmlHelper.updateInputValue(userConfiguration.difficultyLevel, '#form-difficultyLevel');
+  htmlHelper.updateInputValue(userConfiguration.difficultyLevel + 1, '#form-difficultyLevel');
 };
 
 export const updateCardsConfigurationPageElement = (cardsConfiguration) => {
@@ -99,4 +99,16 @@ export const showValidationErrorMessage = () => {
 export const showValidationErrorMessageForUserConfiguration = () => {
   htmlHelper.setClassesToElement('#form-maxNewWordsPerDay', 'validation_failed');
   htmlHelper.setClassesToElement('#form-maxCardsWithWordsPerDay', 'validation_failed');
+}
+
+export const showValidationErrorMessageForNewWords = () =>  {
+  htmlHelper.setClassesToElement('#form-maxNewWordsPerDay', 'validation_failed');
+}
+
+export const showValidationErrorMessageForMaxCards = () =>  {
+  htmlHelper.setClassesToElement('#form-maxCardsWithWordsPerDay', 'validation_failed');
+}
+
+export const showValidationErrorMessageForDifficultyLevel = () => {
+  htmlHelper.setClassesToElement('#form-difficultyLevel', 'validation_failed');
 }
