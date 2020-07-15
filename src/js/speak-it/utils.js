@@ -3,12 +3,15 @@ import { getCustomConfiguration, saveCustomConfiguration } from '../configuratio
 import { ERR_MSG } from '../games/constants';
 import { getFullDataWords } from '../api/words';
 import { getAggregatedUserWords } from '../api/userWords';
+import { getSettings } from '../api/settings';
 
 export async function addConfiguration() {
-  const gameConfiguration = await getCustomConfiguration('speakIt');
+  let gameConfiguration = await getCustomConfiguration('speakIt');
   if (!gameConfiguration || Object.keys(gameConfiguration).length === 0) {
-    saveCustomConfiguration(DEFAULT_CONFIGURATION_GAMES);
-    return DEFAULT_CONFIGURATION_GAMES;
+    const configuration = await getSettings();
+    gameConfiguration = DEFAULT_CONFIGURATION_GAMES;
+    gameConfiguration.level = configuration.optional.difficultyLevel;
+    saveCustomConfiguration(gameConfiguration);
   }
   return gameConfiguration;
 }
