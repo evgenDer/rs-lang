@@ -1,5 +1,6 @@
 import { getConfiguration } from "../configuration";
 import { getAllUserWords } from "../api/userWords";
+import { getStatistics } from "../api/statistics";
 
 class DayStat {
   constructor() {
@@ -31,6 +32,23 @@ class DayStat {
 
   async init() {
     await this.getInitValues();
+    const stat = await getStatistics();
+    console.log(stat)
+    const currentDate = new Date();
+    const cd = currentDate.getDate();
+    for (let item of JSON.parse(stat.optional.sd)[0].d) {
+      const date = new Date(item.dt);
+      if (cd === date.getDate()) {
+        this.state.dayLearnedWords = item.lwc;
+        this.state.rightCount = item.tc;
+
+        break;
+      }
+      console.log(date.getDate());
+
+    }
+    console.log(cd)
+    console.log(new Date(JSON.parse(stat.optional.sd)[0].d[0].dt))
     this.updateStat();
   }
 
@@ -50,9 +68,7 @@ class DayStat {
     const dayStat = this.getStat();
     if (dayStat !== null) {
       if (+this.currentDate === +dayStat.currentDate) {
-        this.state.dayLearnedWords += dayStat.state.dayLearnedWords;
         this.state.daylearnedNewWords += dayStat.state.daylearnedNewWords;
-        this.state.rightCount += dayStat.state.rightCount;
         this.state.errorCount += dayStat.state.errorCount;
         if (dayStat.state.bestSeries > this.state.bestSeries) { this.state.bestSeries = dayStat.state.bestSeries; }
       }
@@ -64,10 +80,7 @@ class DayStat {
     if (+this.currentDate === +Math.floor(learningDate)) {
       const learnedNewWords = dayLearningProgressArrs.newWordProgressArr.filter((element) => element).length;
       const learnedWords = dayLearningProgressArrs.learningProgressArr.filter((element) => element).length;
-
-      this.state.dayLearnedWords += learnedWords + learnedNewWords;
       this.state.daylearnedNewWords += learnedNewWords;
-      this.state.rightCount += dayLearningStat.rightAnswers;
       this.state.errorCount += learnedWords + learnedNewWords - dayLearningStat.rightAnswers;
       if (dayLearningStat.longestRightAnswerSeries > this.state.bestSeries) {
         this.state.bestSeries = dayLearningStat.longestRightAnswerSeries;
