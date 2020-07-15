@@ -27,6 +27,12 @@ export default class PromoPage extends HTMLElement {
       <li slot='property'>Подробнее об алгоритме начисления баллов</li>
       <div slot='chart'><canvas></canvas></div>
       <img slot='gitHubWay' src='assets/img/icons/promo/gitHub.svg'>
+
+<div slot='videoElement'>
+ <iframe src="//www.youtube.com/embed/4aQwT3n2c1Q" height="315" width="560" allowfullscreen="" frameborder="0">
+ </iframe>
+</div>
+
     `,
     );
   }

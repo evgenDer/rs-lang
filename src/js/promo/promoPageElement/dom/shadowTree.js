@@ -44,6 +44,8 @@ const promoPageShadowTree = `
   .content {width: calc(100vw - 80px); max-width: 800px; height:100vw; max-height:500px; }
 
   #aboutVideo .content {background: #ffffff90;  border: 1px solid ${styles.colorOpacityBlack}; border-radius: 20px;}
+  #aboutVideo ::slotted(div) {position: relative; padding-bottom: 56.25%;  padding: 30px; height: 100%; width: 100%; overflow: hidden; }
+
   #aboutLearning .content {height: auto; flex-direction: row;}
   #aboutLearningScreen {padding: 10px; width:55%; height: 100%; min-width: 320px; min-height: 340px; position: relative; align-items: flex-start;
     background: #ffffff90;  border: 1px solid ${styles.colorOpacityBlack}; border-radius: 20px; }
