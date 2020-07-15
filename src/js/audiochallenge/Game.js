@@ -303,6 +303,7 @@ export class Game {
           answer.classList.add('uk-animation-shake');
 
           ProgressBar.setWrongProgressPoint(this.task.progress.points[this.currentAnswer]);
+          this.showRightAnswer();
         }
       };
     });
