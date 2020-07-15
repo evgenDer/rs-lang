@@ -21,8 +21,11 @@ export async function createNewWordsPack(
 
   allUpdatedUserWords = allUserWords.filter((element) => element.optional.mode !== 'deleted');
   if (isHardMode) {
-    allUpdatedUserWords = allUserWords.filter((element) => element.difficulty === 'hard');
+    allUpdatedUserWords = allUpdatedUserWords.filter((element) => element.difficulty === 'hard');
+  } else {
+    allUpdatedUserWords = allUpdatedUserWords.filter((element) => calculateRepeatTiming(element) <= new Date(Date.now()))
   }
+
   allUpdatedUserWords = sortLearnedWords(allUpdatedUserWords);
   allUpdatedUserWords = sortLearnedWordsByNeededToRepeat(allUpdatedUserWords);
 
@@ -40,9 +43,6 @@ export async function createNewWordsPack(
   }
 
   if (!isHardMode) {
-    if (allUpdatedUserWords.length < dayWordsCount) {
-      newWordsNeededCount += dayWordsCount - allUpdatedUserWords.length;
-    }
 
     dayNewWordsPack = await updateNewWordsPack(
       dayNewWordsPack,

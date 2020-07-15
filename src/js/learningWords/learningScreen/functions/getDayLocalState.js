@@ -7,12 +7,11 @@ import { createNewWordsPack } from './createNewWordsPack';
 
 export default async function getDayLocalState(learningScreenElemen) {
   let currentDate = new Date(Date.now());
-  currentDate = currentDate.getDate();
+  currentDate = currentDate.getDate() + Math.floor(currentDate.getHours() * 100 / 24) / 100;
 
   const prevDate = JSON.parse(localStorage.getItem('dayLearningDate'));
   //const prevDate = 10;
-
-  if (prevDate === currentDate) {
+  if (prevDate + 4 >= currentDate) {
     const dayLocalState = window.localStorage.getItem('dayLearningLocalState');
     const dayWordArrs = window.localStorage.getItem('dayLearningWordArrs');
     const dayStat = window.localStorage.getItem('dayLearningStat');
