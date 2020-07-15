@@ -92,7 +92,7 @@ export default class Game {
     life.src = 'assets/img/icons/heart-minus.svg';
     this.playAudio('assets/audio/error.mp3');
     setTimeout(() =>{
-      this.data[this.currentAnswer].isError = false;
+      this.data[this.currentAnswer].isError = true
       this.errors += 1;
       this.addResultsFromCurrentAnswer();
     }, 1000);

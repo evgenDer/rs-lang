@@ -50,7 +50,7 @@ export function addStatisticsRound(dataPageRound, b64 = false) {
       correctField.querySelector('span').innerText = `${correct}`;
       successFields.push(`${sentence.word} - ${sentence.wordTranslate}`);
     }
-    else {
+    if(sentence.isError) {
       error += 1;
       errorField.insertAdjacentHTML('beforeend', element);
       errorField.querySelector('span').innerText = `${error}`;
