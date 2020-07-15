@@ -54,6 +54,8 @@ input[type="radio"]{
   width: 180px;
   height: 50px;
   &:hover{
+    background-color: $color-background-additinal;
+    color: $color-secondary;
     cursor: pointer;
   }
 }
