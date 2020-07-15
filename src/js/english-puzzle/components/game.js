@@ -51,7 +51,7 @@ export default class Game {
     }
     else {
       const userData = await getAggregatedWords();
-      if (userData.totalCount < this.wordsAmntInRound) {
+      if (userData.paginatedResults.length < this.wordsAmntInRound) {
         throw ERR_MSG;
       }
       this.numberRound = Number(localStorage.getItem('numberPage'));
