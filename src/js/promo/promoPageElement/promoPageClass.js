@@ -28,8 +28,8 @@ export default class PromoPage extends HTMLElement {
       <div slot='chart'><canvas></canvas></div>
       <img slot='gitHubWay' src='assets/img/icons/promo/gitHub.svg'>
 
-<div slot='videoElement'>
- <iframe src="//www.youtube.com/embed/4aQwT3n2c1Q" height="315" width="560" allowfullscreen="" frameborder="0">
+  <div slot='videoElement'>
+    <iframe src="https://www.youtube.com/embed/vBBzd_7SX0c" height="315" width="560" allowfullscreen="" frameborder="0">
  </iframe>
 </div>
 

@@ -26,7 +26,7 @@ const promoPageShadowTree = `
   #background{width: 100%; height:100vh; position:fixed; z-index:10; voerflow:hidden; object-fit:cover; filter: opacity(0.2)}
   #background img{width: 100%; height:100vh; object-fit:cover; }
   h1 {margin-block-end: 20px;}
-  
+
   #contentBlock {padding: 0px 40px; width:calc(100% - 80px); position:relative; z-index:11; }
   .header {width: 100%;  max-width: 900px; height: 100px; font-size: 18px;}
 
@@ -292,7 +292,7 @@ const promoPageShadowTree = `
       <div class='feedbackCard'>
       <div class='cardContent'>
         <div class='cardText'>
-          <span>Узнал то, чего не сказали на lingvoleo!</span>
+          <span>Очень понравилось приложение, спасибо!</span>
         </div>
         <div class='author'>
           <span>Василий</span>
@@ -303,7 +303,7 @@ const promoPageShadowTree = `
     <div class='feedbackCard'>
       <div class='cardContent'>
         <div class='cardText'>
-          <span>Очень глубоко продуманное приложение</span>
+          <span>Очень интересное приложение для всей семьи</span>
         </div>
         <div class='author'>
           <span>AnnieBunny</span>
