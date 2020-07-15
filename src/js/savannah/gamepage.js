@@ -21,7 +21,7 @@ export const createProcessTemplate = () => {
   game.startGame();
   stopAudio();
   document.body.append(process);
-  const spinner = `<div class = "spinner" style="height: 80px; width: 80px; margin-top: 10vh" uk-spinner="ratio: 4.5"></span>`;
+  const spinner = `<div class = "spinner" style="height: 80px; width: 80px; margin-top: 8vh" uk-spinner="ratio: 4.5"></span>`;
   process.insertAdjacentHTML('beforeend', spinner);
   process.classList.add('show-after-click');
 };

@@ -36,7 +36,6 @@ async function loginUser(emailUser, passwordUser) {
     return content;
   }
   catch(error){
-    localStorage.removeItem('userId');
     return null;
   }
 }

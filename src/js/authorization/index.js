@@ -3,6 +3,9 @@ import { setUserId, setToken, setRefreshToken } from '../utils/storage';
 import { loginUser, createUser } from '../api/authorization';
 import { APP_NAME } from '../utils/constants';
 import { createElement } from '../utils/create';
+import PromoPage from '../promo/promoPageElement/promoPageClass';
+
+customElements.define('promo-page', PromoPage);
 
 function show() {
   PASSWORD.setAttribute('type', 'text');
@@ -36,6 +39,7 @@ async function logIn() {
       window.location.replace('main.html')
       setToken(content);
       setRefreshToken(content);
+      setUserId(content);
     } else {
       throw new Error();
     }
