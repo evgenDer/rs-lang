@@ -1,4 +1,5 @@
 import { createElementObj } from '../../utils/create';
+import { DATA_URL } from '../../utils/constants';
 
 export default class Card {
   constructor(data) {
@@ -6,8 +7,8 @@ export default class Card {
     this.word = data.word;
     this.transcription = data.transcription;
     this.wordTranslate = data.wordTranslate;
-    this.imageUrl = `https://raw.githubusercontent.com/Marrlika/rslang-data/master/${data.image}`;
-    this.audioSrc = `https://raw.githubusercontent.com/Marrlika/rslang-data/master/${data.audio}`;
+    this.imageUrl = `${DATA_URL}${data.image}`;
+    this.audioSrc = `${DATA_URL}${data.audio}`;
     this.isCorrectAnswer = false;
   }
 
