@@ -93,6 +93,7 @@ const plugins = () => {
     htmlWebpackPluginCreator('game_savannah.html', 'game_savannah'),
     htmlWebpackPluginCreator('vocabulary.html', 'index'),
     htmlWebpackPluginCreator('configuration.html', 'index', 'settings-page'),
+    htmlWebpackPluginCreator('game-speak-it.html', 'game_speakit'),
     htmlWebpackPluginCreator('game_english-puzzle.html', 'index', 'english_puzzle'),
     htmlWebpackPluginCreator('game_sprint.html', 'index', 'game_sprint'),
     htmlWebpackPluginCreator('statistics.html', 'index', 'statistics_page'),
@@ -136,6 +137,7 @@ module.exports = {
   entry: {
     index: ['@babel/polyfill', './js/index.js', './sass/style.scss'],
     main_page: ['@babel/polyfill', './js/main-page/index.js', './sass/style.scss'],
+    game_speakit: ['@babel/polyfill', './js/speak-it/index.js', './sass/style.scss'],
     english_puzzle: ['@babel/polyfill', './js/english-puzzle/index.js', './sass/style.scss'],
     game_savannah: ['@babel/polyfill', './js/savannah/index.js', './sass/style.scss'],
     game_sprint: ['@babel/polyfill', './js/game-sprint/index.js', './sass/style.scss'],

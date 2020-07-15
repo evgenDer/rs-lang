@@ -1,10 +1,8 @@
 import moment from 'moment';
 import {markToText, markToStyle} from '../constants/progressBarTooltipTypes';
 import { createElementObj } from '../utils/create';
-import { WORD_STATE, WORD_DIFFICULTLY } from '../utils/constants';
+import { WORD_STATE, WORD_DIFFICULTLY, DATA_URL } from '../utils/constants';
 import { updateUserWord } from '../api/userWords';
-
-const ASSETS_URL = 'https://raw.githubusercontent.com/Marrlika/rslang-data/master/';
 
 export default class Card {
   constructor(data,) {
@@ -33,7 +31,7 @@ export default class Card {
       const cardImg = createElementObj({
         tagName: 'img',
         classNames: `vocabulary__card-img`,
-        attrs: [['src', `${ASSETS_URL}${this.data.image}`], ['alt', `${this.data.word} image`]],
+        attrs: [['src', `${DATA_URL}${this.data.image}`], ['alt', `${this.data.word} image`]],
       });
       this.vocabularyCardContains.insertBefore(cardImg, cardInfoContainer);
     }
@@ -137,13 +135,13 @@ export default class Card {
     this.vocabularyWordContains.addEventListener('click', (event) => {
       switch (event.target.id) {
         case 'word':
-          callbackFunction.OnClickPlayAudio(`${ASSETS_URL}${this.data.audio}`);
+          callbackFunction.OnClickPlayAudio(`${DATA_URL}${this.data.audio}`);
           break;
         case 'context':
-          callbackFunction.OnClickPlayAudio(`${ASSETS_URL}${this.data.audioExample}`);
+          callbackFunction.OnClickPlayAudio(`${DATA_URL}${this.data.audioExample}`);
           break;
         case 'meaning':
-          callbackFunction.OnClickPlayAudio(`${ASSETS_URL}${this.data.audioMeaning}`);
+          callbackFunction.OnClickPlayAudio(`${DATA_URL}${this.data.audioMeaning}`);
           break;
         default:
       }
