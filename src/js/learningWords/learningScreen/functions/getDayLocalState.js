@@ -10,8 +10,8 @@ export default async function getDayLocalState(learningScreenElemen) {
   currentDate = currentDate.getDate() + Math.floor(currentDate.getHours() * 100 / 24) / 100;
 
   const prevDate = JSON.parse(localStorage.getItem('dayLearningDate'));
-  //const prevDate = 10;
-  if (prevDate + 4 >= currentDate) {
+  // const prevDate = 15;
+  if (prevDate + Math.floor(400 / 24) / 100 >= currentDate) {
     const dayLocalState = window.localStorage.getItem('dayLearningLocalState');
     const dayWordArrs = window.localStorage.getItem('dayLearningWordArrs');
     const dayStat = window.localStorage.getItem('dayLearningStat');
@@ -38,20 +38,84 @@ export default async function getDayLocalState(learningScreenElemen) {
     learningScreenElemen.setState('currentNewWordCardIndex', firstNoLearnedNewWordIndex);
     learningScreenElemen.setState('currentLearningCardIndex', firstNoLearnedWordIndex);
   } else {
+    const isHardMode = learningScreenElemen.settings.learning.isHardMode;
+    let dayCurrentLocalState = {
+      learningProgressArr: [],
+      needToRepeatProgressArr: [],
+      newWordProgressArr: [],
+    };
+    let dayCurrenWordArrs = {
+      newWords: [],
+      learnedWords: [],
+      needToRepeat: [],
+    };
+    let dayCurrentStat = {
+      currentRightAnswerSeries: 0,
+      longestRightAnswerSeries: 0,
+      rightAnswers: 0,
+    };;
+
+    if (Math.floor(prevDate) === Math.floor(currentDate) && !isHardMode) {
+      dayCurrentLocalState = JSON.parse(window.localStorage.getItem('dayLearningLocalState'));
+      dayCurrenWordArrs = JSON.parse(window.localStorage.getItem('dayLearningWordArrs'));
+      dayCurrentStat = JSON.parse(window.localStorage.getItem('dayLearningStat'));
+
+      if (dayCurrentLocalState === null) {
+        dayCurrentLocalState = {
+          learningProgressArr: [],
+          needToRepeatProgressArr: [],
+          newWordProgressArr: [],
+        };
+      }
+      if (dayCurrenWordArrs === null) {
+        dayCurrenWordArrs = {
+          newWords: [],
+          learnedWords: [],
+          needToRepeat: [],
+        };
+      }
+      if (dayCurrentStat === null) {
+        dayCurrentStat = {
+          currentRightAnswerSeries: 0,
+          longestRightAnswerSeries: 0,
+          rightAnswers: 0,
+        };;
+      }
+
+      for (let arr in dayCurrentLocalState) {
+        if (arr !== 'needToRepeatProgressArr') {
+          dayCurrentLocalState[arr] = dayCurrentLocalState[arr].filter((element) => element);
+        } else {
+          dayCurrentLocalState[arr] = dayCurrentLocalState[arr].filter((element) => !element);
+        }
+      }
+
+      dayCurrenWordArrs.learnedWords = dayCurrenWordArrs.learnedWords.slice(0, dayCurrentLocalState.learningProgressArr.length);
+      dayCurrenWordArrs.newWords = dayCurrenWordArrs.newWords.slice(0, dayCurrentLocalState.newWordProgressArr.length);
+      dayCurrenWordArrs.needToRepeat = dayCurrenWordArrs.needToRepeat.slice(-dayCurrentLocalState.needToRepeatProgressArr.length + 1);
+
+    }
+
+
     learningScreenElemen.localState = {};
     learningScreenElemen.wordArrs = {};
+
     learningScreenElemen.setState('mode', 'newWord');
-    learningScreenElemen.setState('currentNewWordCardIndex', 0);
-    learningScreenElemen.setState('currentLearningCardIndex', 0);
+    const currentNWindex = dayCurrentLocalState.newWordProgressArr.length - 1 < 0 ? 0 : dayCurrentLocalState.newWordProgressArr.length - 1;
+    const currenLindex = dayCurrentLocalState.learningProgressArr.length - 1 < 0 ? 0 : dayCurrentLocalState.learningProgressArr.length - 1;
+
+    learningScreenElemen.setState('currentNewWordCardIndex', currentNWindex);
+    learningScreenElemen.setState('currentLearningCardIndex', currenLindex);
 
     let cardToRepeatCount =
-      learningScreenElemen.settings.wordCount - learningScreenElemen.settings.newWordCount;
-    if (cardToRepeatCount < 0) {
-      cardToRepeatCount = 0;
-    }
-    const isHardMode = learningScreenElemen.settings.learning.isHardMode;
+      learningScreenElemen.settings.wordCount - learningScreenElemen.settings.newWordCount - dayCurrentLocalState.learningProgressArr.length;
+    if (cardToRepeatCount < 0) { cardToRepeatCount = 0; }
+
+    let cardNewWordCount = learningScreenElemen.settings.newWordCount - dayCurrentLocalState.newWordProgressArr.length;
+    if (cardNewWordCount < 0) { cardNewWordCount = 0; }
+
     let wordArrs = await createNewWordsPack(
-      learningScreenElemen.settings.newWordCount,
+      cardNewWordCount,
       cardToRepeatCount,
       learningScreenElemen.settings.learning.groupNumber,
       learningScreenElemen.settings.learning.learningWordsPage,
@@ -67,8 +131,17 @@ export default async function getDayLocalState(learningScreenElemen) {
       needToRepeatProgressArr: [],
     };
 
-    Object.assign(learningScreenElemen.localState, dayLocalState);
-    Object.assign(learningScreenElemen.wordArrs, dayWordArrs);
+    for (let arr in dayWordArrs) {
+      dayCurrenWordArrs[arr] = dayCurrenWordArrs[arr].concat(dayWordArrs[arr]);
+    }
+    for (let arr in dayLocalState) {
+      dayCurrentLocalState[arr] = dayCurrentLocalState[arr].concat(dayLocalState[arr]);
+    }
+
+    Object.assign(learningScreenElemen.localState, dayCurrentLocalState);
+    Object.assign(learningScreenElemen.wordArrs, dayCurrenWordArrs);
+    Object.assign(learningScreenElemen.statistics, dayCurrentStat);
+
     window.localStorage.setItem('dayLearningDate', currentDate);
     saveDayMode(learningScreenElemen);
     saveDayLocalState(learningScreenElemen);

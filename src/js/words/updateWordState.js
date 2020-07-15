@@ -107,13 +107,13 @@ function calculateRepeatTiming(word) {
   const currentMark = word.optional['successPoint'];
   let timing = 0;
   if (currentMark <= 2) {
-    timing = (currentMark * 40 - 20) / (24 * 60); //mins-days
+    timing = (currentMark * 20 - 16) / 24; //hours-days
   } else if (currentMark <= 3) {
-    timing = (currentMark * 47 - 93) / 24; //hours-days
+    timing = (currentMark * 3 - 5); //days
   } else if (currentMark <= 4) {
-    timing = currentMark * 5 - 13; //days
+    timing = currentMark * 6 - 14; //days
   } else if (currentMark <= 5) {
-    timing = currentMark * 23 - 85; //days
+    timing = currentMark * 20 - 70; //days
   }
   const repeatRating = Math.floor(timing * 24 * 3600 * 1000 + word.optional['lastUpdateDate']);
   return repeatRating;

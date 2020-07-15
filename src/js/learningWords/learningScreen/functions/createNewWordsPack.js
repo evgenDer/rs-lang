@@ -23,7 +23,8 @@ export async function createNewWordsPack(
   if (isHardMode) {
     allUpdatedUserWords = allUpdatedUserWords.filter((element) => element.difficulty === 'hard');
   } else {
-    allUpdatedUserWords = allUpdatedUserWords.filter((element) => calculateRepeatTiming(element) <= new Date(Date.now()))
+    allUpdatedUserWords = allUpdatedUserWords.filter((element) =>
+      (calculateRepeatTiming(element) <= new Date(Date.now())) || element.optional.mode === 'needToRepeat')
   }
 
   allUpdatedUserWords = sortLearnedWords(allUpdatedUserWords);
