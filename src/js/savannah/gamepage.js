@@ -84,6 +84,7 @@ export function generateGame(){
 }
 
 export const createHeaderOnStartingPage = () => {
+  document.body.classList.remove('hidden');
   const cross = createElement({ tagName: 'img', classNames: 'game-container__dagger-img', attrs: [['src', dagger]] });
   const iconAudio = createElement ({ tagName: 'img', classNames: 'game-container_audio', attrs: [['src', audioIcon]]});
   const heartContainer = createElement({ tagName: 'div', classNames: 'game-container__hearts hidden', children: heartCreator()});

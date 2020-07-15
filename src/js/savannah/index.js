@@ -15,13 +15,11 @@ function addStatisticsButtonClickHandler() {
 }
 
 window.onload = () => {
+  createHeaderOnStartingPage();
   addGameModeSwitchClickHandler();
-
   Dropdown.addDropdownsEventHandlers();
   Dropdown.addActiveGameControls('savannah');
   Dropdown.enableDropdowns();
-
   addStatisticsButtonClickHandler();
-  createHeaderOnStartingPage();
 };
 
