@@ -21,7 +21,8 @@ export default class Results {
   generate(callbacks) {
 
     const titleText = createElementObj({ tagName: 'h2', textContent: 'Результаты' });
-    const titleContainer = createElementObj({ tagName: 'div', classNames: 'uk-modal-header speakit_result_header', children: [titleText] });
+    this.errorMessage =  createElementObj({ tagName: 'p', classNames: 'result_error-message', textContent: 'Вы еще не практиковали произношение слов' });
+    const titleContainer = createElementObj({ tagName: 'div', classNames: 'uk-modal-header speakit_result_header', children: [titleText, this.errorMessage] });
     this.incorrectAnswersCount = createElementObj({ tagName: 'span', classNames: 'results_answers_count incorrect-answers_count' });
     const textIncorrectAnswers = createElementObj({ tagName: 'h3', classNames: 'game-results_title-answer', textContent: 'Я не знаю ' });
     const titleIncorrectAnswers = createElementObj({ tagName: 'div', classNames: 'game-results_title', children: [textIncorrectAnswers, this.incorrectAnswersCount] });
@@ -86,6 +87,7 @@ export default class Results {
     document.dispatchEvent(customEvent);
     this.gameResults.classList.add('hidden');
     this.gameResultsWrapper.classList.remove('uk-animation-scale-up');
+    this.clearAllData();
   }
 
   updateUserWordState() {
@@ -103,6 +105,17 @@ export default class Results {
         updateUserWord(card.getWordId(), currentUserData);
       }
     });
+  }
+
+  clearAllData() {
+    this.incorrectAnswers.innerHTML = '';
+    this.correctAnswers.innerHTML = '';
+    this.incorrectAnswersCount.innerHTML = '';
+    this.correctAnswersCount.innerHTML = '';
+    this.correctAnswersCard.length = 0;
+    this.incorrectAnswersCard.length = 0;
+    this.correct = 0;
+    this.incorrect = 0;
   }
 
   show() {
@@ -136,10 +149,20 @@ export default class Results {
   }
 
   addData(data, isRoundEnd) {
-    this.isRoundEnd = isRoundEnd;
-    this.correctAnswersCard = data.correctAnswers;
-    this.incorrectAnswersCard = data.incorrectAnswers;
-    this.addDataByTypeOfResponse(this.correctAnswersCard, 'correct');
-    this.addDataByTypeOfResponse(this.incorrectAnswersCard, 'incorrect');
+    if(data.correctAnswers.length === 0 && data.incorrectAnswers.length === 0) {
+      this.errorMessage.classList.remove('hidden');
+      this.newGameBtn.classList.add('disabled');
+      this.report.classList.add('disabled');
+      this.clearAllData();
+    } else {
+      this.newGameBtn.classList.remove('disabled');
+      this.report.classList.remove('disabled');
+      this.errorMessage.classList.add('hidden');
+      this.isRoundEnd = isRoundEnd;
+      this.correctAnswersCard = data.correctAnswers;
+      this.incorrectAnswersCard = data.incorrectAnswers;
+      this.addDataByTypeOfResponse(this.correctAnswersCard, 'correct');
+      this.addDataByTypeOfResponse(this.incorrectAnswersCard, 'incorrect');
+    }
   }
 }

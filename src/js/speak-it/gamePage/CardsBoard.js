@@ -86,7 +86,7 @@ export default class CardsBoard {
 
   stopGameMode() {
     this.wrapper.classList.remove('hidden');
-    this.currentCards.forEach((card) => card.markAsNotGuessed());
+    this.currentCards.forEach((card) => card.markAsNotAnswered());
   }
 
   getCurrentWordInfo() {
@@ -104,7 +104,7 @@ export default class CardsBoard {
   }
 
   getWordsWithNotCorrectAnswer() {
-    return this.currentCards.filter((card) => !card.wasAnswered());
+    return this.currentCards.filter((card) => card.wasError());
   }
 
   cardOnClickHandler(event, callback) {
@@ -122,10 +122,15 @@ export default class CardsBoard {
   checkAnswers(inputValue) {
     const currentCard = this.mixedСards[this.gameModeCurrentWordIndex];
     if (currentCard.getWord().toLowerCase() === inputValue.toLowerCase()) {
-      currentCard.markAsGuessed();
+      currentCard.markAsAnswered();
       return true;
     }
     return false;
+  }
+
+  markErroneousAnswer() {
+    const currentCard = this.mixedСards[this.gameModeCurrentWordIndex];
+    currentCard.markAsError();
   }
 
   increaseCurrentWordIndex() {

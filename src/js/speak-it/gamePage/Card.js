@@ -11,6 +11,7 @@ export default class Card {
     this.imageUrl = `${DATA_URL}${data.image}`;
     this.audioSrc = `${DATA_URL}${data.audio}`;
     this.isCorrectAnswer = false;
+    this.isErrorAnswer = false;
     this.userWord = '';
     if (data.userWord) {
       this.userWord = data.userWord;
@@ -72,12 +73,21 @@ export default class Card {
     return this.isCorrectAnswer;
   }
 
-  markAsGuessed() {
+  wasError() {
+    return this.isErrorAnswer;
+  }
+
+  markAsAnswered() {
     this.isCorrectAnswer = true;
   }
 
-  markAsNotGuessed() {
+  markAsError() {
+    this.isErrorAnswer = true;
+  }
+
+  markAsNotAnswered() {
     this.isCorrectAnswer = false;
+    this.isErrorAnswer = false;
   }
 
   makeInactive() {

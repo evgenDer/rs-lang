@@ -127,6 +127,7 @@ export default class GamePage {
         this.attemptsСount += 1;
         if (this.attemptsСount >= MAX_ATTEMTS_COUNT) {
           this.microphone.addMessage(TYPE_MICROPHONE_MESSAGE.nextWord);
+          this.cardsBoard.markErroneousAnswer();
           this.statusBar.addStar();
           this.checkAvailableWords('2500');
         }
@@ -157,6 +158,7 @@ export default class GamePage {
         this.turnOnMicrophone();
       } else {
         this.statusBar.addStar();
+        this.cardsBoard.markErroneousAnswer();
         this.checkAvailableWords('800');
       }
     });

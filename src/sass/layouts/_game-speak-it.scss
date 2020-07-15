@@ -1003,3 +1003,23 @@
   max-height: fit-content;
   border-radius: 10px;
 }
+
+#games-speak-it .result_error-message {
+  color: $color-red;
+}
+
+#games-speak-it .btn-report.disabled {
+  color: rgb(171, 172, 173);
+  border: 1px solid #abacad;
+  opacity: 0.8;
+  cursor: auto;
+  pointer-events: none;
+}
+
+#games-speak-it .btn-new-game.disabled {
+  color: rgb(171, 172, 173);
+  border: 1px solid #abacad;
+  opacity: 0.8;
+  cursor: auto;
+  pointer-events: none;
+}
