@@ -33,7 +33,6 @@ class DayStat {
   async init() {
     await this.getInitValues();
     const stat = await getStatistics();
-    console.log(stat)
     const currentDate = new Date();
     const cd = currentDate.getDate();
     for (let item of JSON.parse(stat.optional.sd)[0].d) {
@@ -41,14 +40,9 @@ class DayStat {
       if (cd === date.getDate()) {
         this.state.dayLearnedWords = item.lwc;
         this.state.rightCount = item.tc;
-
         break;
       }
-      console.log(date.getDate());
-
     }
-    console.log(cd)
-    console.log(new Date(JSON.parse(stat.optional.sd)[0].d[0].dt))
     this.updateStat();
   }
 
