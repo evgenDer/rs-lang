@@ -202,10 +202,10 @@
 .main-page-contol_button {
 	outline: none;
 	border: none;
-	width: 270px;
+	width: 250px;
 	height: 70px;
 	border-radius: 10px;
-	margin: 5px;
+	margin: 10px;
 	@include font(1.4rem, 1.4rem, 600);
 	@extend %light-shadow;
 

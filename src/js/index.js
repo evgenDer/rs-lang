@@ -2,8 +2,9 @@ import { addHeaderToPage, defineActivePage } from './navigation/index';
 import { addAuthorizationClickHandler, generateLendingPage } from './authorization/index';
 import { isNewUser } from './utils/checks';
 import { initConfigurationPage } from './configuration/index';
-import  initStatistics from './statistics/index';
-import addBtnStartEventListener from './determinationLevel/index';
+
+import initStatistics from './statistics/index';
+import { updPageContent } from './main-page/index';
 import initVocabularyPage from './vocabulary/index';
 import './learningWords/learningWordsPage';
 import './promo/promoPageCreating';
@@ -14,6 +15,7 @@ window.onload = () => {
   const activePage = defineActivePage();
   switch (activePage) {
     case 0:
+      updPageContent();
       // main-page
       break;
     case 1:

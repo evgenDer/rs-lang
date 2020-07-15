@@ -46,14 +46,18 @@ export default function checkAnswer(cardElement) {
     );
 
     setTimeout(
-      () => cardElement.querySelector('span[slot=word3]').classList.add('animatted'),
+      () => {
+        const word3 = cardElement.querySelector('span[slot=word3]');
+        if (word3 !== null) { word3.classList.add('animatted'); }
+      },
       1000,
     );
     setTimeout(() => {
       cardElement
         .querySelector('learning-line')
         .insertAdjacentHTML('beforeend', `<span slot='word2'>${rightWord}</span>`);
-      cardElement.querySelector('span[slot=word3]').remove();
+      const word3 = cardElement.querySelector('span[slot=word3]');
+      if (word3 !== null) { word3.remove(); }
     }, 1500);
   }
 

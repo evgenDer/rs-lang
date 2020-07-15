@@ -2,11 +2,19 @@ export function createModeButtons(learningScreenElement) {
   learningScreenElement.insertAdjacentHTML(
     'beforeend',
     `
-<div slot='modeButton' class='modeButton newWord clickable opened'>Новые слова</div>
-<div slot='modeButton' class='modeButton learning clickable opened'>Изучение</div>
+<div slot='modeButton' class='modeButton newWord'>Новые слова</div>
+<div slot='modeButton' class='modeButton learning'>Изучение</div>
 <div slot='modeButton' class='modeButton repeating'>Исправление ошибок</div>
 `,
   );
+  if (learningScreenElement.wordArrs.newWords.length !== 0) {
+    learningScreenElement.querySelectorAll('div.modeButton')[0].classList.add('opened');
+    learningScreenElement.querySelectorAll('div.modeButton')[0].classList.add('clickable');
+  }
+  if (learningScreenElement.wordArrs.learnedWords.length !== 0) {
+    learningScreenElement.querySelectorAll('div.modeButton')[1].classList.add('opened');
+    learningScreenElement.querySelectorAll('div.modeButton')[1].classList.add('clickable');
+  }
 }
 
 export function updateModeButtons(learningScreenElement) {

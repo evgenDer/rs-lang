@@ -3,7 +3,9 @@ import { updateStopAudioHelper } from '../../../card/domBuilder/lightTree/AudioH
 export function stopAudio(card) {
   card.localState.isAudioPlaying = false;
   card.audio.word.pause();
+  card.audio.word.onended = () => {};
   card.audio.example.pause();
+  card.audio.example.onended = () => {};
   card.audio.meaning.pause();
   updateStopAudioHelper(card);
 }

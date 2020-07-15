@@ -31,7 +31,16 @@ export default function createEvents(learningScreenElement) {
       addWordNeedToRepeat(learningScreenElement);
       event.target.classList.remove('hovered');
       event.target.classList.add('active');
-    } else if (event.target.closest('.enableAudio[slot=audioHelperButton]') != null) {
+    }
+
+    if (
+      event.target.closest('[slot=translateOptions]') === null &&
+      event.target.closest('.translateOptionsButton') === null
+    ) {
+      try {
+        learningScreenElement.querySelector('.translateOptionsButton').classList.remove('active');
+        learningScreenElement.querySelector('[slot=translateOptions]').classList.remove('opened');
+      } catch { }
     }
 
     if (item != null) {
@@ -63,7 +72,13 @@ export default function createEvents(learningScreenElement) {
   });
 
   document.addEventListener('keydown', () => {
-    if (event.key === 'Enter' && learningScreenElement.querySelector('learning-results') === null) {
+    if (
+      learningScreenElement.querySelector('.translateOptionsButton').classList.contains('active')
+    ) {
+      learningScreenElement.querySelector('.translateOptionsButton').classList.remove('active');
+      learningScreenElement.querySelector('[slot=translateOptions]').classList.remove('opened');
+    }
+    if (event.key === 'Enter' && document.querySelector('learning-results') === null) {
       rightClick(learningScreenElement);
     }
   });

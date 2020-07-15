@@ -3,7 +3,7 @@ export function getRandomInt(max) {
 }
 
 export function shuffleArray(array) {
-  console.log(array);
+
   for (let i = array.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     // eslint-disable-next-line no-param-reassign

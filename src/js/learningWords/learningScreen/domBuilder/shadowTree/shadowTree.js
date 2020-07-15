@@ -108,7 +108,7 @@ const learningScreenShadowTreeHTML = `
   .deadZone {width: 10%; min-width: 30px; height: 40px;}
 
   @media screen and (max-width: ${styles.tabletWidth}) {
-    :host{}
+    :host{ height: auto;}
     #modeBlock{left: calc(50vw - 150px);}
   
   @media screen and (max-width: ${styles.mobileBigWidth}) {

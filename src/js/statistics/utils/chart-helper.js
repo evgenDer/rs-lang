@@ -25,7 +25,7 @@ export function renderDateTimeChart(data) {
         showInLegend: true,
         name: "Изучено слов",
         xValueType: "dateTime",
-        xValueFormatString: "DD MMM hh:mm TT",
+        xValueFormatString: "DD MMM",
         dataPoints: data.dataTotal
       },
       {
@@ -34,7 +34,7 @@ export function renderDateTimeChart(data) {
         name: "Правильно",
         color: "#61bd4f",
         xValueType: "dateTime",
-        xValueFormatString: "DD MMM hh:mm TT",
+        xValueFormatString: "DD MMMT",
         dataPoints: data.dataCorrect
       },
       {
@@ -43,7 +43,7 @@ export function renderDateTimeChart(data) {
         name: "Неправильно",
         color: "#fe5c55",
         xValueType: "dateTime",
-        xValueFormatString: "DD MMM hh:mm TT",
+        xValueFormatString: "DD MMM",
         dataPoints: data.dataError
       }
     ]
@@ -125,7 +125,6 @@ export function renderPercentToAllChart(data){
       text: "Прогресс изученных слов"
     },
     axisY: {
-      maximum: 3600
     },
     data: [{
       type: "stepArea",

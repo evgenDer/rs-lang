@@ -1,5 +1,5 @@
 import { removeChild } from '../helpers/html-helper';
-import playAudio from '../helpers/audio';
+import { playAudio } from '../helpers/audio';
 import { updatDifficultyLevel } from '../configuration';
 import { DATA_URL } from '../utils/constants';
 
@@ -43,12 +43,12 @@ export function addStatisticRound(dataPageRound) {
   });
 }
 
-async function getComparedHTMLElement(totalCorrect){
+async function getComparedHTMLElement(totalCorrect) {
   const countSentence = 30;
   const countLevels = 6;
   let innerTextResult = '';
-  let lvl = Math.ceil(totalCorrect/countSentence * (countLevels)) - 1;
-  if(totalCorrect === 0){
+  let lvl = Math.ceil(totalCorrect / countSentence * (countLevels)) - 1;
+  if (totalCorrect === 0) {
     lvl = 0;
   }
   innerTextResult = `Ваш уровень для слов равен ${lvl + 1}`;
@@ -62,10 +62,10 @@ async function getComparedHTMLElement(totalCorrect){
   return compareElement;
 }
 
-export async function createStaticticRound(totalCorrect, totalErrors, errorArray){
+export async function createStaticticRound(totalCorrect, totalErrors, errorArray) {
   const compareHTMLElement = await getComparedHTMLElement(totalCorrect, totalErrors, errorArray);
   const statisticElement =
-  `<div id="modal" uk-modal class = 'modal'>
+    `<div id="modal" uk-modal class = 'modal'>
       <div class="modal-round uk-align-center">
           <div class="uk-modal-header">
             <h2>Результаты</h2>
@@ -88,8 +88,9 @@ export async function createStaticticRound(totalCorrect, totalErrors, errorArray
   `;
   document.body.insertAdjacentHTML('beforeend', statisticElement);
   // eslint-disable-next-line no-undef
-  UIkit.modal('#modal', { bgclose: false, center: true}).show();
+  UIkit.modal('#modal', { bgclose: false, center: true }).show();
   document.getElementById('modal-btn-learn').addEventListener('click', () => {
+    window.localStorage.setItem('dayLearningDate', '-1');
     window.location.href = 'learningWords.html';
   });
 }

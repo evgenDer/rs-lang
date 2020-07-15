@@ -1,6 +1,4 @@
 import updateStatusBar from './updateStatus';
-import createImg from './createImg';
-import createAudio from './createAudio';
 
 import { updateEnableAudioHelper, updateStopAudioHelper } from '../lightTree/AudioHelpers';
 
@@ -14,11 +12,12 @@ export default function updateCardContent(cardElement) {
   const ruMeaning = cardElement.querySelector('[slot=RUMeaning]');
   const openButton = cardElement.querySelector('[slot=openWord]');
   const repeatButton = cardElement.querySelector('[slot=repeatWord]');
+  const transcription = cardElement.querySelector('[slot=transcription]');
+  const wordAudioButton = cardElement.querySelector('[slot=pronunciation]');
 
   //Обновляем строку ввода
   learningline.setState('isDone', cardElement.state.isDone);
 
-  //Обновляем отображение перевода
   //Пример предложения
   if (cardElement.settings.showExplanationExample) {
     const example = cardElement.state.textExample;
@@ -62,20 +61,18 @@ export default function updateCardContent(cardElement) {
     }
   }
   //Перевод слова
-  if (
-    (cardElement.settings.showNewWordTranslation &&
-      cardElement.state.optional.mode === 'newWord') ||
-    (cardElement.settings.showWordTranslation && cardElement.state.isDone)
-  ) {
+  if ((cardElement.settings.showWordTranslation) || (cardElement.settings.showNewWordTranslation && cardElement.state.isDone)) {
     ruWord.classList.add('opened');
   } else {
     ruWord.classList.remove('opened');
   }
+
   //Обновляем опции звука и отображения перевода
   updateEnableAudioHelper(cardElement);
   updateStopAudioHelper(cardElement);
 
-  //Обновляем кнопки доп.опций
+  //Обновляем кнопки доп.опций и транскрипцию
+
   if (cardElement.state.isDone) {
     if (openButton !== null) {
       openButton.remove();
@@ -101,6 +98,10 @@ export default function updateCardContent(cardElement) {
         repeatButton.innerHTML = 'Придется повторить';
       }
     }
+    if (transcription !== null) {
+      transcription.classList.add('opened');
+    }
+    wordAudioButton.classList.add('opened');
   }
 
   //Обновляем статусБар

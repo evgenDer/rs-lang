@@ -38,7 +38,6 @@ export default function daleteCard(learningScreenElement) {
   let wordClone = null;
   let wordCloneIndex = null;
   for (let i = learningScreenElement.wordArrs.needToRepeat.length - 1; i >= 0; i -= 1) {
-    console.log(wordId + ' ' + learningScreenElement.wordArrs.needToRepeat[i].id);
     if (learningScreenElement.wordArrs.needToRepeat[i].id === wordId) {
       wordClone = learningScreenElement.wordArrs.needToRepeat[i];
       wordCloneIndex = i;
@@ -46,7 +45,6 @@ export default function daleteCard(learningScreenElement) {
     }
   }
   if (wordClone !== null) {
-    console.log('cloneDeleted');
     learningScreenElement.localState.needToRepeatProgressArr[wordCloneIndex] = true;
   }
 
@@ -63,7 +61,6 @@ export default function daleteCard(learningScreenElement) {
   if (cardMode === 'newWord') {
     createUserWord(wordId, word);
   } else {
-    console.log(word);
     updateUserWord(wordId, word);
   }
 
@@ -82,6 +79,7 @@ export default function daleteCard(learningScreenElement) {
     createCard(learningScreenElement);
     updateDifficultyButtons(learningScreenElement);
   } else {
+    window.scrollTo(pageYOffset, 0)
     createResults(learningScreenElement);
   }
 }
