@@ -1,0 +1,26 @@
+%hamburger-line {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  background-color: $color-secondary;
+  border-radius: 5px;
+  width: 100%;
+  height: 4px;
+}
+
+%light-shadow {
+  box-shadow: 0 0 0.125rem 0 rgba(143,115,96,.12), 0 0.125rem 0.25rem 0 rgba(143,115,96,.12);
+}
+
+%puzzle-field{
+  width: $max-width-puzzle-field;
+  @include media-laptop{
+    width: $middle-width-puzzle-field;
+  }
+  @media (max-width: 800px){
+    width: $tablet-width-puzzle-field;
+  }
+  @media (max-width: 480px){
+    width: $small-width-puzzle-field;
+  }
+}

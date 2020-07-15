@@ -1,0 +1,144 @@
+.authentication{
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100vw!important;
+  min-height: 100vh;
+  height: 100%;
+  overflow-x: hidden;
+  top: 0px;
+  bottom: 0px;
+  background-color: transparent;
+}
+
+.authentication .header__btn{
+  color: $color-primary;
+  background-color: $color-secondary;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  height: 35px;
+  width: 90px;
+}
+
+.authentication .header__btn:before{
+  content: 'ВХОД';
+}
+.authentication form {
+  margin-top: 3rem;
+}
+.authentication__form {
+  width: 420px;
+  @include media-mobilesmall{
+    width: $mobile-small-width;
+  }
+  min-height: 500px;
+  height: auto;
+  border-radius: 10px;
+  margin: 0rem auto;
+  box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+  padding: 2%;
+  background-color: darken($color: $color-background, $amount: 3);
+  @include media-tablet{
+    min-height: 480px;
+  }
+  @media (max-width: $mobile-big-width){
+    width: 300px;
+  }
+
+}
+
+form .authentication-page__container{
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.head-form {
+  margin: 1% auto 1% auto;
+  text-align: center;
+}
+/* Login title form form */
+.head-form  h2 {
+  font-size: 4rem;
+  color: $color-secondary;
+  margin: 30px;
+}
+
+.input-item {
+  background: #fff;
+  color: $color-secondary;
+  padding: 15px 0px 14.8px 8px;
+  border-radius: 5px 0px 0px 5px;
+  @media (max-width: $mobile-big-width){
+    display: none;
+  }
+}
+
+#eye {
+  background: #fff;
+  color: $color-secondary;
+
+  margin: 6px 0 0 0;
+  margin-left: -20px;
+  padding: 15px 9px 18px 0px;
+  border-radius: 0px 5px 5px 0px;
+
+  float: right;
+  position: relative;
+  right: 1%;
+  top: 0;
+  z-index: 5;
+
+  cursor: pointer;
+  @media (max-width: $mobile-big-width){
+    margin: -49px 15px 20px 0;
+  }
+}
+/* inputs form  */
+input[class="form-input"]{
+  width: 280px;
+  height: 49px;
+
+  margin-top: 2%;
+  font-size: 16px;
+  color: $color-secondary;
+  outline: none;
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+  transition: 0.2s linear;
+  @media (max-width: $mobile-big-width){
+    margin-left: 20px;
+    padding-left: 20px;
+    width: 250px;
+    border-radius: 5px;
+  }
+
+}
+input[id="txt-input"] {
+  width: 280px;
+  @media (max-width: $mobile-big-width){
+    width: 250px;
+    padding-left: 20px;
+    margin-left: 20px;
+  }
+}
+/* focus  */
+input:focus {
+  transform: translateX(-2px);
+  border-radius: 5px;
+}
+
+input:-webkit-autofill {
+  box-shadow: inset 0 0 0 50px #fff !important;
+  -webkit-box-shadow: inset 0 0 0 50px #fff !important;
+}
+
+.error-msg{
+  color: $color-red!important;
+  height: 30px;
+}

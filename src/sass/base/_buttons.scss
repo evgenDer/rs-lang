@@ -1,0 +1,338 @@
+.authentication-page button {
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s linear;
+  letter-spacing: 0.05em;
+  color: $color-primary;
+  opacity: 1;
+  font-family: 'Montserrat';
+}
+
+button{
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+
+.sign-up {
+  background-color: $color-additional;
+  margin-left: 20px;
+  background: $color-active;
+}
+
+.log-in{
+  margin: 7% 0;
+  background: $color-secondary;
+  width: 310px;
+  @media (max-width: $mobile-big-width){
+    margin-left: 25px;
+    width: 240px;
+  }
+}
+.frgt-pass {background: transparent;}
+
+/* buttons hover Animation */
+button:not(.disabled):hover {
+  animation: ani9 0.4s ease-in-out infinite alternate;
+}
+@keyframes ani9 {
+  100% {
+      transform: translateY(3px);
+  }
+}
+
+#game-sprint button.game-container_audio{
+  border: none;
+  outline: none;
+  position: absolute;
+  right: 10vw;
+  top: 4.5vh;
+}
+
+.btn_autopronoucing::before{
+  content: "\f001";
+}
+.btn_translation::before{
+  content: "\f1ab";
+}
+
+.modal-round .btn_pronoucing{
+  background: transparent;
+  color: $color-secondary;
+}
+
+.btn_background::before{
+  content: "\f03e";
+}
+
+.btn_statistic img{
+  width: 35px;
+  height: 35px;
+
+}
+
+.block-hints button{
+    background-color: transparent;
+}
+
+
+.btn_exit, .btn_pronoucing{
+  font-family: 'FontAwesome';
+}
+
+#game-puzzle .btn_exit{
+  width: 50px;
+  animation: none;
+  transform: rotate(180deg);
+  img {
+    filter: invert(100%);
+  }
+}
+
+.disable{
+  background-color: $button-disable !important;
+}
+
+.btns button{
+  width: 50px;
+  margin-right: 10px;
+  background-color: $color-additional;
+  font-size: 2rem;
+  font-family: 'FontAwesome';
+  color: white;
+  text-align: center;
+  padding: 0px;
+}
+
+button.btn_unknown::before{
+ content: "Не знаю";
+}
+
+.btn_check::before{
+  content: "Проверить";
+}
+
+.btn_result::before{
+  content: "Результаты";
+}
+
+.btn_continue::before{
+  content: "Продолжить";
+}
+
+.btn_next::before{
+  content: "Продолжить";
+}
+
+
+.block-btns button{
+  color: white;
+  width: 300px;
+  height: 60px;
+  margin: 30px 30px 0px;
+  background-color: $color-additional;
+  font-size: 1.8rem;
+  @media (max-width: $tablet-width){
+    font-size: 1.5rem;
+    margin: 10px;
+    width: 200px;
+  }
+}
+
+#game-sprint .btn_audioexample{
+  position: absolute;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  width: 30px;
+  height: 30px;
+  margin-left: 300px;
+  @include media-mobile{
+    margin-left: 230px;
+  }
+}
+
+
+.btn_close{
+  min-width: 25px;
+  transition: all .4s;
+  background-color: transparent!important;
+  &:hover{
+    color: $color-additional!important;
+  }
+  svg{
+    width: 25px;
+    width: 30px;
+    height: 30px;
+  }
+}
+#game-sprint .btn_close{
+  min-width: 25px;
+  transition: all .4s;
+  background-color: transparent!important;
+  &:hover{
+    color: $color-additional!important;
+  }
+  svg{
+    width: 25px;
+    width: 30px;
+    height: 30px;
+  }
+}
+.game-control__btn {
+  width: 150px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  background-color: $color-additional !important;
+	color: $color-primary !important;
+	&:hover {
+		background-color: $color-additional;
+		color: $color-primary;
+		cursor: pointer;
+		transition: all 0.4s;
+	}
+  transition: all 0.4s;
+  @include media-tablet{
+    width: 100px;
+    padding: 0px;
+  }
+}
+
+#game-puzzle .game-control__btn{
+  background-color: $color-secondary !important;
+	color: $color-primary !important;
+}
+
+.game-control__list {
+  background: $color-secondary;
+  opacity: 0.8;
+  border-radius: 10px;
+  color: $color-primary;
+  padding: 15px 25px;
+  min-width: fit-content;
+  max-width: 250px;
+  ul li {
+    @include font(1.1rem, 1.4rem, 400);
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  .list__active {
+    color: $color-active;
+  }
+}
+
+#game-savannah .game-control__list {
+  background: $color-primary!important;
+  color: $color-additional!important;
+}
+
+.game-control__btn_mode {
+  width: 190px;
+  padding: 0;
+  @include media-tablet{
+    width: 250px;
+    padding: 0px;
+  }
+}
+
+.game-control__btn_mode_active {
+  background: $color-yellow !important;
+  color: $color-secondary !important;
+}
+
+#game-puzzle .game-control__btn_mode_active {
+  background: $color-active !important;
+  color: $color-primary !important;
+}
+
+.game-control__btn_mode_disabled {
+  background: $color-additional !important;
+  color: $color-primary !important;
+}
+
+.game-control__list_desc {
+  div p {
+    @include font(1.1rem, 1.4rem, 400);
+    margin: 0;
+    width: 200px;
+    word-break: break-all;
+    overflow: hidden;
+    text-align: center;
+  }
+}
+
+
+.btn_pronoucing::before{
+  content: "\f028";
+  font-family: 'FontAwesome';
+}
+  #game-sprint .card__btns {
+  display: flex;
+  justify-content: center;
+  button{
+    margin-top: 10px;
+    outline: none;
+    width: 100px;
+    border: none;
+    height: 50px;
+    margin: 10px;
+    color: $color-primary;
+    border-radius: 10px;
+  }
+  .btn_correct{
+    background-color: $color-green;
+  }
+  .btn_wrong{
+    background-color: $color-red;
+  }
+}
+
+
+#game-sprint .btn_pronoucing{
+  background: transparent;
+  color: $color-secondary;
+  border: none;
+  outline: none;
+}
+
+.play-page .btn_pronoucing::before{
+  color: $color-primary;
+}
+
+#game-sprint {
+  .btn_statistic{
+  background-color: $color-additional;
+  border: none;
+  width: 40px;
+  height: 35px;
+  border-radius: 10px;
+  img{
+    width: 30px;
+    height: 30px;
+  }
+ }
+
+.btn_exit{
+  img {
+    width: 25px;
+    filter: invert(100%);
+  }
+    border: none;
+    outline: none;
+    position: absolute;
+    left: 10vw;
+    top: 5vh;
+    transform: rotate(180deg);
+    &:hover{
+      animation: none;
+    }
+  }
+}

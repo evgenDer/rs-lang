@@ -1,0 +1,121 @@
+.header__navigation {
+  z-index: 2;
+}
+
+.header__hamburger {
+  width: 30px;
+}
+
+.hamburger {
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.hamburger__line {
+  @extend %hamburger-line;
+  transition: all 0.3s ease-in;
+  top: calc( 50% - 2px );
+  left: 0;
+  &:before {
+    @extend %hamburger-line;
+    top: 13px;
+    left: 0;
+    transition: all 0.3s ease-in;
+  }
+  &:after {
+    @extend %hamburger-line;
+    top: -13px;
+    left: 0;
+    transition: all 0.3s ease-in;
+  }
+}
+
+.hamburger__line_active {
+  transform: rotate(-90deg);
+  transition: all 0.3s ease-in;
+  background: $color-additional;
+  &:before {
+    background: $color-additional;
+    transition: all 0.3s ease-in;
+  }
+  &:after {
+    background: $color-additional;
+    transition: all 0.3s ease-in;
+  }
+}
+
+
+.navigation {
+  position: absolute;
+  background: $color-primary;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: calc((100vw - 1400px) / 2 + 300px);
+  padding-left: calc((100vw - 1400px) / 2);
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  padding-top: 80px;
+  transition: all 0.3s ease-in;
+  @include media-laptop {
+    width: 300px;
+    padding-left: 0px;
+  }
+  @include media-tablet {
+    padding-top: 50px;
+  }
+}
+
+.navigation_hidden {
+  left: calc(((100vw - 1400px) / 2 + 300px) * -1);
+  @include media-laptop {
+    left: -300px;
+  }
+  box-shadow: none;
+}
+
+.navigation__link {
+  list-style: none;
+  @include font(1.6rem, 1.6rem, 500);
+  padding: 10px 10px;
+  color: $color-secondary;
+  cursor: pointer;
+  width: 100%;
+  background-image: linear-gradient(rgba($color-background-additinal, 0.5) 0%, rgba($color-background-additinal, 0.5) 100%);
+  background-repeat: repeat-y;
+  background-size: 0% 0em;
+  background-position: 0 65%;
+  transition: 0.4s ease;
+  &:hover {
+    background-image: linear-gradient(rgba($color-background-additinal, 1) 0%, rgba($color-background-additinal, 1) 100%);
+    background-size: 100% 1em;
+    transition: 0.4s ease;
+  }
+
+  a {
+    padding-left: 30px;
+    text-decoration: none;
+    color: inherit;
+    font: inherit;
+  }
+
+  img {
+    height: 25.6px;
+    vertical-align: bottom;
+    filter: invert(18%) sepia(98%) hue-rotate(175deg) contrast(110%) brightness(98%);
+    margin-right: 10px;
+  }
+}
+
+.navigation__link_active {
+  color: $color-active;
+  font-weight: 600;
+  img {
+    filter: invert(18%) sepia(100%) hue-rotate(330deg) saturate(600%) contrast(76%) brightness(220%);
+  }
+}
