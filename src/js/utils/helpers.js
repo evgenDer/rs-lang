@@ -8,6 +8,11 @@ function getUser() {
 
 function getMistakeResponse(codeError) {
   if (codeError === ERROR_PASSWORD) {
+    UIkit.notification({
+      message: 'Пароль должен содержать не менее 8 символов, как минимум одну прописную букву, одну заглавную букву, одну цифру и один спецсимвол из +-_@$!%*?&#.,;:[]{}',
+      status: 'warning',
+      pos: 'top-center',
+    });
     return 'Пароль не соответствует формату';
   }
   return 'Такой пользователь уже существует';
