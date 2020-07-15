@@ -1,95 +1,93 @@
-.modal-round{
+.modal-round {
   border-radius: 10px;
   background: $color-background;
   margin-top: 25vh;
   padding-bottom: 10px;
   padding-top: 10px;
-  h2{
+  h2 {
     color: $color-secondary;
   }
-  .uk-modal-header{
+  .uk-modal-header {
     background: $color-background;
     text-align: center;
     border-radius: 10px;
-    p{
+    p {
       color: $color-secondary;
       font-size: 15px;
     }
     margin-bottom: 30px;
   }
-  img{
+  img {
     width: 100px;
     height: 100px;
   }
-  h3{
+  h3 {
     font-size: 20px;
     color: $color-secondary;
   }
-  .line{
+  .line {
     display: flex;
     color: $color-secondary;
     margin-top: -20px;
     text-align: start;
   }
-  .uk-close{
-    color: $color-secondary
+  .uk-close {
+    color: $color-secondary;
   }
-  span{
+  span {
     padding: 0px 10px;
     margin-left: 10px;
     text-align: center;
     height: 25px;
-    width: 35px!important;
+    width: 35px !important;
     border-radius: 20px;
     color: $color-primary;
   }
 }
 
-
-
-.modal-round__correct{
-  span{
+.modal-round__correct {
+  span {
     background-color: $color-green;
   }
 }
 .modal-round__error {
-  span{
+  span {
     background-color: $color-red;
   }
   margin-top: 20px;
 }
 
-.uk-modal-body{
+.uk-modal-body {
   margin-top: 10px;
   min-height: 280px;
   max-height: 350px;
-  &::-webkit-scrollbar-track{
+  &::-webkit-scrollbar-track {
     background-color: $color-primary;
     border-radius: 10px;
   }
-  &::-webkit-scrollbar-thumb{
+  &::-webkit-scrollbar-thumb {
     background-color: $color-secondary;
     border-radius: 10px;
   }
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 5px;
   }
 }
 
 .uk-modal-header {
-  span{
+  span {
     color: $color-green;
   }
-  h3{
+  h3 {
     margin: 0px;
   }
 }
 
-.uk-modal-footer{
+.uk-modal-footer {
   background-color: $color-background;
   display: flex;
   justify-content: center;
-  button{
+  button {
     margin: 10px;
     background-color: $color-secondary;
     border-radius: 10px;
@@ -100,3 +98,11 @@
   }
 }
 
+iframe {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
