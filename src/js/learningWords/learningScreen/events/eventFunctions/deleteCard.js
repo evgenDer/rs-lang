@@ -79,6 +79,7 @@ export default function daleteCard(learningScreenElement) {
     createCard(learningScreenElement);
     updateDifficultyButtons(learningScreenElement);
   } else {
+    window.scrollTo(pageYOffset, 0)
     createResults(learningScreenElement);
   }
 }

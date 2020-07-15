@@ -110,6 +110,7 @@ export default class LearningScreenElement extends HTMLElement {
       const today = new Date().toDateString();
       this.stat.dateTime = new Date(today).getTime();
     } else {
+      window.scrollTo(pageYOffset, 0)
       createResults(this);
     }
 
