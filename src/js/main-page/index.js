@@ -35,6 +35,8 @@ export async function updPageContent() {
 
     if (event.target.closest('#start-learning-btn') !== null) {
       window.location.href = 'learningWords.html';
+    } else if (event.target.closest('#start-level-btn')) {
+      window.location.href = 'determinationLevel.html';
     }
   })
 }
