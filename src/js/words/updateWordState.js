@@ -89,7 +89,7 @@ function calculateSuccessPoint(word, isgamemode = false, isSuccess = false) {
         mark = mark - difficultyToErrorPoint[word.difficulty];
       }
     }
-    console.log(mark);
+
     if (currentMark >= 2 && mark < 2) {
       mark = 2;
     }
