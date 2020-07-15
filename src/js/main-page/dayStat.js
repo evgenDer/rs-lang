@@ -73,7 +73,6 @@ class DayStat {
         this.state.bestSeries = dayLearningStat.longestRightAnswerSeries;
       }
     }
-    console.log(this.state)
   }
 
 }
